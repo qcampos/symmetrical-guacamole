@@ -1,10 +1,13 @@
 package fr.upem.hireanemployee;
 
 
+import fr.upem.hireanemployee.profildata.*;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -34,11 +37,19 @@ public class StarterClass {
         List<Language> languages = Arrays.asList(l);
         bdu.register(l);
 
-        Employee e = new Employee("Nicolas", "Borie", "nborie@borieawardofficial.fr", "pony77", languages);
+        Employee e = new Employee("Nicolas", "Borie", "Teacher", Country.FRANCE, new Domain("Combinatorics"), "nborie@award.fr", "pony77");
+
+        School upem = new School("UPEM", Country.FRANCE);
+        Degree degree = new Degree("Doctorat en combinatoire", Degree.DegreeType.PHD, upem);
+        Experience experience = new Experience("C&A", "Hôte de caisse", "Mon rôle fut de tenir une caisse", "Un poste éprouvant", Date.from(Instant.now()), Date.from(Instant.now()));
+        
+
+        e.addDegree(degree);
+        e.addExperience(experience);
         bdu.register(e);
 
 
-        Employee employeeByMail = bdu.getEmployeeByMail("nborie@borieawardofficial.fr");
+        Employee employeeByMail = bdu.getEmployeeByMail("nborie@award.fr");
 
         bdu.cleanAll();
         return "Founded : " + employeeByMail.toString();

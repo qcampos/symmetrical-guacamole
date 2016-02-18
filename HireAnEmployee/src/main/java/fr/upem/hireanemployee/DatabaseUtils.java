@@ -1,5 +1,7 @@
 package fr.upem.hireanemployee;
 
+import fr.upem.hireanemployee.profildata.Language;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,8 +17,12 @@ public class DatabaseUtils {
     private EntityManager em;
 
     public void register(Object o) {
-        em.persist(o);
-        em.flush();
+        try {
+            em.persist(o);
+            em.flush();
+        } catch (Exception e) {
+            throw new IllegalStateException("There was an error while adding an item to the database", e);
+        }
     }
 
     public List<Language> getSkillsByName(final String name) {

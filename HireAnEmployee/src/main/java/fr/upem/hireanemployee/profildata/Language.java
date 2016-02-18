@@ -1,4 +1,6 @@
-package fr.upem.hireanemployee;
+package fr.upem.hireanemployee.profildata;
+
+import fr.upem.hireanemployee.Employee;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -15,7 +17,7 @@ public class Language {
     private long id;
     private String name;
 
-    @ManyToMany(mappedBy = "skills")
+    @ManyToMany(mappedBy = "skills", cascade = CascadeType.ALL)
     private Collection<Employee> employee;
 
     public Language() {
