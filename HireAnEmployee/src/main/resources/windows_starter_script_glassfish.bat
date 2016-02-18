@@ -1,0 +1,1 @@
+D:\Quentin\workspace\Servers\glassfish4\glassfish\bin\asadmin.bat start-domain domain1 & D:\Quentin\workspace\Servers\glassfish4\glassfish\bin\asadmin.bat start-database

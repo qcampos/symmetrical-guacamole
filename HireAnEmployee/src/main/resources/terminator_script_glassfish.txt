@@ -1,0 +1,2 @@
+/Users/Baxtalou/Development/glassfish4.1/glassfish/bin/asadmin stop-database
+/Users/Baxtalou/Development/glassfish4.1/glassfish/bin/asadmin stop-domain domain1

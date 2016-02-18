@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+    <persistence-unit name="hireaePU">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:app/hireaedb</jta-data-source>
+
+        <properties>
+            <property name="eclipselink.target-database"
+                      value="Derby"/>
+            <!-- JDBC connection properties -->
+            <property name="eclipselink.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="eclipselink.jdbc.url"
+                      value="jdbc:derby://localhost:1527/hireaedb;retrieveMessagesFromServerOnGetMessage=true;create=true;"/>
+            <property name="eclipselink.jdbc.user" value="APP"/>
+            <property name="eclipselink.jdbc.password" value="APP"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+        </properties>
+    </persistence-unit>
+</persistence>

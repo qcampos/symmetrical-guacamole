@@ -1,0 +1,107 @@
+/* From ed3c96 (237/60/150) to ed3c96 */
+
+
+/* DARKER */
+
+
+/* From 11bb69 to f5bad9(245,186,217) */
+
+
+/* LIGHTER */
+
+a {
+    color: #f5bad9;
+    /* LIGHTER COLOR */
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: #ed3c96;
+    /* DARKER COLOR */
+    text-decoration: underline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    color: #ed3c96;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: aliceblue;
+    border-color: #ed3c96;
+}
+
+.btn-primary {
+    background-image: aliceblue; /*-webkit-linear-gradient(#ed3c96, #ed3c96 60%, #ed3c96);*/
+    background-image: aliceblue;/* -webkit-gradient(linear, left top, left bottom, from(#ed3c96), color-stop(60%, #ed3c96), to(#ed3c96));*/
+    background-image: aliceblue;/* -webkit-linear-gradient(#ed3c96, #ed3c96 60%, #ed3c96);*/
+    background-image: aliceblue;/* -webkit-linear-gradient(#ed3c96, #ed3c96 60%, #ed3c96);*/
+    background-image: aliceblue;/*linear-gradient(#ed3c96, #ed3c96 60%, #ed3c96);*/
+    background-repeat: no-repeat;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff54b4eb', endColorstr='#ed3c96', GradientType=0);
+    -webkit-filter: none;
+    filter: none;
+    border-color: aliceblue;
+    border-bottom: 2px solid #aliceblue;
+}
+
+.btn-primary:hover {
+    background-color: #aliceblue;
+}
+
+.ll {
+    display: block;
+}
+
+.row-strip {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.hyperspan {
+    background: red;
+    opacity: .3;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.fill { 
+    min-height: 100%;
+    height: 100%;
+    display: block;
+}
+.map {
+    height: 100%;
+    min-height: 100%;
+    background: red;
+    display: block;
+}
+
+/* Mine */
+
+#ponyForm {
+    background-color: #ed3c96;
+    padding: 2em;
+}
+
+legend, label {
+    color: aliceblue; 
+    -webkit-text-decoration-color: aliceblue; 
+    text-decoration-color: aliceblue;
+}
