@@ -1,0 +1,14 @@
+colors :
+
+bleu-principal : #4B77BE;
+jaune-clair : #F6BB42;
+bleu-sombre : #434a54;
+gris-très-clair : #aab2bd; (footer-only 4 now)
+gris-clair : #7d8a9b;
+bleu-clair : #5D9CEC;
+bleu-sombre-complémentaire-au-clair : #4A89DC;
+
+vert-foncé : #8CC152;
+vert-clair : #A0D468;
+
+

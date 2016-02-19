@@ -1,0 +1,288 @@
+/* Begin Navbar *************/
+
+
+/* Background color */
+
+.navbar-inverse {
+    background-color: #ffffff;
+    border: 0;
+    padding: auto;
+}
+
+
+/* BurgerMenu */
+
+.navbar-inverse .navbar-toggle {
+    background-color: #A0D468;
+    border-color: #A0D468;
+    border-radius: 0;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #ffffff;
+}
+
+
+/* End of burger menu */
+
+
+/* Profil cellule icon */
+
+#profile-li span {
+    margin-right: 7px;
+}
+
+
+/* Logout cellule icon */
+
+#navbar-logout i {
+    font-size: 14px;
+    top: 2px;
+}
+
+
+/* FONT COLOR */
+
+.navbar-inverse .navbar-nav>li>a {
+    font-weight: 700;
+    color: #434a54;
+}
+
+
+/* The form input */
+
+.navbar-inverse .btn {
+    font-weight: 700;
+    background-color: #434a54;
+    border-color: #434a54;
+}
+
+.navbar-inverse .form-control {
+    padding-right: 30px;
+}
+
+.navbar-inverse .form-search .search-query {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.navbar-inverse .btn {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+
+/* End of the form */
+
+
+/* When Hover, BACKGROUND COLOR */
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-nav>li>a:hover,
+.navbar-inverse .navbar-brand:hover {
+    background-color: #4A89DC;
+    border-color: #4A89DC;
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-nav>li>#navbar-logout:hover {
+    background-color: #DA4453;
+    color: #ffffff;
+}
+
+
+/* HIREANEMPLOYEE TITLE */
+
+.navbar-inverse .navbar-brand {
+    font-size: 24px;
+    font-weight: 700;
+    background-color: #A0D468;
+    color: #ffffff;
+}
+
+
+/* Liste margin */
+
+.navbar-inverse .navbar-nav>li>a,
+.navbar-inverse .navbar-nav>li>form .input-group {
+    padding-right: 26px;
+    padding-left: 26px;
+}
+
+
+/* Making the a filling all the li for the background color */
+
+.navbar-inverse .navbar-nav>li>a {
+    width: auto;
+}
+
+#navbar-logout {
+    font-weight: 500;
+    color: #7d8a9b;
+    padding-right: 26px;
+    padding-left: 26px;
+}
+
+@media (max-width:990px) {
+    .navbar-inverse .navbar-nav>li>a,
+    .navbar-inverse .navbar-nav>li>form .input-group {
+        padding-right: 13px;
+        padding-left: 13px;
+    }
+    #navbar-logout #logout-text {
+        display: none;
+    }
+    #navbar-logout {
+        padding-left: 0px;
+    }
+}
+
+
+/*** COLLAPSE ***/
+
+.navbar-inverse .navbar-collapse,
+.navbar-collapse .navbar-form {
+    border: 0;
+}
+
+
+/* END Navbar *************/
+
+
+/* BEGIN Top Photo *************/
+
+.top-photo {
+    height: 200px;
+    align-content: center;
+}
+
+.top-photo a {
+    display: inline-block;
+    margin-top: 40px;
+    color: #434a54;
+    font-weight: 100;
+}
+
+.top-photo a:hover {
+    color: #5D9CEC;
+}
+
+.top-photo span {
+    top: 3px;
+    margin-right: 6px;
+}
+
+
+/* BEGIN Pannel *************/
+
+.panel-blue .panel-heading {
+    background-color: #434a54;
+    height: 50px;
+    padding: auto;
+    padding-top: 16px;
+}
+
+.panel-blue .panel-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: #FFCE54;
+}
+
+.panel-blue .panel {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.panel-blue .panel-body-title {
+    margin-top: 10px;
+}
+
+
+/* END Panel ***********/
+
+
+/* BEGIN Description panel ********/
+
+#add-relation span {
+    font-size: 11px;
+}
+
+
+/* BEGIN Footer *************/
+
+
+/* Used to marging right after the logo footer on the small screen */
+
+#footer-logo-div {
+    display: inline-block;
+    margin-right: 30px;
+    margin-bottom: 100px;
+}
+
+#footer-logo-div >a {
+    color: #FFCE54;
+}
+
+.footer-copyright {
+    font-size: 14px;
+}
+
+.footer {
+    background-color: #434a54;
+}
+
+body {
+    font-size: 16px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.row-strip {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.btn-default {
+    background-color: #5D9CEC;
+    color: #ffffff;
+    border: #5D9CEC;
+    padding: 8px 10px 8px 8px;
+    font-weight: 600;
+}
+
+.btn-default:hover {
+    background-color: #4A89DC;
+    color: #ffffff;
+}
+
+
+/* BEGIN Typographie ********/
+
+.small-text {
+    font-size: 14px;
+    color: #7d8a9b;
+}
+
+
+/* END Typographie ********/
+
+
+/* CV page */
+
+
+/*
+.demo {
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+#equalheight {
+    overflow: hidden;
+}
+*/
