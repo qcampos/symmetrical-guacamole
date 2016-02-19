@@ -1,3 +1,8 @@
+body {
+    background-color: #f1f2f6;
+}
+
+
 /* Begin Navbar *************/
 
 
@@ -7,6 +12,9 @@
     background-color: #ffffff;
     border: 1px;
     padding: auto;
+    border-color: #aab2bd;
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;
     -webkit-border-radius: 0px 0px 4px 4px;
     -moz-border-radius: 0px 0px 4px 4px;
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
@@ -63,8 +71,8 @@
 
 .navbar-inverse .btn {
     font-weight: 700;
-    background-color: #434a54;
-    border-color: #434a54;
+    background-color: #5D9CEC;
+    border-color: #5D9CEC;
 }
 
 .navbar-inverse .form-control {
@@ -72,9 +80,9 @@
 }
 
 .navbar-inverse .form-search .search-query {
+    padding-left: 15px;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
-    border-left: 0px;
     -webkit-border-radius: 0px 4px 4px 0px;
     -webkit-border-radius: 0px 4px 4px 0px;
     -webkit-box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .1);
@@ -86,6 +94,11 @@
     border-top-left-radius: 4px;
 }
 
+.navbar-inverse .btn:hover {
+    background-color: #19B5FE;
+    border-color: #19B5FE;
+}
+
 
 /* End of the form */
 
@@ -95,9 +108,8 @@
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-nav>li>a:hover,
 .navbar-inverse .navbar-brand:hover {
-    background-color: #4A89DC;
-    border-color: #4A89DC;
-    color: #ffffff;
+    background-color: #FFCE54;
+    border-color: #FFCE54;
 }
 
 .navbar-inverse .navbar-brand:hover {
@@ -120,12 +132,9 @@
 .navbar-inverse .navbar-brand {
     font-size: 24px;
     font-weight: 700;
-    background-color: #FFCE54;
+    background-color: #DA4453;
     color: #ffffff;
 }
-
-
-/* Liste margin */
 
 .navbar-inverse .navbar-nav>li>a,
 .navbar-inverse .navbar-nav>li>form .input-group {
@@ -135,10 +144,6 @@
 
 
 /* Making the a filling all the li for the background color */
-
-.navbar-inverse .navbar-nav>li>a {
-    width: auto;
-}
 
 #navbar-logout {
     font-weight: 500;
@@ -155,9 +160,6 @@
     }
     #navbar-logout #logout-text {
         display: none;
-    }
-    #navbar-logout {
-        padding-left: 13px;
     }
 }
 
@@ -203,15 +205,15 @@
     background-color: #ffffff;
 }
 
-
-
 .panel-blue .panel-heading {
     height: 50px;
     padding: auto;
     padding-top: 16px;
 }
 
+
 /* Panel-blue transition */
+
 .panel-blue img,
 .panel-blue .panel-heading {
     -webkit-transition: all 0.2s ease-in-out;
@@ -243,7 +245,6 @@
     margin-left: 16px;
 }
 
-
 .panel-blue .panel-body-title {
     margin-top: 10px;
 }
@@ -266,7 +267,7 @@
 
 #cv-content {
     position: relative;
-    animation: fadein 0.4s;
+    animation: fadein 0.4s linear;
 }
 
 @keyframes fadein {
@@ -280,8 +281,7 @@
     }
 }
 
-
-@keyframes collapse-out-cv  {
+@keyframes collapse-out-cv {
     from {
         max-height: 0px;
     }
@@ -339,12 +339,28 @@ body {
     transition: all 0.2s ease-in-out;
 }
 
+.btn-redb {
+    background-color: #DA4453;
+    border-color: #DA4453;
+}
+.btn-yellowb {
+    background-color: #F6BB42;
+    border-color: #F6BB42;
+}
+
 .btn-default:hover {
     top: -3px;
-    background-color: #4A89DC;
+    background-color: #19B5FE;
     color: #ffffff;
 }
 
+.btn-redb:hover {
+    background-color: #DC3023;
+}
+
+.btn-yellowb:hover {
+    background-color: #F5D76E;
+}
 
 /* BEGIN Typographie ********/
 
@@ -356,6 +372,48 @@ body {
 
 /* END Typographie ********/
 
+
+/**** CONNECTION PAGE ****************************/
+#connection-page-forms {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+#connection-form .panel-blue,
+#connection-form {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.hidden-pannel {
+    opacity: 0.4;
+}
+
+.hidden-pannel:hover,
+.hidden-pannel:focus {
+    opacity: 1;
+}
+
+#connection-form .panel-blue {
+    position: relative;
+    top: 0px;
+    animation: fadein 0.4s linear;
+}
+
+#connection-form .panel-blue:hover {
+    top: -4px;
+    -webkit-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
+}
+
+#connection-form .panel-body {
+    padding-top: 6px;
+}
+
+#connection-form .row {
+    margin-top: 10px;
+}
 
 /* CV page */
 
