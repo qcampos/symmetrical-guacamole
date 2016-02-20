@@ -7,6 +7,23 @@
     <title>Title</title>
 </head>
 <body>
-    <h:outputText value="#{starterClass.printCoucou()}"/>
+
+
+    <h:form prependId="false">
+        <h:commandButton value="Click" action="#{startBean.search}">
+            <f:ajax execute="@this" render="@form error"/>
+        </h:commandButton>
+
+        <br/>
+
+        <h:commandLink
+                action="#{startBean.showResult}"
+                rendered="#{startBean.result != null}"
+                value="#{startBean.result}"
+        />
+
+    </h:form>
+
+    <h:outputText rendered="#{startBean.count > -1}" value="Error ! Retry please #{startBean.count}" id="error"/>
 </body>
 </html>

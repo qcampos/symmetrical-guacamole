@@ -32,7 +32,7 @@ public class StarterClass {
     }
 
     public String printCoucou() {
-
+        System.out.println("Print COUCOU");
         Language l = new Language("Ponylang");
         List<Language> languages = Arrays.asList(l);
         bdu.register(l);

@@ -1,68 +1,322 @@
-/* From ed3c96 (237/60/150) to ed3c96 */
-
-
-/* DARKER */
-
-
-/* From 11bb69 to f5bad9(245,186,217) */
-
-
-/* LIGHTER */
-
-a {
-    color: #f5bad9;
-    /* LIGHTER COLOR */
-    text-decoration: none;
+body {
+    background-color: #f1f2f6;
 }
 
-a:hover,
-a:focus {
-    color: #ed3c96;
-    /* DARKER COLOR */
-    text-decoration: underline;
+
+/* Begin Navbar *************/
+
+
+/* Background color */
+
+.navbar-inverse {
+    background-color: #ffffff;
+    padding: auto;
+    border: 1px solid #aab2bd;
+    border-top-width: 0;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-    color: #ed3c96;
+.navbar-inverse .navbar-brand {
+    -webkit-border-radius: 0 0 0 4px;
+    -moz-border-radius: 0 0 0 4px;
 }
 
-.btn-primary {
+
+/* BurgerMenu */
+
+.navbar-inverse .navbar-toggle,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #FFCE54;
+    border-color: #FFCE54;
+    border-radius: 0;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #ffffff;
+}
+
+
+/* End of burger menu */
+
+
+/* Profil cellule icon */
+
+#profile-li span {
+    margin-right: 7px;
+}
+
+
+/* Logout cellule icon */
+
+#navbar-logout i {
+    font-size: 14px;
+    top: 2px;
+}
+
+
+/* FONT COLOR */
+
+.navbar-inverse .navbar-nav>li>a {
+    font-weight: 700;
+    color: #434a54;
+}
+
+
+/* The form input */
+
+.navbar-inverse .btn {
+    font-weight: 700;
+    background-color: #5D9CEC;
+    border-color: #5D9CEC;
+}
+
+.navbar-inverse .form-control {
+    padding-right: 30px;
+}
+
+.navbar-inverse .form-search .search-query {
+    padding-left: 15px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    -webkit-box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .1);
+    -moz-box-shadow: inset 2px 1px 2px rgba(0, 0, 0, .1);
+}
+
+.navbar-inverse .btn {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.navbar-inverse .btn:hover {
+    background-color: #19B5FE;
+    border-color: #19B5FE;
+}
+
+
+/* End of the form */
+
+
+/* When Hover, BACKGROUND COLOR */
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-nav>li>a:hover,
+.navbar-inverse .navbar-brand:hover {
+    background-color: #FFCE54;
+    border-color: #FFCE54;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    border-bottom-left-radius: 4px;
+    -webkit-border-radius: 0 0 0 4px;
+    -moz-border-radius: 0 0 0 4px;
+}
+
+.navbar-inverse .navbar-nav>li>#navbar-logout:hover {
+    background-color: #DA4453;
     color: #ffffff;
-    background-color: aliceblue;
-    border-color: #ed3c96;
+    border-bottom-right-radius: 4px;
+    -webkit-border-radius: 0 0 4px 0;
+    -moz-border-radius: 0 0 4px 0;
 }
 
-.btn-primary {
-    background-image: aliceblue; /*-webkit-linear-gradient(#ed3c96, #ed3c96 60%, #ed3c96);*/
-    background-image: aliceblue;/* -webkit-gradient(linear, left top, left bottom, from(#ed3c96), color-stop(60%, #ed3c96), to(#ed3c96));*/
-    background-image: aliceblue;/* -webkit-linear-gradient(#ed3c96, #ed3c96 60%, #ed3c96);*/
-    background-image: aliceblue;/* -webkit-linear-gradient(#ed3c96, #ed3c96 60%, #ed3c96);*/
-    background-image: aliceblue;/*linear-gradient(#ed3c96, #ed3c96 60%, #ed3c96);*/
-    background-repeat: no-repeat;
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff54b4eb', endColorstr='#ed3c96', GradientType=0);
-    -webkit-filter: none;
-    filter: none;
-    border-color: aliceblue;
-    border-bottom: 2px solid #aliceblue;
+
+/* HIREANEMPLOYEE TITLE */
+
+.navbar-inverse .navbar-brand {
+    font-size: 24px;
+    font-weight: 700;
+    background-color: #DA4453;
+    color: #ffffff;
 }
 
-.btn-primary:hover {
-    background-color: #aliceblue;
+.navbar-inverse .navbar-nav>li>a,
+.navbar-inverse .navbar-nav>li>form .input-group {
+    padding-right: 26px;
+    padding-left: 26px;
 }
 
-.ll {
-    display: block;
+
+/* Making the a filling all the li for the background color */
+
+#navbar-logout {
+    font-weight: 500;
+    color: #7d8a9b;
+    padding-right: 26px;
+    padding-left: 26px;
+}
+
+@media (max-width:990px) {
+    .navbar-inverse .navbar-nav>li>a,
+    .navbar-inverse .navbar-nav>li>form .input-group {
+        padding-right: 13px;
+        padding-left: 13px;
+    }
+    #navbar-logout #logout-text {
+        display: none;
+    }
+}
+
+
+/*** COLLAPSE ***/
+
+.navbar-inverse .navbar-collapse,
+.navbar-collapse .navbar-form {
+    border: 0;
+}
+
+
+/* END Navbar *************/
+
+
+/* BEGIN Top Photo *************/
+
+.top-photo {
+    height: 150px;
+    align-content: center;
+}
+
+.top-photo a {
+    display: inline-block;
+    margin-top: 40px;
+    color: #434a54;
+    font-weight: 100;
+}
+
+.top-photo a:hover {
+    color: #5D9CEC;
+}
+
+.top-photo span {
+    top: 3px;
+    margin-right: 6px;
+}
+
+
+/* BEGIN Pannel *************/
+
+.panel-blue {
+    background-color: #ffffff;
+}
+
+.panel-blue .panel-heading {
+    height: 50px;
+    padding: auto;
+    padding-top: 16px;
+}
+
+
+/* Panel-blue transition */
+
+.panel-blue img,
+.panel-blue .panel-heading {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.panel-blue:hover {
+    background-color: #FFFFFC;
+}
+
+.panel-blue img {
+    top: 0;
+    position: relative;
+}
+
+.panel-blue:hover img {
+    top: -4px;
+    -webkit-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
+}
+
+.panel-blue .panel-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: #434a54;
+    margin-top: 10px;
+    margin-left: 16px;
+}
+
+.panel-blue .panel-body-title {
+    margin-top: 10px;
+}
+
+
+/* END Panel ***********/
+
+
+/* BEGIN Description panel ********/
+
+#add-relation span {
+    font-size: 11px;
+}
+
+
+/* END Description panel **********/
+
+
+/* BEGIN CV left row *************/
+
+#cv-content {
+    position: relative;
+    animation: fadein 0.4s linear;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+        top: -40px;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+@keyframes collapse-out-cv {
+    from {
+        max-height: 0;
+    }
+    to {
+        max-height: 2000px;
+    }
+}
+
+
+/* END CV left row **********/
+
+
+/* BEGIN Footer *************/
+
+
+/* Used to marging right after the logo footer on the small screen */
+
+#footer-logo-div {
+    display: inline-block;
+    margin-right: 30px;
+    margin-bottom: 100px;
+}
+
+#footer-logo-div >a {
+    color: #FFCE54;
+}
+
+.footer-copyright {
+    font-size: 14px;
+}
+
+.footer {
+    background-color: #434a54;
+}
+
+body {
+    font-size: 16px;
 }
 
 .row-strip {
@@ -70,38 +324,111 @@ h6,
     padding-right: 0;
 }
 
-.hyperspan {
-    background: red;
-    opacity: .3;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
+.btn-default {
+    background-color: #5D9CEC;
+    color: #ffffff;
+    border: #5D9CEC;
     top: 0;
-    z-index: 1;
+    padding: 8px 10px 8px 8px;
+    font-weight: 600;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
-.fill { 
-    min-height: 100%;
-    height: 100%;
-    display: block;
+.btn-redb {
+    background-color: #DA4453;
+    border-color: #DA4453;
 }
-.map {
-    height: 100%;
-    min-height: 100%;
-    background: red;
-    display: block;
+.btn-yellowb {
+    background-color: #F6BB42;
+    border-color: #F6BB42;
 }
 
-/* Mine */
-
-#ponyForm {
-    background-color: #ed3c96;
-    padding: 2em;
+.btn-default:hover {
+    top: -3px;
+    background-color: #19B5FE;
+    color: #ffffff;
 }
 
-legend, label {
-    color: aliceblue; 
-    -webkit-text-decoration-color: aliceblue; 
-    text-decoration-color: aliceblue;
+.btn-redb:hover {
+    background-color: #DC3023;
 }
+
+.btn-yellowb:hover {
+    background-color: #F5D76E;
+}
+
+/* BEGIN Typographie ********/
+
+.small-text {
+    font-size: 14px;
+    color: #7d8a9b;
+}
+
+
+/* END Typographie ********/
+
+
+/**** CONNECTION PAGE ****************************/
+#connection-page-forms {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.connection-form .panel-blue,
+.connection-form {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.hidden-pannel {
+    opacity: 0.4;
+}
+
+.hidden-pannel:hover,
+.hidden-pannel:focus {
+    opacity: 1;
+}
+
+.connection-form .panel-blue {
+    position: relative;
+    top: 0;
+    animation: fadein 0.4s linear;
+}
+
+.connection-form .panel-blue:hover {
+    top: -4px;
+    -webkit-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
+}
+
+.connection-form .panel-body {
+    padding-top: 6px;
+}
+
+.connection-form .row {
+    margin-top: 10px;
+}
+
+.under {
+    text-decoration: underline;
+}
+.bold {
+    font-weight: bold;
+}
+/* CV page */
+
+
+/*
+.demo {
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+#equalheight {
+    overflow: hidden;
+}
+*/
