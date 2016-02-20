@@ -43,7 +43,7 @@
 
     <!-- NavBar
       ================================================== -->
-    <div class="container">
+    <div class="navbbar-top">
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -86,10 +86,31 @@
                 </nav>
             </div>
         </div>
+        
+
+        <div id="notification" class="redb">
+            azezaea
+            <button id="notification-closer" onclick="slideIn('notification', 'redb');">X</button>
+        </div>
     </div>
+    
     <!-- UI - X Starts -->
+    <script>
+        function slideIn(el, colorClass) {
+            var elem = document.getElementById(el);
+           // elem.style.transition = "left 0.5s ease-in 0s";
+            // elem.style.left = "0px";
+            elem.className = "out ";
+            elem.className += colorClass;
+        }
 
-
+        function popNotification() {
+            var elem = document.getElementById('notification');
+            elem.className = "redb";
+            // elem.style.transition = "left 0.5s ease-out 0s";
+            // elem.style.left = "-400px";
+        }
+    </script>
 
 
     <!-- (top photo banniere) -->
@@ -99,6 +120,7 @@
         </div>
     </div>
     <div class="container">
+        <button id="notification-toggle" onclick="popNotification();"/>NOTIFY</button>
 
 
 

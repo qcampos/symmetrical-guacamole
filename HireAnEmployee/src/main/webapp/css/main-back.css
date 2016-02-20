@@ -9,7 +9,7 @@ body {
 /* Background color */
 
 .navbbar-top {
-    position: fixed;
+    position:fixed;
     z-index: 99999;
     width: 100%;
     /*font-size: 25px;*/
@@ -26,7 +26,6 @@ body {
     border-right-width: 0;
     margin-bottom: 0;
 }
-
 
 /*
 .navbar-inverse .navbar-brand {
@@ -119,7 +118,6 @@ body {
     background-color: #FFCE54;
     border-color: #FFCE54;
 }
-
 
 /*
 .navbar-inverse .navbar-brand:hover {
@@ -353,7 +351,6 @@ body {
     background-color: #DA4453;
     border-color: #DA4453;
 }
-
 .btn-yellowb {
     background-color: #F6BB42;
     border-color: #F6BB42;
@@ -373,7 +370,6 @@ body {
     background-color: #F5D76E;
 }
 
-
 /* BEGIN Typographie ********/
 
 .small-text {
@@ -386,12 +382,10 @@ body {
 
 
 /**** CONNECTION PAGE ****************************/
-
 #connection-page-forms {
     margin-top: 40px;
     margin-bottom: 40px;
 }
-
 .connection-form .panel-blue,
 .connection-form {
     -webkit-transition: all 0.2s ease-in-out;
@@ -432,21 +426,14 @@ body {
 .under {
     text-decoration: underline;
 }
-
 .bold {
     font-weight: bold;
 }
-
-
 /* CV page */
-
-
 /* Styling the bar itself */
-
 #topbar {
     height: 60px;
-    margin-top: -60px;
-    /* has to be around the height of the bar or more. */
+    margin-top: -60px; /* has to be around the height of the bar or more. */
     display: block;
     z-index: 99998;
     width: 100%;
@@ -458,45 +445,38 @@ body {
     transition: margin-top 0.5s;
 }
 
-#notification {
-    height: 60px;
-    margin-top: 0;
-    /*-60px; /* Has to be the height of the bar or more. */
+#topbar div p {
+    display: inline;
+    float: none;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+/* Hiding the checkbox */
+#toggleTop {
+    display: none;
+}
+/* Styling the lables, to show and hide the bar */
+#showTop {
+    position: fixed;
+    z-index: 9999;
+    top: 100px;
+    right: 30px;
     display: block;
-    z-index: 99998;
-    /* Under the navbar */
-    width: 100%;
-    overflow: hidden;
-    color: #ffffff;
-    font-size: 25px;
-    animation: notification-in-anim 0.2s ease-out;
+    padding: 10px;
+    background-color: #000000;
+    color: #fff;
 }
 
-@keyframes notification-in-anim {
-    from {
-        margin-top: -60px;
-    }
-    to {
-        margin-top: 0;
-    }
+#hideTop {
+    float: right;
+    display: inline-block;
 }
-
-#notification.redb {
-    background-color: #DA4453;
+/* Displaying the bar when the checkbox is checked */
+#toggleTop + #topbar {
+    transition: all 0.2s ease-in-out;
+    margin-top: 0;
 }
-
-#notification.out {
-    margin-top: -60px;
-    transition: all 0.3s ease-out;
-}
-
-#notification-closer {
-    background-color: transparent;
-    border-style: none;
-    outline: none;
-}
-
-
 /*
 .demo {
     margin-bottom: -99999px;

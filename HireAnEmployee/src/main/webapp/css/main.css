@@ -8,21 +8,31 @@ body {
 
 /* Background color */
 
+.navbbar-top {
+    position: fixed;
+    z-index: 99999;
+    width: 100%;
+    /*font-size: 25px;*/
+    text-align: center;
+}
+
 .navbar-inverse {
     background-color: #ffffff;
     padding: auto;
     border: 1px solid #aab2bd;
+    /*height: 51px;*/
     border-top-width: 0;
-    -webkit-border-radius: 0 0 4px 4px;
-    -moz-border-radius: 0 0 4px 4px;
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    border-left-width: 0;
+    border-right-width: 0;
+    margin-bottom: 0;
 }
 
+
+/*
 .navbar-inverse .navbar-brand {
     -webkit-border-radius: 0 0 0 4px;
     -moz-border-radius: 0 0 0 4px;
-}
+}*/
 
 
 /* BurgerMenu */
@@ -110,11 +120,13 @@ body {
     border-color: #FFCE54;
 }
 
+
+/*
 .navbar-inverse .navbar-brand:hover {
     border-bottom-left-radius: 4px;
     -webkit-border-radius: 0 0 0 4px;
     -moz-border-radius: 0 0 0 4px;
-}
+}*/
 
 .navbar-inverse .navbar-nav>li>#navbar-logout:hover {
     background-color: #DA4453;
@@ -176,13 +188,13 @@ body {
 /* BEGIN Top Photo *************/
 
 .top-photo {
-    height: 150px;
+    height: 201px;
     align-content: center;
 }
 
 .top-photo a {
     display: inline-block;
-    margin-top: 40px;
+    margin-top: 91px;
     color: #434a54;
     font-weight: 100;
 }
@@ -341,6 +353,7 @@ body {
     background-color: #DA4453;
     border-color: #DA4453;
 }
+
 .btn-yellowb {
     background-color: #F6BB42;
     border-color: #F6BB42;
@@ -360,6 +373,7 @@ body {
     background-color: #F5D76E;
 }
 
+
 /* BEGIN Typographie ********/
 
 .small-text {
@@ -372,10 +386,12 @@ body {
 
 
 /**** CONNECTION PAGE ****************************/
+
 #connection-page-forms {
     margin-top: 40px;
     margin-bottom: 40px;
 }
+
 .connection-form .panel-blue,
 .connection-form {
     -webkit-transition: all 0.2s ease-in-out;
@@ -416,10 +432,69 @@ body {
 .under {
     text-decoration: underline;
 }
+
 .bold {
     font-weight: bold;
 }
+
+
 /* CV page */
+
+
+/* Styling the bar itself */
+
+#topbar {
+    height: 60px;
+    margin-top: -60px;
+    /* has to be around the height of the bar or more. */
+    display: block;
+    z-index: 99998;
+    width: 100%;
+    background-color: #DA4453;
+    overflow: hidden;
+    color: #fff;
+    font-size: 25px;
+    vertical-align: middle;
+    transition: margin-top 0.5s;
+}
+
+#notification {
+    height: 60px;
+    margin-top: 0;
+    /*-60px; /* Has to be the height of the bar or more. */
+    display: block;
+    z-index: 99998;
+    /* Under the navbar */
+    width: 100%;
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 25px;
+    animation: notification-in-anim 0.2s ease-out;
+}
+
+@keyframes notification-in-anim {
+    from {
+        margin-top: -60px;
+    }
+    to {
+        margin-top: 0;
+    }
+}
+
+#notification.redb {
+    background-color: #DA4453;
+}
+
+#notification.out {
+    margin-top: -60px;
+    transition: all 0.3s ease-out;
+}
+
+#notification-closer {
+    background-color: transparent;
+    border-style: none;
+    outline: none;
+}
 
 
 /*

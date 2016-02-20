@@ -1,0 +1,17 @@
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<!-- Including the js file -->
+	<h:outputScript library="js" name="notifications.js" target="body" />
+
+	<!-- The top div is re-rendered by the calling component and then errorState is checked -->
+	<h:panelGroup layout="block" id="popNotification" class="navbbar-top">
+
+		<h:panelGroup layout="block" id="notification" class="redb" rendered="#{viewScope[notifierBean].errorState}">
+			#{connectionBean.errorMsg}
+			<button id="notification-closer" onclick="slideIn('notification', 'redb');">X</button>
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>
