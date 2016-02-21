@@ -64,7 +64,7 @@ public class ConnectionBean extends Logger {
         // Connection successful.
         log("connect " + "connection successful.");
         // Setting the employee in the session.
-        sessionBean.setEmployee(employee);
+        sessionBean.setConnected(employee);
         return Navigations.redirect(Constants.CV);
     }
 

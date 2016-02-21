@@ -20,7 +20,7 @@ import java.io.Serializable;
  */
 @ManagedBean(eager = true)
 @ApplicationScoped
-public class InitializationBean extends  Logger {
+public class InitializationBean extends Logger {
 
 
     @EJB
@@ -34,7 +34,7 @@ public class InitializationBean extends  Logger {
 
     @PostConstruct
     public void init() {
-    logDB("init initialializationBean called");
+        logDB("init initialializationBean called");
         if (!bdu.emailExists("nborie@upem.fr")) {
             bdu.signup("Nicolas", "Borie", "nborie@upem.fr", "pony17");
         }
@@ -49,7 +49,10 @@ public class InitializationBean extends  Logger {
         employee = bdu.connect("jmangue@u.com", "12345");
 
         description = employee.getDescription();
-        edao.updateSector(description, "Développement");
         edao.updateCountry(description, Country.FRANCE);
+        edao.updateFormation(description, "Université Paris-Est Marne La Vallée");
+        edao.updateSector(description, "Logiciels informatiques");
+        edao.updateProfessionalTitle(description, "MSc in Project and Programme Management and Business Development");
+        log("init " + description.getEmployee().getFirstName());
     }
 }
