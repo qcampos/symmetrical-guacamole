@@ -469,7 +469,9 @@ body {
     overflow: hidden;
     color: #ffffff;
     font-size: 25px;
+    font-weight: 400;
     animation: notification-in-anim 0.2s ease-out;
+    padding: 10px;
 }
 
 @keyframes notification-in-anim {
@@ -494,9 +496,94 @@ body {
     background-color: transparent;
     border-style: none;
     outline: none;
+    float: right;
+    width: 100%;
+}
+
+.hyperspan {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
 }
 
 
+/* Editables System for edition *****/
+
+.editable {
+    position: relative;
+    display: inline-block;
+    padding: 8px;
+    transition: background-color 0.2s;
+}
+
+.editable *,
+.editable h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.editable .glyphicon {
+    opacity: 0;
+    font-size: 70%;
+    transition: opacity 0.2s;
+}
+
+.editable:hover {
+    background-color: #aab2bd;
+}
+
+.editable:hover .glyphicon {
+    opacity: 1;
+}
+
+.editable a {
+    cursor: pointer;
+}
+
+.editor {
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+    transition: height 0.25s linear, padding 0.25s;
+}
+
+.editor .row {
+    height: 10px;
+}
+
+.editor.expand {
+    height: 148px;
+    padding: 15px;
+    transition: height 0.25s linear, padding 0.25s;
+}
+
+.editor.expand#title {
+    height: 100px;
+    padding: 15px;
+    transition: height 0.25s linear, padding 0.25s;
+}
+
+.editor.expand#country {
+    height: 145px;
+    padding: 15px;
+    transition: height 0.25s linear, padding 0.25s;
+}
+
+.editor.expand#formation {
+    height: 115px;
+    padding: 15px;
+    transition: height 0.25s linear, padding 0.25s;
+}
+
+.editor input {
+    margin-top: 2px;
+}
+
+.editor .btn {
+    height: 34px;
+}
 /*
 .demo {
     margin-bottom: -99999px;

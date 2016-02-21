@@ -1,6 +1,7 @@
 package fr.upem.hireanemployee.beans;
 
 import fr.upem.hireanemployee.LoggerBean;
+import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.navigation.Navigations;
 
 import javax.faces.bean.ManagedBean;
@@ -42,16 +43,14 @@ public class ConnectionBean implements Serializable {
         if (email == null || password == null || email.trim().isEmpty() || password.trim().isEmpty()) {
             setErrorState(true);
             log.logB(this, "connect " + "connection failed.");
-            errorMsg = "Please fill the forms entirely";
+            errorMsg = "Please fill all the fields";
             return "";
         }
 
-        // TODO : put a specific message into the errorState.
-        // Use a class with errorState.set("Can not blah.")
-        // Or errorState.setFalse();
-        log.logB(this, "connect " + "connection successful.");
         setErrorState(false);
-        return Navigations.redirect("cv.xhtml"); // TODO constants.
+
+        log.logB(this, "connect " + "connection successful.");
+        return Navigations.redirect(Constants.CV);
     }
 
 

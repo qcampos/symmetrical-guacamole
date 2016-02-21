@@ -45,7 +45,7 @@
       ================================================== -->
     <div class="navbbar-top">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-12">
                 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
                     <div class="container-fluid">
                         <!-- Brand and toggle get grouped for better mobile display -->
@@ -86,19 +86,20 @@
                 </nav>
             </div>
         </div>
-        
+
 
         <div id="notification" class="redb">
             azezaea
-            <button id="notification-closer" onclick="slideIn('notification', 'redb');">X</button>
+            <span style="float:right;">X</span>
+            <button id="notification-closer" class="hyperspan" onclick="slideIn('notification', 'redb');" />
         </div>
     </div>
-    
+
     <!-- UI - X Starts -->
     <script>
         function slideIn(el, colorClass) {
             var elem = document.getElementById(el);
-           // elem.style.transition = "left 0.5s ease-in 0s";
+            // elem.style.transition = "left 0.5s ease-in 0s";
             // elem.style.left = "0px";
             elem.className = "out ";
             elem.className += colorClass;
@@ -120,7 +121,7 @@
         </div>
     </div>
     <div class="container">
-        <button id="notification-toggle" onclick="popNotification();"/>NOTIFY</button>
+        <button id="notification-toggle" onclick="popNotification();" />NOTIFY</button>
 
 
 

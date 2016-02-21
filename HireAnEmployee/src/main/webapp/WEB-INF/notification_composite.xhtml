@@ -11,7 +11,8 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 		<h:panelGroup layout="block" id="notification" class="redb" rendered="#{viewScope[notifierBean].errorState}">
 			#{connectionBean.errorMsg}
-			<button id="notification-closer" onclick="slideIn('notification', 'redb');">X</button>
+			<span style="float:right;">X</span>
+			<button id="notification-closer" class="hyperspan" onclick="slideIn('notification', 'redb');"/>
 		</h:panelGroup>
 	</h:panelGroup>
 </ui:composition>
