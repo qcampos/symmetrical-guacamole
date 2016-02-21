@@ -1,13 +1,15 @@
 package fr.upem.hireanemployee.beans;
 
-import fr.upem.hireanemployee.LoggerBean;
+import fr.upem.hireanemployee.DatabaseDAO;
+import fr.upem.hireanemployee.Employee;
+import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.navigation.Navigations;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.io.Serializable;
 
 /**
  * Created by Abwuds on 20/02/2016.
@@ -15,19 +17,23 @@ import java.io.Serializable;
  */
 @ManagedBean
 @ViewScoped
-public class ConnectionBean implements Serializable {
+public class ConnectionBean extends Logger {
 
-    @ManagedProperty(value = "#{loggerBean}")
-    private LoggerBean log;
+    /* Application's beans */
+    @EJB
+    private DatabaseDAO dao;
+    @ManagedProperty(value = "#{sessionBean}")
+    private SessionBean sessionBean;
 
 
+    /* Controller informations */
     private boolean errorState;
-
     private String email;
     private String password;
     private String errorMsg;
 
     public ConnectionBean() {
+
     }
 
     /**
@@ -37,25 +43,46 @@ public class ConnectionBean implements Serializable {
      * @return empty string if the connection has failed. The new url otherwise.
      */
     public String connect() {
-         log.logB(this, "connect " + "mail : " + email + " password : " + password);
+         log("connect " + "mail : " + email + " password : " + password);
+
         // If fields are not filled. Returning to the same page.
         // And setting the bad information flag.
         if (email == null || password == null || email.trim().isEmpty() || password.trim().isEmpty()) {
-            setErrorState(true);
-            log.logB(this, "connect " + "connection failed.");
-            errorMsg = "Please fill all the fields";
-            return "";
+            badFieldConnection();
+            return Constants.CURRENT_PAGE;
         }
 
-        setErrorState(false);
+        // Trying to connect to the database.
+        Employee employee = dao.connect(email, password);
 
-        log.logB(this, "connect " + "connection successful.");
+        // If the connection has failed.
+        if (employee == null) {
+            badInformationConnection();
+            return Constants.CURRENT_PAGE;
+        }
+
+        // Connection successful.
+        log("connect " + "connection successful.");
+        // Setting the employee in the session.
+        sessionBean.setEmployee(employee);
         return Navigations.redirect(Constants.CV);
+    }
+
+    private void badInformationConnection() {
+        setErrorState(true);
+        log("connect " + "connection failed. Not in the database");
+        errorMsg = "Sorry, your are not in our database.";
+    }
+
+    private void badFieldConnection() {
+        setErrorState(true);
+        log("connect " + "connection failed. Wrong fields");
+        errorMsg = "Some error are detected. Please correct your fields.";
     }
 
 
     public boolean isErrorState() {
-        log.logB(this, "isErrorState " + errorState);
+        log("isErrorState " + errorState);
         return errorState;
     }
 
@@ -63,8 +90,8 @@ public class ConnectionBean implements Serializable {
         this.errorState = errorState;
     }
 
-    public void setLog(LoggerBean log) {
-        this.log = log;
+    public void setSessionBean(SessionBean sessionBean) {
+        this.sessionBean = sessionBean;
     }
 
     public void setEmail(String email) {

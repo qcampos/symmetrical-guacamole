@@ -1,370 +1,68 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<head>
-    <meta charset="utf-8">
-    <title>HireEmployee - accueil</title>
-    <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!-- SmartAddon.com Verification -->
-    <meta name="smartaddon-verification" content="936e8d43184bc47ef34e25e426c508fe">
-    <meta name="keywords" content="Flat UI Design, UI design, UI, user interface, web interface design, user interface design, Flat web design, Bootstrap, Bootflat, Flat UI colors, colors">
-    <meta name="description" content="The complete style of the Bootflat Framework.">
-    <link rel="shortcut icon" href="favicon_16.ico">
-    <link rel="bookmark" href="favicon_16.ico">
+<!-- Head cartridge -->
+<ui:include src="WEB-INF/head.xhtml">
+    <ui:param name="title" value="connexion"/>
+</ui:include>
 
+<!-- TODO custimize the color here -->
+<h:body style="background-color: #5D9CEC;">
 
+    <!-- Notification system composite -->
+    <ui:include src="WEB-INF/notification_composite.xhtml">
+        <ui:param name="notifierBean" value="connectionBean"/>
+    </ui:include>
 
-    <!-- WB Ui -->
-    <link href="ui_css/style-67.css" rel="stylesheet">
-
-    <!-- BootFlat CSS / JS -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/site.min.css">
-    <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <script src="js/respond.min.js"></script>
-    <![endif]-->
-    <script async="" src="//www.google-analytics.com/analytics.js"></script>
-    <script type="text/javascript" async="" src="http://s1.smartaddon.com/share_addon.js"></script>
-    <script type="text/javascript" src="js/site.min.js"></script>
-
-
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/verticals.css">
-</head>
-
-<body>
-    <!-- TODO custimize the color here -->
-
-
-    <!-- NavBar
-      ================================================== -->
     <div class="container">
+        <!-- Header -->
+        <!-- (page description header) -->
         <div class="row">
-            <div class="col-md-12">
-                <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-                    <div class="container-fluid">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-5">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="#">Hire|Employ<b><u>ee</u></b></a>
-                        </div>
-
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="navbar-collapse collapse out" id="bs-example-navbar-collapse-5" style="">
-                            <ul class="nav navbar-nav">
-                                <li id="profile-li"><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                                <li class="">
-                                    <form class="navbar-form" role="search">
-                                        <div class="form-search search-only input-group">
-                                            <div class="input-group form-search">
-                                                <span class="input-group-btn">
-                                                <button type="submit" class="btn btn-warning" data-type="last">Search</button>
-                                            </span>
-                                                <input type="text" class="form-control search-query">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#" id="navbar-logout" data-toggle="dropdown"><i class="glyphicon glyphicon-off"></i><span id="logout-text"> Logout</span></a></li>
-                            </ul>
-                        </div>
-                        <!-- /.navbar-collapse -->
-                    </div>
-                    <!-- /.container-fluid -->
-                </nav>
+            <div class="col-xs-12">
+                <h1>Hire|Employ<span class="under">ee</span></h1>
+                <h4>Votre curriculum vitae sous son meilleur jour</h4>
             </div>
         </div>
     </div>
+
+
     <!-- UI - X Starts -->
 
 
+    <!-- (row) -->
+    <div class="row" id="cv-content">
 
-
-    <!-- (top photo banniere) -->
-    <div class="top-photo">
-        <div class="container text-center">
-            <h4><a href="#"><span class="glyphicon glyphicon-camera"></span>Ajouter une photo d'arrière plan</a></h4>
+        <!-- (Main left row, containing the description, the list of experiences and the list of formations) -->
+        <div class="col-md-9" id="cv-left-row">
+            <!-- The description part -->
+            <ui:include src="WEB-INF/cv_desc_component.xhtml"/>
         </div>
     </div>
-    <div class="container">
 
+    <!-- footer -->
+    <ui:include src="WEB-INF/footer.xhtml"/>
 
+    <h:outputScript>
+        <!-- Script made by us, allowing the expand&collapse of our informations editors -->
+        function expandEditor(el) {
+            var elem = document.getElementById(el);
+            elem.className = "col-sm-8 col-xs-12 editor expand";
+            // Updating the toggler to close on a new clic.
+            var toggler = document.getElementById(el + '_toggler');
+            toggler.setAttribute("onClick", "collapseEditor('" + el + "');");
+        }
 
-        <!-- (row) -->
-        <div class="row" id="cv-content">
-
-            <!-- (left row) -->
-            <div class="col-md-9" id="cv-left-row">
-                <div class="cv-bloc-element">
-                    <!-- (descripton) -->
-                    <div class="panel panel-blue">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">Description</h1>
-                        </div>
-                        <div class="panel-body">
-                            <!-- (photo) -->
-                            <div class="col-sm-4 col-xs-5">
-                                <img src="img/photo1.jpg" alt="photo de profil" class="img-thumbnail">
-                            </div>
-                            <div class="col-sm-8 col-xs-12">
-                                <h3 class="panel-body-title">Jefferson Mangue</h3>
-                                <!-- (titre professionnel) -->
-                                <p><strong>MSc in Project and Programme Management and Business Development</strong></p>
-                                <!-- (pays - secteur) -->
-                                <p>France | Logiciels informatiques</p>
-                                <!-- (formation) -->
-                                <p>Université Paris-Est Marne La Vallée</p>
-                                <div class="col-xs-6 row-strip">
-                                    <button class="btn btn-default" id="add-relation"><span class="glyphicon glyphicon-plus"></span> Ajouter à mes relations</button>
-                                </div>
-                                <!-- (relations) -->
-                                <div class="col-xs-offset-4 col-xs-2 row-strip">
-                                    <p class="text-right"><b>424</b> relations</p>
-                                </div>
-                            </div>
-                            <div class="row"></div>
-                            <!-- (coordonées) -->
-                            <div class="col-md-12">
-                                <hr class="dashed">
-                                <div class="collapse out" style="" id="accordion2">
-                                    <div class="col-xs-6 row-strip">
-                                        <span class="secondary-text">h2ee/manguejefferson</span>
-                                    </div>
-                                    <div class="col-xs-6 row-strip text-right">
-                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" class="collapsed"> Coordonnées
-                                    </a>
-                                    </div>
-
-                                    <div id="collapseFour" class="panel-collapse collapse" style="height: 0px;">
-                                        <p><span class="glyphicon glyphicon-envelope" style="top:3px; margin-right:7px"></span> jefferson.mangue@gmail.com
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- (fin de descripton) -->
-
-                <div class="row"></div>
-
-                <!-- (experiences) -->
-                <div class="panel panel-blue cv-bloc-element">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">
-                            <span class="glyphicon glyphicon-send" style="margin-right:8px;top:2px;"></span>Expériences
-                        </h1>
-                    </div>
-                    <div class="panel-body">
-
-                        <!-- (instance experience) -->
-                        <div class="col-xs-12">
-                            <!-- (titre) -->
-                            <h4 class="panel-body-title">MSc in Project and Programme Management and Business Development</h4>
-                            <!-- (nom de l'entreprise) -->
-                            <p><strong>Dassault System</strong></p>
-                            <!-- (date - pays) -->
-                            <p class="small-text">décembre 2015 - février 2016 (3 mois) | France</p>
-                            <!-- (description) -->
-                            <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
-                        </div>
-                        <!-- (fin instance experience) -->
-                        <div class="row"></div>
-                        <hr class="dashed">
-
-                        <!-- (instance experience) -->
-                        <div class="col-xs-12">
-                            <!-- (titre) -->
-                            <h4 class="panel-body-title">Asistant Marketing Managert</h4>
-                            <!-- (nom de l'entreprise) -->
-                            <p><strong>Weekendesk</strong></p>
-                            <!-- (date - pays) -->
-                            <p class="small-text">juillet 2014 – décembre 2014 (6 mois) | Espagne</p>
-                            <!-- (description) -->
-                            <p>Weekendesk is an European Online Travel Agency, operating in the French, Spanish, Belgian, Dutch and Italian markets, focused on delivering the best experience for short breaks and holidays. http://www.weekendesk.fr/ As a Marketing Assistant, I managed the digital presence of the Weekendesk brand in Spain on social networks: Facebook, Twitter and Google +.
-
-                                <ul>
-                                    <li> Community management</li>
-                                    <li> Creation of content to share daily</li>
-                                    <li> Moderation</li>
-                                    <li> Reportings</li>
-                                    <li> Creation and implementation of applications and contests</li>
-                                    <li> Digital strategies</li>
-                                </ul>
-                                Daily monitoring of the areas of tourism, social media, digital marketing. </p>
-                        </div>
-                        <!-- (fin instance experience) -->
-                    </div>
-                </div>
-                <!-- (fin de experiences) -->
-
-
-                <!-- (formations) -->
-                <div class="panel panel-blue">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">
-                            <span class="glyphicon glyphicon-globe" style="margin-right:8px;top:2px;"></span>Formations
-                        </h1>
-                    </div>
-                    <div class="panel-body">
-
-                        <!-- (instance formation) -->
-                        <div class="col-xs-12">
-                            <!-- (ecole) -->
-                            <h4 class="panel-body-title">SKEMA Business School</h4>
-                            <!-- (diplome - discipline) -->
-                            <p><strong>Master’s Degree, Master of Science in Project and Programme Management and Business Development</strong></p>
-                            <!-- (date - pays) -->
-                            <p class="small-text">décembre 2015 - février 2016 (3 mois) | France</p>
-                            <!-- (description) -->
-                            <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
-                        </div>
-                        <!-- (fin instance formation) -->
-                        <div class="row"></div>
-                        <hr class="dashed">
-
-                        <!-- (instance formation) -->
-                        <div class="col-xs-12">
-                            <!-- (ecole) -->
-                            <h4 class="panel-body-title">NEOMA Business School</h4>
-                            <!-- (diplome - discipline) -->
-                            <p><strong>Bachelor's Degree, International Business</strong></p>
-                            <!-- (date - pays) -->
-                            <p class="small-text">2011 - 2015</p>
-                            <!-- (description) -->
-                            <p>
-                                <ul>
-                                    <li> International Business Development</li>
-                                    <li> International Marketing</li>
-                                    <li> Financial Analysis,</li>
-                                    <li> Website design & creation</li>
-                                    <li> Global and Human Resource Management</li>
-                                </ul>
-                            </p>
-                        </div>
-                        <!-- (fin instance formation) -->
-
-                    </div>
-                </div>
-                <!-- (fin de formations) -->
-            </div>
-            <!-- (fin de left row) -->
-            <div class="col-md-offset-1 col-md-2">
-                <div class="panel panel-blue">marged</div>
-            </div>
-        </div>
-        <!-- (fin de row) -->
-
-
-
-
-
-        <!--
-        <hr class="dashed" />
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel">
-                    <ul id="myTab1" class="nav nav-tabs nav-justified">
-                        <li class="active"><a href="#home1" data-toggle="tab">Home</a></li>
-                        <li><a href="#profile1" data-toggle="tab">Profile</a></li>
-                        <li class="dropdown">
-                            <a href="#" id="myTabDrop1-1" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-                                <li><a href="#dropdown1-1" tabindex="-1" data-toggle="tab">@fat</a></li>
-                                <li><a href="#dropdown1-2" tabindex="-1" data-toggle="tab">@mdo</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <div id="myTabContent" class="tab-content">
-                        <div class="tab-pane fade active in" id="home1">
-                            <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
-                        </div>
-                        <div class="tab-pane fade" id="profile1">
-                            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. </p>
-                        </div>
-                        <div class="tab-pane fade" id="dropdown1-1">
-                            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone...</p>
-                        </div>
-                        <div class="tab-pane fade" id="dropdown1-2">
-                            <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche ... </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-    </div> -->
-
-
-
-
-
-        <!-- Footer
-      ================================================== -->
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="footer">
-                    <div class="container">
-                        <div class="clearfix">
-                            <div class="footer-logo" id="footer-logo-div"><a href="#">Hire|Employ<b><u>ee</u></b><br/>.com</a></div>
-                            <div id="footer-left-first">
-                                <dl class="footer-nav">
-                                    <dt class="nav-title">ABOUT</dt>
-                                    <dd class="nav-item"><a href="#">The Company</a></dd>
-                                    <dd class="nav-item"><a href="#">History</a></dd>
-                                    <dd class="nav-item"><a href="#">Vision</a></dd>
-                                </dl>
-                                <dl class="footer-nav">
-                                    <dt class="nav-title">GALLERY</dt>
-                                    <dd class="nav-item"><a href="#">Flickr</a></dd>
-                                    <dd class="nav-item"><a href="#">Picasa</a></dd>
-                                    <dd class="nav-item"><a href="#">iStockPhoto</a></dd>
-                                    <dd class="nav-item"><a href="#">PhotoDune</a></dd>
-                                </dl>
-                                <dl class="footer-nav">
-                                    <dt class="nav-title">CONTACT</dt>
-                                    <dd class="nav-item"><a href="#">QCampos</a></dd>
-                                    <dd class="nav-item"><a href="#">JMangue</a></dd>
-                                    <dd class="nav-item"><a href="#">DVaracca</a></dd>
-                                </dl>
-                            </div>
-                        </div>
-                        <div class="footer-copyright text-center">Copyright &copy; 2016 HireAnEmployee.All rights reserved.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- UI-1 Ends -->
-
-
-
-    <!-- WB UI Scripts -->
-    <!-- Javascript files -->
-    <!-- jQuery -->
-    <script src="ui_js/jquery.js"></script>
-    <!-- Bootstrap JS -->
-    <!-- Already included by BootFlat <script src="ui_js/bootstrap.min.js"></script> -->
-    <!-- Placeholder JS -->
-    <script src="ui_js/placeholder.js"></script>
-    <!-- Respond JS for IE8 -->
-    <script src="ui_js/respond.min.js"></script>
-    <!-- HTML5 Support for IE -->
-    <script src="ui_js/html5shiv.js"></script>
-
-</body>
+        function collapseEditor(el) {
+            var elem = document.getElementById(el);
+            elem.className = "col-sm-8 col-xs-12 editor";
+            // Updating the toggler to open on a new clic.
+            var toggler = document.getElementById(el + '_toggler');
+            toggler.setAttribute("onClick", "expandEditor('" + el + "');");
+        }
+    </h:outputScript>
+</h:body>
 
 </html>

@@ -468,10 +468,10 @@ body {
     width: 100%;
     overflow: hidden;
     color: #ffffff;
-    font-size: 25px;
+    font-size: 16px;
     font-weight: 400;
     animation: notification-in-anim 0.2s ease-out;
-    padding: 10px;
+    padding: 17px;
 }
 
 @keyframes notification-in-anim {
@@ -545,8 +545,9 @@ body {
 .editor {
     height: 0;
     margin: 0;
+    opacity: 0;
     overflow: hidden;
-    transition: height 0.25s linear, padding 0.25s;
+    transition: height 0.25s linear, opacity 0.25s ease-out, padding 0.25s;
 }
 
 .editor .row {
@@ -556,29 +557,34 @@ body {
 .editor.expand {
     height: 148px;
     padding: 15px;
-    transition: height 0.25s linear, padding 0.25s;
+    padding-top: 0;
+    opacity: 1;
+    transition: height 0.25s linear, opacity 0.35s ease-out, padding 0.25s;
 }
 
 .editor.expand#title {
     height: 100px;
     padding: 15px;
+    padding-top: 0;
     transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor.expand#country {
     height: 145px;
     padding: 15px;
+    padding-top: 0;
     transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor.expand#formation {
     height: 115px;
     padding: 15px;
+    padding-top: 0;
     transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor input {
-    margin-top: 2px;
+    margin-top: 15px;
 }
 
 .editor .btn {

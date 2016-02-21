@@ -62,6 +62,14 @@ public class StarterClass {
 
         EmployeeDescription description = employee.getDescription();
         edao.updateSector(description, "Combinatorics");
+
+        if (!bdu.emailExists("jmangue@u.com")) {
+            bdu.signup("Jefferson", "Mangue", "jmangue@u.com", "12345");
+        }
+        employee = bdu.connect("jmangue@u.com", "12345");
+
+        description = employee.getDescription();
+        edao.updateSector(description, "Développement");
         return employee.toString();
 
 

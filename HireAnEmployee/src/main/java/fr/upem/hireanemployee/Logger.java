@@ -6,17 +6,15 @@ import java.io.Serializable;
 
 /**
  * Created by Baxtalou on 20/02/2016.
- * Class to inject to delegate the log to.
+ * Class able to log itself.
  */
-@ManagedBean(name = "loggerBean")
-@SessionScoped
-public class LoggerBean implements Serializable {
+public class Logger implements Serializable {
 
     private static final boolean DEBUG = true;
     private static final String BEAN = "[BEAN]";
     private static final String DATABASE = "[DATABASE]";
 
-    public LoggerBean() {
+    public Logger() {
     }
 
     /**
@@ -24,8 +22,8 @@ public class LoggerBean implements Serializable {
      *
      * @param msg the message to log.
      */
-    public void logB(Object caller, String msg) {
-        log(caller, msg, BEAN);
+    public void log(String msg) {
+        log(this, msg, BEAN);
     }
 
     /**
@@ -33,8 +31,8 @@ public class LoggerBean implements Serializable {
      *
      * @param msg the message to log.
      */
-    public void logDB(Object caller, String msg) {
-        log(caller, msg, DATABASE);
+    public void logDB(String msg) {
+        log(this, msg, DATABASE);
     }
 
     private void log(Object caller, String msg, String filter) {
