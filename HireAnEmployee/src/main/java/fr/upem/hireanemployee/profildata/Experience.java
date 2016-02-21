@@ -92,4 +92,17 @@ public class Experience {
     public void setEndDate(final Date to) {
         this.endDate = to;
     }
+
+    @Override
+    public String toString() {
+        return "Experience{" +
+                "id=" + id +
+                ", CompanyName='" + CompanyName + '\'' +
+                ", jobName='" + jobName + '\'' +
+                ", jobAbstract='" + jobAbstract + '\'' +
+                ", jobDescription='" + jobDescription + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

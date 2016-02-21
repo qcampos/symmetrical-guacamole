@@ -36,4 +36,14 @@ public class Degree {
         this.level = level;
         this.school = school;
     }
+
+    @Override
+    public String toString() {
+        return "Degree{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", level=" + level +
+                ", school=" + school +
+                '}';
+    }
 }

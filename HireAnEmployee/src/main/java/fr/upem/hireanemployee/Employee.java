@@ -19,11 +19,8 @@ public class Employee {
     private long id;
     private String firstName;
     private String lastName;
-    private String currentJob;
-    private Country country;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Domain domain;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private EmployeeDescription description;
 
     // Account data.
     @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
@@ -40,38 +37,34 @@ public class Employee {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Employee> relations;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Collection<Degree> degrees;
+    private Collection<Degree> formations;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Experience> experiences;
 
     public Employee() {
     }
 
-    public Employee(final String firstName, final String lastName, final String currentJob, final Country country, final Domain domain, final String email, final String password) {
+    public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.currentJob = currentJob;
-        this.country = country;
-        this.domain = domain;
+        this.description = new EmployeeDescription(this, professionalTitle, country, sector);
         this.email = email;
         this.password = password;
         skills = new ArrayList<>();
         relations = new ArrayList<>();
-        degrees = new ArrayList<>();
+        formations = new ArrayList<>();
         experiences = new ArrayList<>();
     }
 
-    public Employee(final String firstName, final String lastName, final String currentJob, final Country country, final Domain domain, final String email, final String password, final Collection<Language> skills, final Collection<Employee> relations, final Collection<Degree> degrees, final Collection<Experience> experiences) {
+    public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password, final Collection<Language> skills, final Collection<Employee> relations, final Collection<Degree> formations, final Collection<Experience> experiences) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.currentJob = currentJob;
-        this.country = country;
-        this.domain = domain;
+        this.description = new EmployeeDescription(this, professionalTitle, country, sector);
         this.email = email;
         this.password = password;
         this.skills = skills;
         this.relations = relations;
-        this.degrees = degrees;
+        this.formations = formations;
         this.experiences = experiences;
     }
 
@@ -99,28 +92,12 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getCurrentJob() {
-        return currentJob;
+    public EmployeeDescription getDescription() {
+        return description;
     }
 
-    public void setCurrentJob(final String currentJob) {
-        this.currentJob = currentJob;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(final Country country) {
-        this.country = country;
-    }
-
-    public Domain getDomain() {
-        return domain;
-    }
-
-    public void setDomain(final Domain domain) {
-        this.domain = domain;
+    public void setDescription(final EmployeeDescription description) {
+        this.description = description;
     }
 
     public String getEmail() {
@@ -155,12 +132,12 @@ public class Employee {
         this.relations = relations;
     }
 
-    public Collection<Degree> getDegrees() {
-        return degrees;
+    public Collection<Degree> getFormations() {
+        return formations;
     }
 
-    public void setDegrees(final Collection<Degree> degrees) {
-        this.degrees = degrees;
+    public void setFormations(final Collection<Degree> degrees) {
+        this.formations = degrees;
     }
 
     public Collection<Experience> getExperiences() {
@@ -184,12 +161,16 @@ public class Employee {
 
     }
 
-    public void addDegree(Degree degree) {
-        degrees.add(degree);
+    public void addFormation(Degree degree) {
+        formations.add(degree);
     }
 
     public void addExperience(Experience experience) {
         experiences.add(experience);
+    }
+
+    public int getNbRelations() {
+        return relations.size();
     }
 
     @Override
@@ -198,14 +179,12 @@ public class Employee {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", currentJob='" + currentJob + '\'' +
-                ", country=" + country +
-                ", domain=" + domain +
+                ", description=" + description +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", skills=" + skills +
                 ", relations=" + relations +
-                ", degrees=" + degrees +
+                ", formations=" + formations +
                 ", experiences=" + experiences +
                 '}';
     }

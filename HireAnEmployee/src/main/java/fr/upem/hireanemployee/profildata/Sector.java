@@ -8,21 +8,18 @@ import javax.persistence.Id;
  * Created by Quentin on 18/02/2016.
  */
 @Entity
-public class School {
+public class Sector {
 
     @Id
     @GeneratedValue
     private long id;
-
     private String name;
-    private Country country;
 
-    public School() {
+    public Sector() {
     }
 
-    public School(final String name, final Country country) {
+    public Sector(final String name) {
         this.name = name;
-        this.country = country;
     }
 
     public long getId() {
@@ -41,20 +38,8 @@ public class School {
         this.name = name;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(final Country country) {
-        this.country = country;
-    }
-
     @Override
     public String toString() {
-        return "School{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", country=" + country +
-                '}';
+        return "Sector(" + name + ")";
     }
 }
