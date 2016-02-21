@@ -50,7 +50,6 @@ public class InitializationBean extends Logger {
 
         description = employee.getDescription();
         edao.updateCountry(description, Country.FRANCE);
-        edao.updateFormation(description, "Université Paris-Est Marne La Vallée");
         edao.updateSector(description, "Logiciels informatiques");
         edao.updateProfessionalTitle(description, "MSc in Project and Programme Management and Business Development");
         log("init " + description.getEmployee().getFirstName());

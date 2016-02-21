@@ -44,7 +44,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(final String firstName, final String lastName, final String professionalTitle, final String formationString, final Country country, final Sector sector, final String email, final String password) {
+    public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = new EmployeeDescription(this, professionalTitle, country, sector);
@@ -56,7 +56,7 @@ public class Employee {
         experiences = new ArrayList<>();
     }
 
-    public Employee(final String firstName, final String lastName, final String professionalTitle, final String formationString, final Country country, final Sector sector, final String email, final String password, final Collection<Language> skills, final Collection<Employee> relations, final Collection<Formation> formations, final Collection<Experience> experiences) {
+    public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password, final Collection<Language> skills, final Collection<Employee> relations, final Collection<Formation> formations, final Collection<Experience> experiences) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = new EmployeeDescription(this, professionalTitle, country, sector);
