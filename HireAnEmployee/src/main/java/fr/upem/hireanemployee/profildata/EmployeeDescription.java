@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Comparator;
 
 /**
  * Created by Quentin on 21/02/2016.
@@ -59,6 +60,15 @@ public class EmployeeDescription {
         this.professionalTitle = currentJob;
     }
 
+    public String getFormation() {
+        return employee.getFormations().stream().sorted(new Comparator<Formation>() {
+            @Override
+            public int compare(final Formation o1, final Formation o2) {
+                return o2.getLevel().getYears() - o1.getLevel().getYears();
+            }
+        }).findFirst().orElse(new Formation("", "", Formation.DegreeType.NONE, new School("", Country.NONE))).getSchool().getName();
+    }
+
     public Country getCountry() {
         return country;
     }
@@ -84,15 +94,6 @@ public class EmployeeDescription {
     public void setBufferedImage(BufferedImage image) throws IOException {
         File output = new File(getImagePath(id));
         ImageIO.write(image, "png", output);
-    }
-
-    public String getFormation() {
-        return "A quoi sert ce champ ? Pourquoi est-il dans EmployeeDescription alors que les associées données sont dans employées ? Pourquoi un String ?";
-        // FIXME Doit-on renvoyer la dernière formation ?
-    }
-
-    public void setFormation(String formation) {
-        // TODO See the getter and then correct this method.
     }
 
     public int getNbRelations() {

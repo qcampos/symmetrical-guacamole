@@ -37,14 +37,14 @@ public class Employee {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Employee> relations;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Collection<Degree> formations;
+    private Collection<Formation> formations;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Experience> experiences;
 
     public Employee() {
     }
 
-    public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password) {
+    public Employee(final String firstName, final String lastName, final String professionalTitle, final String formationString, final Country country, final Sector sector, final String email, final String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = new EmployeeDescription(this, professionalTitle, country, sector);
@@ -56,7 +56,7 @@ public class Employee {
         experiences = new ArrayList<>();
     }
 
-    public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password, final Collection<Language> skills, final Collection<Employee> relations, final Collection<Degree> formations, final Collection<Experience> experiences) {
+    public Employee(final String firstName, final String lastName, final String professionalTitle, final String formationString, final Country country, final Sector sector, final String email, final String password, final Collection<Language> skills, final Collection<Employee> relations, final Collection<Formation> formations, final Collection<Experience> experiences) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = new EmployeeDescription(this, professionalTitle, country, sector);
@@ -132,12 +132,12 @@ public class Employee {
         this.relations = relations;
     }
 
-    public Collection<Degree> getFormations() {
+    public Collection<Formation> getFormations() {
         return formations;
     }
 
-    public void setFormations(final Collection<Degree> degrees) {
-        this.formations = degrees;
+    public void setFormations(final Collection<Formation> formations) {
+        this.formations = formations;
     }
 
     public Collection<Experience> getExperiences() {
@@ -154,15 +154,15 @@ public class Employee {
 
     public void addRelation(Employee relation) {
         relations.add(relation);
-        // Relations are always bidirectionnals
+        // Relations are always bidirectional.
         if (!relation.relations.contains(this)) {
             relation.relations.add(this);
         }
 
     }
 
-    public void addFormation(Degree degree) {
-        formations.add(degree);
+    public void addFormation(Formation formation) {
+        formations.add(formation);
     }
 
     public void addExperience(Experience experience) {
@@ -188,4 +188,5 @@ public class Employee {
                 ", experiences=" + experiences +
                 '}';
     }
+
 }
