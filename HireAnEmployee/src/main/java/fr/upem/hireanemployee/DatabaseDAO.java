@@ -1,7 +1,6 @@
 package fr.upem.hireanemployee;
 
 import fr.upem.hireanemployee.profildata.Country;
-import fr.upem.hireanemployee.profildata.EmployeeDescription;
 import fr.upem.hireanemployee.profildata.Sector;
 import fr.upem.hireanemployee.profildata.Language;
 
@@ -76,7 +75,7 @@ public class DatabaseDAO {
             emptySector = new Sector("");
         }
         // Persist the new employee into the database.
-        Employee e = new Employee(firstName, lastName, "", Country.NONE, emptySector, email, encrypt(password));
+        Employee e = new Employee(firstName, lastName, "", formationString, Country.NONE, emptySector, email, encrypt(password));
         em.persist(e);
         em.flush();
         return e;

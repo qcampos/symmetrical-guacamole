@@ -41,7 +41,7 @@ public class StarterClass {
 //        Employee e = new Employee("Nicolas", "Borie", "Teacher", Country.FRANCE, new Sector("Combinatorics"), "nborie@award.fr", "pony77");
 //
 //        School upem = new School("UPEM", Country.FRANCE);
-//        Degree degree = new Degree("Doctorat en combinatoire", Degree.DegreeType.PHD, upem);
+//        Formation degree = new Formation("Doctorat en combinatoire", Formation.DegreeType.PHD, upem);
 //        Experience experience = new Experience("C&A", "Hôte de caisse", "Mon rôle fut de tenir une caisse", "Un poste éprouvant", Date.from(Instant.now()), Date.from(Instant.now()));
 //
 //
