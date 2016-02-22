@@ -5,6 +5,7 @@ import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.navigation.Navigations;
+import fr.upem.hireanemployee.validators.ErrorHandler;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -32,16 +33,15 @@ public class ConnectionBean extends Logger {
     private String firstName;
 
     /* Error handler */
-    private boolean errorHandler;
-    private String errorMsg;
+    private final ErrorHandler errorHandler;
 
     public ConnectionBean() {
-
+        errorHandler = new ErrorHandler();
     }
 
     /**
      * Connects the user to the system.
-     * If an error as occured, sets the errorHandler flag accordingly to notify the user.
+     * If an error as occurred, sets the errorHandler flag accordingly to notify the user.
      *
      * @return empty string if the connection has failed. The new url otherwise.
      */
@@ -65,6 +65,7 @@ public class ConnectionBean extends Logger {
         }
 
         // Connection successful.
+        errorHandler.clear();
         log("connect - connection successful.");
 
         // Setting the employee in the session and redirecting to the CV page.
@@ -99,36 +100,36 @@ public class ConnectionBean extends Logger {
             return Constants.CURRENT_PAGE;
         }
 
+        // Creation successful.
+        errorHandler.clear();
         log("create - creation successful.");
+
         // Setting the employee in the session and redirecting to the CV page.
         sessionBean.setConnected(employee);
         return Navigations.redirect(Constants.CV);
     }
 
     private void badInformationConnection() {
-        setErrorHandler(true);
         log("connect - connection failed. Not in the database");
-        errorMsg = "Sorry, your are not in our database.";
+        setErrorMsg("Sorry, your are not in our database.");
     }
 
     private void alreadyExistsCreation() {
-        setErrorHandler(true);
         log("connect - connection failed. Wrong fields");
-        errorMsg = "Sorry " + email + " already exists in our database.";
+        setErrorMsg("Sorry " + email + " already exists in our database.");
     }
 
     private void badFieldConnection() {
-        setErrorHandler(true);
+        setErrorMsg("Some error are detected. Please correct your fields.");
         log("connect - connection failed. Wrong fields");
-        errorMsg = "Some error are detected. Please correct your fields.";
     }
 
     public boolean isErrorHandler() {
-        return errorHandler;
+        return errorHandler.isError();
     }
 
-    public void setErrorHandler(boolean errorHandler) {
-        this.errorHandler = errorHandler;
+    public void setErrorMsg(String msg) {
+        errorHandler.setError(msg);
     }
 
     public void setSessionBean(SessionBean sessionBean) {
@@ -160,7 +161,7 @@ public class ConnectionBean extends Logger {
     }
 
     public String getErrorMsg() {
-        return errorMsg;
+        return errorHandler.getMsg();
     }
 
     public String getFirstName() {
