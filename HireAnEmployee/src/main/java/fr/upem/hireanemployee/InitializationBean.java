@@ -34,7 +34,7 @@ public class InitializationBean extends Logger {
 
     @PostConstruct
     public void init() {
-        logDB("init initialializationBean called");
+        logDB("init - initialializationBean called");
         if (!bdu.emailExists("nborie@upem.fr")) {
             bdu.signup("Nicolas", "Borie", "nborie@upem.fr", "pony17");
         }
@@ -53,6 +53,6 @@ public class InitializationBean extends Logger {
         edao.updateFormation(description, "Université Paris-Est Marne La Vallée");
         edao.updateSector(description, "Logiciels informatiques");
         edao.updateProfessionalTitle(description, "MSc in Project and Programme Management and Business Development");
-        log("init " + description.getEmployee().getFirstName());
+        log("init - " + description.getEmployee().getFirstName());
     }
 }

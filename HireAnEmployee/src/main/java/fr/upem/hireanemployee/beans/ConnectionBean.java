@@ -25,11 +25,14 @@ public class ConnectionBean extends Logger {
     @ManagedProperty(value = "#{sessionBean}")
     private SessionBean sessionBean;
 
-
     /* Controller informations */
-    private boolean errorState;
+    private String lastName;
     private String email;
     private String password;
+    private String firstName;
+
+    /* Error handler */
+    private boolean errorHandler;
     private String errorMsg;
 
     public ConnectionBean() {
@@ -38,15 +41,15 @@ public class ConnectionBean extends Logger {
 
     /**
      * Connects the user to the system.
-     * And sets the errorState flag accordingly. To be used if the connection failed.
+     * If an error as occured, sets the errorHandler flag accordingly to notify the user.
      *
      * @return empty string if the connection has failed. The new url otherwise.
      */
     public String connect() {
-         log("connect " + "mail : " + email + " password : " + password);
+        log("connect - mail : " + email + " password : " + password);
 
         // If fields are not filled. Returning to the same page.
-        // And setting the bad information flag.
+        // And setting the flag in the errorHandler object.
         if (email == null || password == null || email.trim().isEmpty() || password.trim().isEmpty()) {
             badFieldConnection();
             return Constants.CURRENT_PAGE;
@@ -62,32 +65,70 @@ public class ConnectionBean extends Logger {
         }
 
         // Connection successful.
-        log("connect " + "connection successful.");
-        // Setting the employee in the session.
+        log("connect - connection successful.");
+
+        // Setting the employee in the session and redirecting to the CV page.
+        sessionBean.setConnected(employee);
+        return Navigations.redirect(Constants.CV);
+    }
+
+    /**
+     * Creates the user inside the database.
+     * If an error as occured, sets the errorHandler flag accordingly to notify the user.
+     *
+     * @return empty string if the connection has failed. The new url otherwise.
+     */
+    public String create() {
+        log("create - " + firstName + " " + lastName + " " + email + " " + password);
+
+        // If fields are not filled. Returning to the same page.
+        // And setting the flag in the errorHandler object.
+        if (email == null || password == null || firstName == null || lastName == null ||
+                email.trim().isEmpty() || password.trim().isEmpty() || firstName.trim().isEmpty() ||
+                lastName.trim().isEmpty()) {
+            badFieldConnection();
+            return Constants.CURRENT_PAGE;
+        }
+
+        // trying to create in the database.
+        Employee employee = dao.signup(firstName, lastName, email, password);
+
+        // If the creation has failed. (Already in the database).
+        if (employee == null) {
+            alreadyExistsCreation();
+            return Constants.CURRENT_PAGE;
+        }
+
+        log("create - creation successful.");
+        // Setting the employee in the session and redirecting to the CV page.
         sessionBean.setConnected(employee);
         return Navigations.redirect(Constants.CV);
     }
 
     private void badInformationConnection() {
-        setErrorState(true);
-        log("connect " + "connection failed. Not in the database");
+        setErrorHandler(true);
+        log("connect - connection failed. Not in the database");
         errorMsg = "Sorry, your are not in our database.";
     }
 
+    private void alreadyExistsCreation() {
+        setErrorHandler(true);
+        log("connect - connection failed. Wrong fields");
+        errorMsg = "Sorry " + email + " already exists in our database.";
+    }
+
     private void badFieldConnection() {
-        setErrorState(true);
-        log("connect " + "connection failed. Wrong fields");
+        setErrorHandler(true);
+        log("connect - connection failed. Wrong fields");
         errorMsg = "Some error are detected. Please correct your fields.";
     }
 
-
-    public boolean isErrorState() {
-        log("isErrorState " + errorState);
-        return errorState;
+    public boolean isErrorHandler() {
+        return errorHandler;
     }
 
-    public void setErrorState(boolean errorState) {
-        this.errorState = errorState;
+    public void setErrorHandler(boolean errorHandler) {
+        this.errorHandler = errorHandler;
     }
 
     public void setSessionBean(SessionBean sessionBean) {
@@ -102,6 +143,14 @@ public class ConnectionBean extends Logger {
         this.password = password;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -112,5 +161,13 @@ public class ConnectionBean extends Logger {
 
     public String getErrorMsg() {
         return errorMsg;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

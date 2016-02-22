@@ -20,6 +20,7 @@ public class SessionBean extends Logger {
     private boolean isConnected;
     private EmployeeDescription employeeDescription;
     private Collection<Experience> employeeExperiences;
+    private boolean isMyID;
 
     public SessionBean() {
         super();
@@ -36,5 +37,9 @@ public class SessionBean extends Logger {
 
     public EmployeeDescription getEmployeeDescription() {
         return employeeDescription;
+    }
+
+    public boolean isMyID(int value) {
+        return value == 12;
     }
 }

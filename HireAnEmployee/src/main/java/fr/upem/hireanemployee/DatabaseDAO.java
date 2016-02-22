@@ -75,6 +75,11 @@ public class DatabaseDAO {
         } catch (NoResultException e) {
             emptySector = new Sector("");
         }
+
+        // TODO prevent SQL exception is these very code.
+        if (emailExists(email)) {
+            return null;
+        }
         // Persist the new employee into the database.
         Employee e = new Employee(firstName, lastName, "", Country.NONE, emptySector, email, encrypt(password));
         em.persist(e);

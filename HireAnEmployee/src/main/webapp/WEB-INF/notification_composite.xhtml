@@ -6,10 +6,10 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<!-- Including the js file -->
 	<h:outputScript library="js" name="notifications.js" target="body" />
 
-	<!-- The top div is re-rendered by the calling component and then errorState is checked -->
+	<!-- The top div is re-rendered by the calling component and then errorHandler is checked -->
 	<h:panelGroup layout="block" id="popNotification" class="navbbar-top">
 
-		<h:panelGroup layout="block" id="notification" class="redb" rendered="#{viewScope[notifierBean].errorState}">
+		<h:panelGroup layout="block" id="notification" class="redb" rendered="#{viewScope[notifierBean].errorHandler}">
 			#{connectionBean.errorMsg}
 			<span style="float:right;">X</span>
 			<button id="notification-closer" class="hyperspan" onclick="slideIn('notification', 'redb');"/>

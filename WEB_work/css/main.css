@@ -16,6 +16,11 @@ body {
     text-align: center;
 }
 
+/* For the notification bug (could not collapsed on large screen) */
+.navbbar-top .col-lg-12 {
+    float: none;
+}
+
 .navbar-inverse {
     background-color: #ffffff;
     padding: auto;
@@ -217,8 +222,7 @@ body {
 
 .panel-blue .panel-heading {
     height: 50px;
-    padding: auto;
-    padding-top: 16px;
+    padding: 16px auto auto;
 }
 
 
@@ -437,6 +441,10 @@ body {
     font-weight: bold;
 }
 
+#not_found {
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
 
 /* CV page */
 
@@ -551,35 +559,31 @@ body {
 }
 
 .editor .row {
-    height: 10px;
+    height: 8px;
 }
 
 .editor.expand {
     height: 148px;
-    padding: 15px;
-    padding-top: 0;
+    padding: 0 15px 15px;
     opacity: 1;
     transition: height 0.25s linear, opacity 0.35s ease-out, padding 0.25s;
 }
 
 .editor.expand#title {
     height: 100px;
-    padding: 15px;
-    padding-top: 0;
+    padding: 0 15px 15px;
     transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor.expand#country {
     height: 145px;
-    padding: 15px;
-    padding-top: 0;
+    padding: 0 15px 15px;
     transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor.expand#formation {
     height: 115px;
-    padding: 15px;
-    padding-top: 0;
+    padding: 0 15px 15px;
     transition: height 0.25s linear, padding 0.25s;
 }
 
