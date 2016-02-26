@@ -1,7 +1,6 @@
 package fr.upem.hireanemployee;
 
 import fr.upem.hireanemployee.profildata.Country;
-import fr.upem.hireanemployee.profildata.EmployeeDescription;
 import fr.upem.hireanemployee.profildata.Sector;
 import fr.upem.hireanemployee.profildata.Language;
 

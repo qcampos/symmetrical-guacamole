@@ -25,18 +25,22 @@ public class EmployeeDescriptionDAO {
         desc.getEmployee().setFirstName(firstName);
         desc.getEmployee().setLastName(lastName);
         em.merge(desc);
+        em.flush();
         return desc;
     }
 
     public EmployeeDescription updateProfessionalTitle(EmployeeDescription employeeDescription, String professionalTitle) {
         employeeDescription.setProfessionalTitle(professionalTitle);
         em.merge(employeeDescription);
+        em.flush();
         return employeeDescription;
     }
 
     public EmployeeDescription updateImage(EmployeeDescription employeeDescription, BufferedImage image) {
         try {
             employeeDescription.setBufferedImage(image);
+            em.merge(employeeDescription);
+            em.flush();
         } catch (IOException e) {
             // FIXME i/o error on a save. The image changing is impossible
             throw new UncheckedIOException("Cannot save the new image on the disk for EmployeeDescription " + employeeDescription.getId(), e);
@@ -47,6 +51,7 @@ public class EmployeeDescriptionDAO {
     public EmployeeDescription updateCountry(EmployeeDescription employeeDescription, Country country) {
         employeeDescription.setCountry(country);
         em.merge(employeeDescription);
+        em.flush();
         return employeeDescription;
     }
 
@@ -57,15 +62,11 @@ public class EmployeeDescriptionDAO {
         } catch (NoResultException e) {
             sector = new Sector(sectorName);
             em.persist(sector);
+            em.flush();
         }
         employeeDescription.setSector(sector);
         em.merge(employeeDescription);
         return employeeDescription;
     }
 
-    public EmployeeDescription updateFormation(EmployeeDescription employeeDescription, String formation) {
-        // FIXME Do the correct operation once EmployeeDescription::formation has it's true utility revealed.
-        return employeeDescription;
-    }
-    
 }

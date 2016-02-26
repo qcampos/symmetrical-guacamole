@@ -51,10 +51,6 @@ public class School {
 
     @Override
     public String toString() {
-        return "School{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", country=" + country +
-                '}';
+        return name + " in " + country;
     }
 }
