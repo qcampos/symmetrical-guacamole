@@ -16,6 +16,7 @@ import java.util.List;
  * Created by Quentin on 18/02/2016.
  */
 @Stateless
+// TODO extend the custom Logger class to log
 public class DatabaseDAO {
 
     @PersistenceContext(unitName = "hireaePU")
@@ -131,15 +132,7 @@ public class DatabaseDAO {
      * @return The employee found, null otherwise.
      */
     public Employee getEmployeeByID(long id) {
-        // TODO Real request.
-        // TODO please extend the custom Logger class to log
         // TODO your data with de DATABASE filter ;)
-        if (id == 5) {
-            return connect("jmangue@u.com", "12345");
-        }
-        if (id == 1) {
-            return connect("nborie@upem.fr", "pony17");
-        }
-        return null;
+        return em.find(Employee.class, id);
     }
 }
