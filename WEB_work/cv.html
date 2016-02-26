@@ -20,7 +20,6 @@
     <!-- BootFlat CSS / JS -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/site.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
@@ -111,21 +110,22 @@
             // elem.style.transition = "left 0.5s ease-out 0s";
             // elem.style.left = "-400px";
         }
-            function expandEditor(el) {
-                var elem = document.getElementById(el);
-                elem.className = "col-sm-8 col-xs-12 editor expand";
-                // Updating the toggler to close on a new clic.
-                var toggler = document.getElementById(el + '_toggler');
-                toggler.setAttribute("onClick", "collapseEditor('" + el + "');");
-            }
 
-            function collapseEditor(el) {
-                var elem = document.getElementById(el);
-                elem.className = "col-sm-8 col-xs-12 editor";
-                // Updating the toggler to open on a new clic.
-                var toggler = document.getElementById(el + '_toggler');
-                toggler.setAttribute("onClick", "expandEditor('" + el + "');");
-            }
+        function expandEditor(el) {
+            var elem = document.getElementById(el);
+            elem.className = "col-sm-8 col-xs-12 editor expand";
+            // Updating the toggler to close on a new clic.
+            var toggler = document.getElementById(el + '_toggler');
+            toggler.setAttribute("onClick", "collapseEditor('" + el + "');");
+        }
+
+        function collapseEditor(el) {
+            var elem = document.getElementById(el);
+            elem.className = "col-sm-8 col-xs-12 editor";
+            // Updating the toggler to open on a new clic.
+            var toggler = document.getElementById(el + '_toggler');
+            toggler.setAttribute("onClick", "expandEditor('" + el + "');");
+        }
     </script>
 
 
@@ -198,7 +198,7 @@
 
                 <div class="row"></div>
 
-                
+
                 <div class="cv-bloc-element">
                     <!-- (descripton) -->
                     <div class="panel panel-blue">
@@ -218,11 +218,25 @@
                                     <h3 class="panel-body-title">Jefferson Mangue <span class="glyphicon glyphicon-pencil"/></h3>
                                 </div>
                                 <div class="col-sm-9 col-xs-12 editor" id="names">
-                                    <input type="text" class="form-control" placeholder="Nom" />
-                                    <input type="text" class="form-control" placeholder="Prénom" />
-                                    <div class="row"></div>
-                                    <button class="btn btn-default">OK</button>
-                                    <button class="btn btn-redb" onclick="collapseEditor('names');">Annuler</button>
+                                    <form data-toggle="validator" role="form" action="cv.html">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group has-feedback">
+                                                    <input type="text" class="form-control" placeholder="Nom" data-minlength="5" data-error=" " required/>
+                                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                    <span class="help-block with-error">5 caractères minimum.</span>
+                                                </div>
+                                                <div class="form-group has-feedback">
+                                                    <input type="text" class="form-control" placeholder="Prenom" data-minlength="5" data-error=" " required/>
+                                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                    <span class="help-block with-error">5 caractères minimum.</span>
+                                                </div>
+                                                <div class="row"></div>
+                                                <button class="btn btn-default" type="submit" action="submit">OK</button>
+                                                <button class="btn btn-redb" onclick="collapseEditor('names');">Annuler</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
 
 
@@ -232,7 +246,7 @@
                                     <p><strong>MSc in Project and Programme Management and Business Development <span class="glyphicon glyphicon-pencil"/></strong></p>
                                 </div>
                                 <div class="col-sm-8 col-xs-12 editor" id="title">
-                                    <input type="text" class="form-control" placeholder="Titre" />
+                                    <input type="text" class="form-control" placeholder="Titre professionnel" />
                                     <div class="row"></div>
                                     <button class="btn btn-default">OK</button>
                                     <button class="btn btn-redb" onclick="collapseEditor('title');">Annuler</button>
@@ -294,15 +308,15 @@
                     </div>
                 </div>
                 <!-- (fin de descripton) -->
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
                 <!-- (experiences) -->
                 <div class="panel panel-blue cv-bloc-element">
                     <div class="panel-heading">
@@ -495,18 +509,7 @@
 
 
 
-    <!-- WB UI Scripts -->
-    <!-- Javascript files -->
-    <!-- jQuery -->
-    <script src="ui_js/jquery.js"></script>
-    <!-- Bootstrap JS -->
-    <!-- Already included by BootFlat <script src="ui_js/bootstrap.min.js"></script> -->
-    <!-- Placeholder JS -->
-    <script src="ui_js/placeholder.js"></script>
-    <!-- Respond JS for IE8 -->
-    <script src="ui_js/respond.min.js"></script>
-    <!-- HTML5 Support for IE -->
-    <script src="ui_js/html5shiv.js"></script>
+    <script src="js/validator.js"></script>
 
 </body>
 

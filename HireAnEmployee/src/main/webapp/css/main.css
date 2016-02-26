@@ -567,6 +567,7 @@ body {
 
 .editable {
     position: relative;
+    width: 100%;
     display: inline-block;
     transition: background-color 0.2s;
 }

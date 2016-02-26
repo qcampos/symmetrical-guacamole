@@ -6,6 +6,7 @@ import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.EmployeeDescription;
+import fr.upem.hireanemployee.validators.Regexes;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -73,6 +74,11 @@ public class EmployeeDescriptionBean extends Logger {
         // No new values.
         if (newFirstName == null && newLastName == null) {
             return Constants.CURRENT_PAGE;
+        }
+        // Checking if values are not pur alpha. This is also checked on the view side.
+        if (!Regexes.parseAlpha(newFirstName) || !Regexes.parseAlpha(newLastName)) {
+            log("updateNames - error in the parsing phase");
+            return Constants.CURRENT_PAGE; // TODO trigger error.
         }
         // Verifying empty fields (they are not both required at the same time).
         Employee employee = employeeDescription.getEmployee();
