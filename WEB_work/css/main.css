@@ -16,7 +16,9 @@ body {
     text-align: center;
 }
 
+
 /* For the notification bug (could not collapsed on large screen) */
+
 .navbbar-top .col-lg-12 {
     float: none;
 }
@@ -189,6 +191,31 @@ body {
 
 /* END Navbar *************/
 
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    color: #333;
+}
+
+
+/* BEGIN Connection page ******/
+
+#title,
+#sub-title {
+    color: #fff;
+}
+
+#sub-title {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 500;
+    height: 19px;
+    line-height: 19px;
+}
+
 
 /* BEGIN Top Photo *************/
 
@@ -254,7 +281,7 @@ body {
 .panel-blue .panel-title {
     font-weight: 700;
     font-size: 15px;
-    color: #434a54;
+    /* color: #434a54;*/
     margin-top: 10px;
     margin-left: 16px;
 }
@@ -377,6 +404,13 @@ body {
     background-color: #F5D76E;
 }
 
+.btn-redb.disabled {
+    background-color: #DC3023;
+}
+
+.btn-yellowb.disabled {
+    background-color: #F5D76E;
+}
 
 /* BEGIN Typographie ********/
 
@@ -433,6 +467,38 @@ body {
     margin-top: 10px;
 }
 
+.form-group.has-feedback {
+    margin-bottom: 0;
+}
+
+
+/* BEGIN Form prompts ****/
+
+.error-msg {
+    font-size: 15px;
+    margin-top: 4px;
+    color: #da4453;
+    font-weight: 400;
+}
+
+.has-success .help-block.with-hint,
+.has-error .help-block.with-hint,
+.help-block.with-success,
+.help-block.with-error {
+    display: none;
+}
+
+.has-success .help-block.with-success {
+    display: inline;
+}
+
+.has-error .help-block.with-error {
+    display: inline;
+}
+
+
+/* END Form prompts ****/
+
 .under {
     text-decoration: underline;
 }
@@ -445,6 +511,7 @@ body {
     margin-top: 50px;
     margin-bottom: 70px;
 }
+
 
 /* CV page */
 
@@ -497,7 +564,7 @@ body {
 
 #notification.out {
     margin-top: -60px;
-    transition: all 0.3s ease-out;
+    transition: all 0.2s ease-in;
 }
 
 #notification-closer {
@@ -594,6 +661,8 @@ body {
 .editor .btn {
     height: 34px;
 }
+
+
 /*
 .demo {
     margin-bottom: -99999px;

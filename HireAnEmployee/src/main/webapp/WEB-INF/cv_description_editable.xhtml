@@ -18,14 +18,14 @@
 
                 <!-- (photo) -->
                 <div class="col-sm-4 col-xs-5">
-                    <h:graphicImage value="img/photo1.jpg" alt="photo de profil" class="img-thumbnail"/>
+                    <h:graphicImage name="img/photo1.jpg" alt="photo de profil" class="img-thumbnail"/>
                 </div>
 
                 <!-- (nom prenom) -->
                 <div class="col-sm-8 col-xs-12">
                     <div class="editable">
                         <a class="hyperspan" onclick="expandEditor('names');" id="names_toggler"></a>
-                        <h3 class="panel-body-title">#{sessionBean.employeeDescription.employee.firstName} #{sessionBean.employeeDescription.employee.lastName}
+                        <h3 class="panel-body-title">#{employeeDescriptionBean.employeeDescription.employee.firstName} #{employeeDescriptionBean.employeeDescription.employee.lastName}
                             <span class="glyphicon glyphicon-pencil"/></h3>
                     </div>
                     <div class="col-sm-9 col-xs-12 editor" id="names">
@@ -40,7 +40,7 @@
                     <!-- (titre professionnel) -->
                     <div class="editable">
                         <a class="hyperspan" onclick="expandEditor('title');" id="title_toggler"></a>
-                        <p><strong>#{sessionBean.employeeDescription.professionalTitle} <span
+                        <p><strong>#{employeeDescriptionBean.employeeDescription.professionalTitle} <span
                                 class="glyphicon glyphicon-pencil"/></strong></p>
                     </div>
                     <div class="col-sm-8 col-xs-12 editor" id="title">
@@ -53,7 +53,7 @@
                     <!-- (pays - secteur) -->
                     <div class="editable">
                         <a class="hyperspan" onclick="expandEditor('country');" id="country_toggler"></a>
-                        <p>#{sessionBean.employeeDescription.country} | #{sessionBean.employeeDescription.sector} <span
+                        <p>#{employeeDescriptionBean.employeeDescription.country} | #{employeeDescriptionBean.employeeDescription.sector} <span
                                 class="glyphicon glyphicon-pencil"/></p>
                     </div>
                     <div class="col-sm-8 col-xs-12 editor" id="country">
@@ -67,7 +67,7 @@
                     <!-- (formation) -->
                     <div class="editable">
                         <a class="hyperspan" onclick="expandEditor('formation');" id="formation_toggler"></a>
-                        <p>#{sessionBean.employeeDescription.formation} <span class="glyphicon glyphicon-pencil"/></p>
+                        <p>#{employeeDescriptionBean.employeeDescription.formation} <span class="glyphicon glyphicon-pencil"/></p>
                     </div>
                     <div class="col-sm-8 col-xs-12 editor" id="formation">
                         <input type="text" class="form-control" placeholder="Formation"/>
@@ -83,16 +83,16 @@
                     </div>
                     <!-- (relations) -->
                     <div class="col-xs-offset-4 col-xs-2 row-strip">
-                        <p class="text-right"><b>#{sessionBean.employeeDescription.nbRelations}</b> relations</p>
+                        <p class="text-right"><b>#{employeeDescriptionBean.employeeDescription.nbRelations}</b> relations</p>
                     </div>
                 </div>
                 <div class="row"></div>
-                <!-- (coordonées) -->
+                <!-- (coordonées URL) -->
                 <div class="col-md-12">
                     <hr class="dashed"/>
                     <div class="collapse out" style="" id="accordion2">
                         <div class="col-xs-6 row-strip">
-                            <span class="secondary-text">h2ee/#{sessionBean.employeeDescription.employee.firstName}#{sessionBean.employeeDescription.employee.lastName}</span>
+                            <span class="secondary-text">h2ee/#{employeeDescriptionBean.employeeDescription.employee.firstName}#{employeeDescriptionBean.employeeDescription.employee.lastName}</span>
                         </div>
                         <div class="col-xs-6 row-strip text-right">
                             <a data-toggle="collapse" data-parent="#accordion2" href="#collapseFour"
@@ -102,7 +102,7 @@
 
                         <div id="collapseFour" class="panel-collapse collapse" style="height: 0px;">
                             <p><span class="glyphicon glyphicon-envelope"
-                                     style="top:3px; margin-right:7px"></span> jefferson.mangue@gmail.com
+                                     style="top:3px; margin-right:7px"></span> #{employeeDescriptionBean.employeeDescription.employee.email}
                             </p>
                         </div>
                     </div>

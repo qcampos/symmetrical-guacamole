@@ -27,7 +27,6 @@ public class DatabaseDAO {
      * Encrypt the password in order to store in with some security.
      *
      * @param password the password to be encrypted.
-     *
      * @return the String representation of the encryted password.
      */
     private static String encrypt(String password) {
@@ -41,9 +40,8 @@ public class DatabaseDAO {
     /**
      * Check if the given credentials are bind to a user into the database and return the right one. Otherwise, return <code>null</code>
      *
-     * @param email the user's email used as a login.
+     * @param email    the user's email used as a login.
      * @param password the user's password.
-     *
      * @return the corresponding Employee object, or null if the credential does not match.
      */
     public Employee connect(String email, String password) {
@@ -62,9 +60,8 @@ public class DatabaseDAO {
      *
      * @param firstName
      * @param lastName
-     * @param email the user's email which will be used as login.
-     * @param password the use's password.
-     *
+     * @param email     the user's email which will be used as login.
+     * @param password  the use's password.
      * @return the newly created Employee object.
      */
     public Employee signup(String firstName, String lastName, String email, String password) {
@@ -91,7 +88,6 @@ public class DatabaseDAO {
      * Check if the given email is already in use in the database.
      *
      * @param email the email to check.
-     *
      * @return <code>true</code> if the user is already in use, <code>false</code> otherwise.
      */
     public boolean emailExists(String email) {
@@ -102,7 +98,6 @@ public class DatabaseDAO {
      * Update the given employee to get the last version stored in the database.
      *
      * @param employee the employee to update.
-     *
      * @return another Employee object with up-to-date values.
      */
     public Employee update(Employee employee) {
@@ -128,5 +123,24 @@ public class DatabaseDAO {
 
     public void cleanAll() {
         em.clear();
+    }
+
+    /**
+     * Retrieves the corresponding employee in the database.
+     *
+     * @param id primary key of the employee wanted
+     * @return The employee found, null otherwise.
+     */
+    public Employee getEmployeeByID(long id) {
+        // TODO Real request.
+        // TODO please extend the custom Logger class to log
+        // TODO your data with de DATABASE filter ;)
+        if (id == 5) {
+            return connect("jmangue@u.com", "12345");
+        }
+        if (id == 1) {
+            return connect("nborie@upem.fr", "pony17");
+        }
+        return null;
     }
 }

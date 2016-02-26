@@ -16,7 +16,6 @@
 
 
     <!-- WB Ui -->
-    <link href="ui_css/style-67.css" rel="stylesheet">
 
     <!-- BootFlat CSS / JS -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
@@ -31,6 +30,11 @@
     <script type="text/javascript" async="" src="http://s1.smartaddon.com/share_addon.js"></script>
     <script type="text/javascript" src="js/site.min.js"></script>
 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/validator.js"></script>
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/main.css">
@@ -40,39 +44,41 @@
 <body style="background-color: #5D9CEC;">
     <!-- TODO custimize the color here -->
 
-    
-    
+
+
     <div class="navbbar-top">
 
-        <!-- The Notification bar container -->
-        <!-- Label to Show Notification bar -->
-        <label for="toggleTop" id="showTop">+</label>
-        <!-- The checkbox -->
-        <input type="checkbox" id="toggleTop" name="toggleTop" value="toggleTop">
 
-        <div id="topbar">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- You're content here -->
-                    <p>This is a notification</p>
-                </div>
-            </div>
-            <!-- Label to Hide Notification bar -->
-            <label for="toggleTop" id="hideTop">X</label>
-        </div>
     </div>
 
-    
-    
+
+
     <div class="container">
-        
+
         <!-- (page description header) -->
         <div class="row">
             <div class="col-xs-12">
-                <h1>Hire|Employ<u>ee</u></h1>
-                <h4>Votre curriculum sous son meilleur jour</h4>
+                <h1 id="title">Hire|Employ<u>ee</u></h1>
+                <h4 id="sub-title">Votre curriculum sous son meilleur jour</h4>
             </div>
         </div>
+
+        <!-- Test input -->
+        <form data-toggle="validator" role="form">
+            <div class="form-group has-feedback">
+                <label for="inputTwitter" class="control-label">Rechercher un ami</label>
+                <div class="input-group">
+                    <span class="input-group-addon"></span>
+                    <input type="text" class="form-control" id="inputTwitter" placeholder="Rechercher" required="true" />
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <span class="help-block">C'est gratuit ! (Et ça le restera toujours)</span>
+            </div>
+            <div class="form-group">
+               <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+            </div>
+        </form>
+
 
         <div class="row" id="connection-page-forms">
 
@@ -85,18 +91,32 @@
                     </div>
                     <div class="panel-body">
                         <div class="modal-body">
-                            <form action="cv.html">
-                                
+                            <form data-toggle="validator" role="form" action="cv.html">
+
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control" placeholder="Email" required="true">
+                                        <div class="form-group has-feedback">
+                                            <label for="emailLogin" class="control-label">Email</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">@</span>
+                                                <input type="email" class="form-control" id="emailLogin" placeholder="Email" 
+                                                       data-error="Format incorrect" required>
+                                            </div>
+                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <label>Mot de passe</label>
-                                        <input type="password" class="form-control" placeholder="Mot de passe" required="true">
+                                        <div class="form-group has-feedback">
+                                            <label for="motdepasse" class="control-label">Mot de passe</label>
+                                                <input type="password" class="form-control" id="motdepasse" data-minlength="5"
+                                                       placeholder="Mot de passe" data-error=" " required>
+                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                            <span class="help-block with-error">5 caractères minimum.</span>
+                                            <!--<span class="help-block with-success">Ok !</span>
+                                            <span class="help-block with-hint"></span> -->
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -112,7 +132,7 @@
             <!-- (fin de connexion form) -->
 
             <!-- (login form) -->
-            <div class="col-lg-offset-1 col-lg-5 col-sm-6 hidden-pannel connection-form">
+            <div class="col-lg-offset-2 col-lg-5 col-sm-6 hidden-pannel connection-form">
                 <!-- (descripton) -->
                 <div class="panel panel-blue">
                     <div class="panel-heading">
@@ -135,8 +155,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control" placeholder="Email" required="true">
+                                        <div class="form-group has-error has-feedback">
+                                            <label class="control-label" for="inputError2">Email</label>
+                                            <span class="error-msg">existe dans la base.</span>
+                                            <input type="email" class="form-control" placeholder="Email" required="true">
+                                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -199,20 +223,6 @@
     </div>
     <!-- UI-1 Ends -->
 
-
-
-    <!-- WB UI Scripts -->
-    <!-- Javascript files -->
-    <!-- jQuery -->
-    <script src="ui_js/jquery.js"></script>
-    <!-- Bootstrap JS -->
-    <!-- Already included by BootFlat <script src="ui_js/bootstrap.min.js"></script> -->
-    <!-- Placeholder JS -->
-    <script src="ui_js/placeholder.js"></script>
-    <!-- Respond JS for IE8 -->
-    <script src="ui_js/respond.min.js"></script>
-    <!-- HTML5 Support for IE -->
-    <script src="ui_js/html5shiv.js"></script>
 
 </body>
 

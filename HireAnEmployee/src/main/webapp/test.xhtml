@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+</h:head>
+
+<h:body>
+    <h:form prependId="false" p:role="form" p:data-toggle="validator">
+        <div class="form-group has-feedback">
+            <label for="inputTwitter" class="control-label">Twitter</label>
+            <div class="input-group">
+                <span class="input-group-addon">@</span>
+                <h:inputText type="text" p:pattern="^[_A-z0-9]{1,}$" p:maxlength="15" class="form-control" id="inputTwitter" p:placeholder="1000hz" p:required=""/>
+            </div>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <span class="help-block with-errors">Hey look, this one has feedback icons!</span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </h:form>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"/>
+    <script src="js/validator.js"/>
+</h:body>
+</html>

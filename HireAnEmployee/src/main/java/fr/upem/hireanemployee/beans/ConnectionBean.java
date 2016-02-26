@@ -31,6 +31,7 @@ public class ConnectionBean extends Logger {
     private String email;
     private String password;
     private String firstName;
+    private Employee employee;
 
     /* Error handler */
     private final ErrorHandler errorHandler;
@@ -56,7 +57,7 @@ public class ConnectionBean extends Logger {
         }
 
         // Trying to connect to the database.
-        Employee employee = dao.connect(email, password);
+        employee = dao.connect(email, password);
 
         // If the connection has failed.
         if (employee == null) {
@@ -70,7 +71,7 @@ public class ConnectionBean extends Logger {
 
         // Setting the employee in the session and redirecting to the CV page.
         sessionBean.setConnected(employee);
-        return Navigations.redirect(Constants.CV);
+        return redirectToCvWithID();
     }
 
     /**
@@ -92,7 +93,7 @@ public class ConnectionBean extends Logger {
         }
 
         // trying to create in the database.
-        Employee employee = dao.signup(firstName, lastName, email, password);
+        employee = dao.signup(firstName, lastName, email, password);
 
         // If the creation has failed. (Already in the database).
         if (employee == null) {
@@ -106,22 +107,36 @@ public class ConnectionBean extends Logger {
 
         // Setting the employee in the session and redirecting to the CV page.
         sessionBean.setConnected(employee);
-        return Navigations.redirect(Constants.CV);
+        return redirectToCvWithID();
     }
 
+    /**
+     * s
+     * Notification message.
+     */
     private void badInformationConnection() {
         log("connect - connection failed. Not in the database");
         setErrorMsg("Sorry, your are not in our database.");
     }
 
+    /**
+     * Notification message.
+     */
     private void alreadyExistsCreation() {
         log("connect - connection failed. Wrong fields");
         setErrorMsg("Sorry " + email + " already exists in our database.");
     }
 
+    /**
+     * Notification message.
+     */
     private void badFieldConnection() {
         setErrorMsg("Some error are detected. Please correct your fields.");
         log("connect - connection failed. Wrong fields");
+    }
+
+    private String redirectToCvWithID() {
+        return Navigations.redirect(Constants.CV) + "id=" + employee.getId();
     }
 
     public boolean isErrorHandler() {
@@ -138,6 +153,7 @@ public class ConnectionBean extends Logger {
 
     public void setEmail(String email) {
         this.email = email;
+        log("setEmail - " + email);
     }
 
     public void setPassword(String password) {
@@ -170,5 +186,10 @@ public class ConnectionBean extends Logger {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public long getId() {
+        if (employee == null) return -1;
+        return employee.getId();
     }
 }
