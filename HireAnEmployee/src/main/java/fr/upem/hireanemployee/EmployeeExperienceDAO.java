@@ -27,13 +27,26 @@ public class EmployeeExperienceDAO {
         return experience;
     }
 
+
+
+    /**
+     * With employee ID.
+     */
     public List<Experience> createExperience(final String companyName, final String jobName, final String jobAbstract, final String jobDescription, final Date startDate, final Date endDate, final long employeeId) {
-        Experience experience = new Experience(companyName, jobName, jobAbstract, jobDescription, startDate, endDate);
         Employee employee = em.find(Employee.class, employeeId);
+        return createExperience(companyName, jobName, jobAbstract, jobDescription, startDate, endDate, employee);
+    }
+
+    // TODO J'ai du toucher ta page, très rapidement.
+
+    /**
+     * Surcharge needed for some cases.
+     */
+    public List<Experience> createExperience(final String companyName, final String jobName, final String jobAbstract, final String jobDescription, final Date startDate, final Date endDate, final Employee employee) {
+        Experience experience = new Experience(companyName, jobName, jobAbstract, jobDescription, startDate, endDate);
         employee.addExperience(experience);
         em.merge(employee);
         em.flush();
         return Lists.newArrayList(employee.getExperiences());
     }
-
 }
