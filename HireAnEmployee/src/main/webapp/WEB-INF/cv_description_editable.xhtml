@@ -27,11 +27,12 @@
                         <a class="hyperspan" onclick="expandEditor('names');" id="names_toggler"></a>
                         <h3 class="panel-body-title">#{employeeDescriptionBean.names}
                             <span class="glyphicon glyphicon-pencil"/></h3>
+                        <h:outputScript>collapseEditor('names');</h:outputScript>
                     </h:panelGroup>
 
                     <!-- (editor) Toggled by id= names_toggler -->
                     <h:panelGroup id="names" class="col-sm-9 col-xs-12 editor"  layout="block">
-                        <h:form prependId="false">
+                        <h:form id="names_form" prependId="false">
                             <h:inputText type="text" styleClass="form-control" p:placeholder="Nom" value="#{employeeDescriptionBean.newFirstName}"/>
                             <h:inputText type="text" styleClass="form-control" p:placeholder="Prénom" value="#{employeeDescriptionBean.newLastName}"/>
                             <div class="row"></div>

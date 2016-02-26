@@ -79,12 +79,16 @@
             toggler.setAttribute("onClick", "collapseEditor('" + el + "');");
         }
 
+        /* Close and resets the form 'el'-form */
         function collapseEditor(el) {
             var elem = document.getElementById(el);
             elem.className = "col-sm-8 col-xs-12 editor";
             // Updating the toggler to open on a new clic.
             var toggler = document.getElementById(el + '_toggler');
             toggler.setAttribute("onClick", "expandEditor('" + el + "');");
+            // Reseting the form.
+            var form = document.getElementById(el + '_form');
+            form.reset();
         }
     </h:outputScript>
 </h:body>
