@@ -542,6 +542,10 @@ body {
     background-color: #DA4453;
 }
 
+#notification.greenb {
+    background-color: #8cc152;
+}
+
 #notification.out {
     margin-top: -60px;
     transition: all 0.2s ease-in;
@@ -613,7 +617,7 @@ body {
 }
 
 .editor.expand {
-    height: 148px;
+    height: 158px;
     padding: 0;
     left: 0;
     opacity: 1;
