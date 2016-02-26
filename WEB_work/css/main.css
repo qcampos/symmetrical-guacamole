@@ -2,9 +2,7 @@ body {
     background-color: #f1f2f6;
 }
 
-
 /* Begin Navbar *************/
-
 
 /* Background color */
 
@@ -15,7 +13,6 @@ body {
     /*font-size: 25px;*/
     text-align: center;
 }
-
 
 /* For the notification bug (could not collapsed on large screen) */
 
@@ -34,13 +31,11 @@ body {
     margin-bottom: 0;
 }
 
-
 /*
 .navbar-inverse .navbar-brand {
     -webkit-border-radius: 0 0 0 4px;
     -moz-border-radius: 0 0 0 4px;
 }*/
-
 
 /* BurgerMenu */
 
@@ -55,16 +50,13 @@ body {
     background-color: #ffffff;
 }
 
-
 /* End of burger menu */
-
 
 /* Profil cellule icon */
 
 #profile-li span {
     margin-right: 7px;
 }
-
 
 /* Logout cellule icon */
 
@@ -73,14 +65,12 @@ body {
     top: 2px;
 }
 
-
 /* FONT COLOR */
 
-.navbar-inverse .navbar-nav>li>a {
+.navbar-inverse .navbar-nav > li > a {
     font-weight: 700;
     color: #434a54;
 }
-
 
 /* The form input */
 
@@ -114,19 +104,16 @@ body {
     border-color: #19B5FE;
 }
 
-
 /* End of the form */
-
 
 /* When Hover, BACKGROUND COLOR */
 
 .navbar-inverse .navbar-toggle:hover,
-.navbar-inverse .navbar-nav>li>a:hover,
+.navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-brand:hover {
     background-color: #FFCE54;
     border-color: #FFCE54;
 }
-
 
 /*
 .navbar-inverse .navbar-brand:hover {
@@ -135,14 +122,13 @@ body {
     -moz-border-radius: 0 0 0 4px;
 }*/
 
-.navbar-inverse .navbar-nav>li>#navbar-logout:hover {
+.navbar-inverse .navbar-nav > li > #navbar-logout:hover {
     background-color: #DA4453;
     color: #ffffff;
     border-bottom-right-radius: 4px;
     -webkit-border-radius: 0 0 4px 0;
     -moz-border-radius: 0 0 4px 0;
 }
-
 
 /* HIREANEMPLOYEE TITLE */
 
@@ -153,12 +139,11 @@ body {
     color: #ffffff;
 }
 
-.navbar-inverse .navbar-nav>li>a,
-.navbar-inverse .navbar-nav>li>form .input-group {
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-nav > li > form .input-group {
     padding-right: 26px;
     padding-left: 26px;
 }
-
 
 /* Making the a filling all the li for the background color */
 
@@ -169,17 +154,17 @@ body {
     padding-left: 26px;
 }
 
-@media (max-width:990px) {
-    .navbar-inverse .navbar-nav>li>a,
-    .navbar-inverse .navbar-nav>li>form .input-group {
+@media (max-width: 990px) {
+    .navbar-inverse .navbar-nav > li > a,
+    .navbar-inverse .navbar-nav > li > form .input-group {
         padding-right: 13px;
         padding-left: 13px;
     }
+
     #navbar-logout #logout-text {
         display: none;
     }
 }
-
 
 /*** COLLAPSE ***/
 
@@ -187,7 +172,6 @@ body {
 .navbar-collapse .navbar-form {
     border: 0;
 }
-
 
 /* END Navbar *************/
 
@@ -199,7 +183,6 @@ h5,
 p {
     color: #333;
 }
-
 
 /* BEGIN Connection page ******/
 
@@ -215,7 +198,6 @@ p {
     height: 19px;
     line-height: 19px;
 }
-
 
 /* BEGIN Top Photo *************/
 
@@ -240,7 +222,6 @@ p {
     margin-right: 6px;
 }
 
-
 /* BEGIN Pannel *************/
 
 .panel-blue {
@@ -251,7 +232,6 @@ p {
     height: 50px;
     padding: 16px auto auto;
 }
-
 
 /* Panel-blue transition */
 
@@ -290,9 +270,7 @@ p {
     margin-top: 10px;
 }
 
-
 /* END Panel ***********/
-
 
 /* BEGIN Description panel ********/
 
@@ -300,9 +278,7 @@ p {
     font-size: 11px;
 }
 
-
 /* END Description panel **********/
-
 
 /* BEGIN CV left row *************/
 
@@ -331,12 +307,9 @@ p {
     }
 }
 
-
 /* END CV left row **********/
 
-
 /* BEGIN Footer *************/
-
 
 /* Used to marging right after the logo footer on the small screen */
 
@@ -346,7 +319,7 @@ p {
     margin-bottom: 100px;
 }
 
-#footer-logo-div >a {
+#footer-logo-div > a {
     color: #FFCE54;
 }
 
@@ -390,6 +363,10 @@ body {
     border-color: #F6BB42;
 }
 
+.btn-greenb {
+    background-color: #8cc152;
+}
+
 .btn-default:hover {
     top: -3px;
     background-color: #19B5FE;
@@ -404,12 +381,21 @@ body {
     background-color: #F5D76E;
 }
 
+.btn-greenb:hover {
+    background-color: #9bcf50;
+}
+
 .btn-redb.disabled {
     background-color: #DC3023;
 }
 
 .btn-yellowb.disabled {
     background-color: #F5D76E;
+}
+
+.btn-greenb.disabled {
+    /*background-color: #aab2bd;*/
+    background-color: rgba(140, 187, 73, 0.85);
 }
 
 /* BEGIN Typographie ********/
@@ -419,9 +405,7 @@ body {
     color: #7d8a9b;
 }
 
-
 /* END Typographie ********/
-
 
 /**** CONNECTION PAGE ****************************/
 
@@ -471,7 +455,6 @@ body {
     margin-bottom: 0;
 }
 
-
 /* BEGIN Form prompts ****/
 
 .error-msg {
@@ -496,7 +479,6 @@ body {
     display: inline;
 }
 
-
 /* END Form prompts ****/
 
 .under {
@@ -512,9 +494,7 @@ body {
     margin-bottom: 70px;
 }
 
-
 /* CV page */
-
 
 /* Styling the bar itself */
 
@@ -583,22 +563,22 @@ body {
     top: 0;
 }
 
-
 /* Editables System for edition *****/
 
 .editable {
     position: relative;
     display: inline-block;
-    padding: 8px;
     transition: background-color 0.2s;
 }
 
-.editable *,
+/*
+/*.editable ,
+.editable p,
 .editable h3 {
     margin: 0;
     padding: 0;
 }
-
+*/
 .editable .glyphicon {
     opacity: 0;
     font-size: 70%;
@@ -621,8 +601,10 @@ body {
     height: 0;
     margin: 0;
     opacity: 0;
+    padding: 0;
+    left: 30px;
     overflow: hidden;
-    transition: height 0.25s linear, opacity 0.25s ease-out, padding 0.25s;
+    transition: height 0.25s linear, opacity 0.25s ease-out, left 0.25s ease-out;
 }
 
 .editor .row {
@@ -631,37 +613,39 @@ body {
 
 .editor.expand {
     height: 148px;
-    padding: 0 15px 15px;
+    padding: 0;
+    left: 0;
     opacity: 1;
-    transition: height 0.25s linear, opacity 0.35s ease-out, padding 0.25s;
+    transition: height 0.25s linear, opacity 0.5s ease-out, left 0.35s ease-out;
 }
 
 .editor.expand#title {
     height: 100px;
-    padding: 0 15px 15px;
-    transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor.expand#country {
     height: 145px;
-    padding: 0 15px 15px;
-    transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor.expand#formation {
     height: 115px;
-    padding: 0 15px 15px;
-    transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor input {
-    margin-top: 15px;
+    margin-top: 12px;
+}
+
+input.btn {
+    margin-top: 0;
+}
+
+input.btn-default {
+    margin-right: 4px;
 }
 
 .editor .btn {
     height: 34px;
 }
-
 
 /*
 .demo {

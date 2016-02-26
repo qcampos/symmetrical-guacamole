@@ -49,6 +49,7 @@ public class InitializationBean extends Logger {
         employee = bdu.connect("jmangue@u.com", "12345");
 
         description = employee.getDescription();
+
         edao.updateCountry(description, Country.FRANCE);
         edao.updateSector(description, "Logiciels informatiques");
         edao.updateProfessionalTitle(description, "MSc in Project and Programme Management and Business Development");

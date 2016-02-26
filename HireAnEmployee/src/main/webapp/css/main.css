@@ -395,7 +395,7 @@ body {
 
 .btn-greenb.disabled {
     /*background-color: #aab2bd;*/
-   background-color: rgba(140, 187, 73, 0.85);
+    background-color: rgba(140, 187, 73, 0.85);
 }
 
 /* BEGIN Typographie ********/
@@ -568,16 +568,17 @@ body {
 .editable {
     position: relative;
     display: inline-block;
-    padding: 8px;
     transition: background-color 0.2s;
 }
 
-.editable *,
+/*
+/*.editable ,
+.editable p,
 .editable h3 {
     margin: 0;
     padding: 0;
 }
-
+*/
 .editable .glyphicon {
     opacity: 0;
     font-size: 70%;
@@ -600,8 +601,10 @@ body {
     height: 0;
     margin: 0;
     opacity: 0;
+    padding: 0;
+    left: 30px;
     overflow: hidden;
-    transition: height 0.25s linear, opacity 0.25s ease-out, padding 0.25s;
+    transition: height 0.25s linear, opacity 0.25s ease-out, left 0.25s ease-out;
 }
 
 .editor .row {
@@ -610,31 +613,34 @@ body {
 
 .editor.expand {
     height: 148px;
-    padding: 0 15px 15px;
+    padding: 0;
+    left: 0;
     opacity: 1;
-    transition: height 0.25s linear, opacity 0.35s ease-out, padding 0.25s;
+    transition: height 0.25s linear, opacity 0.5s ease-out, left 0.35s ease-out;
 }
 
 .editor.expand#title {
     height: 100px;
-    padding: 0 15px 15px;
-    transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor.expand#country {
     height: 145px;
-    padding: 0 15px 15px;
-    transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor.expand#formation {
     height: 115px;
-    padding: 0 15px 15px;
-    transition: height 0.25s linear, padding 0.25s;
 }
 
 .editor input {
-    margin-top: 15px;
+    margin-top: 12px;
+}
+
+input.btn {
+    margin-top: 0;
+}
+
+input.btn-default {
+    margin-right: 4px;
 }
 
 .editor .btn {

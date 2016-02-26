@@ -127,7 +127,7 @@ public class DatabaseDAO {
     /**
      * Retrieves the corresponding employee in the database.
      *
-     * @param id primary key of the employee wanted
+     * @param id primary key of the employee wanted.
      * @return The employee found, null otherwise.
      */
     public Employee getEmployeeByID(long id) {

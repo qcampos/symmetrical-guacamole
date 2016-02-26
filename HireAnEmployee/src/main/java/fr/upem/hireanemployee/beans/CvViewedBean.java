@@ -17,7 +17,7 @@ import java.util.Collection;
 /**
  * Created by Baxtalou on 22/02/2016.
  * The main bean for the page : cv.xhtml.
- * Manages the employee's data bootsrape to feed : EmployeeDescriptionBean,
+ * Manages the employee's data bootsrap to feed : EmployeeDescriptionBean,
  * EmployeeExperiencesBean and EmployeeFormationBean.
  */
 @ManagedBean
@@ -33,6 +33,7 @@ public class CvViewedBean extends Logger {
 
     // Current CV id
     private long id;
+    private boolean initialized;
 
     /**
      * Method call on the viewAction of page cv.xhtml. It provides initialization capabilities
@@ -42,9 +43,14 @@ public class CvViewedBean extends Logger {
      * this lifecycle use.
      *
      * @return The current page if the id corresponds to an Employee. The 404 error page otherwise.
-     * TODO redirect on a research page + the message "unknonw employee" instead.
+     * TODO redirect on a research page + the message "unknown employee" instead.
      */
     public String viewActionInit() {
+        // Guard needed because of viewParam Bug with ajax in the API 2.2
+        if (initialized) {
+            return Constants.CURRENT_PAGE;
+        }
+        initialized = true;
         log("viewActionInit - id " + id);
         // Retrieving the employee in the database.
         employee = dao.getEmployeeByID(id);
@@ -60,11 +66,14 @@ public class CvViewedBean extends Logger {
     }
 
     public long getId() {
-        log("getId - " + id);
         return id;
     }
 
     public void setId(long id) {
+        // Guard needed because of viewParam Bug with ajax in the API 2.2
+        if (initialized) {
+            return;
+        }
         this.id = id;
     }
 

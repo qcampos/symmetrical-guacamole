@@ -24,6 +24,9 @@ public class EmployeeDescriptionDAO {
     public EmployeeDescription updateNames(EmployeeDescription desc, String firstName, String lastName) {
         desc.getEmployee().setFirstName(firstName);
         desc.getEmployee().setLastName(lastName);
+        // TODO Les nouveaux noms ne vont pas être enregistrés dans la base. Je te donnais desc pour que tu puisses
+        // TODO juste update ce qu'il fallait avec son id mais c'est vrai qu'on perd en pertinence.
+        // TODO le seul soucis là c'est qu'il faut aussi - juste dans ce cas là - update les noms de l'employé. Chouss
         em.merge(desc);
         em.flush();
         return desc;

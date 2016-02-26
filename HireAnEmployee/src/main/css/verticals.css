@@ -1,0 +1,116 @@
+/*
+Include this after bootstrap.css. Add class of 
+vert-off-top-value or vert-off-bot-value 
+to your Bootstrap 3 default rows to prevent row content 
+from touching the row content above or below.
+*/
+
+
+/* Vertical off Bottom */
+
+.vert-off-top-12 {
+    margin-top: 12em;
+}
+
+.vert-off-top-11 {
+    margin-top: 11em;
+}
+
+.vert-off-top-10 {
+    margin-top: 10em;
+}
+
+.vert-off-top-9 {
+    margin-top: 9em;
+}
+
+.vert-off-top-8 {
+    margin-top: 8em;
+}
+
+.vert-off-top-7 {
+    margin-top: 7em;
+}
+
+.vert-off-top-6 {
+    margin-top: 6em;
+}
+
+.vert-off-top-5 {
+    margin-top: 5em;
+}
+
+.vert-off-top-4 {
+    margin-top: 4em;
+}
+
+.vert-off-top-3 {
+    margin-top: 3em;
+}
+
+.vert-off-top-2 {
+    margin-top: 2em;
+}
+
+.vert-off-top-1 {
+    margin-top: 1em;
+}
+
+.vert-off-top-0 {
+    margin-top: 0em;
+}
+
+
+/* Vertical off bot */
+
+.vert-off-bot-12 {
+    margin-bottom: 12em;
+}
+
+.vert-off-bot-11 {
+    margin-bottom: 11em;
+}
+
+.vert-off-bot-10 {
+    margin-bottom: 10em;
+}
+
+.vert-off-bot-9 {
+    margin-bottom: 9em;
+}
+
+.vert-off-bot-8 {
+    margin-bottom: 8em;
+}
+
+.vert-off-bot-7 {
+    margin-bottom: 7em;
+}
+
+.vert-off-bot-6 {
+    margin-bottom: 6em;
+}
+
+.vert-off-bot-5 {
+    margin-bottom: 5em;
+}
+
+.vert-off-bot-4 {
+    margin-bottom: 4em;
+}
+
+.vert-off-bot-3 {
+    margin-bottom: 3em;
+}
+
+.vert-off-bot-2 {
+    margin-bottom: 2em;
+}
+
+.vert-off-bot-1 {
+    margin-bottom: 1em;
+}
+
+.vert-off-bot-0 {
+    margin-bottom: 0em;
+}
