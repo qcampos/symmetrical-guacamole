@@ -1,18 +1,26 @@
-<ui:composition 
-xmlns="http://www.w3.org/1999/xhtml" 
-xmlns:h="http://xmlns.jcp.org/jsf/html"
-xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-	<!-- Including the js file -->
-	<h:outputScript library="js" name="notifications.js" target="body" />
+    <!-- Including the js file -->
+    <h:outputScript library="js" name="notifications.js" target="body"/>
 
-	<!-- The top div is re-rendered by the calling component and then errorHandler is checked -->
-	<h:panelGroup layout="block" id="popNotification" class="navbbar-top">
+    <!-- The top div is re-rendered by the calling component and then errorHandler is checked -->
+    <h:panelGroup layout="block" id="popNotification" class="navbbar-top">
 
-		<h:panelGroup layout="block" id="notification" class="redb" rendered="#{viewScope[notifierBean].errorHandler}">
-			#{connectionBean.errorMsg}
-			<span style="float:right;">X</span>
-			<button id="notification-closer" class="hyperspan" onclick="slideIn('notification', 'redb');"/>
-		</h:panelGroup>
-	</h:panelGroup>
+        <h:panelGroup layout="block" id="notification" class="#{notificationBean.styleClass}"
+                      rendered="#{notificationBean.rendered}">
+            #{notificationBean.message}
+            <span style="float:right;">X</span>
+            <button id="notification-closer" class="hyperspan"
+                    onclick="slideBack('notification', '#{notificationBean.styleClass}');"/>
+        </h:panelGroup>
+
+        <h:outputScript>
+            /* When this component is rendered (slideIn), triggering the timeOut to automaticaly slideBack
+            if no clic is done after some delay. */
+            slideIn('notification', '#{notificationBean.styleClass}');
+        </h:outputScript>
+    </h:panelGroup>
 </ui:composition>

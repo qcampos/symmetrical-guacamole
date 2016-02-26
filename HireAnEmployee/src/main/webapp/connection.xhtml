@@ -12,9 +12,7 @@
 <h:body style="background-color: #5D9CEC;">
 
     <!-- Notification system composite -->
-    <ui:include src="WEB-INF/notification_composite.xhtml">
-        <ui:param name="notifierBean" value="connectionBean"/>
-    </ui:include>
+    <ui:include src="WEB-INF/notification_composite.xhtml"/>
 
     <!-- Header -->
     <div class="container">
@@ -88,7 +86,7 @@
                                         <h:commandButton class="btn btn-default btn-greenb" style="margin-top:8px;"
                                                          type="submit" action="#{connectionBean.connect}"
                                                          value="Connexion">
-                                            <f:ajax execute="@form" render="popNotification"/>
+                                            <f:ajax execute="@form" render="#{notificationBean.id}"/>
                                         </h:commandButton>
                                     </div>
                                 </div>
@@ -169,7 +167,7 @@
                                         <h:commandButton class="btn btn-default btn-greenb" style="margin-top:8px;"
                                                          type="submit" action="#{connectionBean.create()}"
                                                          value="Inscription">
-                                            <f:ajax execute="@form" render="popNotification"/>
+                                            <f:ajax execute="@form" render="#{notificationBean.id}"/>
                                         </h:commandButton>
                                     </div>
                                 </div>

@@ -29,6 +29,8 @@ public class EmployeeDescriptionBean extends Logger {
     // Managed fields.
     @ManagedProperty("#{cvViewedBean.employeeDescription}")
     private EmployeeDescription employeeDescription;
+    @ManagedProperty("#{notificationBean}")
+    private NotificationBean notificationBean;
 
     // Data fields to show.
     private String professionalTitle;
@@ -71,26 +73,33 @@ public class EmployeeDescriptionBean extends Logger {
     public String updateNames() {
         // TODO if == null : notificationBean(ViewScope).notifyError();
         log("updateNames - " + newFirstName + " " + newLastName);
+        notificationBean.clear();
         // No new values.
-        if (newFirstName == null && newLastName == null) {
+        Employee employee = employeeDescription.getEmployee();
+        if ((newFirstName == null || newFirstName.equals(employee.getFirstName())) &&
+                (newLastName == null || newLastName.equals(employee.getLastName()))) {
             return Constants.CURRENT_PAGE;
         }
-        // Checking if values are not pur alpha. This is also checked on the view side.
-        if (!Regexes.parseAlpha(newFirstName) || !Regexes.parseAlpha(newLastName)) {
-            log("updateNames - error in the parsing phase");
-            return Constants.CURRENT_PAGE; // TODO trigger error.
-        }
         // Verifying empty fields (they are not both required at the same time).
-        Employee employee = employeeDescription.getEmployee();
         newFirstName = (newFirstName == null) ? employee.getFirstName() : newFirstName;
         newLastName = (newLastName == null) ? employee.getLastName() : newLastName;
+        // Checking if values are not pur alpha. This is also checked on the view side.
+        boolean b1 = !Regexes.parseAlpha(newFirstName);
+        if (b1 || !Regexes.parseAlpha(newLastName)) {
+            log("updateNames - error in the parsing phase");
+            notificationBean.setError("The value : " + (b1 ? newFirstName : newLastName) + " is not correct.");
+            return Constants.CURRENT_PAGE;
+        }
         // Updating the database.
         dao.updateNames(employeeDescription, newFirstName, newLastName);
         // Updating the corresponding field for next renderings by this very bean.
         String firstName = employee.getFirstName();
         String lastName = employee.getLastName();
         names = firstName + " " + lastName;
+        newFirstName = firstName;
+        newLastName = lastName;
         log("updateNames - names " + names);
+        notificationBean.setSuccess("Names updated to : " + newFirstName + " " + newLastName);
         return Constants.CURRENT_PAGE;
     }
 
@@ -128,6 +137,10 @@ public class EmployeeDescriptionBean extends Logger {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setNotificationBean(NotificationBean notificationBean) {
+        this.notificationBean = notificationBean;
     }
 
     public void setNewFirstName(String newFirstName) {

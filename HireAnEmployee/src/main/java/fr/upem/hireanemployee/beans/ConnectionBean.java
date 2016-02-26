@@ -23,6 +23,8 @@ public class ConnectionBean extends Logger {
     /* Application's beans */
     @EJB
     private DatabaseDAO dao;
+    @ManagedProperty(value = "#{notificationBean}")
+    private NotificationBean notificationBean;
     @ManagedProperty(value = "#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -33,11 +35,7 @@ public class ConnectionBean extends Logger {
     private String firstName;
     private Employee employee;
 
-    /* Error handler */
-    private final ErrorHandler errorHandler;
-
     public ConnectionBean() {
-        errorHandler = new ErrorHandler();
     }
 
     /**
@@ -66,7 +64,7 @@ public class ConnectionBean extends Logger {
         }
 
         // Connection successful.
-        errorHandler.clear();
+        notificationBean.clear();
         log("connect - connection successful.");
 
         // Setting the employee in the session and redirecting to the CV page.
@@ -102,7 +100,7 @@ public class ConnectionBean extends Logger {
         }
 
         // Creation successful.
-        errorHandler.clear();
+        notificationBean.clear();
         log("create - creation successful.");
 
         // Setting the employee in the session and redirecting to the CV page.
@@ -139,12 +137,8 @@ public class ConnectionBean extends Logger {
         return Navigations.redirect(Constants.CV) + "id=" + employee.getId();
     }
 
-    public boolean isErrorHandler() {
-        return errorHandler.isError();
-    }
-
     public void setErrorMsg(String msg) {
-        errorHandler.setError(msg);
+        notificationBean.setError(msg);
     }
 
     public void setSessionBean(SessionBean sessionBean) {
@@ -154,6 +148,10 @@ public class ConnectionBean extends Logger {
     public void setEmail(String email) {
         this.email = email;
         log("setEmail - " + email);
+    }
+
+    public void setNotificationBean(NotificationBean notificationBean) {
+        this.notificationBean = notificationBean;
     }
 
     public void setPassword(String password) {
@@ -174,10 +172,6 @@ public class ConnectionBean extends Logger {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getErrorMsg() {
-        return errorHandler.getMsg();
     }
 
     public String getFirstName() {

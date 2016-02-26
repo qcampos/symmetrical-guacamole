@@ -6,12 +6,10 @@ import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.EmployeeDescription;
 import fr.upem.hireanemployee.profildata.Experience;
-import javafx.event.Event;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ComponentSystemEvent;
 import java.util.Collection;
 
 /**
