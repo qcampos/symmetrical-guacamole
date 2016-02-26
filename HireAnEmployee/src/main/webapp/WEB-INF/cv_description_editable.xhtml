@@ -33,16 +33,17 @@
                     <!-- (editor) Toggled by id= names_toggler -->
                     <h:panelGroup id="names" class="col-sm-9 col-xs-12 editor"  layout="block">
                         <h:form id="names_form" prependId="false">
-                            <h:inputText type="text" styleClass="form-control" p:placeholder="Nom" value="#{employeeDescriptionBean.newFirstName}"/>
-                            <h:inputText type="text" styleClass="form-control" p:placeholder="Prénom" value="#{employeeDescriptionBean.newLastName}"/>
+                            <h:panelGroup id="names_inputs" layout="block">
+                                <h:inputText type="text" styleClass="form-control" p:placeholder="Nom" value="#{employeeDescriptionBean.newFirstName}"/>
+                                <h:inputText type="text" styleClass="form-control" p:placeholder="Prénom" value="#{employeeDescriptionBean.newLastName}"/>
+                            </h:panelGroup>
                             <div class="row"></div>
                             <h:commandButton type="submit" styleClass="btn btn-default" value="OK" action="#{employeeDescriptionBean.updateNames}">
-                                <f:ajax execute="@form" render="names_group" resetValues="true"/> <!-- TODO collapse editor if js{cond?'collapse()':''} -->
+                                <f:ajax execute="@form" render="names_group names_inputs" resetValues="true"/> <!-- TODO collapse editor if js{cond?'collapse()':''} -->
                             </h:commandButton>
                             <h:commandButton styleClass="btn btn-redb" onclick="collapseEditor('names');"
                                              value="Annuler">
-
-                                <f:ajax/>
+                                <f:ajax/> <!-- Catching this call -->
                             </h:commandButton>
                         </h:form>
                     </h:panelGroup>

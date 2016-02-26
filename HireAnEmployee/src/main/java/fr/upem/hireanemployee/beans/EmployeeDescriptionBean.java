@@ -62,14 +62,25 @@ public class EmployeeDescriptionBean extends Logger {
         formation = employeeDescription.getFormation().equals("") ? "TODO Formation dans InitializationBean" : employeeDescription.getFormation();
         nbRelations = employeeDescription.getNbRelations();
         professionalTitle = employeeDescription.getProfessionalTitle();
+        // Allowing default values by setting these forms.
+        newFirstName = firstName;
+        newLastName = lastName;
     }
 
     public String updateNames() {
         // TODO if == null : notificationBean(ViewScope).notifyError();
         log("updateNames - " + newFirstName + " " + newLastName);
-        dao.updateNames(employeeDescription, newFirstName, newLastName);
-        // Updating the corresponding field for printing.
+        // No new values.
+        if (newFirstName == null && newLastName == null) {
+            return Constants.CURRENT_PAGE;
+        }
+        // Verifying empty fields (they are not both required at the same time).
         Employee employee = employeeDescription.getEmployee();
+        newFirstName = (newFirstName == null) ? employee.getFirstName() : newFirstName;
+        newLastName = (newLastName == null) ? employee.getLastName() : newLastName;
+        // Updating the database.
+        dao.updateNames(employeeDescription, newFirstName, newLastName);
+        // Updating the corresponding field for next renderings by this very bean.
         String firstName = employee.getFirstName();
         String lastName = employee.getLastName();
         names = firstName + " " + lastName;
@@ -114,12 +125,10 @@ public class EmployeeDescriptionBean extends Logger {
     }
 
     public void setNewFirstName(String newFirstName) {
-        log("setNewFirstName " + newFirstName);
         this.newFirstName = newFirstName;
     }
 
     public void setNewLastName(String newLastName) {
-        log("setNewLastName " + newLastName);
         this.newLastName = newLastName;
     }
 
