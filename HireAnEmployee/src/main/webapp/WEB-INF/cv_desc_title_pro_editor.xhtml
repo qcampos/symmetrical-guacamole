@@ -2,12 +2,13 @@
         xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
-<!-- Couple description + editor for the description profesionnal title -->
+    <!-- Couple description + editor for the description profesionnal title -->
 
     <!-- Informations -->
     <h:panelGroup class="editable" id="title_group" layout="block">
         <a class="hyperspan" onclick="expandEditor('title');" id="title_toggler"></a>
-        <p><strong>#{employeeDescriptionBean.professionalTitle} <span
+        <p><strong>#{employeeDescriptionBean.professionalTitle == null ?
+                "Ajouter un titre professionel" : employeeDescriptionBean.professionalTitle} <span
                 class="glyphicon glyphicon-pencil"/></strong></p>
         <h:outputScript>collapseEditor('title');</h:outputScript>
     </h:panelGroup>
@@ -25,8 +26,8 @@
                         <!-- (Input Title) -->
                         <div class="form-group has-feedback">
                             <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
-                                         p:required="true" p:placeholder="Title"
-                                         value="#{employeeDescriptionBean.newProfessionalTitle}"/>
+                                          p:placeholder="Title"
+                                         value="#{employeeDescriptionBean.newProfessionalTitle}"/><!--p:required="true"-->
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             <!-- <span class="help-block with-error">5 caractères minimum.</span> -->
                         </div>

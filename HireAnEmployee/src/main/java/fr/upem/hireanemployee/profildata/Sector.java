@@ -40,6 +40,6 @@ public class Sector {
 
     @Override
     public String toString() {
-        return "Sector(" + name + ")";
+        return name;
     }
 }

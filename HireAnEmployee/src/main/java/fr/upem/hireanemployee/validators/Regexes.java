@@ -12,12 +12,21 @@ import javax.faces.bean.ManagedBean;
 public class Regexes {
 
     public static final String ALPHA = "^[_A-z]+$";
+    public static final String EMAIL = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)" +
+            "*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
 
     /**
      * ALPHA only regex.
      */
     public static String getAlpha() {
         return ALPHA;
+    }
+
+    /**
+     * EMAIL only regex.
+     */
+    public static String getEmail() {
+        return EMAIL;
     }
 
     /**

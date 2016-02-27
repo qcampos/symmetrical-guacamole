@@ -7,6 +7,7 @@ import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.EmployeeDescription;
+import fr.upem.hireanemployee.profildata.Sector;
 import fr.upem.hireanemployee.validators.Regexes;
 
 import javax.annotation.PostConstruct;
@@ -55,6 +56,7 @@ public class EmployeeDescriptionBean extends Logger {
     private String newSector;
     private String newFormation;
     private List<String> countries;
+    private List<String> sectors;
 
     @PostConstruct
     private void init() {
@@ -65,17 +67,33 @@ public class EmployeeDescriptionBean extends Logger {
         url = firstName + lastName;
         email = employee.getEmail();
         names = firstName + " " + lastName;
-        country = employeeDescription.getCountry().toString();
+        country = employeeDescription.getCountry().equals(Country.NONE) ? "" : employeeDescription.getCountry().toString();
         sector = employeeDescription.getSector().toString();
         formation = employeeDescription.getFormation().equals("") ? "TODO Formation dans InitializationBean" : employeeDescription.getFormation();
         nbRelations = employeeDescription.getNbRelations();
         professionalTitle = employeeDescription.getProfessionalTitle();
+
+        // Normalizing null values. We program with the option preventing the use of empty strings.
+        // Null strings are handle ate the printing to place placeholder independent from this very model.
+        // It allows us for example to translate placeholders outside the model.
+        country = setNullIfEmpty(country);
+        sector = setNullIfEmpty(sector);
+        professionalTitle = setNullIfEmpty(professionalTitle);
+        // TODO formation = setNullIfEmpty(formation);
+
         // Allowing default values by setting these forms.
         newFirstName = firstName;
         newLastName = lastName;
         newProfessionalTitle = professionalTitle;
-        newCountry = country.toString();
+        newCountry = country;
+        newSector = sector;
         countries = ddao.getCountryList();
+        sectors = ddao.getSectorList();
+
+    }
+
+    public String setNullIfEmpty(String str) {
+        return str.isEmpty() ? null : str;
     }
 
     public String updateNames() {
@@ -117,7 +135,7 @@ public class EmployeeDescriptionBean extends Logger {
     public String updateTitle() {
         log("updateTitle - " + newProfessionalTitle);
         notificationBean.clear();
-        if (newProfessionalTitle == null || newProfessionalTitle.equals(professionalTitle)) {
+        if (newProfessionalTitle != null && newProfessionalTitle.equals(professionalTitle)) {
             return Constants.CURRENT_PAGE;
         }
         dao.updateProfessionalTitle(employeeDescription, newProfessionalTitle);
@@ -128,19 +146,24 @@ public class EmployeeDescriptionBean extends Logger {
     }
 
     public String updateCountryAndSector() {
-        log("updateCountryAndSector - " + newCountry);
+        log("updateCountryAndSector - " + newCountry + " " + newSector);
         notificationBean.clear();
-        if (newCountry == null || newCountry.equals(country)) {
+        if ((newCountry == null || newCountry.equals(country)) &&
+                (newSector == null || newSector.equals(sector))) {
             return Constants.CURRENT_PAGE;
         }
         try {
-            Country country = Country.valueOf(newCountry);
-            dao.updateCountry(employeeDescription, country);
+            // Updating the country.
+            Country resultCountry = Country.stringToCountry(newCountry);
+            dao.updateCountry(employeeDescription, resultCountry);
             this.country = newCountry;
-            log("updateCountryAndSector - country " + country + " sector " + sector);
+            // updating the sector.
+            dao.updateSector(employeeDescription, newSector);
+            this.sector = newSector;
+            log("updateCountryAndSector - country " + resultCountry + " sector " + newSector);
             notificationBean.setSuccess("New Country and Sector set.");
         } catch (IllegalArgumentException e) {
-            notificationBean.setError("The value : " + country + " is not correct. " + e.getMessage());
+            notificationBean.setError("The value : " + newCountry + " is not correct. " + e.getMessage());
         }
         return Constants.CURRENT_PAGE;
     }
@@ -243,5 +266,9 @@ public class EmployeeDescriptionBean extends Logger {
 
     public List<String> getCountries() {
         return countries;
+    }
+
+    public List<String> getSectors() {
+        return sectors;
     }
 }

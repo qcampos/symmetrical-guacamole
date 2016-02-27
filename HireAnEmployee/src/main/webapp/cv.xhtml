@@ -55,7 +55,7 @@
                 </c:if>
                 <!-- A visitor's description -->
                 <c:if test="#{sessionBean.id != cvViewedBean.id}">
-                    Hello Visitor !
+                    <ui:include src="WEB-INF/cv_description_no_editable.xhtml"/>
                 </c:if>
             </div>
 
@@ -69,7 +69,7 @@
     <h:outputScript library="js" name="mojarra-bug.js"/>
     <h:outputScript library="js" name="validator.js"/>
     <h:outputScript>
-/* TODO put it in description_editors.js */
+        /* TODO put it in description_editors.js */
         /* Script, allowing the expand and collapse of our informations editors
          IDs has to be of type : xx_toggler to toggle the corresponding id="xx" */
         function expandEditor(el) {

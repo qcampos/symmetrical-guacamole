@@ -141,6 +141,11 @@ public class DatabaseDAO {
     public List<String> getCountryList() {
         // TODO returns the list of country in a list of strings.
         // TODO Warning, Countries in MAJ for valueOf.
-        return Arrays.asList("FRANCE", "IRELAND", "ITALY");
+        return Arrays.asList("---" , "France", "Ireland", "Italy");
+    }
+
+    public List<String> getSectorList() {
+        // TODO returns the list of sector in a list of strings.
+        return Arrays.asList("Logiciels informatiques", "Agriculture", "Armée");
     }
 }

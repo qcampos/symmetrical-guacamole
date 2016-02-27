@@ -1,13 +1,14 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
-<!-- Couple description + editor for the description country and sector -->
+        xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <!-- Couple description + editor for the description country and sector -->
 
     <!-- Informations -->
     <h:panelGroup class="editable" id="country_group" layout="block">
         <a class="hyperspan" onclick="expandEditor('country');" id="country_toggler"></a>
-        <p>#{employeeDescriptionBean.country} | #{employeeDescriptionBean.sector} <span
+        <p>#{employeeDescriptionBean.country == null ?
+                "Ajouter un pays" : employeeDescriptionBean.country} | #{employeeDescriptionBean.sector == null ?
+                "Ajouter un titre professionel" : employeeDescriptionBean.sector} <span
                 class="glyphicon glyphicon-pencil"/></p>
         <h:outputScript>collapseEditor('country');</h:outputScript>
     </h:panelGroup>
@@ -15,7 +16,7 @@
 
     <!-- (editor) Toggled by id= country_toggler -->
     <h:panelGroup id="country" class="col-sm-9 col-xs-12 editor" layout="block">
-        <h:form id="country_form" prependId="false" p:data-toggle="validator" p:role="form">
+        <h:form id="country_form">
             <div class="row">
                 <div class="col-sm-12">
 
@@ -25,13 +26,14 @@
                         <!-- (Input country) -->
                         <!-- TODO list -->
                         <div class="form-group has-feedback">
-                            <h:selectOneMenu value="#{employeeDescriptionBean.country}" styleClass="selecter_1 selecter-element">
+                            <h:selectOneMenu value="#{employeeDescriptionBean.newCountry}" styleClass="form-control">
                                 <f:selectItems value="#{employeeDescriptionBean.countries}" var="_country"
-                                               itemLabel="#{_country}" itemValue="#{_country}" />
+                                               itemLabel="#{_country.toString()}" itemValue="#{_country}"/>
                             </h:selectOneMenu>
-                            <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
-                                         p:required="true" p:placeholder="Pays"
-                                         value="#{employeeDescriptionBean.newCountry}"/>
+                            <h:selectOneMenu value="#{employeeDescriptionBean.newSector}" styleClass="form-control">
+                                <f:selectItems value="#{employeeDescriptionBean.sectors}" var="_sector"
+                                               itemLabel="#{_sector}" itemValue="#{_sector}"/>
+                            </h:selectOneMenu>
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             <!-- <span class="help-block with-error">5 caractères minimum.</span> -->
                         </div>

@@ -1,7 +1,6 @@
 <ui:composition
-        xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <!-- This is the description component. Editable -->
 
@@ -22,23 +21,27 @@
                 </div>
 
                 <!-- (Text informations) -->
-                <div class="col-sm-8 col-xs-12" >
+                <div class="col-sm-8 col-xs-12">
 
                     <!-- (nom prenom) -->
-                    <ui:include src="cv_desc_name_editor.xhtml"/>
+                    <h:panelGroup class="" id="names_group" layout="block">
+                        <h3 class="panel-body-title">#{employeeDescriptionBean.names}</h3>
+                    </h:panelGroup>
 
                     <!-- (titre professionnel) -->
-                    <ui:include src="cv_desc_title_pro_editor.xhtml"/>
+                    <h:panelGroup class="" id="title_group" layout="block">
+                        <p><strong>#{employeeDescriptionBean.professionalTitle}</strong></p>
+                    </h:panelGroup>
 
                     <!-- (pays - secteur) -->
-                    <ui:include src="cv_desc_country_sector_editor.xhtml"/>
+                    <h:panelGroup class="" id="country_group" layout="block">
+                        <p>#{employeeDescriptionBean.country} | #{employeeDescriptionBean.sector}</p>
+                    </h:panelGroup>
 
                     <!-- (formation) -->
-                    <div class="editable">
-                        <a class="hyperspan" onclick="expandEditor('formation');" id="formation_toggler"></a>
-                        <p>#{employeeDescriptionBean.formation} <span
-                                class="glyphicon glyphicon-pencil"/></p>
-                    </div>
+                    <h:panelGroup class="" layout="block">
+                        <p>#{employeeDescriptionBean.formation}</p>
+                    </h:panelGroup>
 
                     <!-- (Relation button) -->
                     <div class="col-xs-6 row-strip">
