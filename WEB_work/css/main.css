@@ -2,7 +2,9 @@ body {
     background-color: #f1f2f6;
 }
 
+
 /* Begin Navbar *************/
+
 
 /* Background color */
 
@@ -13,6 +15,7 @@ body {
     /*font-size: 25px;*/
     text-align: center;
 }
+
 
 /* For the notification bug (could not collapsed on large screen) */
 
@@ -31,11 +34,13 @@ body {
     margin-bottom: 0;
 }
 
+
 /*
 .navbar-inverse .navbar-brand {
     -webkit-border-radius: 0 0 0 4px;
     -moz-border-radius: 0 0 0 4px;
 }*/
+
 
 /* BurgerMenu */
 
@@ -50,13 +55,16 @@ body {
     background-color: #ffffff;
 }
 
+
 /* End of burger menu */
+
 
 /* Profil cellule icon */
 
 #profile-li span {
     margin-right: 7px;
 }
+
 
 /* Logout cellule icon */
 
@@ -65,12 +73,14 @@ body {
     top: 2px;
 }
 
+
 /* FONT COLOR */
 
 .navbar-inverse .navbar-nav > li > a {
     font-weight: 700;
     color: #434a54;
 }
+
 
 /* The form input */
 
@@ -104,7 +114,9 @@ body {
     border-color: #19B5FE;
 }
 
+
 /* End of the form */
+
 
 /* When Hover, BACKGROUND COLOR */
 
@@ -114,6 +126,7 @@ body {
     background-color: #FFCE54;
     border-color: #FFCE54;
 }
+
 
 /*
 .navbar-inverse .navbar-brand:hover {
@@ -130,6 +143,7 @@ body {
     -moz-border-radius: 0 0 4px 0;
 }
 
+
 /* HIREANEMPLOYEE TITLE */
 
 .navbar-inverse .navbar-brand {
@@ -144,6 +158,7 @@ body {
     padding-right: 26px;
     padding-left: 26px;
 }
+
 
 /* Making the a filling all the li for the background color */
 
@@ -160,11 +175,11 @@ body {
         padding-right: 13px;
         padding-left: 13px;
     }
-
     #navbar-logout #logout-text {
         display: none;
     }
 }
+
 
 /*** COLLAPSE ***/
 
@@ -172,6 +187,7 @@ body {
 .navbar-collapse .navbar-form {
     border: 0;
 }
+
 
 /* END Navbar *************/
 
@@ -183,6 +199,7 @@ h5,
 p {
     color: #333;
 }
+
 
 /* BEGIN Connection page ******/
 
@@ -198,6 +215,7 @@ p {
     height: 19px;
     line-height: 19px;
 }
+
 
 /* BEGIN Top Photo *************/
 
@@ -222,6 +240,7 @@ p {
     margin-right: 6px;
 }
 
+
 /* BEGIN Pannel *************/
 
 .panel-blue {
@@ -232,6 +251,7 @@ p {
     height: 50px;
     padding: 16px auto auto;
 }
+
 
 /* Panel-blue transition */
 
@@ -270,7 +290,9 @@ p {
     margin-top: 10px;
 }
 
+
 /* END Panel ***********/
+
 
 /* BEGIN Description panel ********/
 
@@ -278,7 +300,9 @@ p {
     font-size: 11px;
 }
 
+
 /* END Description panel **********/
+
 
 /* BEGIN CV left row *************/
 
@@ -307,9 +331,12 @@ p {
     }
 }
 
+
 /* END CV left row **********/
 
+
 /* BEGIN Footer *************/
+
 
 /* Used to marging right after the logo footer on the small screen */
 
@@ -398,6 +425,7 @@ body {
     background-color: rgba(140, 187, 73, 0.85);
 }
 
+
 /* BEGIN Typographie ********/
 
 .small-text {
@@ -405,7 +433,9 @@ body {
     color: #7d8a9b;
 }
 
+
 /* END Typographie ********/
+
 
 /**** CONNECTION PAGE ****************************/
 
@@ -455,6 +485,7 @@ body {
     margin-bottom: 0;
 }
 
+
 /* BEGIN Form prompts ****/
 
 .error-msg {
@@ -479,6 +510,7 @@ body {
     display: inline;
 }
 
+
 /* END Form prompts ****/
 
 .under {
@@ -494,7 +526,9 @@ body {
     margin-bottom: 70px;
 }
 
+
 /* CV page */
+
 
 /* Styling the bar itself */
 
@@ -567,6 +601,7 @@ body {
     top: 0;
 }
 
+
 /* Editables System for edition *****/
 
 .editable {
@@ -576,6 +611,7 @@ body {
     transition: background-color 0.2s;
 }
 
+
 /*
 /*.editable ,
 .editable p,
@@ -584,6 +620,7 @@ body {
     padding: 0;
 }
 */
+
 .editable .glyphicon {
     opacity: 0;
     font-size: 70%;
@@ -651,6 +688,24 @@ input.btn-default {
 .editor .btn {
     height: 34px;
 }
+
+select {
+    -webkit-appearance: none;
+    color: rgb(67, 74, 84);
+    display: block;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    height: 34px;
+    line-height: 20px;
+    max-width: 100%;
+    outline-color: rgb(67, 74, 84);
+    outline-style: none;
+    outline-width: 0px;
+    position: relative;
+    width: 262.5px;
+    z-index: 1;
+}
+
 
 /*
 .demo {
