@@ -1,0 +1,65 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<!-- Couple description + editor for the description names -->
+
+    <!-- Informations -->
+    <h:panelGroup class="editable" id="names_group" layout="block">
+        <a class="hyperspan" onclick="expandEditor('names');" id="names_toggler"></a>
+        <h3 class="panel-body-title">#{employeeDescriptionBean.names}
+            <span class="glyphicon glyphicon-pencil"/></h3>
+        <h:outputScript>collapseEditor('names');</h:outputScript>
+    </h:panelGroup>
+
+    <!-- (editor) Toggled by id= names_toggler -->
+    <h:panelGroup id="names" class="col-sm-9 col-xs-12 editor" layout="block">
+        <h:form id="names_form" prependId="false" p:data-toggle="validator" p:role="form">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <!-- (Inputs) -->
+                    <h:panelGroup id="names_inputs" layout="block">
+
+                        <!-- (Input1 FirstName) -->
+                        <div class="form-group has-feedback">
+                            <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
+                                         p:required="true" p:pattern="#{regexes.getAlpha()}"
+                                         p:placeholder="Nom" value="#{employeeDescriptionBean.newFirstName}"/>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <!-- <span class="help-block with-error">5 caractères minimum.</span> -->
+                        </div>
+                        <!-- (End input1 FirstName) -->
+
+
+                        <!-- (Input2 LastName) -->
+                        <div class="form-group has-feedback">
+                            <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
+                                         p:required="true" p:pattern="#{regexes.getAlpha()}"
+                                         p:placeholder="Prénom" value="#{employeeDescriptionBean.newLastName}"/>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <!-- <span class="help-block with-error">5 caractères minimum.</span> -->
+                        </div>
+                        <!-- (End input2 FirstName) -->
+
+                    </h:panelGroup>
+                    <!-- (End of inputs) -->
+
+                    <div class="row"></div>
+
+                    <!-- (Buttons) -->
+                    <h:commandButton type="submit" styleClass="btn btn-default" value="OK"
+                                     action="#{employeeDescriptionBean.updateNames}">
+                        <f:ajax execute="@form" render="names_group names_inputs #{notificationBean.id}"
+                                resetValues="true"/>
+                    </h:commandButton>
+                    <h:commandButton type="button" styleClass="btn btn-redb" onclick="collapseEditor('names');"
+                                     value="Annuler">
+                        <f:ajax render="names_inputs" resetValues="true"/><!-- Catching this call -->
+                    </h:commandButton>
+                    <!-- (End of buttons -->
+                </div>
+            </div>
+        </h:form>
+    </h:panelGroup>
+</ui:composition>

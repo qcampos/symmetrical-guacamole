@@ -69,7 +69,7 @@
     <h:outputScript library="js" name="mojarra-bug.js"/>
     <h:outputScript library="js" name="validator.js"/>
     <h:outputScript>
-
+/* TODO put it in description_editors.js */
         /* Script, allowing the expand and collapse of our informations editors
          IDs has to be of type : xx_toggler to toggle the corresponding id="xx" */
         function expandEditor(el) {
@@ -89,7 +89,7 @@
             toggler.setAttribute("onClick", "expandEditor('" + el + "');");
             // Reseting the form.
             var form = document.getElementById(el + '_form');
-            form.reset();
+            // form.reset();
         }
     </h:outputScript>
 </h:body>

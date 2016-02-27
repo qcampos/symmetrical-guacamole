@@ -1,0 +1,61 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<!-- Couple description + editor for the description country and sector -->
+
+    <!-- Informations -->
+    <h:panelGroup class="editable" id="country_group" layout="block">
+        <a class="hyperspan" onclick="expandEditor('country');" id="country_toggler"></a>
+        <p>#{employeeDescriptionBean.country} | #{employeeDescriptionBean.sector} <span
+                class="glyphicon glyphicon-pencil"/></p>
+        <h:outputScript>collapseEditor('country');</h:outputScript>
+    </h:panelGroup>
+
+
+    <!-- (editor) Toggled by id= country_toggler -->
+    <h:panelGroup id="country" class="col-sm-9 col-xs-12 editor" layout="block">
+        <h:form id="country_form" prependId="false" p:data-toggle="validator" p:role="form">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <!-- (Inputs) -->
+                    <h:panelGroup id="country_inputs" layout="block">
+
+                        <!-- (Input country) -->
+                        <!-- TODO list -->
+                        <div class="form-group has-feedback">
+                            <h:selectOneMenu value="#{employeeDescriptionBean.country}" styleClass="selecter_1 selecter-element">
+                                <f:selectItems value="#{employeeDescriptionBean.countries}" var="_country"
+                                               itemLabel="#{_country}" itemValue="#{_country}" />
+                            </h:selectOneMenu>
+                            <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
+                                         p:required="true" p:placeholder="Pays"
+                                         value="#{employeeDescriptionBean.newCountry}"/>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <!-- <span class="help-block with-error">5 caractères minimum.</span> -->
+                        </div>
+                        <!-- (End input country) -->
+
+
+                    </h:panelGroup>
+                    <!-- (End of inputs) -->
+
+                    <div class="row"></div>
+
+                    <!-- (Buttons) -->
+                    <h:commandButton type="submit" styleClass="btn btn-default" value="OK"
+                                     action="#{employeeDescriptionBean.updateCountryAndSector}">
+                        <f:ajax execute="@form" render="country_group country_inputs #{notificationBean.id}"
+                                resetValues="true"/>
+                    </h:commandButton>
+                    <h:commandButton type="button" styleClass="btn btn-redb" onclick="collapseEditor('country');"
+                                     value="Annuler">
+                        <f:ajax render="country_inputs" resetValues="true"/><!-- Catching this call -->
+                    </h:commandButton>
+                    <!-- (End of buttons -->
+                </div>
+            </div>
+        </h:form>
+    </h:panelGroup>
+</ui:composition>

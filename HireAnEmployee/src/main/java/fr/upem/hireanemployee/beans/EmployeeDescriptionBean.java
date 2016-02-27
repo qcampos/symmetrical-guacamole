@@ -1,5 +1,6 @@
 package fr.upem.hireanemployee.beans;
 
+import fr.upem.hireanemployee.DatabaseDAO;
 import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.EmployeeDescriptionDAO;
 import fr.upem.hireanemployee.Logger;
@@ -14,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  * Created by Baxtalou on 22/02/2016.
@@ -23,6 +25,8 @@ import java.awt.image.BufferedImage;
 @ViewScoped
 public class EmployeeDescriptionBean extends Logger {
 
+    @EJB
+    private DatabaseDAO ddao;
     @EJB
     private EmployeeDescriptionDAO dao;
 
@@ -46,10 +50,11 @@ public class EmployeeDescriptionBean extends Logger {
     private String newFirstName;
     private String newLastName;
     private String newProfessionalTitle;
-    private Country newCountry;
+    private String newCountry;
     private BufferedImage newImage;
     private String newSector;
     private String newFormation;
+    private List<String> countries;
 
     @PostConstruct
     private void init() {
@@ -68,16 +73,20 @@ public class EmployeeDescriptionBean extends Logger {
         // Allowing default values by setting these forms.
         newFirstName = firstName;
         newLastName = lastName;
+        newProfessionalTitle = professionalTitle;
+        newCountry = country.toString();
+        countries = ddao.getCountryList();
     }
 
     public String updateNames() {
-        // TODO if == null : notificationBean(ViewScope).notifyError();
         log("updateNames - " + newFirstName + " " + newLastName);
         notificationBean.clear();
         // No new values.
         Employee employee = employeeDescription.getEmployee();
-        if ((newFirstName == null || newFirstName.equals(employee.getFirstName())) &&
-                (newLastName == null || newLastName.equals(employee.getLastName()))) {
+        String firstName = employee.getFirstName();
+        String lastName = employee.getLastName();
+        if ((newFirstName == null || newFirstName.equals(firstName)) &&
+                (newLastName == null || newLastName.equals(lastName))) {
             return Constants.CURRENT_PAGE;
         }
         // Verifying empty fields (they are not both required at the same time).
@@ -86,6 +95,8 @@ public class EmployeeDescriptionBean extends Logger {
         // Checking if values are not pur alpha. This is also checked on the view side.
         boolean b1 = !Regexes.parseAlpha(newFirstName);
         if (b1 || !Regexes.parseAlpha(newLastName)) {
+            newFirstName = firstName;
+            newLastName = lastName;
             log("updateNames - error in the parsing phase");
             notificationBean.setError("The value : " + (b1 ? newFirstName : newLastName) + " is not correct.");
             return Constants.CURRENT_PAGE;
@@ -93,13 +104,44 @@ public class EmployeeDescriptionBean extends Logger {
         // Updating the database.
         dao.updateNames(employeeDescription, newFirstName, newLastName);
         // Updating the corresponding field for next renderings by this very bean.
-        String firstName = employee.getFirstName();
-        String lastName = employee.getLastName();
+        firstName = employee.getFirstName();
+        lastName = employee.getLastName();
         names = firstName + " " + lastName;
         newFirstName = firstName;
         newLastName = lastName;
         log("updateNames - names " + names);
         notificationBean.setSuccess("Names updated to : " + newFirstName + " " + newLastName);
+        return Constants.CURRENT_PAGE;
+    }
+
+    public String updateTitle() {
+        log("updateTitle - " + newProfessionalTitle);
+        notificationBean.clear();
+        if (newProfessionalTitle == null || newProfessionalTitle.equals(professionalTitle)) {
+            return Constants.CURRENT_PAGE;
+        }
+        dao.updateProfessionalTitle(employeeDescription, newProfessionalTitle);
+        professionalTitle = newProfessionalTitle;
+        log("updateTitle - title " + professionalTitle);
+        notificationBean.setSuccess("New Professional title set.");
+        return Constants.CURRENT_PAGE;
+    }
+
+    public String updateCountryAndSector() {
+        log("updateCountryAndSector - " + newCountry);
+        notificationBean.clear();
+        if (newCountry == null || newCountry.equals(country)) {
+            return Constants.CURRENT_PAGE;
+        }
+        try {
+            Country country = Country.valueOf(newCountry);
+            dao.updateCountry(employeeDescription, country);
+            this.country = newCountry;
+            log("updateCountryAndSector - country " + country + " sector " + sector);
+            notificationBean.setSuccess("New Country and Sector set.");
+        } catch (IllegalArgumentException e) {
+            notificationBean.setError("The value : " + country + " is not correct. " + e.getMessage());
+        }
         return Constants.CURRENT_PAGE;
     }
 
@@ -155,7 +197,7 @@ public class EmployeeDescriptionBean extends Logger {
         this.newProfessionalTitle = newProfessionalTitle;
     }
 
-    public void setNewCountry(Country newCountry) {
+    public void setNewCountry(String newCountry) {
         this.newCountry = newCountry;
     }
 
@@ -183,7 +225,7 @@ public class EmployeeDescriptionBean extends Logger {
         return newProfessionalTitle;
     }
 
-    public Country getNewCountry() {
+    public String getNewCountry() {
         return newCountry;
     }
 
@@ -197,5 +239,9 @@ public class EmployeeDescriptionBean extends Logger {
 
     public String getNewFormation() {
         return newFormation;
+    }
+
+    public List<String> getCountries() {
+        return countries;
     }
 }

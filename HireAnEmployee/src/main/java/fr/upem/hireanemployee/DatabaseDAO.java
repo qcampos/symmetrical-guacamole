@@ -10,6 +10,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -134,5 +136,11 @@ public class DatabaseDAO {
     public Employee getEmployeeByID(long id) {
         // TODO your data with de DATABASE filter ;)
         return em.find(Employee.class, id);
+    }
+
+    public List<String> getCountryList() {
+        // TODO returns the list of country in a list of strings.
+        // TODO Warning, Countries in MAJ for valueOf.
+        return Arrays.asList("FRANCE", "IRELAND", "ITALY");
     }
 }

@@ -21,94 +21,17 @@
                     <h:graphicImage name="img/photo1.jpg" alt="photo de profil" class="img-thumbnail"/>
                 </div>
 
-                <!-- (nom prenom) -->
+                <!-- (Text informations) -->
                 <div class="col-sm-8 col-xs-12" >
-                    <h:panelGroup class="editable" id="names_group" layout="block">
-                        <a class="hyperspan" onclick="expandEditor('names');" id="names_toggler"></a>
-                        <h3 class="panel-body-title">#{employeeDescriptionBean.names}
-                            <span class="glyphicon glyphicon-pencil"/></h3>
-                        <h:outputScript>collapseEditor('names');</h:outputScript>
-                    </h:panelGroup>
 
-                    <!-- (editor) Toggled by id= names_toggler -->
-                    <h:panelGroup id="names" class="col-sm-9 col-xs-12 editor"  layout="block">
-                        <h:form id="names_form" prependId="false" p:data-toggle="validator" p:role="form">
-                            <div class="row">
-                                <div class="col-sm-12">
-
-                                    <!-- (Inputs) -->
-                                    <h:panelGroup id="names_inputs" layout="block">
-
-                                        <!-- (Input1 FirstName) -->
-                                        <div class="form-group has-feedback">
-                                            <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
-                                                         p:required="true" p:pattern="#{regexes.getAlpha()}"
-                                                         p:placeholder="Nom" value="#{employeeDescriptionBean.newFirstName}"/>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                            <!-- <span class="help-block with-error">5 caractères minimum.</span> -->
-                                        </div>
-                                        <!-- (End input1 FirstName) -->
-
-
-                                        <!-- (Input2 LastName) -->
-                                        <div class="form-group has-feedback">
-                                            <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
-                                                         p:required="true" p:pattern="#{regexes.getAlpha()}"
-                                                         p:placeholder="Prénom" value="#{employeeDescriptionBean.newLastName}"/>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                            <!-- <span class="help-block with-error">5 caractères minimum.</span> -->
-                                        </div>
-                                        <!-- (End input2 FirstName) -->
-                                    </h:panelGroup>
-                                    <!-- (End of inputs) -->
-
-                                    <div class="row"></div>
-
-                                    <!-- (Buttons) -->
-                                    <h:commandButton type="submit" styleClass="btn btn-default" value="OK" action="#{employeeDescriptionBean.updateNames}">
-                                        <f:ajax execute="@form" render="names_group names_inputs #{notificationBean.id}" resetValues="true"/> <!-- TODO collapse editor if js{cond?'collapse()':''} -->
-                                    </h:commandButton>
-                                    <h:commandButton type="button" styleClass="btn btn-redb" onclick="collapseEditor('names');"
-                                                     value="Annuler">
-                                        <f:ajax render="names_inputs" resetValues="true"/><!-- Catching this call -->
-                                    </h:commandButton>
-                                    <!-- (End of buttons -->
-                                </div>
-                            </div>
-                        </h:form>
-                    </h:panelGroup>
-
+                    <!-- (nom prenom) -->
+                    <ui:include src="cv_desc_name_editor.xhtml"/>
 
                     <!-- (titre professionnel) -->
-                    <div class="editable">
-                        <a class="hyperspan" onclick="expandEditor('title');" id="title_toggler"></a>
-                        <p><strong>#{employeeDescriptionBean.professionalTitle} <span
-                                class="glyphicon glyphicon-pencil"/></strong></p>
-                    </div>
-
-                    <!-- (editor) -->
-                    <div class="col-sm-8 col-xs-12 editor" id="title">
-                        <input type="text" class="form-control" placeholder="Titre professionnel"/>
-                        <div class="row"></div>
-                        <button class="btn btn-default">OK</button>
-                        <button class="btn btn-redb" onclick="collapseEditor('title');">Annuler</button>
-                    </div>
+                    <ui:include src="cv_desc_title_pro_editor.xhtml"/>
 
                     <!-- (pays - secteur) -->
-                    <div class="editable">
-                        <a class="hyperspan" onclick="expandEditor('country');" id="country_toggler"></a>
-                        <p>#{employeeDescriptionBean.country} | #{employeeDescriptionBean.sector} <span
-                                class="glyphicon glyphicon-pencil"/></p>
-                    </div>
-
-                    <!-- (editor) -->
-                    <div class="col-sm-8 col-xs-12 editor" id="country">
-                        <input type="text" class="form-control" placeholder="Pays"/>
-                        <input type="text" class="form-control" placeholder="Secteur"/>
-                        <div class="row"></div>
-                        <button class="btn btn-default">OK</button>
-                        <button class="btn btn-redb" onclick="collapseEditor('country');">Annuler</button>
-                    </div>
+                    <ui:include src="cv_desc_country_sector_editor.xhtml"/>
 
                     <!-- (formation) -->
                     <div class="editable">
