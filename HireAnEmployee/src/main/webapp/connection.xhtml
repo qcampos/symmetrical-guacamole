@@ -59,6 +59,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">@</span>
                                                 <h:inputText p:type="email" class="form-control" id="emailLogin"
+                                                             p:pattern="#{regexes.getEmail()}"
                                                              p:placeholder="Email" value="#{connectionBean.email}"
                                                              p:data-error="Format incorrect" p:required="true"/>
                                             </div>
@@ -139,7 +140,8 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">@</span>
                                                 <h:inputText p:type="email" class="form-control" id="emailLogin2"
-                                                             p:placeholder="Email" value="#{connectionBean.email}"
+                                                             p:placeholder="Email" p:pattern="#{regexes.getEmail()}"
+                                                             value="#{connectionBean.email}"
                                                              p:data-error="Format incorrect" p:required="true"/>
                                             </div>
                                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
