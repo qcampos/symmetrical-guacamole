@@ -2,7 +2,10 @@ package fr.upem.hireanemployee.profildata;
 
 import javax.persistence.*;
 import javax.validation.constraints.Past;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Quentin on 18/02/2016.
@@ -105,5 +108,32 @@ public class Experience {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
+    }
+
+    public String toDate() {
+        SimpleDateFormat format = new SimpleDateFormat("MMM yyyy");
+        return format.format(startDate) + " - " + format.format(endDate) + " " + dateDifference(startDate, endDate);//  (3 mois)
+    }
+
+    private String dateDifference(Date startDate, Date endDate) {
+        //in milliseconds
+
+        long duration = endDate.getTime() - startDate.getTime();
+
+        long diffInDays = TimeUnit.MILLISECONDS.toDays(duration);
+        long diffYear = diffInDays / 365;
+        diffInDays -= (diffInDays * diffYear * 365);
+        long diffMonths = Math.round(diffInDays / 31.0);
+
+        if (diffMonths + diffYear == 0) {
+            return "";
+        }
+        if (diffMonths > 0) {
+            if (diffYear > 0) {
+                return "(" + diffMonths + " mois et " + diffYear + " ans)";
+            }
+            return "(" + diffMonths + " mois)";
+        }
+        return diffYear > 0 ? "(" + diffYear + " ans)" : "";
     }
 }

@@ -153,7 +153,7 @@ public class DatabaseDAO {
         return Arrays.asList(Country.values()).stream().map(new Function<Country, String>() {
             @Override
             public String apply(final Country country) {
-                return country.name();
+                return country.toString();
             }
         }).collect(Collectors.<String> toList());
     }

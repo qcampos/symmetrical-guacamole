@@ -58,6 +58,7 @@ public class EmployeeDescriptionDAO {
 
     public EmployeeDescription updateSector(EmployeeDescription employeeDescription, String sectorName) {
         Sector sector;
+        System.out.println("SECTOR [BEAN] " + sectorName + " end.");
         try {
             sector = em.createQuery("Select s from Sector s where s.name = :sectorName", Sector.class).setParameter("sectorName", sectorName).getSingleResult();
         } catch (NoResultException e) {

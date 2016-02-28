@@ -56,7 +56,7 @@ public class EmployeeExperienceBean extends Logger {
         // Normalizing null values. We program with the option preventing the use of empty strings.
         // Null strings are handle ate the printing to place placeholder independent from this very model.
         // It allows us for example to translate placeholders outside the model.
-        //professionalTitle = setNullIfEmpty(professionalTitle);
+        //professionalTitle = setNullIfEmpty(professionalTitle);s
 
         // Allowing default values by setting these forms.
 //        newFirstName = firstName;

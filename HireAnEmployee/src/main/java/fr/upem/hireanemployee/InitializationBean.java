@@ -48,8 +48,9 @@ public class InitializationBean extends Logger {
         Employee employee = bdu.connect("nborie@upem.fr", "pony17");
 
         EmployeeDescription description = employee.getDescription();
-        edao.updateSector(description, "Combinatorics");
         edao.updateSector(description, "---");
+        edao.updateSector(description, "Combinatorics");
+        edao.updateSector(description, "Logiciels informatiques");
 
         if (!bdu.emailExists("jmangue@u.com")) {
             bdu.signup("Jefferson", "Mangue", "jmangue@u.com", "12345");
@@ -59,19 +60,26 @@ public class InitializationBean extends Logger {
         description = employee.getDescription();
 
         edao.updateCountry(description, Country.FRANCE);
-        edao.updateSector(description, "Logiciels informatiques");
         edao.updateProfessionalTitle(description, "MSc in Project and Programme Management and Business Development");
 
         fdao.createFormation("SKEMA Business School", "Master’s Degree, Master of Science in Project and Programme Management and Business Development",
                 Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), employee);
 
-        /*
+        exdao.createExperience("Weekendesk", "Asistant Marketing Manager", "jobAbstract",
+                "Weekendesk is an European Online Travel Agency, operating in the French, Spanish, Belgian, Dutch and Italian markets, " +
+                        "focused on delivering the best experience for short breaks and holidays. http://www.weekendesk.fr/ As a Marketing " +
+                        "Assistant, I managed the digital presence of the Weekendesk brand in Spain on social networks: Facebook, Twitter and " +
+                        "Google +.",
+                new Date(114, 6, 1), new Date(114, 11, 29), employee);
+        // Begun the 1 and ended the 31 always. (1 Juillter <-> 29 Décembre (problem with 31 Fevrier does not exists).
+
         exdao.createExperience("Dassault System", "MSc in Project and Programme Management and Business Development", "jobAbstract",
                 "Member of the ICT Team The ICT team will deliver all communications and related services, " +
                         "as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, " +
                         "set-up, operations and change management of all deliverables within the scope of ICT.",
-                new Date(), new Date(), employee);
-        */
+                new Date(115, 11, 1), new Date(116, 1, 29), employee);
+        // Begun the 1 and ended the 31 always. (1 Décembre <-> 29 Février (problem with 31 Fevrier does not exists).
+
 
         log("init - " + description.getEmployee().getFirstName());
     }
