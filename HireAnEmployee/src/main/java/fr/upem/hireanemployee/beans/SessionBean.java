@@ -2,12 +2,15 @@ package fr.upem.hireanemployee.beans;
 
 import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.Logger;
+import fr.upem.hireanemployee.navigation.Constants;
+import fr.upem.hireanemployee.navigation.Navigations;
 import fr.upem.hireanemployee.profildata.EmployeeDescription;
 import fr.upem.hireanemployee.profildata.Experience;
 import org.omg.PortableInterceptor.DISCARDING;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.util.Collection;
 
 /**
@@ -16,6 +19,7 @@ import java.util.Collection;
 @ManagedBean
 @SessionScoped
 public class SessionBean extends Logger {
+
 
     public enum State {CONNECTED, DISCONNECTED}
 
@@ -29,6 +33,22 @@ public class SessionBean extends Logger {
         this.employee = employee;
         state = State.CONNECTED;
         log("setConnected - " + employee.getFirstName());
+    }
+
+    /**
+     * Disconnects the current employee.
+     *
+     * @return the current page.
+     */
+    public String setDisconnected() {
+        if (state == State.DISCONNECTED) {
+            return Navigations.redirect("cv.xhtml") + ";includeViewParams=true";
+        }
+        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        log("setDisconnected - " + employee.getFirstName() + " on " + viewId + "?includeViewParams=true");
+        state = State.DISCONNECTED;
+        employee = null;
+        return Navigations.redirect("cv.xhtml") + ";includeViewParams=true";
     }
 
     /**
@@ -46,5 +66,15 @@ public class SessionBean extends Logger {
             return -1;
         }
         return employee.getId();
+    }
+
+    /**
+     * @return The profil URL for the current session.
+     */
+    public String getProfilUrl() {
+        if (state == State.DISCONNECTED) {
+            return Navigations.redirect(Constants.CONNECTION);
+        }
+        return Navigations.redirect(Constants.CV) + "id=" + getId();
     }
 }

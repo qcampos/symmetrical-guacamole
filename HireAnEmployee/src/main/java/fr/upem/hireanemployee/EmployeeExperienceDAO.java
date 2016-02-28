@@ -37,8 +37,6 @@ public class EmployeeExperienceDAO {
         return createExperience(companyName, jobName, jobAbstract, jobDescription, startDate, endDate, employee);
     }
 
-    // TODO J'ai du toucher ta page, très rapidement.
-
     /**
      * Surcharge needed for some cases.
      */

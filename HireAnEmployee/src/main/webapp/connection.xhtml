@@ -9,185 +9,190 @@
     <ui:param name="title" value="connexion"/>
 </ui:include>
 
-<h:body style="background-color: #5D9CEC;">
+<h:body id="connection_body">
 
     <!-- Notification system composite -->
     <h:panelGroup layout="block" class="navbbar-top">
         <ui:include src="WEB-INF/notification_composite.xhtml"/>
     </h:panelGroup>
 
-    <!-- Header -->
-    <div class="container">
-        <!-- (page description header) -->
-        <div class="row">
-            <div class="col-xs-12">
-                <h1 id="title">Hire|Employ<span class="under">ee</span></h1>
-                <h4 id="sub-title">Votre curriculum vit&aelig; sous son meilleur jour</h4>
-            </div>
-        </div>
-
-        <h:form p:role="form">
-            <div class="form-group has-feedback">
-                <label for="inputTwitter" class="control-label">Rechercher un ami</label>
-                <div class="input-group">
-                    <span class="input-group-addon">@</span>
-                    <h:inputText type="text" class="form-control" id="inputTwitter"
-                                 p:placeholder="Rechercher" p:required="true"/>
+    <div id="body-content">
+        <!-- Header -->
+        <div class="container">
+            <!-- (page description header) -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 id="title">Hire|Employ<span class="under">ee</span></h1>
+                    <h4 id="sub-title">Votre curriculum vit&aelig; sous son meilleur jour</h4>
                 </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <span class="help-block">C'est gratuit ! (Et ça le restera toujours)</span>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </h:form>
 
-
-        <div class="row" id="connection-page-forms">
-            <!-- (connexion form) -->
-            <div class="col-lg-5 col-sm-6 connection-form">
-                <!-- (descripton) -->
-                <div class="panel panel-blue">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Connectez-vous</h1>
+            <!--
+            <h:form p:role="form">
+                <div class="form-group has-feedback">
+                    <label for="inputTwitter" class="control-label">Rechercher un ami</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">@</span>
+                        <h:inputText type="text" class="form-control" id="inputTwitter"
+                                     p:placeholder="Rechercher" p:required="true"/>
                     </div>
-                    <div class="panel-body">
-                        <div class="modal-body">
-                            <h:form prependId="false" p:data-toggle="validator" p:role="form">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-feedback">
-                                            <label for="emailLogin" class="control-label">Email</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">@</span>
-                                                <h:inputText p:type="email" class="form-control" id="emailLogin"
-                                                             p:pattern="#{regexes.getEmail()}"
-                                                             p:placeholder="Email" value="#{connectionBean.email}"
-                                                             p:data-error="Format incorrect" p:required="true"/>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <span class="help-block">C'est gratuit ! (Et ça le restera toujours)</span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </h:form>-->
+
+
+            <div class="row" id="connection-page-forms">
+                <!-- (connexion form) -->
+                <div class="col-lg-5 col-sm-6 connection-form">
+                    <!-- (descripton) -->
+                    <div class="panel panel-blue">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Connectez-vous</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="modal-body">
+                                <h:form prependId="false" p:data-toggle="validator" p:role="form">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="emailLogin" class="control-label">Email</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">@</span>
+                                                    <h:inputText p:type="email" class="form-control" id="emailLogin"
+                                                                 p:pattern="#{regexes.getEmail()}"
+                                                                 p:placeholder="Email" value="#{connectionBean.email}"
+                                                                 p:data-error="Format incorrect" p:required="true"/>
+                                                </div>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                             </div>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-feedback">
-                                            <label for="password" class="control-label">Mot de passe</label>
-                                            <h:inputText p:type="password" class="form-control" id="password"
-                                                         p:data-minlength="5"
-                                                         value="#{connectionBean.password}" p:placeholder="Mot de passe"
-                                                         p:data-error=" " p:required="true"/>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                            <span class="help-block with-error">5 caractères minimum.</span>
-                                            <!--<span class="help-block with-success">Ok !</span>
-                                            <span class="help-block with-hint"></span> -->
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="password" class="control-label">Mot de passe</label>
+                                                <h:inputText p:type="password" class="form-control" id="password"
+                                                             p:data-minlength="5"
+                                                             value="#{connectionBean.password}"
+                                                             p:placeholder="Mot de passe"
+                                                             p:data-error=" " p:required="true"/>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                <span class="help-block with-error">5 caractères minimum.</span>
+                                                <!--<span class="help-block with-success">Ok !</span>
+                                                <span class="help-block with-hint"></span> -->
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                        <h:commandButton class="btn btn-default btn-greenb" style="margin-top:8px;"
-                                                         type="submit" action="#{connectionBean.connect}"
-                                                         value="Connexion">
-                                            <f:ajax execute="@form" render="#{notificationBean.id}"/>
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <h:commandButton class="btn btn-default btn-greenb" style="margin-top:8px;"
+                                                             type="submit" action="#{connectionBean.connect}"
+                                                             value="Connexion">
+                                                <f:ajax execute="@form" render="#{notificationBean.id}"/>
+                                            </h:commandButton>
+                                        </div>
                                     </div>
-                                </div>
-                            </h:form>
+                                </h:form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- (fin de connexion form) -->
+                <!-- (fin de connexion form) -->
 
-            <!-- (login form) -->
-            <div class="col-lg-offset-1 col-lg-5 col-sm-6 hidden-pannel connection-form">
-                <!-- (descripton) -->
-                <div class="panel panel-blue">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Inscrivez-vous</h1>
-                    </div>
-                    <div class="panel-body">
-                        <div class="modal-body">
-                            <h:form prependId="false" p:data-toggle="validator" p:role="form">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-feedback">
-                                            <label for="lastname" class="control-label">Nom</label>
-                                            <h:inputText p:type="text" class="form-control" id="lastname"
-                                                         value="#{connectionBean.lastName}" p:placeholder="Nom"
-                                                         p:data-error=" " p:required="true"/>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                            <span class="help-block with-error">Format invalide.</span>
-                                            <!--<span class="help-block with-success">Ok !</span>
-                                            <span class="help-block with-hint"></span> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-feedback">
-                                            <label for="firstname" class="control-label">Prénom</label>
-                                            <h:inputText p:type="text" class="form-control" id="firstname"
-                                                         value="#{connectionBean.firstName}" p:placeholder="Prénom"
-                                                         p:data-error=" " p:required="true"/>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-feedback">
-                                            <label for="emailLogin2" class="control-label">Email</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">@</span>
-                                                <h:inputText p:type="email" class="form-control" id="emailLogin2"
-                                                             p:placeholder="Email" p:pattern="#{regexes.getEmail()}"
-                                                             value="#{connectionBean.email}"
-                                                             p:data-error="Format incorrect" p:required="true"/>
+                <!-- (login form) -->
+                <div class="col-lg-offset-1 col-lg-5 col-sm-6 hidden-pannel connection-form">
+                    <!-- (descripton) -->
+                    <div class="panel panel-blue">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Inscrivez-vous</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="modal-body">
+                                <h:form prependId="false" p:data-toggle="validator" p:role="form">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="lastname" class="control-label">Nom</label>
+                                                <h:inputText p:type="text" class="form-control" id="lastname"
+                                                             value="#{connectionBean.lastName}" p:placeholder="Nom"
+                                                             p:data-error=" " p:required="true"/>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                <span class="help-block with-error">Format invalide.</span>
+                                                <!--<span class="help-block with-success">Ok !</span>
+                                                <span class="help-block with-hint"></span> -->
                                             </div>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                            <span class="help-block with-error">Format incorect.</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-feedback">
-                                            <label for="password2" class="control-label">Mot de passe</label>
-                                            <h:inputText p:type="password" class="form-control" id="password2"
-                                                         p:data-minlength="5"
-                                                         value="#{connectionBean.password}" p:placeholder="Mot de passe"
-                                                         p:data-error=" " p:required="true"/>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                            <span class="help-block with-error">5 caractères minimum.</span>
-                                            <!--<span class="help-block with-success">Ok !</span>
-                                            <span class="help-block with-hint"></span> -->
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="firstname" class="control-label">Prénom</label>
+                                                <h:inputText p:type="text" class="form-control" id="firstname"
+                                                             value="#{connectionBean.firstName}" p:placeholder="Prénom"
+                                                             p:data-error=" " p:required="true"/>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                        <h:commandButton class="btn btn-default btn-greenb" style="margin-top:8px;"
-                                                         type="submit" action="#{connectionBean.create()}"
-                                                         value="Inscription">
-                                            <f:ajax execute="@form" render="#{notificationBean.id}"/>
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="emailLogin2" class="control-label">Email</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">@</span>
+                                                    <h:inputText p:type="email" class="form-control" id="emailLogin2"
+                                                                 p:placeholder="Email" p:pattern="#{regexes.getEmail()}"
+                                                                 value="#{connectionBean.email}"
+                                                                 p:data-error="Format incorrect" p:required="true"/>
+                                                </div>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                <span class="help-block with-error">Format incorect.</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </h:form>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="password2" class="control-label">Mot de passe</label>
+                                                <h:inputText p:type="password" class="form-control" id="password2"
+                                                             p:data-minlength="5"
+                                                             value="#{connectionBean.password}"
+                                                             p:placeholder="Mot de passe"
+                                                             p:data-error=" " p:required="true"/>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                <span class="help-block with-error">5 caractères minimum.</span>
+                                                <!--<span class="help-block with-success">Ok !</span>
+                                                <span class="help-block with-hint"></span> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <h:commandButton class="btn btn-default btn-greenb" style="margin-top:8px;"
+                                                             type="submit" action="#{connectionBean.create()}"
+                                                             value="Inscription">
+                                                <f:ajax execute="@form" render="#{notificationBean.id}"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- (fin de connexion form) -->
+                <!-- (fin de connexion form) -->
 
+            </div>
+            <!-- (fin de row) -->
         </div>
-        <!-- (fin de row) -->
+
+        <!-- footer -->
+        <ui:include src="WEB-INF/footer.xhtml"/>
     </div>
-
-    <!-- footer -->
-    <ui:include src="WEB-INF/footer.xhtml"/>
 </h:body>
 
 </html>

@@ -61,6 +61,9 @@ public class EmployeeDescriptionBean extends Logger {
     @PostConstruct
     private void init() {
         log("init - description " + employeeDescription);
+        if (employeeDescription == null) {
+            throw new NullPointerException("The current description is null.");
+        }
         Employee employee = employeeDescription.getEmployee();
         String firstName = employee.getFirstName();
         String lastName = employee.getLastName();

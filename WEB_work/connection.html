@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="css/verticals.css">
 </head>
 
-<body style="background-color: #5D9CEC;">
+<body id="connection_body">
     <!-- TODO custimize the color here -->
 
 
@@ -53,18 +53,19 @@
 
 
 
-    <div class="container">
+    <div id="body-content">
+        <div class="container">
 
-        <!-- (page description header) -->
-        <div class="row">
-            <div class="col-xs-12">
-                <h1 id="title">Hire|Employ<u>ee</u></h1>
-                <h4 id="sub-title">Votre curriculum sous son meilleur jour</h4>
+            <!-- (page description header) -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 id="title">Hire|Employ<u>ee</u></h1>
+                    <h4 id="sub-title">Votre curriculum sous son meilleur jour</h4>
+                </div>
             </div>
-        </div>
 
-        <!-- Test input -->
-        <form data-toggle="validator" role="form">
+            <!-- Test input -->
+            <!--<form data-toggle="validator" role="form">
             <div class="form-group has-feedback">
                 <label for="inputTwitter" class="control-label">Rechercher un ami</label>
                 <div class="input-group">
@@ -74,155 +75,153 @@
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <span class="help-block">C'est gratuit ! (Et ça le restera toujours)</span>
             </div>
-            <div class="form-group">
-               <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-            </div>
-        </form>
+            <div class="form-group">-->
+            <!-- <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+            <!-- </div>
+        </form>-->
 
 
-        <div class="row" id="connection-page-forms">
+            <div class="row" id="connection-page-forms">
 
-            <!-- (connexion form) -->
-            <div class="col-lg-5 col-sm-6 connection-form">
-                <!-- (descripton) -->
-                <div class="panel panel-blue">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Connectez-vous</h1>
-                    </div>
-                    <div class="panel-body">
-                        <div class="modal-body">
-                            <form data-toggle="validator" role="form" action="cv.html">
+                <!-- (connexion form) -->
+                <div class="col-lg-5 col-sm-6 connection-form">
+                    <!-- (descripton) -->
+                    <div class="panel panel-blue">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Connectez-vous</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="modal-body">
+                                <form data-toggle="validator" role="form" action="cv.html">
 
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-feedback">
-                                            <label for="emailLogin" class="control-label">Email</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">@</span>
-                                                <input type="email" class="form-control" id="emailLogin" placeholder="Email" 
-                                                       data-error="Format incorrect" required>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="emailLogin" class="control-label">Email</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">@</span>
+                                                    <input type="email" class="form-control" id="emailLogin" placeholder="Email" data-error="Format incorrect" required>
+                                                </div>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                             </div>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-feedback">
-                                            <label for="motdepasse" class="control-label">Mot de passe</label>
-                                                <input type="password" class="form-control" id="motdepasse" data-minlength="5"
-                                                       placeholder="Mot de passe" data-error=" " required>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                            <span class="help-block with-error">5 caractères minimum.</span>
-                                            <!--<span class="help-block with-success">Ok !</span>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="motdepasse" class="control-label">Mot de passe</label>
+                                                <input type="password" class="form-control" id="motdepasse" data-minlength="5" placeholder="Mot de passe" data-error=" " required>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                <span class="help-block with-error">5 caractères minimum.</span>
+                                                <!--<span class="help-block with-success">Ok !</span>
                                             <span class="help-block with-hint"></span> -->
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                        <input class="btn btn-default btn-redb" style="margin-top:8px;" type="submit" action="submit" value="Connexion"></input>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- (fin de connexion form) -->
-
-            <!-- (login form) -->
-            <div class="col-lg-offset-2 col-lg-5 col-sm-6 hidden-pannel connection-form">
-                <!-- (descripton) -->
-                <div class="panel panel-blue">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Inscrivez-vous</h1>
-                    </div>
-                    <div class="panel-body">
-                        <div class="modal-body">
-                            <form action="cv.html">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <label>Nom</label>
-                                        <input type="text" class="form-control" placeholder="Nom" required="true">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <label>Prénom</label>
-                                        <input type="text" class="form-control" placeholder="Prénom" required="true">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group has-error has-feedback">
-                                            <label class="control-label" for="inputError2">Email</label>
-                                            <span class="error-msg">existe dans la base.</span>
-                                            <input type="email" class="form-control" placeholder="Email" required="true">
-                                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <input class="btn btn-default btn-redb" style="margin-top:8px;" type="submit" action="submit" value="Connexion"></input>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <label>Mot de passe</label>
-                                        <input type="password" class="form-control" placeholder="Mot de passe" required="true">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                        <input class="btn btn-default btn-yellowb" style="margin-top:8px;" type="submit" action="submit" value="Inscription"></input>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- (fin de connexion form) -->
-
-        </div>
-        <!-- (fin de row) -->
-    </div>
-    <!-- Footer
-      ================================================== -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="footer">
-                    <div class="container">
-                        <div class="clearfix">
-                            <div class="footer-logo" id="footer-logo-div"><a href="#">Hire|Employ<b><u>ee</u></b><br/>.com</a></div>
-                            <div id="footer-left-first">
-                                <dl class="footer-nav">
-                                    <dt class="nav-title">ABOUT</dt>
-                                    <dd class="nav-item"><a href="#">The Company</a></dd>
-                                    <dd class="nav-item"><a href="#">History</a></dd>
-                                    <dd class="nav-item"><a href="#">Vision</a></dd>
-                                </dl>
-                                <dl class="footer-nav">
-                                    <dt class="nav-title">GALLERY</dt>
-                                    <dd class="nav-item"><a href="#">Flickr</a></dd>
-                                    <dd class="nav-item"><a href="#">Picasa</a></dd>
-                                    <dd class="nav-item"><a href="#">iStockPhoto</a></dd>
-                                    <dd class="nav-item"><a href="#">PhotoDune</a></dd>
-                                </dl>
-                                <dl class="footer-nav">
-                                    <dt class="nav-title">CONTACT</dt>
-                                    <dd class="nav-item"><a href="#">QCampos</a></dd>
-                                    <dd class="nav-item"><a href="#">JMangue</a></dd>
-                                    <dd class="nav-item"><a href="#">DVaracca</a></dd>
-                                </dl>
+                                </form>
                             </div>
                         </div>
-                        <div class="footer-copyright text-center">Copyright &copy; 2016 HireAnEmployee.All rights reserved.</div>
+                    </div>
+                </div>
+                <!-- (fin de connexion form) -->
+
+                <!-- (login form) -->
+                <div class="col-lg-offset-2 col-lg-5 col-sm-6 hidden-pannel connection-form">
+                    <!-- (descripton) -->
+                    <div class="panel panel-blue">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Inscrivez-vous</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="modal-body">
+                                <form action="cv.html">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Nom</label>
+                                            <input type="text" class="form-control" placeholder="Nom" required="true">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Prénom</label>
+                                            <input type="text" class="form-control" placeholder="Prénom" required="true">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group has-error has-feedback">
+                                                <label class="control-label" for="inputError2">Email</label>
+                                                <span class="error-msg">existe dans la base.</span>
+                                                <input type="email" class="form-control" placeholder="Email" required="true">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Mot de passe</label>
+                                            <input type="password" class="form-control" placeholder="Mot de passe" required="true">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <input class="btn btn-default btn-yellowb" style="margin-top:8px;" type="submit" action="submit" value="Inscription"></input>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- (fin de connexion form) -->
+
+            </div>
+            <!-- (fin de row) -->
+        </div>
+        <!-- Footer
+      ================================================== -->
+        <div class="container-fluid" id="footer-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer">
+                        <div class="container">
+                            <div class="clearfix">
+                                <div class="footer-logo" id="footer-logo-div"><a href="#">Hire|Employ<b><u>ee</u></b><br/>.com</a></div>
+                                <div id="footer-left-first">
+                                    <dl class="footer-nav">
+                                        <dt class="nav-title">ABOUT</dt>
+                                        <dd class="nav-item"><a href="#">The Company</a></dd>
+                                        <dd class="nav-item"><a href="#">History</a></dd>
+                                        <dd class="nav-item"><a href="#">Vision</a></dd>
+                                    </dl>
+                                    <dl class="footer-nav">
+                                        <dt class="nav-title">GALLERY</dt>
+                                        <dd class="nav-item"><a href="#">Flickr</a></dd>
+                                        <dd class="nav-item"><a href="#">Picasa</a></dd>
+                                        <dd class="nav-item"><a href="#">iStockPhoto</a></dd>
+                                        <dd class="nav-item"><a href="#">PhotoDune</a></dd>
+                                    </dl>
+                                    <dl class="footer-nav">
+                                        <dt class="nav-title">CONTACT</dt>
+                                        <dd class="nav-item"><a href="#">QCampos</a></dd>
+                                        <dd class="nav-item"><a href="#">JMangue</a></dd>
+                                        <dd class="nav-item"><a href="#">DVaracca</a></dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="footer-copyright text-center">Copyright &copy; 2016 HireAnEmployee.All rights reserved.</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- UI-1 Ends -->
     </div>
-    <!-- UI-1 Ends -->
-
 
 </body>
 

@@ -5,6 +5,7 @@ package fr.upem.hireanemployee.navigation;
  */
 public class Constants {
     public static final String CV = "cv.xhtml";
+    public static final String CONNECTION = "connection.xhtml";
 
     public static final String CURRENT_PAGE = "";
 }

@@ -62,7 +62,7 @@
                         <div class="navbar-collapse collapse out" id="bs-example-navbar-collapse-5" style="">
                             <ul class="nav navbar-nav">
                                 <li id="profile-li"><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                                <li class="">
+                                <li id="navbar-input">
                                     <form class="navbar-form" role="search">
                                         <div class="form-search search-only input-group">
                                             <div class="input-group form-search">
@@ -128,186 +128,143 @@
         }
     </script>
 
-
-    <!-- (top photo banniere) -->
-    <div class="top-photo">
-        <div class="container text-center">
-            <h4><a href="#"><span class="glyphicon glyphicon-camera"></span>Ajouter une photo d'arrière plan</a></h4>
+    <div id="body-content">
+        <!-- (top photo banniere) -->
+        <div class="top-photo">
+            <div class="container text-center">
+                <h4><a href="#"><span class="glyphicon glyphicon-camera"></span>Ajouter une photo d'arrière plan</a></h4>
+            </div>
         </div>
-    </div>
-    <div class="container">
-        <button id="notification-toggle" onclick="popNotification();" />NOTIFY</button>
+        <div class="container">
 
 
 
-        <!-- (row) -->
-        <div class="row" id="cv-content">
+            <!-- (row) -->
+            <div class="row" id="cv-content">
 
-            <!-- (left row) -->
-            <div class="col-md-9" id="cv-left-row">
-                <div class="cv-bloc-element">
-                    <!-- (descripton) -->
-                    <div class="panel panel-blue">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">Description</h1>
-                        </div>
-                        <div class="panel-body">
-                            <!-- (photo) -->
-                            <div class="col-sm-4 col-xs-5">
-                                <img src="img/photo1.jpg" alt="photo de profil" class="img-thumbnail">
+                <!-- (left row) -->
+                <div class="col-md-9" id="cv-left-row">
+
+                    <div class="row"></div>
+
+
+                    <div class="cv-bloc-element">
+                        <!-- (descripton) -->
+                        <div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">Description</h1>
                             </div>
-                            <div class="col-sm-8 col-xs-12">
-                                <h3 class="panel-body-title">Jefferson Mangue</h3>
-                                <!-- (titre professionnel) -->
-                                <p><strong>MSc in Project and Programme Management and Business Development</strong></p>
-                                <!-- (pays - secteur) -->
-                                <p>France | Logiciels informatiques</p>
-                                <!-- (formation) -->
-                                <p>Université Paris-Est Marne La Vallée</p>
-                                <div class="col-xs-6 row-strip">
-                                    <button class="btn btn-default" id="add-relation"><span class="glyphicon glyphicon-plus"></span> Ajouter à mes relations</button>
+                            <div class="panel-body">
+                                <!-- (photo) -->
+                                <div class="col-sm-4 col-xs-5">
+                                    <img src="img/photo1.jpg" alt="photo de profil" class="img-thumbnail">
                                 </div>
-                                <!-- (relations) -->
-                                <div class="col-xs-offset-4 col-xs-2 row-strip">
-                                    <p class="text-right"><b>424</b> relations</p>
-                                </div>
-                            </div>
-                            <div class="row"></div>
-                            <!-- (coordonées) -->
-                            <div class="col-md-12">
-                                <hr class="dashed">
-                                <div class="collapse out" style="" id="accordion2">
-                                    <div class="col-xs-6 row-strip">
-                                        <span class="secondary-text">h2ee/manguejefferson</span>
-                                    </div>
-                                    <div class="col-xs-6 row-strip text-right">
-                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" class="collapsed"> Coordonnées
-                                    </a>
-                                    </div>
 
-                                    <div id="collapseFour" class="panel-collapse collapse" style="height: 0px;">
-                                        <p><span class="glyphicon glyphicon-envelope" style="top:3px; margin-right:7px"></span> jefferson.mangue@gmail.com
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- (fin de descripton) -->
-
-                <div class="row"></div>
-
-
-                <div class="cv-bloc-element">
-                    <!-- (descripton) -->
-                    <div class="panel panel-blue">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">Description</h1>
-                        </div>
-                        <div class="panel-body">
-                            <!-- (photo) -->
-                            <div class="col-sm-4 col-xs-5">
-                                <img src="img/photo1.jpg" alt="photo de profil" class="img-thumbnail">
-                            </div>
-
-                            <!-- (nom prenom) -->
-                            <div class="col-sm-8 col-xs-12">
-                                <div class="editable">
-                                    <a class="hyperspan" onclick="expandEditor('names');" id="names_toggler"></a>
-                                    <h3 class="panel-body-title">Jefferson Mangue <span class="glyphicon glyphicon-pencil"/></h3>
-                                </div>
-                                <div class="col-sm-9 col-xs-12 editor" id="names">
-                                    <form data-toggle="validator" role="form" action="cv.html">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group has-feedback">
-                                                    <input type="text" class="form-control" placeholder="Nom" data-minlength="5" data-error=" " required/>
-                                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                                    <span class="help-block with-error">5 caractères minimum.</span>
-                                                </div>
-                                                <div class="form-group has-feedback">
-                                                    <input type="text" class="form-control" placeholder="Prenom" data-minlength="5" data-error=" " required/>
-                                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                                    <span class="help-block with-error">5 caractères minimum.</span>
-                                                </div>
-                                                <div class="row"></div>
-                                                <button class="btn btn-default" type="submit" action="submit">OK</button>
-                                                <button class="btn btn-redb" onclick="collapseEditor('names');">Annuler</button>
-                                            </div>
+                                <!-- (nom prenom) -->
+                                <div class="col-sm-8 col-xs-12">
+                                    <div class="editable">
+                                        <div>
+                                            <a class="hyperspan" onclick="expandEditor('names');" id="names_toggler"></a>
+                                            <h3 class="panel-body-title">Jefferson Mangue <span class="glyphicon glyphicon-pencil"/></h3>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                    <div class="col-sm-9 col-xs-12 editor" id="names">
+                                        <form data-toggle="validator" role="form" action="cv.html">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group has-feedback">
+                                                        <input type="text" class="form-control" placeholder="Nom" data-minlength="5" data-error=" " required/>
+                                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                        <span class="help-block with-error">5 caractères minimum.</span>
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+                                                        <input type="text" class="form-control" placeholder="Prenom" data-minlength="5" data-error=" " required/>
+                                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                        <span class="help-block with-error">5 caractères minimum.</span>
+                                                    </div>
+                                                    <div class="row"></div>
+                                                    <button class="btn btn-default" type="submit" action="submit">OK</button>
+                                                    <button class="btn btn-redb" onclick="collapseEditor('names');">Annuler</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
 
 
-                                <!-- (titre professionnel) -->
-                                <div class="editable">
-                                    <a class="hyperspan" onclick="expandEditor('title');" id="title_toggler"></a>
-                                    <p><strong>MSc in Project and Programme Management and Business Development <span class="glyphicon glyphicon-pencil"/></strong></p>
-                                </div>
-                                <div class="col-sm-8 col-xs-12 editor" id="title">
-                                    <input type="text" class="form-control" placeholder="Titre professionnel" />
-                                    <div class="row"></div>
-                                    <button class="btn btn-default">OK</button>
-                                    <button class="btn btn-redb" onclick="collapseEditor('title');">Annuler</button>
-                                </div>
+                                    <!-- (titre professionnel) -->
+                                    <div class="editable">
+                                        <div>
+                                            <a class="hyperspan" onclick="expandEditor('title');" id="title_toggler"></a>
+                                            <p><strong>MSc in Project and Programme Management and Business Development <span class="glyphicon glyphicon-pencil"/></strong></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-12 editor" id="title">
+                                        <input type="text" class="form-control" placeholder="Titre professionnel" />
+                                        <div class="row"></div>
+                                        <button class="btn btn-default">OK</button>
+                                        <button class="btn btn-redb" onclick="collapseEditor('title');">Annuler</button>
+                                    </div>
 
-                                <!-- (pays - secteur) -->
-                                <div class="editable">
-                                    <a class="hyperspan" onclick="expandEditor('country');" id="country_toggler"></a>
-                                    <p>France | Logiciels informatiques <span class="glyphicon glyphicon-pencil" /></p>
-                                </div>
-                                <div class="col-sm-8 col-xs-12 editor" id="country">
-                                    <input type="text" class="form-control" placeholder="Pays" />
-                                    <input type="text" class="form-control" placeholder="Secteur" />
-                                    <div class="row"></div>
-                                    <button class="btn btn-default">OK</button>
-                                    <button class="btn btn-redb" onclick="collapseEditor('country');">Annuler</button>
-                                </div>
+                                    <!-- (pays - secteur) -->
+                                    <div class="editable">
+                                        <div>
+                                            <a class="hyperspan" onclick="expandEditor('country');" id="country_toggler"></a>
+                                            <p>France | Logiciels informatiques <span class="glyphicon glyphicon-pencil" /></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-12 editor" id="country">
+                                        <input type="text" class="form-control" placeholder="Pays" />
+                                        <input type="text" class="form-control" placeholder="Secteur" />
+                                        <div class="row"></div>
+                                        <button class="btn btn-default">OK</button>
+                                        <button class="btn btn-redb" onclick="collapseEditor('country');">Annuler</button>
+                                    </div>
 
-                                <!-- (formation) -->
-                                <div class="editable">
-                                    <a class="hyperspan" onclick="expandEditor('formation');" id="formation_toggler"></a>
-                                    <p>Université Paris-Est Marne La Vallée <span class="glyphicon glyphicon-pencil" /></p>
-                                </div>
-                                <div class="col-sm-8 col-xs-12 editor" id="formation">
-                                    <input type="text" class="form-control" placeholder="Formation" />
-                                    <div class="row"></div>
-                                    <button class="btn btn-default">OK</button>
-                                    <button class="btn btn-redb" onclick="collapseEditor('formation');">Annuler</button>
-                                </div>
+                                    <!-- (formation) -->
+                                    <div class="editable">
+                                        <div>
+                                            <a class="hyperspan" onclick="expandEditor('formation');" id="formation_toggler"></a>
+                                            <p>Université Paris-Est Marne La Vallée <span class="glyphicon glyphicon-pencil" /></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-12 editor" id="formation">
+                                        <input type="text" class="form-control" placeholder="Formation" />
+                                        <div class="row"></div>
+                                        <button class="btn btn-default">OK</button>
+                                        <button class="btn btn-redb" onclick="collapseEditor('formation');">Annuler</button>
+                                    </div>
 
-                                <div class="col-xs-6 row-strip">
-                                    <button class="btn btn-default" id="add-relation"><span class="glyphicon glyphicon-plus"></span> Ajouter à mes relations</button>
-                                </div>
-                                <!-- (relations) -->
-                                <div class="col-xs-offset-4 col-xs-2 row-strip">
-                                    <p class="text-right"><b>424</b> relations</p>
-                                </div>
-                            </div>
-                            <div class="row"></div>
-                            <!-- (coordonées) -->
-                            <div class="col-md-12">
-                                <hr class="dashed">
-                                <div class="collapse out" style="" id="accordion2">
                                     <div class="col-xs-6 row-strip">
-                                        <span class="secondary-text">h2ee/manguejefferson</span>
+                                        <button class="btn btn-default" id="add-relation"><span class="glyphicon glyphicon-plus"></span> Ajouter à mes relations</button>
                                     </div>
-                                    <div class="col-xs-6 row-strip text-right">
-                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" class="collapsed"> Coordonnées
+                                    <!-- (relations) -->
+                                    <div class="col-xs-offset-4 col-xs-2 row-strip">
+                                        <p class="text-right"><b>424</b> relations</p>
+                                    </div>
+                                </div>
+                                <div class="row"></div>
+                                <!-- (coordonées) -->
+                                <div class="col-md-12">
+                                    <hr class="dashed">
+                                    <div class="collapse out" style="" id="accordion2">
+                                        <div class="col-xs-6 row-strip">
+                                            <span class="secondary-text">/manguejefferson</span>
+                                        </div>
+                                        <div class="col-xs-6 row-strip text-right">
+                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" class="collapsed"> Coordonnées
                                     </a>
-                                    </div>
+                                        </div>
 
-                                    <div id="collapseFour" class="panel-collapse collapse" style="height: 0px;">
-                                        <p><span class="glyphicon glyphicon-envelope" style="top:3px; margin-right:7px"></span> jefferson.mangue@gmail.com
-                                        </p>
+                                        <div id="collapseFour" class="panel-collapse collapse" style="height: 0px;">
+                                            <p><span class="glyphicon glyphicon-envelope" style="top:3px; margin-right:7px"></span> jefferson.mangue@gmail.com
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- (fin de descripton) -->
+                    <!-- (fin de descripton) -->
 
 
 
@@ -317,118 +274,118 @@
 
 
 
-                <!-- (experiences) -->
-                <div class="panel panel-blue cv-bloc-element">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">
+                    <!-- (experiences) -->
+                    <div class="panel panel-blue cv-bloc-element">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">
                             <span class="glyphicon glyphicon-send" style="margin-right:8px;top:2px;"></span>Expériences
                         </h1>
-                    </div>
-                    <div class="panel-body">
-
-                        <!-- (instance experience) -->
-                        <div class="col-xs-12">
-                            <!-- (titre) -->
-                            <h4 class="panel-body-title">MSc in Project and Programme Management and Business Development</h4>
-                            <!-- (nom de l'entreprise) -->
-                            <p><strong>Dassault System</strong></p>
-                            <!-- (date - pays) -->
-                            <p class="small-text">décembre 2015 - février 2016 (3 mois) | France</p>
-                            <!-- (description) -->
-                            <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
                         </div>
-                        <!-- (fin instance experience) -->
-                        <div class="row"></div>
-                        <hr class="dashed">
+                        <div class="panel-body">
 
-                        <!-- (instance experience) -->
-                        <div class="col-xs-12">
-                            <!-- (titre) -->
-                            <h4 class="panel-body-title">Asistant Marketing Managert</h4>
-                            <!-- (nom de l'entreprise) -->
-                            <p><strong>Weekendesk</strong></p>
-                            <!-- (date - pays) -->
-                            <p class="small-text">juillet 2014 – décembre 2014 (6 mois) | Espagne</p>
-                            <!-- (description) -->
-                            <p>Weekendesk is an European Online Travel Agency, operating in the French, Spanish, Belgian, Dutch and Italian markets, focused on delivering the best experience for short breaks and holidays. http://www.weekendesk.fr/ As a Marketing Assistant, I managed the digital presence of the Weekendesk brand in Spain on social networks: Facebook, Twitter and Google +.
+                            <!-- (instance experience) -->
+                            <div class="col-xs-12">
+                                <!-- (titre) -->
+                                <h4 class="panel-body-title">MSc in Project and Programme Management and Business Development</h4>
+                                <!-- (nom de l'entreprise) -->
+                                <p><strong>Dassault System</strong></p>
+                                <!-- (date - pays) -->
+                                <p class="small-text">décembre 2015 - février 2016 (3 mois) | France</p>
+                                <!-- (description) -->
+                                <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
+                            </div>
+                            <!-- (fin instance experience) -->
+                            <div class="row"></div>
+                            <hr class="dashed">
 
-                                <ul>
-                                    <li> Community management</li>
-                                    <li> Creation of content to share daily</li>
-                                    <li> Moderation</li>
-                                    <li> Reportings</li>
-                                    <li> Creation and implementation of applications and contests</li>
-                                    <li> Digital strategies</li>
-                                </ul>
-                                Daily monitoring of the areas of tourism, social media, digital marketing. </p>
+                            <!-- (instance experience) -->
+                            <div class="col-xs-12">
+                                <!-- (titre) -->
+                                <h4 class="panel-body-title">Asistant Marketing Managert</h4>
+                                <!-- (nom de l'entreprise) -->
+                                <p><strong>Weekendesk</strong></p>
+                                <!-- (date - pays) -->
+                                <p class="small-text">juillet 2014 – décembre 2014 (6 mois) | Espagne</p>
+                                <!-- (description) -->
+                                <p>Weekendesk is an European Online Travel Agency, operating in the French, Spanish, Belgian, Dutch and Italian markets, focused on delivering the best experience for short breaks and holidays. http://www.weekendesk.fr/ As a Marketing Assistant, I managed the digital presence of the Weekendesk brand in Spain on social networks: Facebook, Twitter and Google +.
+
+                                    <ul>
+                                        <li> Community management</li>
+                                        <li> Creation of content to share daily</li>
+                                        <li> Moderation</li>
+                                        <li> Reportings</li>
+                                        <li> Creation and implementation of applications and contests</li>
+                                        <li> Digital strategies</li>
+                                    </ul>
+                                    Daily monitoring of the areas of tourism, social media, digital marketing. </p>
+                            </div>
+                            <!-- (fin instance experience) -->
                         </div>
-                        <!-- (fin instance experience) -->
                     </div>
-                </div>
-                <!-- (fin de experiences) -->
+                    <!-- (fin de experiences) -->
 
 
-                <!-- (formations) -->
-                <div class="panel panel-blue">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">
+                    <!-- (formations) -->
+                    <div class="panel panel-blue">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">
                             <span class="glyphicon glyphicon-globe" style="margin-right:8px;top:2px;"></span>Formations
                         </h1>
-                    </div>
-                    <div class="panel-body">
-
-                        <!-- (instance formation) -->
-                        <div class="col-xs-12">
-                            <!-- (ecole) -->
-                            <h4 class="panel-body-title">SKEMA Business School</h4>
-                            <!-- (diplome - discipline) -->
-                            <p><strong>Master’s Degree, Master of Science in Project and Programme Management and Business Development</strong></p>
-                            <!-- (date - pays) -->
-                            <p class="small-text">décembre 2015 - février 2016 (3 mois) | France</p>
-                            <!-- (description) -->
-                            <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
                         </div>
-                        <!-- (fin instance formation) -->
-                        <div class="row"></div>
-                        <hr class="dashed">
+                        <div class="panel-body">
 
-                        <!-- (instance formation) -->
-                        <div class="col-xs-12">
-                            <!-- (ecole) -->
-                            <h4 class="panel-body-title">NEOMA Business School</h4>
-                            <!-- (diplome - discipline) -->
-                            <p><strong>Bachelor's Degree, International Business</strong></p>
-                            <!-- (date - pays) -->
-                            <p class="small-text">2011 - 2015</p>
-                            <!-- (description) -->
-                            <p>
-                                <ul>
-                                    <li> International Business Development</li>
-                                    <li> International Marketing</li>
-                                    <li> Financial Analysis,</li>
-                                    <li> Website design & creation</li>
-                                    <li> Global and Human Resource Management</li>
-                                </ul>
-                            </p>
+                            <!-- (instance formation) -->
+                            <div class="col-xs-12">
+                                <!-- (ecole) -->
+                                <h4 class="panel-body-title">SKEMA Business School</h4>
+                                <!-- (diplome - discipline) -->
+                                <p><strong>Master’s Degree, Master of Science in Project and Programme Management and Business Development</strong></p>
+                                <!-- (date - pays) -->
+                                <p class="small-text">décembre 2015 - février 2016 (3 mois) | France</p>
+                                <!-- (description) -->
+                                <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
+                            </div>
+                            <!-- (fin instance formation) -->
+                            <div class="row"></div>
+                            <hr class="dashed">
+
+                            <!-- (instance formation) -->
+                            <div class="col-xs-12">
+                                <!-- (ecole) -->
+                                <h4 class="panel-body-title">NEOMA Business School</h4>
+                                <!-- (diplome - discipline) -->
+                                <p><strong>Bachelor's Degree, International Business</strong></p>
+                                <!-- (date - pays) -->
+                                <p class="small-text">2011 - 2015</p>
+                                <!-- (description) -->
+                                <p>
+                                    <ul>
+                                        <li> International Business Development</li>
+                                        <li> International Marketing</li>
+                                        <li> Financial Analysis,</li>
+                                        <li> Website design & creation</li>
+                                        <li> Global and Human Resource Management</li>
+                                    </ul>
+                                </p>
+                            </div>
+                            <!-- (fin instance formation) -->
+
                         </div>
-                        <!-- (fin instance formation) -->
-
                     </div>
+                    <!-- (fin de formations) -->
                 </div>
-                <!-- (fin de formations) -->
+                <!-- (fin de left row) -->
+                <div class="col-md-offset-1 col-md-2">
+                    <div class="panel panel-blue"></div>
+                </div>
             </div>
-            <!-- (fin de left row) -->
-            <div class="col-md-offset-1 col-md-2">
-                <div class="panel panel-blue">marged</div>
-            </div>
-        </div>
-        <!-- (fin de row) -->
+            <!-- (fin de row) -->
 
 
 
 
 
-        <!--
+            <!--
         <hr class="dashed" />
         <div class="row">
             <div class="col-md-6">
@@ -464,13 +421,13 @@
     </div> -->
 
 
-
+        </div>
 
 
         <!-- Footer
       ================================================== -->
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid" id="footer-container">
         <div class="row">
             <div class="col-md-12">
                 <div class="footer">
