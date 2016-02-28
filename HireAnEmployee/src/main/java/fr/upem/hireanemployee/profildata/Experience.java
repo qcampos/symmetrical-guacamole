@@ -17,6 +17,7 @@ public class Experience {
     private String CompanyName;
     private String jobName;
     private String jobAbstract;
+    @Column(length = 2000)
     private String jobDescription;
 
     @Temporal(javax.persistence.TemporalType.DATE)

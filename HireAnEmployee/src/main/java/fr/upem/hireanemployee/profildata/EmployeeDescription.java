@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
 
@@ -102,7 +103,10 @@ public class EmployeeDescription {
 
 
     private static String getImagePath(long id) {
-        return Paths.get("img", "employees", Long.toString(id)).toString();
+        Path path = Paths.get("resources", "img", "employees", Long.toString(id) + "png");
+//        Path path = Paths.get(Long.toString(id) + "png");
+        System.err.println("Rainbow path : " + path.toAbsolutePath().toString());
+        return path.toString();
     }
 
     @Override
