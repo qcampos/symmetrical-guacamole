@@ -16,7 +16,6 @@
     <f:viewAction action="#{cvViewedBean.viewActionInit}"/>
 </f:metadata>
 
-<!-- TODO custimize the color here -->
 <h:body>
 
     <!-- (top fixed navbar + notification system -->
@@ -49,6 +48,8 @@
                 <!-- (Left row, containing the description, the list of experiences and the list of formations) -->
                 <!-- The description part -->
                 <div class="col-md-9" id="cv-left-row">
+
+
                     <!-- The user's description -->
                     <c:if test="#{sessionBean.id == cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_editable.xhtml"/>
@@ -57,9 +58,14 @@
                     <c:if test="#{sessionBean.id != cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_no_editable.xhtml"/>
                     </c:if>
+                    <!-- End of the user's description -->
+
+
+                    <!-- User's experiences -->
+                    <ui:include src="WEB-INF/cv_experience_no_editable.xhtml"/>
                 </div>
 
-                <!-- (end of content of the page -->
+                <!-- (end of content of the page) -->
             </div>
         </div>
     </div>

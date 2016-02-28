@@ -75,6 +75,10 @@ public class CvViewedBean extends Logger {
         this.id = id;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
     public EmployeeDescription getEmployeeDescription() {
         return employeeDescription;
     }

@@ -16,6 +16,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Baxtalou on 10/02/2016.
@@ -31,6 +32,8 @@ public class InitializationBean extends Logger {
     private EmployeeDescriptionDAO edao;
     @EJB
     private EmployeeFormationDAO fdao;
+    @EJB
+    private EmployeeExperienceDAO exdao;
 
     public InitializationBean() {
 
@@ -61,6 +64,14 @@ public class InitializationBean extends Logger {
 
         fdao.createFormation("SKEMA Business School", "Master’s Degree, Master of Science in Project and Programme Management and Business Development",
                 Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), employee);
+
+        /*
+        exdao.createExperience("Dassault System", "MSc in Project and Programme Management and Business Development", "jobAbstract",
+                "Member of the ICT Team The ICT team will deliver all communications and related services, " +
+                        "as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, " +
+                        "set-up, operations and change management of all deliverables within the scope of ICT.",
+                new Date(), new Date(), employee);
+        */
 
         log("init - " + description.getEmployee().getFirstName());
     }

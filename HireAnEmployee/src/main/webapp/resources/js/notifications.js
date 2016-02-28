@@ -1,4 +1,4 @@
-// Created by Abwuds. HomeMade notifications for the J2EE course. 2016
+// Created by Jefferson Mangue(Abwuds). HomeMade notifications for the J2EE course. 2016
 
 var timeout;
 
