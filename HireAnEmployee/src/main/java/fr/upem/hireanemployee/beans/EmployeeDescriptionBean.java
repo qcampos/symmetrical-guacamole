@@ -69,7 +69,7 @@ public class EmployeeDescriptionBean extends Logger {
         names = firstName + " " + lastName;
         country = employeeDescription.getCountry().equals(Country.NONE) ? "" : employeeDescription.getCountry().toString();
         sector = employeeDescription.getSector().toString();
-        formation = employeeDescription.getFormation().equals("") ? "TODO Formation dans InitializationBean" : employeeDescription.getFormation();
+        formation = employeeDescription.getFormation().equals("") ? "" : employeeDescription.getFormation();
         nbRelations = employeeDescription.getNbRelations();
         professionalTitle = employeeDescription.getProfessionalTitle();
 
@@ -79,7 +79,7 @@ public class EmployeeDescriptionBean extends Logger {
         country = setNullIfEmpty(country);
         sector = setNullIfEmpty(sector);
         professionalTitle = setNullIfEmpty(professionalTitle);
-        // TODO formation = setNullIfEmpty(formation);
+        formation = setNullIfEmpty(formation);
 
         // Allowing default values by setting these forms.
         newFirstName = firstName;
@@ -97,14 +97,14 @@ public class EmployeeDescriptionBean extends Logger {
     }
 
     public String updateNames() {
-        log("updateNames - " + newFirstName + " " + newLastName);
-        notificationBean.clear();
-        // No new values.
         Employee employee = employeeDescription.getEmployee();
         String firstName = employee.getFirstName();
         String lastName = employee.getLastName();
-        if ((newFirstName == null || newFirstName.equals(firstName)) &&
-                (newLastName == null || newLastName.equals(lastName))) {
+        log("updateNames - " + newFirstName + " " + newLastName + " " + firstName + " " + lastName);
+        notificationBean.clear();
+
+        if ((newFirstName == null || newFirstName.isEmpty() || newFirstName.equals(firstName)) &&
+                (newLastName == null || newLastName.isEmpty() || newLastName.equals(lastName))) {
             return Constants.CURRENT_PAGE;
         }
         // Verifying empty fields (they are not both required at the same time).
@@ -113,10 +113,10 @@ public class EmployeeDescriptionBean extends Logger {
         // Checking if values are not pur alpha. This is also checked on the view side.
         boolean b1 = !Regexes.parseAlpha(newFirstName);
         if (b1 || !Regexes.parseAlpha(newLastName)) {
-            newFirstName = firstName;
-            newLastName = lastName;
             log("updateNames - error in the parsing phase");
             notificationBean.setError("The value : " + (b1 ? newFirstName : newLastName) + " is not correct.");
+            newFirstName = firstName;
+            newLastName = lastName;
             return Constants.CURRENT_PAGE;
         }
         // Updating the database.

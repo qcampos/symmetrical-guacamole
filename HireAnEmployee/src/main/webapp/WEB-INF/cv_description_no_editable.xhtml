@@ -1,6 +1,6 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!-- This is the description component. Editable -->
 
@@ -30,24 +30,32 @@
 
                     <!-- (titre professionnel) -->
                     <h:panelGroup class="" id="title_group" layout="block">
-                        <p><strong>#{employeeDescriptionBean.professionalTitle}</strong></p>
+                        <p><strong>#{employeeDescriptionBean.professionalTitle == null ?
+                                "Aucun titre professionnel renseigné" : employeeDescriptionBean.professionalTitle}</strong>
+                        </p>
                     </h:panelGroup>
 
                     <!-- (pays - secteur) -->
                     <h:panelGroup class="" id="country_group" layout="block">
-                        <p>#{employeeDescriptionBean.country} | #{employeeDescriptionBean.sector}</p>
+                        <p>#{employeeDescriptionBean.country == null || employeeDescriptionBean.country.equals("---") ?
+                                "Aucun pays renseigné" : employeeDescriptionBean.country} | #{employeeDescriptionBean.sector == null ||
+                                employeeDescriptionBean.sector.equals("---") ?
+                                "Aucun secteur renseigné" : employeeDescriptionBean.sector}</p>
                     </h:panelGroup>
 
                     <!-- (formation) -->
                     <h:panelGroup class="" layout="block">
-                        <p>#{employeeDescriptionBean.formation}</p>
+                        <p>#{employeeDescriptionBean.formation == null ?
+                                "Aucune formation renseignée" : employeeDescriptionBean.formation}</p>
                     </h:panelGroup>
 
                     <!-- (Relation button) -->
                     <div class="col-xs-6 row-strip">
-                        <button class="btn btn-default" id="add-relation"><span
-                                class="glyphicon glyphicon-plus"></span> Ajouter à mes relations
-                        </button>
+                        <c:if test="#{sessionBean.state == 'CONNECTED'}">
+                            <button class="btn btn-default" id="add-relation"><span
+                                    class="glyphicon glyphicon-plus"></span> Ajouter à mes relations
+                            </button>
+                        </c:if>
                     </div>
                     <!-- (nb relations) -->
                     <div class="col-xs-offset-4 col-xs-2 row-strip">

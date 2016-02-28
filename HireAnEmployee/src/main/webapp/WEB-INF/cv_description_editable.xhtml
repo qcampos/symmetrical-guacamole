@@ -22,7 +22,7 @@
                 </div>
 
                 <!-- (Text informations) -->
-                <div class="col-sm-8 col-xs-12" >
+                <div class="col-sm-8 col-xs-12">
 
                     <!-- (nom prenom) -->
                     <ui:include src="cv_desc_name_editor.xhtml"/>
@@ -35,16 +35,17 @@
 
                     <!-- (formation) -->
                     <div class="editable">
-                        <a class="hyperspan" onclick="expandEditor('formation');" id="formation_toggler"></a>
-                        <p>#{employeeDescriptionBean.formation} <span
-                                class="glyphicon glyphicon-pencil"/></p>
+                        <div>
+                            <a class="hyperspan" onclick="expandEditor('formation');" id="formation_toggler"></a>
+                            <p>#{employeeDescriptionBean.formation == null ?
+                                    "Ajouter une formation" : employeeDescriptionBean.formation} <span
+                                    class="glyphicon glyphicon-pencil"/></p>
+                        </div>
                     </div>
 
                     <!-- (Relation button) -->
                     <div class="col-xs-6 row-strip">
-                        <button class="btn btn-default" id="add-relation"><span
-                                class="glyphicon glyphicon-plus"></span> Ajouter à mes relations
-                        </button>
+                        <!-- Not in editable mode -->
                     </div>
                     <!-- (nb relations) -->
                     <div class="col-xs-offset-4 col-xs-2 row-strip">

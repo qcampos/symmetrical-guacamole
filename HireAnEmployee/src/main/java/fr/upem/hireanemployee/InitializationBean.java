@@ -6,6 +6,8 @@ import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.EmployeeDescriptionDAO;
 import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.EmployeeDescription;
+import fr.upem.hireanemployee.profildata.Formation;
+import fr.upem.hireanemployee.profildata.School;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,6 +29,8 @@ public class InitializationBean extends Logger {
     private DatabaseDAO bdu;
     @EJB
     private EmployeeDescriptionDAO edao;
+    @EJB
+    private EmployeeFormationDAO fdao;
 
     public InitializationBean() {
 
@@ -42,6 +46,7 @@ public class InitializationBean extends Logger {
 
         EmployeeDescription description = employee.getDescription();
         edao.updateSector(description, "Combinatorics");
+        edao.updateSector(description, "---");
 
         if (!bdu.emailExists("jmangue@u.com")) {
             bdu.signup("Jefferson", "Mangue", "jmangue@u.com", "12345");
@@ -53,6 +58,10 @@ public class InitializationBean extends Logger {
         edao.updateCountry(description, Country.FRANCE);
         edao.updateSector(description, "Logiciels informatiques");
         edao.updateProfessionalTitle(description, "MSc in Project and Programme Management and Business Development");
+
+        fdao.createFormation("SKEMA Business School", "Master’s Degree, Master of Science in Project and Programme Management and Business Development",
+                Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), employee);
+
         log("init - " + description.getEmployee().getFirstName());
     }
 }

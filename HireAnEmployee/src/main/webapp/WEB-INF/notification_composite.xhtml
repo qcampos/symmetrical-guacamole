@@ -7,8 +7,7 @@
     <h:outputScript library="js" name="notifications.js" target="body"/>
 
     <!-- The top div is re-rendered by the calling component and then errorHandler is checked -->
-    <h:panelGroup layout="block" id="popNotification" class="navbbar-top">
-
+    <h:panelGroup id="popNotification" layout="block">
         <h:panelGroup layout="block" id="notification" class="#{notificationBean.styleClass}"
                       rendered="#{notificationBean.rendered}">
             #{notificationBean.message}
@@ -23,4 +22,5 @@
             slideIn('notification', '#{notificationBean.styleClass}');
         </h:outputScript>
     </h:panelGroup>
+
 </ui:composition>

@@ -5,12 +5,15 @@
 
     <!-- Informations -->
     <h:panelGroup class="editable" id="country_group" layout="block">
-        <a class="hyperspan" onclick="expandEditor('country');" id="country_toggler"></a>
-        <p>#{employeeDescriptionBean.country == null ?
-                "Ajouter un pays" : employeeDescriptionBean.country} | #{employeeDescriptionBean.sector == null ?
-                "Ajouter un titre professionel" : employeeDescriptionBean.sector} <span
-                class="glyphicon glyphicon-pencil"/></p>
-        <h:outputScript>collapseEditor('country');</h:outputScript>
+        <div>
+            <a class="hyperspan" onclick="expandEditor('country');" id="country_toggler"></a>
+            <p>#{employeeDescriptionBean.country == null || employeeDescriptionBean.country.equals("---") ?
+                    "Ajouter un pays" : employeeDescriptionBean.country} | #{employeeDescriptionBean.sector == null ||
+                    employeeDescriptionBean.sector.equals("---") ?
+                    "Ajouter un secteur" : employeeDescriptionBean.sector} <span
+                    class="glyphicon glyphicon-pencil"/></p>
+            <h:outputScript>collapseEditor('country');</h:outputScript>
+        </div>
     </h:panelGroup>
 
 

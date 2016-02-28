@@ -146,6 +146,6 @@ public class DatabaseDAO {
 
     public List<String> getSectorList() {
         // TODO returns the list of sector in a list of strings.
-        return Arrays.asList("Logiciels informatiques", "Agriculture", "Armée");
+        return Arrays.asList("---", "Logiciels informatiques", "Agriculture", "Armée");
     }
 }
