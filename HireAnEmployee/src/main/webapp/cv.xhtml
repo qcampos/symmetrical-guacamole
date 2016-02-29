@@ -61,8 +61,14 @@
                     <!-- End of the user's description -->
 
 
-                    <!-- User's experiences -->
-                    <ui:include src="WEB-INF/cv_experience_no_editable.xhtml"/>
+                    <!-- The user's experiences -->
+                    <c:if test="#{sessionBean.id == cvViewedBean.id}">
+                        <ui:include src="WEB-INF/cv_experience_editable.xhtml"/>
+                    </c:if>
+                    <!-- A visitor's experiences -->
+                    <c:if test="#{sessionBean.id != cvViewedBean.id}">
+                        <ui:include src="WEB-INF/cv_experience_no_editable.xhtml"/>
+                    </c:if>
                 </div>
 
                 <!-- (end of content of the page) -->

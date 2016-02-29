@@ -13,5 +13,5 @@ function slideIn(el, colorClass) {
     clearTimeout(timeout);
     timeout = setTimeout(function () {
         slideBack(el, colorClass);
-    }, 3700);
+    }, 3200);
 }
