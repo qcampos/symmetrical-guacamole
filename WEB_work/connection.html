@@ -39,12 +39,92 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/verticals.css">
+    <style>
+        div#mycontent {
+            font-size: 18px;
+            border: #000 1px solid;
+            width: 450px;
+            height: 250px;
+            padding: 20px;
+            background: #DFEFFF;
+        }
+        
+        div#mymenu > button {
+            padding: 10px 30px;
+        }
+    </style>
 </head>
 
 <body id="connection_body">
     <!-- TODO custimize the color here -->
 
 
+
+
+    <script>
+        var btn1Active = false;
+        var btn2Active = false;
+        var minH = "0px";
+        var formClass = "col-lg-offset-3 col-lg-6 col-sm-offset-3  col-sm-6 connection-form";
+        var btnClass = "btn btn-base connect-btn";
+        /* JS manipulating the forms stage. */
+        function _(x) {
+            return document.getElementById(x);
+        }
+
+        function reset(bt1, bt2, f1, f2) {    
+            bt1.className = btnClass;
+            bt2.className = btnClass;
+            f1.className = formClass;
+            f2.className = formClass;
+            f1.style.height = minH;
+            f2.style.height = minH;
+        }
+        
+        /* Btn1 is the connect button */
+        function activeBtn1() {
+            var elConnect = _('toggler-connect');
+            var elCreate = _('toggler-create');
+            var elFConnect = _('connect_form');
+            var elFCreate = _('create_form');
+
+            reset(elConnect, elCreate, elFConnect, elFCreate);
+
+            /* Btn one just being activated. */
+            if (!btn1Active) {
+                btn1Active = true;
+                var inClass = btn2Active ? " delayin" : " in";
+                btn2Active = false;
+                elFConnect.className = formClass + inClass;
+                elFConnect.style.height = "360px";
+                return;
+            }
+            /* Nothing to do in this case. */
+            btn1Active = false;
+        }
+
+        /* Btn2 is the create button */
+        function activeBtn2() {
+            var elConnect = _('toggler-connect');
+            var elCreate = _('toggler-create');
+            var elFConnect = _('connect_form');
+            var elFCreate = _('create_form');
+
+            reset(elConnect, elCreate, elFConnect, elFCreate);
+
+            /* Btn one just being activated. */
+            if (!btn2Active) {
+                btn2Active = true;
+                var inClass = btn1Active ? " delayin" : " in";
+                btn1Active = false;
+                elFCreate.className = formClass + inClass;
+                elFCreate.style.height = "600px";
+                return;
+            }
+            /* Nothing to do in this case. */
+            btn2Active = false;
+        }
+    </script>
 
     <div class="navbbar-top">
 
@@ -58,127 +138,126 @@
 
             <!-- (page description header) -->
             <div class="row">
-                <div class="col-xs-12">
-                    <h1 id="title">Hire|Employ<u>ee</u></h1>
+                <div class="col-xs-12 text-center" id="connection-titles">
+                    <div id="title-content">
+                        <h1 id="main-title">Hire|Employ</h1>
+                        <h1 id="ee">ee</h1>
+                    </div>
                     <h4 id="sub-title">Votre curriculum sous son meilleur jour</h4>
                 </div>
             </div>
 
-            <!-- Test input -->
-            <!--<form data-toggle="validator" role="form">
-            <div class="form-group has-feedback">
-                <label for="inputTwitter" class="control-label">Rechercher un ami</label>
-                <div class="input-group">
-                    <span class="input-group-addon"></span>
-                    <input type="text" class="form-control" id="inputTwitter" placeholder="Rechercher" required="true" />
-                </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <span class="help-block">C'est gratuit ! (Et ça le restera toujours)</span>
-            </div>
-            <div class="form-group">-->
-            <!-- <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-            <!-- </div>
-        </form>-->
-
-
             <div class="row" id="connection-page-forms">
+                <div class="col-xs-12 text-center">
 
-                <!-- (connexion form) -->
-                <div class="col-lg-5 col-sm-6 connection-form">
-                    <!-- (descripton) -->
-                    <div class="panel panel-blue">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">Connectez-vous</h1>
-                        </div>
-                        <div class="panel-body">
-                            <div class="modal-body">
-                                <form data-toggle="validator" role="form" action="cv.html">
+                    <div id="togglers">
+                        <button id="toggler-connect" class="btn btn-base connect-btn" onclick="activeBtn1();">Se connecter</button>
+                        <button id="toggler-create" class="btn btn-base connect-btn" onclick="activeBtn2();">S'enregistrer</button>
+                    </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group has-feedback">
-                                                <label for="emailLogin" class="control-label">Email</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">@</span>
-                                                    <input type="email" class="form-control" id="emailLogin" placeholder="Email" data-error="Format incorrect" required>
+                    <div class="row"></div>
+
+                    <!-- (connexion form) -->
+                    <div id="connect_form" class="col-lg-offset-3 col-lg-6 col-sm-offset-3  col-sm-6 connection-form">
+
+                        <!-- (descripton) -->
+                        <div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">Connectez-vous</h1>
+                            </div>
+                            <div class="panel-body">
+                                <div class="modal-body">
+                                    <form data-toggle="validator" role="form" action="cv.html">
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group has-feedback">
+                                                    <label for="emailLogin" class="control-label">Email</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">@</span>
+                                                        <input type="email" class="form-control" id="emailLogin" placeholder="Email" data-error="Format incorrect" required>
+                                                    </div>
+                                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                                 </div>
-                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group has-feedback">
-                                                <label for="motdepasse" class="control-label">Mot de passe</label>
-                                                <input type="password" class="form-control" id="motdepasse" data-minlength="5" placeholder="Mot de passe" data-error=" " required>
-                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                                <span class="help-block with-error">5 caractères minimum.</span>
-                                                <!--<span class="help-block with-success">Ok !</span>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group has-feedback">
+                                                    <label for="motdepasse" class="control-label">Mot de passe</label>
+                                                    <input type="password" class="form-control" id="motdepasse" data-minlength="5" placeholder="Mot de passe" data-error=" " required>
+                                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                    <span class="help-block with-error">5 caractères minimum.</span>
+                                                    <!--<span class="help-block with-success">Ok !</span>
                                             <span class="help-block with-hint"></span> -->
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 text-center">
-                                            <input class="btn btn-default btn-redb" style="margin-top:8px;" type="submit" action="submit" value="Connexion"></input>
+                                        <div class="row">
+                                            <div class="col-xs-12 text-center">
+                                                <input class="btn btn-default btn-redb" style="margin-top:8px;" type="submit" action="submit" value="Connexion"></input>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- (fin de connexion form) -->
+                    <!-- (fin de connexion form) -->
 
-                <!-- (login form) -->
-                <div class="col-lg-offset-2 col-lg-5 col-sm-6 hidden-pannel connection-form">
-                    <!-- (descripton) -->
-                    <div class="panel panel-blue">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">Inscrivez-vous</h1>
-                        </div>
-                        <div class="panel-body">
-                            <div class="modal-body">
-                                <form action="cv.html">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label>Nom</label>
-                                            <input type="text" class="form-control" placeholder="Nom" required="true">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label>Prénom</label>
-                                            <input type="text" class="form-control" placeholder="Prénom" required="true">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group has-error has-feedback">
-                                                <label class="control-label" for="inputError2">Email</label>
-                                                <span class="error-msg">existe dans la base.</span>
-                                                <input type="email" class="form-control" placeholder="Email" required="true">
-                                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+
+
+
+                    <!-- (login form) -->
+                    <div id="create_form" class="col-lg-offset-3 col-lg-6 col-sm-offset-3  col-sm-6 connection-form">
+                        <!-- (descripton) -->
+                        <div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">Inscrivez-vous</h1>
+                            </div>
+                            <div class="panel-body">
+                                <div class="modal-body">
+                                    <form action="cv.html">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label>Nom</label>
+                                                <input type="text" class="form-control" placeholder="Nom" required="true">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label>Mot de passe</label>
-                                            <input type="password" class="form-control" placeholder="Mot de passe" required="true">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label>Prénom</label>
+                                                <input type="text" class="form-control" placeholder="Prénom" required="true">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 text-center">
-                                            <input class="btn btn-default btn-yellowb" style="margin-top:8px;" type="submit" action="submit" value="Inscription"></input>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group has-error has-feedback">
+                                                    <label class="control-label" for="inputError2">Email</label>
+                                                    <span class="error-msg">existe dans la base.</span>
+                                                    <input type="email" class="form-control" placeholder="Email" required="true">
+                                                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label>Mot de passe</label>
+                                                <input type="password" class="form-control" placeholder="Mot de passe" required="true">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 text-center">
+                                                <input class="btn btn-default btn-yellowb" style="margin-top:8px;" type="submit" action="submit" value="Inscription"></input>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- (fin de connexion form) -->
                 </div>
-                <!-- (fin de connexion form) -->
 
             </div>
             <!-- (fin de row) -->

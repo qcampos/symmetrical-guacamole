@@ -536,7 +536,7 @@ body {
     width: 380px;
 }
 
-#title {
+#main-title {
     margin-left: -61px;
 }
 
@@ -840,29 +840,30 @@ body {
 
 .editable div {
     display: inline-block;
+    transition: background-color 0.5s;
 }
 
-
-/*
-/*.editable ,
-.editable p,
-.editable h3 {
-    margin: 0;
-    padding: 0;
-}
-*/
-
-.editable .glyphicon {
+.cv-bloc-element .editable .glyphicon {
     opacity: 0;
-    font-size: 70%;
-    transition: opacity 0.2s;
+    font-size: 80%;
+    transition: color 0.5s, opacity 0.5s;
 }
 
-.editable div:hover {
-    background-color: #aab2bd;
+.cv-bloc-element:hover .editable div {
+    background-color: #d4d4d4;
+    transition: background-color 0.5s;
 }
 
-.editable:hover .glyphicon {
+.cv-bloc-element .editable div:hover  {
+    background-color: #caecfc;
+    transition: background-color 0.5s;
+}
+.cv-bloc-element .editable div:hover .glyphicon {
+    color: #00a0dc;
+    transition: color 0.5s;
+}
+
+.cv-bloc-element:hover .editable .glyphicon {
     opacity: 1;
 }
 
