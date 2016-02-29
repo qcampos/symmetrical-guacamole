@@ -59,7 +59,7 @@ public class CvViewedBean extends Logger {
         // Setting fields accordingly.
         employeeDescription = employee.getDescription();
         employeeExperiences = employee.getExperiences();
-        log("init - employee " + employee.getFirstName());
+        log("init - employee " + employee.getFirstName() + " Exp : "+employeeExperiences + " Desc : " + employeeDescription);
         return Constants.CURRENT_PAGE;
     }
 
