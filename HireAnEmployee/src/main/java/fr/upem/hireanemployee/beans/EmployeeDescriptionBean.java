@@ -1,5 +1,7 @@
 package fr.upem.hireanemployee.beans;
 
+import java.nio.file.Paths;
+
 import fr.upem.hireanemployee.DatabaseDAO;
 import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.EmployeeDescriptionDAO;
@@ -15,7 +17,15 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 import java.awt.image.BufferedImage;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 /**
@@ -52,11 +62,12 @@ public class EmployeeDescriptionBean extends Logger {
     private String newLastName;
     private String newProfessionalTitle;
     private String newCountry;
-    private BufferedImage newImage;
+    private Part newImage;
     private String newSector;
     private String newFormation;
     private List<String> countries;
     private List<String> sectors;
+    private String imagePath;
 
     @PostConstruct
     private void init() {
@@ -93,6 +104,7 @@ public class EmployeeDescriptionBean extends Logger {
         countries = ddao.getCountryList();
         sectors = ddao.getSectorList();
 
+        imagePath = "img/photo1.jpg";
     }
 
     public String setNullIfEmpty(String str) {
@@ -227,7 +239,7 @@ public class EmployeeDescriptionBean extends Logger {
         this.newCountry = newCountry;
     }
 
-    public void setNewImage(BufferedImage newImage) {
+    public void setNewImage(Part newImage) {
         this.newImage = newImage;
     }
 
@@ -255,7 +267,7 @@ public class EmployeeDescriptionBean extends Logger {
         return newCountry;
     }
 
-    public BufferedImage getNewImage() {
+    public Part getNewImage() {
         return newImage;
     }
 
@@ -273,5 +285,30 @@ public class EmployeeDescriptionBean extends Logger {
 
     public List<String> getSectors() {
         return sectors;
+    }
+
+
+    public String upload() throws IOException {
+        log("upload - " + newImage);
+        if (newImage == null) {
+            log("upload - part image null");
+            return "404";
+        }
+
+        String bd_folder = "/Users/Baxtalou/Documents/Master2/JAVAEE/cv_online/symmetrical-guacamole/HireAnEmployee/bd_images";
+        java.nio.file.Path file = Files.createTempFile(Paths.get(bd_folder), "ll", ".png");
+
+        try (InputStream input = newImage.getInputStream()) {
+            Files.copy(input, file, StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        imagePath = bd_folder + "ll.png";
+// ...
+
+        return Constants.CURRENT_PAGE;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 }
