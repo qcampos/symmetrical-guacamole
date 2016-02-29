@@ -1,19 +1,18 @@
 /* Useful to choose the grayscale antialiasing algorithm
 during CSS animations */
+
 html {
     -webkit-font-smoothing: antialiased;
 }
 
 body {
-    background: url(../img/subtle-pattern-4.jpg) repeat;
+    /*background: url(../img/subtle-pattern-4.jpg) repeat;*/
+    background-color: rgb(41, 152, 205);
 }
 
-#connection_body {
-    background: none;
-    background-color: #5D9CEC;
-}
 
 /* All body content but the footer and navbar&notifications */
+
 #body-content {
     animation: opacityin 0.5s linear;
 }
@@ -29,6 +28,7 @@ body {
         opacity: 1;
     }
 }
+
 
 /* Begin Navbar *************/
 
@@ -53,12 +53,13 @@ body {
 .navbar-inverse {
     /*background-color: #ffffff;*/
     padding: auto;
-    border: 1px solid rgba(170, 178, 189, 0.48);;
+    border: 1px solid rgba(170, 178, 189, 0.48);
     /*height: 51px;*/
     border-top-width: 0;
     border-left-width: 0;
     border-right-width: 0;
-    border: 0; /* Delet if no need */
+    border: 0;
+    /* Delet if no need */
     margin-bottom: 0;
 }
 
@@ -71,8 +72,9 @@ body {
 
 
 /* BurgerMenu */
+
 .navbar-inverse .navbar-toggle,
-.navbar-inverse .navbar-toggle:focus{
+.navbar-inverse .navbar-toggle:focus {
     background-color: #5D9CEC;
     border-color: #5D9CEC;
     border: 0;
@@ -180,7 +182,7 @@ body {
 }*/
 
 .navbar-inverse .navbar-nav > li > #navbar-logout:hover,
-.navbar-inverse .navbar-nav > li.open > #navbar-logout:hover{
+.navbar-inverse .navbar-nav > li.open > #navbar-logout:hover {
     background-color: #DA4453;
     color: #ffffff;
     border-bottom-right-radius: 4px;
@@ -188,10 +190,11 @@ body {
     -moz-border-radius: 0 0 4px 0;
 }
 
-.navbar-inverse .navbar-nav > li.open  > #navbar-logout,
-.navbar-inverse .navbar-nav > li.open  > a{
+.navbar-inverse .navbar-nav > li.open > #navbar-logout,
+.navbar-inverse .navbar-nav > li.open > a {
     background-color: white;
 }
+
 
 /* HIREANEMPLOYEE TITLE */
 
@@ -200,7 +203,8 @@ body {
     font-size: 24px;
     font-weight: 700;
     padding: auto 18px;
-    background-color: rgb(51, 51, 51);;
+    background-color: rgb(51, 51, 51);
+;
     color: #ffffff;
 }
 
@@ -226,20 +230,21 @@ body {
         padding-right: 13px;
         padding-left: 13px;
     }
-
     #navbar-logout #logout-text {
         display: none;
     }
 }
 
+
 /* Menu burger */
+
 @media (max-width: 767px) {
     .navbar-inverse .navbar-nav > li > a,
     .navbar-inverse .navbar-nav > li > form .input-group {
         padding-right: 13px;
         padding-left: 13px;
     }
-    .navbar-inverse .navbar-nav > li  {
+    .navbar-inverse .navbar-nav > li {
         border: 0;
     }
     .navbar-inverse .navbar-nav > li > form .input-group {
@@ -272,22 +277,6 @@ h4,
 h5,
 p {
     color: #333;
-}
-
-
-/* BEGIN Connection page ******/
-
-#title,
-#sub-title {
-    color: #fff;
-}
-
-#sub-title {
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 19px;
-    font-weight: 500;
-    height: 19px;
-    line-height: 19px;
 }
 
 
@@ -391,7 +380,7 @@ p {
 
 /* BEGIN CV left row *************/
 
-#cv-content{
+#cv-content {
     position: relative;
     animation: fadein 0.9s ease-out;
 }
@@ -519,36 +508,196 @@ body {
 
 /**** CONNECTION PAGE ****************************/
 
+
+/* BEGIN Connection page ******/
+
+#connection-titles {
+    margin-top: 10px;
+    animation: con-title-anim 1s ease-out;
+}
+
+@keyframes con-title-anim {
+    0% {
+        opacity: 0;
+        top: -60px;
+    }
+    40% {
+        opacity: 0;
+        top: -40px;
+    }
+    100% {
+        opacity: 1;
+        top: 0px;
+    }
+}
+
+#title-content {
+    margin: auto;
+    width: 380px;
+}
+
+#title {
+    margin-left: -61px;
+}
+
+#connection-titles h1 {
+    display: inline;
+    color: #fff;
+}
+
+#connection-titles #ee {
+    margin-top: 0px;
+    position: absolute;
+    text-decoration: underline;
+    animation: con-title-ee-anim 1.3s ease-out;
+}
+
+@keyframes con-title-ee-anim {
+    0% {
+        opacity: 0;
+        margin-left: 30px;
+    }
+    75% {
+        opacity: 0;
+        margin-left: 30px;
+    }
+    100% {
+        opacity: 1;
+        margin-left: 0;
+    }
+}
+
+#sub-title {
+    color: #fff;
+}
+
+#sub-title {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 500;
+    margin-top: 20px;
+    height: 19px;
+    line-height: 19px;
+    animation: con-sub-title-anim 1.8s ease-out;
+}
+
+@keyframes con-sub-title-anim {
+    0% {
+        opacity: 0;
+        margin-top: 0px;
+    }
+    76% {
+        opacity: 0;
+        margin-top: 0px;
+    }
+    100% {
+        opacity: 1;
+        margin-top: 20px;
+    }
+}
+
+.btn-base,
+.btn-base:focus,
+.btn-base:visited {
+    color: white;
+    background-color: transparent;
+    border: white;
+    border: 2px solid transparent;
+}
+
+.btn-base:hover {
+    background-color: transparent;
+    border: white;
+    border: 2px solid #fff;
+    transition: border 0.3s linear;
+}
+
+.btn-base:active {
+    color: rgb(41, 152, 205);
+    background-color: #fff;
+    border: 2px solid #fff;
+}
+
+#togglers {
+    margin-bottom: 35px;
+}
+
+#connection-page-forms .connect-btn {
+    margin: 0 25px;
+    width: 130px;
+    animation: con-connect-btn-anim 1.8s ease-out;
+}
+
+@keyframes con-connect-btn-anim {
+    0% {
+        opacity: 0;
+        margin: 0 0px;
+    }
+    71% {
+        opacity: 0;
+        margin: 0 0px;
+    }
+    100% {
+        opacity: 1;
+        margin: 0 25px;
+    }
+}
+
 #connection-page-forms {
-    margin-top: 40px;
+    margin-top: 30px;
     margin-bottom: 40px;
+    min-height: 500px;
 }
 
-.connection-form .panel-blue,
 .connection-form {
-    /*-webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;*/
-}
-
-.hidden-pannel {
-    opacity: 0.4;
-}
-
-.hidden-pannel:hover,
-.hidden-pannel:focus {
-    opacity: 1;
+    top: 0px;
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.3s ease-out, top 0.2s ease-in-out;
 }
 
 .connection-form .panel-blue {
-    top: 0;
+    background-color: transparent;
+    -webkit-box-shadow: 1px 2px 2px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 1px 2px 2px rgba(0, 0, 0, .4);
+    transition: background-color 0s ease-out 0.6s, box-shadow 0.2s ease-in-out;
 }
 
-.connection-form .panel-blue:hover {
-    top: -4px;
-    -webkit-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
-    -moz-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
+.connection-form.in .panel-blue {
+    background-color: white;
+    transition: background-color 0s linear;
+    /*To cancel the incoming transitions */
+}
+
+.connection-form.delayin .panel-blue {
+    background-color: white;
+    transition: background-color 0s linear 0.5s;
+    /*To cancel the incoming transitions */
+}
+
+.connection-form.in {
+    overflow: hidden;
+    transition: height 0.6s ease-out, top 0.2s ease-in-out;
+}
+
+.connection-form.delayin {
+    overflow: hidden;
+    transition: height 0.6s ease-out 0.5s, top 0.2s ease-in-out;
+}
+
+.connection-form.in:hover,
+.connection-form.delayin:hover {
+    top: -10px;
+    -webkit-transition: top 0.2s ease-in-out;
+    -moz-transition: top 0.2s ease-in-out;
+    -o-transition: top 0.2s ease-in-out;
+    transition: top 0.2s ease-in-out;
+}
+
+.connection-form:hover .panel-blue {
+    -webkit-box-shadow: 3px 10px 10px rgba(0, 0, 0, .6);
+    -moz-box-shadow: 3px 10px 10px rgba(0, 0, 0, .6);
+    transition: box-shadow 0.2s ease-in-out;
 }
 
 .connection-form .panel-body {
@@ -693,6 +842,7 @@ body {
     display: inline-block;
 }
 
+
 /*
 /*.editable ,
 .editable p,
@@ -755,7 +905,7 @@ body {
 }
 
 .editor input,
-.editor select{
+.editor select {
     margin-top: 12px;
 }
 

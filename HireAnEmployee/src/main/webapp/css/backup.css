@@ -1,7 +1,34 @@
-body {
-    background-color: #f1f2f6;
+/* Useful to choose the grayscale antialiasing algorithm
+during CSS animations */
+html {
+    -webkit-font-smoothing: antialiased;
 }
 
+body {
+    background: url(../img/subtle-pattern-4.jpg) repeat;
+}
+
+#connection_body {
+    background: none;
+    background-color: #5D9CEC;
+}
+
+/* All body content but the footer and navbar&notifications */
+#body-content {
+    animation: opacityin 0.5s linear;
+}
+
+@keyframes opacityin {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
 /* Begin Navbar *************/
 
@@ -9,23 +36,32 @@ body {
 /* Background color */
 
 .navbbar-top {
-    position:fixed;
+    position: fixed;
     z-index: 99999;
     width: 100%;
     /*font-size: 25px;*/
     text-align: center;
 }
 
+
+/* For the notification bug (could not collapsed on large screen) */
+
+.navbbar-top .col-lg-12 {
+    float: none;
+}
+
 .navbar-inverse {
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
     padding: auto;
-    border: 1px solid #aab2bd;
+    border: 1px solid rgba(170, 178, 189, 0.48);;
     /*height: 51px;*/
     border-top-width: 0;
     border-left-width: 0;
     border-right-width: 0;
+    border: 0; /* Delet if no need */
     margin-bottom: 0;
 }
+
 
 /*
 .navbar-inverse .navbar-brand {
@@ -35,12 +71,28 @@ body {
 
 
 /* BurgerMenu */
-
 .navbar-inverse .navbar-toggle,
-.navbar-inverse .navbar-toggle:focus {
-    background-color: #FFCE54;
-    border-color: #FFCE54;
+.navbar-inverse .navbar-toggle:focus{
+    background-color: #5D9CEC;
+    border-color: #5D9CEC;
+    border: 0;
+    margin: 0;
+    width: 50px;
+    height: 50px;
     border-radius: 0;
+    padding: 13px;
+    opacity: 0.9;
+    transition: opacity 0.2s linear;
+}
+
+.navbar-inverse .navbar-toggle:hover {
+    background-color: #5D9CEC;
+    opacity: 1;
+    transition: opacity 0.2s linear;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    width: 24px;
 }
 
 .navbar-inverse .navbar-toggle .icon-bar {
@@ -68,9 +120,10 @@ body {
 
 /* FONT COLOR */
 
-.navbar-inverse .navbar-nav>li>a {
+.navbar-inverse .navbar-nav > li > a {
     font-weight: 700;
-    color: #434a54;
+    color: #ffffff;
+    /* color: #434a54;*/
 }
 
 
@@ -84,6 +137,7 @@ body {
 
 .navbar-inverse .form-control {
     padding-right: 30px;
+    border: 0;
 }
 
 .navbar-inverse .form-search .search-query {
@@ -92,8 +146,8 @@ body {
     border-top-right-radius: 4px;
     -webkit-border-radius: 0 4px 4px 0;
     -moz-border-radius: 0 4px 4px 0;
-    -webkit-box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .1);
-    -moz-box-shadow: inset 2px 1px 2px rgba(0, 0, 0, .1);
+    -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
+    -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
 }
 
 .navbar-inverse .btn {
@@ -112,12 +166,11 @@ body {
 
 /* When Hover, BACKGROUND COLOR */
 
-.navbar-inverse .navbar-toggle:hover,
-.navbar-inverse .navbar-nav>li>a:hover,
+.navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-brand:hover {
-    background-color: #FFCE54;
-    border-color: #FFCE54;
+    background-color: #f6bb42;
 }
+
 
 /*
 .navbar-inverse .navbar-brand:hover {
@@ -126,7 +179,8 @@ body {
     -moz-border-radius: 0 0 0 4px;
 }*/
 
-.navbar-inverse .navbar-nav>li>#navbar-logout:hover {
+.navbar-inverse .navbar-nav > li > #navbar-logout:hover,
+.navbar-inverse .navbar-nav > li.open > #navbar-logout:hover{
     background-color: #DA4453;
     color: #ffffff;
     border-bottom-right-radius: 4px;
@@ -134,18 +188,24 @@ body {
     -moz-border-radius: 0 0 4px 0;
 }
 
+.navbar-inverse .navbar-nav > li.open  > #navbar-logout,
+.navbar-inverse .navbar-nav > li.open  > a{
+    background-color: white;
+}
 
 /* HIREANEMPLOYEE TITLE */
 
-.navbar-inverse .navbar-brand {
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-brand:focus {
     font-size: 24px;
     font-weight: 700;
-    background-color: #DA4453;
+    padding: auto 18px;
+    background-color: rgb(51, 51, 51);;
     color: #ffffff;
 }
 
-.navbar-inverse .navbar-nav>li>a,
-.navbar-inverse .navbar-nav>li>form .input-group {
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-nav > li > form .input-group {
     padding-right: 26px;
     padding-left: 26px;
 }
@@ -160,14 +220,37 @@ body {
     padding-left: 26px;
 }
 
-@media (max-width:990px) {
-    .navbar-inverse .navbar-nav>li>a,
-    .navbar-inverse .navbar-nav>li>form .input-group {
+@media (min-width: 768px) and (max-width: 922px) {
+    .navbar-inverse .navbar-nav > li > a,
+    .navbar-inverse .navbar-nav > li > form .input-group {
         padding-right: 13px;
         padding-left: 13px;
     }
+
     #navbar-logout #logout-text {
         display: none;
+    }
+}
+
+/* Menu burger */
+@media (max-width: 767px) {
+    .navbar-inverse .navbar-nav > li > a,
+    .navbar-inverse .navbar-nav > li > form .input-group {
+        padding-right: 13px;
+        padding-left: 13px;
+    }
+    .navbar-inverse .navbar-nav > li  {
+        border: 0;
+    }
+    .navbar-inverse .navbar-nav > li > form .input-group {
+        margin: auto;
+        width: 100%;
+    }
+    .navbar-inverse .navbar-nav #navbar-input:hover {
+        background-color: #FFCE54;
+    }
+    #navbar-logout #logout-text {
+        /* display: none;*/
     }
 }
 
@@ -181,6 +264,31 @@ body {
 
 
 /* END Navbar *************/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    color: #333;
+}
+
+
+/* BEGIN Connection page ******/
+
+#title,
+#sub-title {
+    color: #fff;
+}
+
+#sub-title {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 500;
+    height: 19px;
+    line-height: 19px;
+}
 
 
 /* BEGIN Top Photo *************/
@@ -214,24 +322,30 @@ body {
 }
 
 .panel-blue .panel-heading {
-    height: 50px;
-    padding: auto;
-    padding-top: 16px;
+    height: 70px;
+    padding: 16px auto auto;
 }
 
 
 /* Panel-blue transition */
 
-.panel-blue img,
-.panel-blue .panel-heading {
+.panel-blue img {
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
 
+.panel-blue .panel-heading {
+    -webkit-transition: opacity 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -o-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+}
+
 .panel-blue:hover {
-    background-color: #FFFFFC;
+    /* background-color: #c2deff; */
+    /* background-color: #FFFFFC; */
 }
 
 .panel-blue img {
@@ -245,10 +359,14 @@ body {
     -moz-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
 }
 
+.panel-blue .panel-title .glyphicon {
+    font-size: 200%;
+}
+
 .panel-blue .panel-title {
     font-weight: 700;
-    font-size: 15px;
-    color: #434a54;
+    font-size: 16px;
+    /* color: #434a54;*/
     margin-top: 10px;
     margin-left: 16px;
 }
@@ -273,28 +391,23 @@ body {
 
 /* BEGIN CV left row *************/
 
-#cv-content {
+#cv-content{
     position: relative;
-    animation: fadein 0.4s linear;
+    animation: fadein 0.9s ease-out;
 }
 
 @keyframes fadein {
-    from {
+    0% {
         opacity: 0;
         top: -40px;
     }
-    to {
+    40% {
+        opacity: 0;
+        top: -40px;
+    }
+    100% {
         opacity: 1;
         top: 0;
-    }
-}
-
-@keyframes collapse-out-cv {
-    from {
-        max-height: 0;
-    }
-    to {
-        max-height: 2000px;
     }
 }
 
@@ -313,8 +426,8 @@ body {
     margin-bottom: 100px;
 }
 
-#footer-logo-div >a {
-    color: #FFCE54;
+#footer-logo-div > a {
+    color: #f6bb42;
 }
 
 .footer-copyright {
@@ -322,11 +435,11 @@ body {
 }
 
 .footer {
-    background-color: #434a54;
+    background-color: rgb(51, 51, 51);
 }
 
 body {
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .row-strip {
@@ -351,9 +464,14 @@ body {
     background-color: #DA4453;
     border-color: #DA4453;
 }
+
 .btn-yellowb {
     background-color: #F6BB42;
     border-color: #F6BB42;
+}
+
+.btn-greenb {
+    background-color: #8cc152;
 }
 
 .btn-default:hover {
@@ -370,6 +488,24 @@ body {
     background-color: #F5D76E;
 }
 
+.btn-greenb:hover {
+    background-color: #9bcf50;
+}
+
+.btn-redb.disabled {
+    background-color: #DC3023;
+}
+
+.btn-yellowb.disabled {
+    background-color: #F5D76E;
+}
+
+.btn-greenb.disabled {
+    /*background-color: #aab2bd;*/
+    background-color: rgba(140, 187, 73, 0.85);
+}
+
+
 /* BEGIN Typographie ********/
 
 .small-text {
@@ -382,16 +518,18 @@ body {
 
 
 /**** CONNECTION PAGE ****************************/
+
 #connection-page-forms {
     margin-top: 40px;
     margin-bottom: 40px;
 }
+
 .connection-form .panel-blue,
 .connection-form {
-    -webkit-transition: all 0.2s ease-in-out;
+    /*-webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;*/
 }
 
 .hidden-pannel {
@@ -404,9 +542,7 @@ body {
 }
 
 .connection-form .panel-blue {
-    position: relative;
     top: 0;
-    animation: fadein 0.4s linear;
 }
 
 .connection-form .panel-blue:hover {
@@ -423,17 +559,61 @@ body {
     margin-top: 10px;
 }
 
+.form-group.has-feedback {
+    margin-bottom: 0;
+}
+
+
+/* BEGIN Form prompts ****/
+
+.error-msg {
+    font-size: 15px;
+    margin-top: 4px;
+    color: #da4453;
+    font-weight: 400;
+}
+
+.has-success .help-block.with-hint,
+.has-error .help-block.with-hint,
+.help-block.with-success,
+.help-block.with-error {
+    display: none;
+}
+
+.has-success .help-block.with-success {
+    display: inline;
+}
+
+.has-error .help-block.with-error {
+    display: inline;
+}
+
+
+/* END Form prompts ****/
+
 .under {
     text-decoration: underline;
 }
+
 .bold {
     font-weight: bold;
 }
+
+#not_found {
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
+
+
 /* CV page */
+
+
 /* Styling the bar itself */
+
 #topbar {
     height: 60px;
-    margin-top: -60px; /* has to be around the height of the bar or more. */
+    margin-top: -60px;
+    /* has to be around the height of the bar or more. */
     display: block;
     z-index: 99998;
     width: 100%;
@@ -445,38 +625,168 @@ body {
     transition: margin-top 0.5s;
 }
 
-#topbar div p {
-    display: inline;
-    float: none;
-    font-size: 24px;
-    font-weight: 400;
-}
-
-/* Hiding the checkbox */
-#toggleTop {
-    display: none;
-}
-/* Styling the lables, to show and hide the bar */
-#showTop {
-    position: fixed;
-    z-index: 9999;
-    top: 100px;
-    right: 30px;
+#notification {
+    height: 60px;
+    margin-top: 0;
+    /*-60px; /* Has to be the height of the bar or more. */
     display: block;
-    padding: 10px;
-    background-color: #000000;
-    color: #fff;
+    z-index: 99998;
+    /* Under the navbar */
+    width: 100%;
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    animation: notification-in-anim 0.2s ease-out;
+    padding: 17px;
 }
 
-#hideTop {
+@keyframes notification-in-anim {
+    from {
+        margin-top: -60px;
+    }
+    to {
+        margin-top: 0;
+    }
+}
+
+#notification.redb {
+    background-color: #DA4453;
+}
+
+#notification.greenb {
+    background-color: #8cc152;
+}
+
+#notification.out {
+    margin-top: -60px;
+    transition: all 0.2s ease-in;
+}
+
+#notification-closer {
+    background-color: transparent;
+    border-style: none;
+    outline: none;
     float: right;
+    width: 100%;
+}
+
+.hyperspan {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+
+/* Editables System for edition *****/
+
+.editable {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.editable div {
     display: inline-block;
 }
-/* Displaying the bar when the checkbox is checked */
-#toggleTop + #topbar {
-    transition: all 0.2s ease-in-out;
+
+/*
+/*.editable ,
+.editable p,
+.editable h3 {
+    margin: 0;
+    padding: 0;
+}
+*/
+
+.editable .glyphicon {
+    opacity: 0;
+    font-size: 70%;
+    transition: opacity 0.2s;
+}
+
+.editable div:hover {
+    background-color: #aab2bd;
+}
+
+.editable:hover .glyphicon {
+    opacity: 1;
+}
+
+.editable a {
+    cursor: pointer;
+}
+
+.editor {
+    height: 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    left: 40px;
+    overflow: hidden;
+    transition: height 0.25s linear, opacity 0.25s ease-out, left 0.25s ease-out;
+}
+
+.editor .row {
+    height: 8px;
+}
+
+.editor.expand {
+    height: 158px;
+    padding: 0;
+    left: 0;
+    opacity: 1;
+    transition: height 0.25s linear, opacity 0.25s ease-out, left 0.25s linear;
+}
+
+.editor.expand#title {
+    height: 100px;
+}
+
+.editor.expand#country {
+    height: 145px;
+}
+
+.editor.expand#formation {
+    height: 115px;
+}
+
+.editor input,
+.editor select{
+    margin-top: 12px;
+}
+
+input.btn {
     margin-top: 0;
 }
+
+input.btn-default {
+    margin-right: 4px;
+}
+
+.editor .btn {
+    height: 34px;
+}
+
+select {
+    -webkit-appearance: none;
+    color: rgb(67, 74, 84);
+    display: block;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    height: 34px;
+    line-height: 20px;
+    max-width: 100%;
+    outline: rgb(67, 74, 84) none 0px;
+    position: relative;
+    width: 262.5px;
+    z-index: 1;
+}
+
+
 /*
 .demo {
     margin-bottom: -99999px;
