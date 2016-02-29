@@ -78,6 +78,7 @@
                                                     <label for="password" class="control-label">Mot de passe</label>
                                                     <h:inputText p:type="password" class="form-control" id="password"
                                                                  p:data-minlength="5"
+                                                                 p:pattern="#{regexes.getAlphaNum()}"
                                                                  value="#{connectionBean.password}"
                                                                  p:placeholder="Mot de passe"
                                                                  p:data-error=" " p:required="true"/>
@@ -121,6 +122,7 @@
                                                 <div class="form-group has-feedback">
                                                     <label for="lastname" class="control-label">Nom</label>
                                                     <h:inputText p:type="text" class="form-control" id="lastname"
+                                                                 p:pattern="#{regexes.getAlpha()}"
                                                                  value="#{connectionBean.lastName}" p:placeholder="Nom"
                                                                  p:data-error=" " p:required="true"/>
                                                     <span class="glyphicon form-control-feedback"
@@ -136,6 +138,7 @@
                                                 <div class="form-group has-feedback">
                                                     <label for="firstname" class="control-label">Prénom</label>
                                                     <h:inputText p:type="text" class="form-control" id="firstname"
+                                                                 p:pattern="#{regexes.getAlpha()}"
                                                                  value="#{connectionBean.firstName}"
                                                                  p:placeholder="Prénom"
                                                                  p:data-error=" " p:required="true"/>
@@ -169,6 +172,7 @@
                                                     <label for="password2" class="control-label">Mot de passe</label>
                                                     <h:inputText p:type="password" class="form-control" id="password2"
                                                                  p:data-minlength="5"
+                                                                 p:pattern="#{regexes.getAlphaNum()}"
                                                                  value="#{connectionBean.password}"
                                                                  p:placeholder="Mot de passe"
                                                                  p:data-error=" " p:required="true"/>

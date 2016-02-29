@@ -6,6 +6,8 @@ import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.navigation.Navigations;
 import fr.upem.hireanemployee.validators.ErrorHandler;
+import fr.upem.hireanemployee.validators.Regexes;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -49,7 +51,8 @@ public class ConnectionBean extends Logger {
 
         // If fields are not filled. Returning to the same page.
         // And setting the flag in the errorHandler object.
-        if (email == null || password == null || email.trim().isEmpty() || password.trim().isEmpty()) {
+        if (email == null || password == null || email.trim().isEmpty() || password.trim().isEmpty()
+                || !email.matches(Regexes.getEmail()) || !password.matches(Regexes.getAlphaNum())) {
             badFieldConnection();
             return Constants.CURRENT_PAGE;
         }
@@ -85,7 +88,8 @@ public class ConnectionBean extends Logger {
         // And setting the flag in the errorHandler object.
         if (email == null || password == null || firstName == null || lastName == null ||
                 email.trim().isEmpty() || password.trim().isEmpty() || firstName.trim().isEmpty() ||
-                lastName.trim().isEmpty()) {
+                lastName.trim().isEmpty() || !email.matches(Regexes.getEmail()) || !firstName.matches(Regexes.getAlpha())
+                || !lastName.matches(Regexes.getAlpha()) || !password.matches(Regexes.getAlphaNum())) {
             badFieldConnection();
             return Constants.CURRENT_PAGE;
         }
