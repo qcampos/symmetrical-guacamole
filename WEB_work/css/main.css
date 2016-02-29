@@ -6,12 +6,13 @@ html {
 }
 
 body {
-    background-color: #f0f3f6;
+    background-color: rgb(228, 235, 240);
 }
 
 #connection_body {
     background-color: #2998cd;
 }
+
 
 /* All body content but the footer and navbar&notifications */
 
@@ -53,6 +54,7 @@ body {
 }
 
 .navbar-inverse {
+    /*background-image: -webkit-linear-gradient(top, rgb(105, 105, 105) 0%, rgb(63, 63, 63) 100%);*/
     background-color: rgb(74, 74, 74);
     padding: auto;
     border: 1px solid rgba(170, 178, 189, 0.48);
@@ -63,6 +65,7 @@ body {
     border: 0;
     /* Delet if no need */
     margin-bottom: 0;
+    box-shadow: rgb(51, 51, 51) 0px 0px 10px 0px;
 }
 
 
@@ -77,8 +80,8 @@ body {
 
 .navbar-inverse .navbar-toggle,
 .navbar-inverse .navbar-toggle:focus {
-    background-color: #5D9CEC;
-    border-color: #5D9CEC;
+    background-color: #2998cd;
+    border-color: #2998cd;
     border: 0;
     margin: 0;
     width: 50px;
@@ -90,16 +93,13 @@ body {
 }
 
 .navbar-inverse .navbar-toggle:hover {
-    background-color: #5D9CEC;
+    background-color: #299fd8;
     opacity: 1;
     transition: opacity 0.2s linear;
 }
 
 .navbar-inverse .navbar-toggle .icon-bar {
     width: 24px;
-}
-
-.navbar-inverse .navbar-toggle .icon-bar {
     background-color: #ffffff;
 }
 
@@ -135,8 +135,8 @@ body {
 
 .navbar-inverse .btn {
     font-weight: 700;
-    background-color: #2998cd;
-    border-color: #2998cd;
+    background-color: #2a3439;
+    border-color: #2a3439;
 }
 
 .navbar-inverse .btn:hover {
@@ -165,7 +165,6 @@ body {
 }
 
 
-
 /* End of the form */
 
 
@@ -178,6 +177,7 @@ body {
 .navbar-inverse .navbar-nav > li > a:hover {
     background-color: #2998cd
 }
+
 
 /*
 .navbar-inverse .navbar-brand:hover {
@@ -209,7 +209,6 @@ body {
     font-weight: 700;
     padding: auto 18px;
     background-color: #2998cd;
-    ;
     color: #ffffff;
 }
 
@@ -227,6 +226,12 @@ body {
     color: #ffffff;
     padding-right: 26px;
     padding-left: 26px;
+}
+
+@media (min-width: 923px) {
+    #navbar-logout .glyphicon {
+        display: none;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 922px) {
@@ -256,7 +261,7 @@ body {
         margin: auto;
         width: 100%;
     }
-  /*  .navbar-inverse .navbar-nav #navbar-input:hover {
+    /*  .navbar-inverse .navbar-nav #navbar-input:hover {
         background-color: #000000;
     } */
     #navbar-logout #logout-text {
@@ -295,8 +300,7 @@ p {
 .top-photo a {
     display: inline-block;
     margin-top: 91px;
-    color: #434a54;
-    font-weight: 100;
+    color: rgba(67, 74, 84, 0.53);
 }
 
 .top-photo a:hover {
@@ -330,12 +334,16 @@ p {
     transition: all 0.3s ease-in-out;
 }
 
+.panel-blue {
+    box-shadow: 0 1px 0.5px rgba(0,0,0,.4);
+}
+/*
 .panel-blue .panel-heading {
     -webkit-transition: opacity 0.2s ease-in-out;
     -moz-transition: opacity 0.2s ease-in-out;
     -o-transition: opacity 0.2s ease-in-out;
     transition: opacity 0.2s ease-in-out;
-}
+}*/
 
 .panel-blue:hover {
     /* background-color: #c2deff; */
@@ -348,9 +356,10 @@ p {
 }
 
 .panel-blue:hover img {
-    top: -8px;
-    -webkit-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
-    -moz-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
+    top: -10px;
+    -webkit-box-shadow: 3px 10px 10px rgba(0, 0, 0, .6);
+    -moz-box-shadow: 3px 10px 10px rgba(0, 0, 0, .6);
+    transition: top 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .panel-blue .panel-title .glyphicon {
@@ -665,18 +674,18 @@ body {
     background-color: transparent;
     -webkit-box-shadow: 1px 2px 2px rgba(0, 0, 0, .4);
     -moz-box-shadow: 1px 2px 2px rgba(0, 0, 0, .4);
-    transition: background-color 0s ease-out 0.6s, box-shadow 0.2s ease-in-out;
+    transition: background-color 0s ease-out 0.6s, box-shadow .2s ease-in-out;
 }
 
 .connection-form.in .panel-blue {
     background-color: white;
-    transition: background-color 0s linear;
+    transition: background-color 0s linear, box-shadow 0.2s ease-in-out;
     /*To cancel the incoming transitions */
 }
 
 .connection-form.delayin .panel-blue {
     background-color: white;
-    transition: background-color 0s linear 0.5s;
+    transition: background-color 0s linear 0.5s, box-shadow 0.2s ease-in-out;
     /*To cancel the incoming transitions */
 }
 
@@ -834,7 +843,7 @@ body {
 }
 
 
-/* Editables System for edition *****/
+/* Editables System for edition - Description *****/
 
 .editable {
     position: relative;
@@ -854,21 +863,29 @@ body {
     transition: color 0.5s, opacity 0.5s;
 }
 
-.cv-bloc-element:hover .editable div {
-    background-color: #d4d4d4;
+.cv-bloc-element:hover .editable div,
+.cv-bloc-element .show-editable div {
+    background-color: #eaeaea;
     transition: background-color 0.5s;
 }
 
-.cv-bloc-element .editable div:hover  {
+.cv-bloc-element .editable div:hover {
     background-color: #caecfc;
     transition: background-color 0.5s;
 }
+
+.cv-bloc-element .editable div:hover *,
 .cv-bloc-element .editable div:hover .glyphicon {
-    color: #00a0dc;
-    transition: color 0.5s;
+    color: #00a9e8;
+    transition: color 0.2s;
 }
 
-.cv-bloc-element:hover .editable .glyphicon {
+.cv-bloc-element .editable div:hover .panel-body-title {
+    color: #333;
+}
+
+.cv-bloc-element:hover .editable .glyphicon,
+.cv-bloc-element .show-editable .glyphicon {
     opacity: 1;
 }
 
@@ -928,7 +945,7 @@ input.btn-default {
 }
 
 select {
-    -webkit-appearance: none;
+    /*-webkit-appearance: none;*/
     color: rgb(67, 74, 84);
     display: block;
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -943,6 +960,110 @@ select {
 }
 
 
+/* END OF System for edition - Description ****/
+
+
+/* BEGIN OF System for edition - Experiences 
+    Used to desactivate click.
+    pointer-events: none;
+    cursor: default;
+****/
+
+.experience-description {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 0.25s ease-in;
+}
+
+.experience-description.expand {
+    pointer-events: auto;
+    cursor: pointer;
+    opacity: 1;
+    overflow: hidden;
+    transition: opacity 0.25s ease-in 0.25s;
+}
+
+.experience-editor {
+    pointer-events: none;
+    cursor: default;
+    position: absolute;
+    opacity: 0;
+    width: 90%;
+    overflow: hidden;
+    transition: opacity 0.2s linear;
+}
+
+.experience-editor.expand {
+    pointer-events: auto;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.25s linear 0.9s;
+}
+
+.experience-editable-container {
+    height: 10px;
+    transition: height 0.945s ease-out 0.25s;
+}
+
+.experience-editable-container.expand {
+    height: 480px;
+    transition: height 0.45s ease-out 0.25s;
+}
+
+/* The form by itself ****/
+/* Dates have ugly paddings unuseful... */
+.form-control.editor-date-input {
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+.experience-form .editor-date-input {
+    margin-left: 0;
+    height: 24px;
+    padding-right: 4px;
+    padding-left: 4px;
+    float:right;
+    margin-right: 0;
+}
+.experience-form select {
+    font-size: 12px;
+    font-weight: 600;
+    height: 24px;
+}
+
+.experience-form label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.experience-form input {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.experience-form .row {
+    margin-bottom: 10px;
+}
+
+.experience-form textarea {
+    resize: none;   
+}
+
+.experience-form .help-block.with-error {
+    font-size: 12px;    
+}
+
+.no-margin-left {
+    margin-left: 0;
+}
+.no-padding-right {
+    padding-right: 0;
+}
+.row.no-margin-bot {
+    margin-bottom: 0;
+}
 /*
 .demo {
     margin-bottom: -99999px;
