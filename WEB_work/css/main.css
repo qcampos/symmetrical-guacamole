@@ -6,10 +6,12 @@ html {
 }
 
 body {
-    /*background: url(../img/subtle-pattern-4.jpg) repeat;*/
-    background-color: rgb(41, 152, 205);
+    background-color: #f0f3f6;
 }
 
+#connection_body {
+    background-color: #2998cd;
+}
 
 /* All body content but the footer and navbar&notifications */
 
@@ -51,7 +53,7 @@ body {
 }
 
 .navbar-inverse {
-    /*background-color: #ffffff;*/
+    background-color: rgb(74, 74, 74);
     padding: auto;
     border: 1px solid rgba(170, 178, 189, 0.48);
     /*height: 51px;*/
@@ -133,8 +135,13 @@ body {
 
 .navbar-inverse .btn {
     font-weight: 700;
-    background-color: #5D9CEC;
-    border-color: #5D9CEC;
+    background-color: #2998cd;
+    border-color: #2998cd;
+}
+
+.navbar-inverse .btn:hover {
+    background-color: #299fd8;
+    border-color: #299fd8;
 }
 
 .navbar-inverse .form-control {
@@ -157,10 +164,6 @@ body {
     border-top-left-radius: 4px;
 }
 
-.navbar-inverse .btn:hover {
-    background-color: #19B5FE;
-    border-color: #19B5FE;
-}
 
 
 /* End of the form */
@@ -168,11 +171,13 @@ body {
 
 /* When Hover, BACKGROUND COLOR */
 
-.navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-brand:hover {
-    background-color: #f6bb42;
+    background-color: #299fd8;
 }
 
+.navbar-inverse .navbar-nav > li > a:hover {
+    background-color: #2998cd
+}
 
 /*
 .navbar-inverse .navbar-brand:hover {
@@ -203,7 +208,7 @@ body {
     font-size: 24px;
     font-weight: 700;
     padding: auto 18px;
-    background-color: rgb(51, 51, 51);
+    background-color: #2998cd;
     ;
     color: #ffffff;
 }
@@ -219,7 +224,7 @@ body {
 
 #navbar-logout {
     font-weight: 500;
-    color: #7d8a9b;
+    color: #ffffff;
     padding-right: 26px;
     padding-left: 26px;
 }
@@ -251,9 +256,9 @@ body {
         margin: auto;
         width: 100%;
     }
-    .navbar-inverse .navbar-nav #navbar-input:hover {
-        background-color: #FFCE54;
-    }
+  /*  .navbar-inverse .navbar-nav #navbar-input:hover {
+        background-color: #000000;
+    } */
     #navbar-logout #logout-text {
         /* display: none;*/
     }
@@ -319,10 +324,10 @@ p {
 /* Panel-blue transition */
 
 .panel-blue img {
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .panel-blue .panel-heading {
@@ -343,13 +348,13 @@ p {
 }
 
 .panel-blue:hover img {
-    top: -4px;
+    top: -8px;
     -webkit-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
     -moz-box-shadow: 2px 4px 8px rgba(0, 0, 0, .1);
 }
 
 .panel-blue .panel-title .glyphicon {
-    font-size: 200%;
+    font-size: 160%;
 }
 
 .panel-blue .panel-title {
@@ -437,9 +442,9 @@ body {
 }
 
 .btn-default {
-    background-color: #5D9CEC;
+    background-color: #2998cd;
     color: #ffffff;
-    border: #5D9CEC;
+    border: #2998cd;
     top: 0;
     padding: 8px 10px 8px 8px;
     font-weight: 600;
@@ -465,7 +470,7 @@ body {
 
 .btn-default:hover {
     top: -3px;
-    background-color: #19B5FE;
+    background-color: #299fd8;
     color: #ffffff;
 }
 

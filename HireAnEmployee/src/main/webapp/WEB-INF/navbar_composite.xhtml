@@ -32,7 +32,7 @@
                         <ul class="nav navbar-nav">
                             <c:if test="#{sessionBean.state == 'CONNECTED'}">
                                 <li id="profile-li"><h:link outcome="#{sessionBean.getProfilUrl()}">
-                                    <span class="glyphicon glyphicon-user"></span>Profile</h:link>
+                                    <span class="glyphicon glyphicon-home"></span>Profile</h:link>
                                 </li>
                             </c:if>
                             <li id="navbar-input">
@@ -40,10 +40,11 @@
                                     <div class="form-search search-only input-group">
                                         <div class="input-group form-search">
                                                 <span class="input-group-btn">
-                                                <button type="submit" class="btn btn-warning" data-type="last">Search
+                                                <button type="submit" class="btn btn-warning" data-type="last">Rechercher
                                                 </button>
                                             </span>
-                                            <input type="text" class="form-control search-query"/>
+                                            <input type="text" class="form-control search-query"
+                                                   placeholder="Rechercher une personne..."/>
                                         </div>
                                     </div>
                                 </form>

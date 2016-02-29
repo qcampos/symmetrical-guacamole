@@ -9,19 +9,21 @@
         <!-- (descripton) -->
         <div class="panel panel-blue">
             <div class="panel-heading">
-                <h1 class="panel-title">Description</h1>
+                <h1 class="panel-title">
+                    <span class="glyphicon glyphicon-user" style="margin-right:8px;top:2px;"></span>
+                    Description</h1>
             </div>
             <div class="panel-body">
 
                 <!-- (photo) -->
                 <h:panelGroup class="col-sm-4 col-xs-5" id="photo-editable" layout="block">
                     <h:form enctype="multipart/form-data" prependId="false">
-                        <h:inputFile value="#{employeeDescriptionBean.newImage}"/>
+                        <!--<h:inputFile value="#{employeeDescriptionBean.newImage}"/>
                         <h:commandButton type="submit" styleClass="btn btn-default" value="OK"
                                          action="#{employeeDescriptionBean.upload()}">
                             <f:ajax execute="@form" render="photo-editable"/>
-                        </h:commandButton>
-                        <h:graphicImage name="img/ll" alt="photo de profil" class="img-thumbnail"/>
+                        </h:commandButton>-->
+                        <h:graphicImage name="img/photo1.jpg" alt="photo de profil" class="img-thumbnail"/>
                     </h:form>
                 </h:panelGroup>
 
