@@ -5,12 +5,8 @@ html {
 }
 
 body {
-    background: url(../img/subtle-pattern-4.jpg) repeat;
-}
-
-#connection_body {
-    background: none;
-    background-color: #5D9CEC;
+    /*background: url(../img/subtle-pattern-4.jpg) repeat;*/
+    background-color: rgb(41, 152, 205);
 }
 
 /* All body content but the footer and navbar&notifications */
@@ -199,8 +195,9 @@ body {
 .navbar-inverse .navbar-brand:focus {
     font-size: 24px;
     font-weight: 700;
+    padding: auto 18px;
     background-color: rgb(51, 51, 51);;
-    color: #FFCE54;
+    color: #ffffff;
 }
 
 .navbar-inverse .navbar-nav > li > a,
@@ -427,10 +424,6 @@ p {
 
 #footer-logo-div > a {
     color: #f6bb42;
-}
-
-#footer-container {
-    padding: 0;
 }
 
 .footer-copyright {
