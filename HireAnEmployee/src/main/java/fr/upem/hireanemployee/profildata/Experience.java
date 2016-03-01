@@ -24,7 +24,7 @@ public class Experience {
     private String jobDescription;
 
     @Temporal(javax.persistence.TemporalType.DATE)
-    @Past
+    // @Past
     private Date startDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date endDate;

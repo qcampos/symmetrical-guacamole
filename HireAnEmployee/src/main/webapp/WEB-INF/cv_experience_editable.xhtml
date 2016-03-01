@@ -270,7 +270,7 @@
 
                 <!-- Creation form -->
                 <ui:include src="cv_experience_editor.xhtml">
-                    <ui:param name="_experience" value="#{employeeExperienceBean.experienceFactory}"/>
+                    <ui:param name="_experience" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
                     <ui:param name="id" value="add"/>
                     <ui:param name="renderList" value="experience-add-script"/>
                     <!--<ui:param name="renderList" value="experience-#{id}-labels experience-#{id}-script"/>-->

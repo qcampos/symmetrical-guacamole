@@ -34,15 +34,10 @@ public class EmployeeExperienceBean extends Logger {
     @ManagedProperty("#{notificationBean}")
     private NotificationBean notificationBean;
 
-    // Data fields to show.
-    private String professionalTitle;
-
-
     // Data fields to edit.
-    private String newFirstName;
     private List<String> months;
-    private ArrayList<ExperienceController> experiences;
-    private ExperienceController experienceFactory;
+    private ArrayList<ExperienceControllerUpdater> experiences;
+    private ExperienceController experienceControllerBuilder;
     private SimpleDateFormat monthFormatter;
     private SimpleDateFormat yearFormatter;
 
@@ -54,97 +49,99 @@ public class EmployeeExperienceBean extends Logger {
             throw new NullPointerException("The current experiences are null.");
         }
 
-        // Creating the experiences list.
-        experiences = new ArrayList<>();
-        months = Arrays.asList(new String[]{"janvier", "février", "mars", "avril", "mai", "juin", "juillet",
-                "aout", "septembre", "octobre", "novembre", "décembre"});
-        monthFormatter = new SimpleDateFormat("MMMM");
-        yearFormatter = new SimpleDateFormat("yyyy");
-        for (Experience exp : originalExperiences) {
-            experiences.add(ExperienceControllerFactory(exp));
-        }
+        // Creating the lsit of experiences updater. They will wrapp real experience inside the DB.
+        experiences = createExperienceControllerUpdater();
 
         // Creating the experience factory.
-        experienceFactory = ExperienceControllerFactory(new Experience(null, null, null, null, new Date(), new Date()));
+        experienceControllerBuilder = createExperienceControllerBuilder();
 
-        // Normalizing null values. We program with the option preventing the use of empty strings.
-        // Null strings are handle ate the printing to place placeholder independent from this very model.
-        // It allows us for example to translate placeholders outside the model.
-        //professionalTitle = setNullIfEmpty(professionalTitle);s
-
-        // Allowing default values by setting these forms.
-//        newFirstName = firstName;
+        // Creating the list of months.
+        months = Arrays.asList("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout", "septembre",
+                "octobre", "novembre", "décembre");
 
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
 
-    public void setNotificationBean(NotificationBean notificationBean) {
-        this.notificationBean = notificationBean;
-    }
+    /**
+     * Performs updates on the database values of the experience wrapped(id) during its perform call.
+     */
+    public class ExperienceControllerUpdater extends ExperienceController {
 
-    public void setOriginalExperiences(Collection<Experience> originalExperiences) {
-        this.originalExperiences = originalExperiences;
-    }
+        private ExperienceControllerUpdater(String jobDescription, String startYear, String startMonth, String endYear,
+                                            String endMonth, Experience experience) {
+            super(experience.getId(), experience.getJobName(), "France", experience.getCompanyName(), jobDescription,
+                    experience.getStartDate(), experience.getEndDate(), experience.toDate(), startMonth, endMonth,
+                    startYear, endYear, experience);// TODO solve "France" with init test (Countries...) !!
+        }
 
-    public ExperienceController getExperienceFactory() {
-        return experienceFactory;
-    }
+        @Override
+        public String update() {
+            EmployeeExperienceBean.this.log("update - " + id + " " + fieldValidated);
+            if (!fieldValidated) {
+                return Constants.CURRENT_PAGE;
+            }
+            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, startDate, endDate);
+            setExperience(experience);
+            log("update - experience set.");
+            return Constants.CURRENT_PAGE;
+        }
 
-    public void setExperienceFactory(ExperienceController experienceFactory) {
-        this.experienceFactory = experienceFactory;
-    }
-
-    public Collection<Experience> getOriginalExperiences() {
-        return originalExperiences;
-    }
-
-    public ArrayList<ExperienceController> getExperiences() {
-        return experiences;
-    }
-
-    public List<String> getMonths() {
-        return months;
-    }
-
-
-    ExperienceController ExperienceControllerFactory(Experience experience) {
-        Objects.requireNonNull(experience);
-
-        // Saving fields to prevent jsf's get to indirect several times.
-        long id = experience.getId();
-        String place = "France"; // TODO solve this with the persistence BDD !!
-        String jobName = experience.getJobName();
-        String jobDescription = experience.getJobDescription();
-        String companyName = experience.getCompanyName();
-        Date startDate = experience.getStartDate();
-        Date endDate = experience.getEndDate();
-        String toDate = experience.toDate();
-        String startMonth = monthFormatter.format(startDate);
-        String endMonth = monthFormatter.format(endDate);
-        String startYear = yearFormatter.format(startDate);
-        String endYear = yearFormatter.format(endDate);
-        jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
-
-        return new ExperienceController(id, jobName, place, companyName, jobDescription, startDate, endDate, toDate,
-                startMonth, endMonth, startYear, endYear, experience);
+        @Override
+        void updateAjaxRenders(AjaxBehaviorEvent event) {
+            UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
+            FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
+        }
     }
 
     /**
-     * Controls any data about experiences on jsf pages. It is used in place of Validator to allow us using
-     * custom notifications (replaced by message in Validators).
+     * Performs updates on the database values of the experience wrapped(id) during its perform call.
      */
-    public class ExperienceController extends Logger {
+    public class ExperienceControllerBuilder extends ExperienceController {
 
-        private long id;
-        private String jobName;
+        private ExperienceControllerBuilder(Date startDate, Date endDate, String startMonth,
+                                            String endMonth, String startYear, String endYear) {
+            super();
+            // TODO solve "France" with init test (Countries...) !!
+        }
+
+        @Override
+        public String update() {
+            EmployeeExperienceBean.this.log("update - " + id + " " + fieldValidated);
+            if (!fieldValidated) {
+                return Constants.CURRENT_PAGE;
+            }
+            log("update - creation with fields : " + companyName + " " + jobName + " " + jobDescription + " " + startDate + "  " + endDate + " " + employee.getId());
+            List<Experience> experience = dao.createExperience(companyName, jobName, "jobAbstract", jobDescription, startDate,
+                    endDate, employee.getId());
+            setEmptyExperience();
+            log("update - experience created ! ");
+            return Constants.CURRENT_PAGE;
+        }
+
+        @Override
+        void updateAjaxRenders(AjaxBehaviorEvent event) {
+            UIComponent target = event.getComponent().findComponent("experience-add-fields");
+            FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
+        }
+    }
+
+    /**
+     * Controls any data about experiences on jsf pages. It is used in place of Validator to allow us to use
+     * custom notifications (replaced by message in Validators).
+     * This abstract class is used in the creation and update experiences'states.
+     * Two implementations are derived : The ExperienceControllerUpdater and the ExperienceControllerBuilder.
+     * The former updates the database values of the experience wrapped during the perform call.
+     * The later creates a new one during the perform call.
+     */
+    public abstract class ExperienceController extends Logger {
+
+        long id;
+        String jobName;
         private String place;
-        private String companyName;
-        private String jobDescription;
-        private Date startDate;
-        private Date endDate;
+        String companyName;
+        String jobDescription;
+        Date startDate;
+        Date endDate;
         private String toDate;
         private String startMonth;
         private String endMonth;
@@ -152,6 +149,14 @@ public class EmployeeExperienceBean extends Logger {
         private String endYear;
         private Experience experience;
 
+
+        private ExperienceController() {
+            setEmptyExperience();
+        }
+
+        void setEmptyExperience() {
+            setExperience(new Experience(null, null, null, null, new Date(), new Date()));
+        }
 
         private ExperienceController(long id, String jobName, String place, String companyName, String jobDescription,
                                      Date startDate, Date endDate, String toDate, String startMonth, String endMonth,
@@ -189,6 +194,69 @@ public class EmployeeExperienceBean extends Logger {
 
             jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
         }
+
+        boolean fieldValidated = true;
+
+        public abstract String update();
+
+        private boolean validateFields() {
+            EmployeeExperienceBean.this.log("validateFields - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
+                    jobDescription + " " + startYear + " " + startMonth + " " + endYear + " " + endMonth);
+            notificationBean.clear();
+
+            // Parsing required field.
+            if (jobName == null || companyName == null || startYear == null || endYear == null) {
+                log("validateFields - empty field");
+                notificationBean.setError("Veuillez remplire les champs requis.");
+                return false;
+            }
+
+            // Parse variables with specific controls bound to this very instance class.
+            try {
+                int startMonth = months.indexOf(this.startMonth);
+                int endMonth = months.indexOf(this.endMonth);
+                int startYear = Integer.valueOf(this.startYear) - 1900;
+                int endYear = Integer.valueOf(this.endYear) - 1900;
+
+                // Parsing dates logic.
+                startDate.setMonth(startMonth);
+                startDate.setYear(startYear);
+                endDate.setMonth(endMonth);
+                endDate.setYear(endYear);
+                startDate.setDate(1); // To create a 1 month interval (caution 29 is for February).
+                endDate.setDate(29);
+
+                if (startDate.compareTo(endDate) > 0) {
+                    notificationBean.setError("La date de départ doit précéder la date de fin.");
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                log("update - " + e.getMessage());
+                notificationBean.setError(NotificationBean.DEFAULT_MSG);
+                return false;
+            }
+
+            return true;
+        }
+
+        public void dynamicFields(AjaxBehaviorEvent event) {
+            log("dynamicFields - render fields. state before validation " + fieldValidated);
+            fieldValidated = false || validateFields();
+            log("dynamicFields - validation. state after validation  " + fieldValidated);
+            if (fieldValidated) {
+                updateAjaxRenders(event);
+            } else {
+                // Resetting fields to normal.
+                setExperience(experience);
+            }
+        }
+
+        abstract void updateAjaxRenders(AjaxBehaviorEvent event);
+
+        public boolean getUpdateState() {
+            return fieldValidated;
+        }
+
 
         public void setId(long id) {
             this.id = id;
@@ -285,76 +353,74 @@ public class EmployeeExperienceBean extends Logger {
         public String getEndYear() {
             return endYear;
         }
+    }
 
-        private boolean fieldValidated = true;
-
-        public String update() {
-            EmployeeExperienceBean.this.log("update - " + id + " " + fieldValidated);
-            if (!fieldValidated) {
-                return Constants.CURRENT_PAGE;
-            }
-            //if (validateFields()) return Constants.CURRENT_PAGE;
-            EmployeeExperienceBean.this.log("update - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
-                    jobDescription + " " + startDate + " " + endDate);
-            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, startDate, endDate);
-            setExperience(experience);
-            log("update - experience set.");
-            return Constants.CURRENT_PAGE;
+    private ArrayList<ExperienceControllerUpdater> createExperienceControllerUpdater() {
+        ArrayList<ExperienceControllerUpdater> experiences = new ArrayList<>();
+        monthFormatter = new SimpleDateFormat("MMMM");
+        yearFormatter = new SimpleDateFormat("yyyy");
+        for (Experience exp : originalExperiences) {
+            experiences.add(ExperienceControllerFactory(exp));
         }
+        return experiences;
+    }
 
-        private boolean validateFields() {
-            notificationBean.clear();
+    private ExperienceControllerBuilder createExperienceControllerBuilder() {
+        Date startDate = new Date();
+        Date endDate = new Date();
+        String startMonth = monthFormatter.format(startDate);
+        String endMonth = monthFormatter.format(endDate);
+        String startYear = yearFormatter.format(startDate);
+        String endYear = yearFormatter.format(endDate);
+        return new ExperienceControllerBuilder(startDate, endDate, startMonth, endMonth, startYear, endYear);
+    }
 
-            // Parsing required field.
-            if (jobName == null) {
-                log("validateFields - empty field");
-                notificationBean.setError(NotificationBean.DEFAULT_MSG);
-                return false;
-            }
 
-            // Parse variables with specific controls bound to this very instance class.
-            try {
-                int startMonth = months.indexOf(this.startMonth);
-                int endMonth = months.indexOf(this.endMonth);
-                int startYear = Integer.valueOf(this.startYear) - 1900;
-                int endYear = Integer.valueOf(this.endYear) - 1900;
+    private ExperienceControllerUpdater ExperienceControllerFactory(Experience experience) {
+        Objects.requireNonNull(experience);
 
-                // Parsing dates logic.
-                startDate.setMonth(startMonth);
-                startDate.setYear(startYear);
-                endDate.setMonth(endMonth);
-                endDate.setYear(endYear);
-                startDate.setDate(1); // To create a 1 month interval (caution 29 is for February).
-                endDate.setDate(29);
+        // Saving fields to prevent jsf's get to indirect several times.
+        String jobDescription = experience.getJobDescription();
+        Date startDate = experience.getStartDate();
+        Date endDate = experience.getEndDate();
+        String startMonth = monthFormatter.format(startDate);
+        String endMonth = monthFormatter.format(endDate);
+        String startYear = yearFormatter.format(startDate);
+        String endYear = yearFormatter.format(endDate);
+        jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
 
-                if (startDate.compareTo(endDate) > 0) {
-                    notificationBean.setError("La date de départ doit précéder la date de fin.");
-                    return false;
-                }
-            } catch (NumberFormatException e) {
-                log("update - " + e.getMessage());
-                notificationBean.setError(NotificationBean.DEFAULT_MSG);
-                return false;
-            }
+        return new ExperienceControllerUpdater(jobDescription, startYear, startMonth, endYear, endMonth, experience);
+    }
 
-            return true;
-        }
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
-        public void dynamicFields(AjaxBehaviorEvent event) {
-            log("dynamicFields - render fields after good state " + fieldValidated);
-            fieldValidated = false || validateFields();
-            log("dynamicFields - validation " + fieldValidated);
-            if (fieldValidated) {
-                UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
-                FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
-            } else {
-                // Reseting fields.
-                setExperience(experience);
-            }
-        }
+    public void setNotificationBean(NotificationBean notificationBean) {
+        this.notificationBean = notificationBean;
+    }
 
-        public boolean getUpdateState() {
-            return fieldValidated;
-        }
+    public void setOriginalExperiences(Collection<Experience> originalExperiences) {
+        this.originalExperiences = originalExperiences;
+    }
+
+    public ExperienceController getExperienceControllerBuilder() {
+        return experienceControllerBuilder;
+    }
+
+    public void setExperienceControllerBuilder(ExperienceController experienceControllerBuilder) {
+        this.experienceControllerBuilder = experienceControllerBuilder;
+    }
+
+    public Collection<Experience> getOriginalExperiences() {
+        return originalExperiences;
+    }
+
+    public ArrayList<ExperienceControllerUpdater> getExperiences() {
+        return experiences;
+    }
+
+    public List<String> getMonths() {
+        return months;
     }
 }
