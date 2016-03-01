@@ -27,7 +27,7 @@
                         <!-- (Input1 FirstName) -->
                         <div class="form-group has-feedback">
                             <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
-                                         p:required="true" p:pattern="#{regexes.getAlpha()}"
+                                         p:required="true" p:pattern="#{regexes.getName()}"
                                          p:placeholder="Nom" value="#{employeeDescriptionBean.newFirstName}"/>
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             <!-- <span class="help-block with-error">5 caractères minimum.</span> -->
@@ -38,7 +38,7 @@
                         <!-- (Input2 LastName) -->
                         <div class="form-group has-feedback">
                             <h:inputText type="text" styleClass="form-control" p:data-minlength="1" p:data-error=" "
-                                         p:required="true" p:pattern="#{regexes.getAlpha()}"
+                                         p:required="true" p:pattern="#{regexes.getName()}"
                                          p:placeholder="Prénom" value="#{employeeDescriptionBean.newLastName}"/>
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             <!-- <span class="help-block with-error">5 caractères minimum.</span> -->

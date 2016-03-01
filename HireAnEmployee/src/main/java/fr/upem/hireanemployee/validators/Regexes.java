@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class Regexes {
 
+    public static final String NAME = "^([ \\u00c0-\\u01ffa-zA-Z'\\-])+$";
     public static final String ALPHA = "^[_A-z]+$";
     public static final String ALPHANUM = "^[_A-z0-9]+$";
     public static final String NUM = "^[0-9]+$";
@@ -31,6 +32,10 @@ public class Regexes {
         return EMAIL;
     }
 
+    public static String getName() {
+        return NAME;
+    }
+
     public static String getAlphaNum() {
         return ALPHANUM;
     }
@@ -41,6 +46,6 @@ public class Regexes {
      * @return true if and only if it matches.
      */
     public static boolean parseAlpha(String s) {
-        return s.matches(ALPHA);
+        return s.matches(NAME);
     }
 }

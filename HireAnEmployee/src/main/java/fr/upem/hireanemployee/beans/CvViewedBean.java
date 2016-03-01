@@ -59,7 +59,7 @@ public class CvViewedBean extends Logger {
         // Setting fields accordingly.
         employeeDescription = employee.getDescription();
         employeeExperiences = employee.getExperiences();
-        log("init - employee " + employee.getFirstName() + " Exp : "+employeeExperiences + " Desc : " + employeeDescription);
+        log("init - employee " + employee.getFirstName() + " Exp : " + employeeExperiences + " Desc : " + employeeDescription);
         return Constants.CURRENT_PAGE;
     }
 
@@ -83,6 +83,7 @@ public class CvViewedBean extends Logger {
         return employeeDescription;
     }
 
-    public Collection<Experience> getEmployeeExperiences() { log(initialized +  " " +getId() + " " + employeeExperiences); return employeeExperiences;
+    public Collection<Experience> getEmployeeExperiences() {
+        return employeeExperiences;
     }
 }

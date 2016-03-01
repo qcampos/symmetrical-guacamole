@@ -113,6 +113,7 @@ public class EmployeeExperienceBean extends Logger {
         String endMonth = monthFormatter.format(endDate);
         String startYear = yearFormatter.format(startDate);
         String endYear = yearFormatter.format(endDate);
+        jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
 
         return new ExperienceController(id, jobName, place, companyName, jobDescription, startDate, endDate, toDate,
                 startMonth, endMonth, startYear, endYear);
@@ -170,6 +171,8 @@ public class EmployeeExperienceBean extends Logger {
             endMonth = monthFormatter.format(endDate);
             startYear = yearFormatter.format(startDate);
             endYear = yearFormatter.format(endDate);
+
+            jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
         }
 
         public void setId(long id) {
@@ -269,22 +272,33 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         public String update() {
-            // Parse variables.
-            int startMonth = months.indexOf(this.startMonth);
-            int endMonth = months.indexOf(this.endMonth);
-            int startYear = Integer.valueOf(this.startYear) - 1900;
-            int endYear = Integer.valueOf(this.endYear) - 1900;
+            notificationBean.clear();
+            EmployeeExperienceBean.this.log("update - " + id);
 
-            // Parsing dates logic.
+            // Parse variables with specific controls bound to this very instance class.
+            try {
+                int startMonth = months.indexOf(this.startMonth);
+                int endMonth = months.indexOf(this.endMonth);
+                int startYear = Integer.valueOf(this.startYear) - 1900;
+                int endYear = Integer.valueOf(this.endYear) - 1900;
 
+                // Parsing dates logic.
+                startDate.setMonth(startMonth);
+                startDate.setYear(startYear);
+                endDate.setMonth(endMonth);
+                endDate.setYear(endYear);
+                startDate.setDate(1); // To create a 1 month interval (caution 29 is for February).
+                endDate.setDate(29);
 
-            startDate.setMonth(startMonth);
-            startDate.setYear(startYear);
-            endDate.setMonth(endMonth);
-            endDate.setYear(endYear);
-            startDate.setDate(1); // To create a 1 month interval (caution 29 is for Febuary).
-            endDate.setDate(29);
-
+                if (startDate.compareTo(endDate) > 0) {
+                    notificationBean.setError("La date de départ doit précéder la date de fin.");
+                    return Constants.CURRENT_PAGE;
+                }
+            } catch (NumberFormatException e) {
+                log("update - " + e.getMessage());
+                notificationBean.setError(NotificationBean.DEFAULT_MSG);
+                return Constants.CURRENT_PAGE;
+            }
 
             EmployeeExperienceBean.this.log("update - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
                     jobDescription + " " + startDate + " " + endDate);

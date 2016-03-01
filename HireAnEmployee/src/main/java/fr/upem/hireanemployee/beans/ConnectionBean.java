@@ -88,8 +88,8 @@ public class ConnectionBean extends Logger {
         // And setting the flag in the errorHandler object.
         if (email == null || password == null || firstName == null || lastName == null ||
                 email.trim().isEmpty() || password.trim().isEmpty() || firstName.trim().isEmpty() ||
-                lastName.trim().isEmpty() || !email.matches(Regexes.getEmail()) || !firstName.matches(Regexes.getAlpha())
-                || !lastName.matches(Regexes.getAlpha()) || !password.matches(Regexes.getAlphaNum())) {
+                lastName.trim().isEmpty() || !email.matches(Regexes.getEmail()) || !firstName.matches(Regexes.getName())
+                || !lastName.matches(Regexes.getName()) || !password.matches(Regexes.getAlphaNum())) {
             badFieldConnection();
             return Constants.CURRENT_PAGE;
         }
@@ -118,7 +118,7 @@ public class ConnectionBean extends Logger {
      */
     private void badInformationConnection() {
         log("connect - connection failed. Not in the database");
-        setErrorMsg("Sorry, your are not in our database.");
+        setErrorMsg("Désolé, l'adresse et le mot de passe ne correspondent pas.");
     }
 
     /**
@@ -126,14 +126,14 @@ public class ConnectionBean extends Logger {
      */
     private void alreadyExistsCreation() {
         log("connect - connection failed. Wrong fields");
-        setErrorMsg("Sorry " + email + " already exists in our database.");
+        setErrorMsg("Désolé " + email + " existe déjà.");
     }
 
     /**
      * Notification message.
      */
     private void badFieldConnection() {
-        setErrorMsg("Some error are detected. Please correct your fields.");
+        setErrorMsg(NotificationBean.DEFAULT_MSG);
         log("connect - connection failed. Wrong fields");
     }
 

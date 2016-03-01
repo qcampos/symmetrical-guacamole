@@ -15,6 +15,8 @@ import javax.faces.bean.ViewScoped;
 public class NotificationBean extends Logger {
 
 
+    public static final String DEFAULT_MSG = "Des erreurs ont été détectées dans vos champs.";
+
     public enum State {SUCCESS, ERROR, IDLE;}
 
     private State state = State.IDLE;

@@ -61,7 +61,8 @@
                                 <div>
                                     <a class="hyperspan"
                                        onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                    <p>#{_experience.jobDescription}
+                                    <p>#{_experience.jobDescription == null ?
+                                            "Ajouter une description" : _experience.jobDescription}
                                         <span class="glyphicon glyphicon-pencil"/></p>
                                 </div>
                             </div>
@@ -205,7 +206,7 @@
                                                        class="control-label">Description</label>
                                                 <h:inputTextarea class="form-control" rows="5"
                                                                  id="experienceDescription-#{_experience.id}"
-                                                                 placeholder="Description..."
+                                                                 p:placeholder="Description..."
                                                                  value="#{_experience.jobDescription}"></h:inputTextarea>
                                             </div>
                                         </div>
