@@ -1,6 +1,7 @@
 package fr.upem.hireanemployee.beans;
 
 import fr.upem.hireanemployee.*;
+import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.Experience;
 
 import javax.annotation.PostConstruct;
@@ -8,8 +9,10 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * Created by Baxtalou on 22/02/2016.
@@ -38,6 +41,8 @@ public class EmployeeExperienceBean extends Logger {
     private String newFirstName;
     private List<String> months;
     private ArrayList<ExperienceController> experiences;
+    private SimpleDateFormat monthFormatter;
+    private SimpleDateFormat yearFormatter;
 
 
     @PostConstruct
@@ -51,10 +56,10 @@ public class EmployeeExperienceBean extends Logger {
                 "aout", "septembre", "octobre", "septembre", "novembre", "décembre"});
 
         experiences = new ArrayList<>();
-        SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM");
-        SimpleDateFormat YearFormatter = new SimpleDateFormat("yyyy");
+        monthFormatter = new SimpleDateFormat("MMMM");
+        yearFormatter = new SimpleDateFormat("yyyy");
         for (Experience exp : originalExperiences) {
-            experiences.add(ExperienceController.ExperienceControllerFactory(exp, monthFormatter, YearFormatter));
+            experiences.add(ExperienceControllerFactory(exp));
         }
 
         // Normalizing null values. We program with the option preventing the use of empty strings.
@@ -92,11 +97,32 @@ public class EmployeeExperienceBean extends Logger {
     }
 
 
+    ExperienceController ExperienceControllerFactory(Experience experience) {
+        Objects.requireNonNull(experience);
+
+        // Saving fields to prevent jsf's get to indirect several times.
+        long id = experience.getId();
+        String place = "France"; // TODO solve this with the persistence BDD !!
+        String jobName = experience.getJobName();
+        String jobDescription = experience.getJobDescription();
+        String companyName = experience.getCompanyName();
+        Date startDate = experience.getStartDate();
+        Date endDate = experience.getEndDate();
+        String toDate = experience.toDate();
+        String startMonth = monthFormatter.format(startDate);
+        String endMonth = monthFormatter.format(endDate);
+        String startYear = yearFormatter.format(startDate);
+        String endYear = yearFormatter.format(endDate);
+
+        return new ExperienceController(id, jobName, place, companyName, jobDescription, startDate, endDate, toDate,
+                startMonth, endMonth, startYear, endYear);
+    }
+
     /**
      * Controls any data about experiences on jsf pages. It is used in place of Validator to allow us using
      * custom notifications (replaced by message in Validators).
      */
-    public static class ExperienceController extends Logger {
+    public class ExperienceController extends Logger {
 
         private long id;
         private String jobName;
@@ -129,26 +155,21 @@ public class EmployeeExperienceBean extends Logger {
             this.endYear = endYear;
         }
 
-        static ExperienceController ExperienceControllerFactory(Experience experience, SimpleDateFormat monthFormatter,
-                                                                SimpleDateFormat yearFormatter) {
+        void setExperience(Experience experience) {
             Objects.requireNonNull(experience);
 
-            // Saving fields to prevent jsf's get to indirect several times.
-            long id = experience.getId();
-            String place = "France";
-            String jobName = experience.getJobName();
-            String jobDescription = experience.getJobDescription();
-            String companyName = experience.getCompanyName();
-            Date startDate = experience.getStartDate();
-            Date endDate = experience.getEndDate();
-            String toDate = experience.toDate();
-            String startMonth = monthFormatter.format(startDate);
-            String endMonth = monthFormatter.format(endDate);
-            String startYear = yearFormatter.format(startDate);
-            String endYear = yearFormatter.format(endDate);
-
-            return new ExperienceController(id, jobName, place, companyName, jobDescription, startDate, endDate, toDate,
-                    startMonth, endMonth, startYear, endYear);
+            id = experience.getId();
+            place = "France"; // TODO solve this with the persistence BDD !!
+            jobName = experience.getJobName();
+            jobDescription = experience.getJobDescription();
+            companyName = experience.getCompanyName();
+            startDate = experience.getStartDate();
+            endDate = experience.getEndDate();
+            toDate = experience.toDate();
+            startMonth = monthFormatter.format(startDate);
+            endMonth = monthFormatter.format(endDate);
+            startYear = yearFormatter.format(startDate);
+            endYear = yearFormatter.format(endDate);
         }
 
         public void setId(long id) {
@@ -245,6 +266,21 @@ public class EmployeeExperienceBean extends Logger {
 
         public String getEndYear() {
             return endYear;
+        }
+
+        public String update() {
+            startDate.setMonth(months.indexOf(startMonth));
+            startDate.setYear(Integer.valueOf(startYear) - 1900);
+            endDate.setMonth(months.indexOf(endMonth));
+            endDate.setYear(Integer.valueOf(endYear) - 1900);
+
+            log(startDate.toString());
+            EmployeeExperienceBean.this.log("update - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
+                    jobDescription + " " + startDate + " " + endDate);
+            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, startDate, endDate);
+            setExperience(experience);
+            log("update - experience save/set.");
+            return Constants.CURRENT_PAGE;
         }
     }
 }

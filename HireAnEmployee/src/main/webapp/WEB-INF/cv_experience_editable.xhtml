@@ -22,48 +22,51 @@
 
                 <!-- (instance experience) -->
                 <div class="experience-editable-container" id="experience-#{_experience.id}-container">
-                    <div class="col-xs-12 experience-description expand" id="experience-#{_experience.id}">
-                        <div class="editable show-editable">
-                            <div>
-                                <a class="hyperspan"
-                                   onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                <h4 class="panel-body-title">#{_experience.jobName}
-                                    <span class="glyphicon glyphicon-pencil"/></h4>
+                    <h:panelGroup layout="block" class="col-xs-12 experience-description expand"
+                                  id="experience-#{_experience.id}">
+                        <h:panelGroup layout="block" id="experience-#{_experience.id}-labels">
+                            <div class="editable show-editable">
+                                <div>
+                                    <a class="hyperspan"
+                                       onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
+                                    <h4 class="panel-body-title">#{_experience.jobName}
+                                        <span class="glyphicon glyphicon-pencil"/></h4>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- (enterprise name) -->
-                        <div class="editable show-editable">
-                            <div>
-                                <a class="hyperspan"
-                                   onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                <p><strong>#{_experience.companyName} <span
-                                        class="glyphicon glyphicon-pencil"/></strong></p>
+                            <!-- (enterprise name) -->
+                            <div class="editable show-editable">
+                                <div>
+                                    <a class="hyperspan"
+                                       onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
+                                    <p><strong>#{_experience.companyName} <span
+                                            class="glyphicon glyphicon-pencil"/></strong></p>
+                                </div>
                             </div>
-                        </div>
 
 
-                        <!-- (date - pays) -->
-                        <div class="editable show-editable">
-                            <div>
-                                <a class="hyperspan"
-                                   onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                <p class="small-text">#{_experience.toDate} | #{_experience.place} <span
-                                        class="glyphicon glyphicon-pencil"/>
-                                </p>
+                            <!-- (date - pays) -->
+                            <div class="editable show-editable">
+                                <div>
+                                    <a class="hyperspan"
+                                       onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
+                                    <p class="small-text">#{_experience.toDate} | #{_experience.place} <span
+                                            class="glyphicon glyphicon-pencil"/>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- (description) -->
-                        <div class="editable show-editable">
-                            <div>
-                                <a class="hyperspan"
-                                   onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                <p>#{_experience.jobDescription}
-                                    <span class="glyphicon glyphicon-pencil"/></p>
+                            <!-- (description) -->
+                            <div class="editable show-editable">
+                                <div>
+                                    <a class="hyperspan"
+                                       onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
+                                    <p>#{_experience.jobDescription}
+                                        <span class="glyphicon glyphicon-pencil"/></p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
 
                     <!-- TEST EDITOR -->
                     <h:panelGroup layout="block" class="col-xs-12 experience-editor"
@@ -205,8 +208,13 @@
                                     <!-- (End of Experience's description) -->
 
                                     <div class="row">
-                                        <h:commandButton type="submit" class="btn btn-default" value="Enregistrer">
-                                            <f:ajax/>
+                                        <h:commandButton type="submit" class="btn btn-default" value="Enregistrer"
+                                                         action="#{_experience.update()}">
+                                            <f:ajax execute="@form"
+                                                    render="experience-#{_experience.id}-labels experience-#{_experience.id}-fields
+                                                    #{notificationBean.id}" onevent="function(data) { if (data.status == 'success') {
+                                                                                hideExperienceEditor('experience-#{_experience.id}'); }}"
+                                                    resetValues="true"/>
                                         </h:commandButton>
                                         <h:commandButton type="button" class="btn btn-redb"
                                                          onclick="hideExperienceEditor('experience-#{_experience.id}');"
