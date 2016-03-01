@@ -10,6 +10,8 @@ import javax.persistence.Id;
 @Entity
 public class Sector {
 
+    // Recognized by the application to be a valid default value.
+    public static final String DEFAULT_NAME = "---";
     @Id
     @GeneratedValue
     private long id;

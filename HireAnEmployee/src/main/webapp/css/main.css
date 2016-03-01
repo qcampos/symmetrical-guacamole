@@ -149,19 +149,28 @@ body {
     border: 0;
 }
 
+.navbar-inverse .form-search .input-group input {
+    padding-right: 4px;
+    margin-right: 17px;
+    padding-left: 4px;
+    width: 200px;
+}
+
 .navbar-inverse .form-search .search-query {
     padding-left: 15px;
-    border-bottom-right-radius: 4px;
+    border-radius: 0;
+    /*border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
     -webkit-border-radius: 0 4px 4px 0;
-    -moz-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;*/
     -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
     -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .1);
 }
 
 .navbar-inverse .btn {
+    border-radius: 0;/*
     border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
+    border-top-left-radius: 4px;*/
 }
 
 
@@ -970,22 +979,19 @@ select {
 ****/
 
 .experience-description {
-    pointer-events: none;
-    cursor: default;
     opacity: 0;
     overflow: hidden;
     transition: opacity 0.25s ease-in;
 }
 
 .experience-description.expand {
-    pointer-events: auto;
-    cursor: pointer;
     opacity: 1;
     overflow: hidden;
     transition: opacity 0.25s ease-in 0.25s;
 }
 
 .experience-editor {
+    /* Used to block inputs on the editor when not expanded */
     pointer-events: none;
     cursor: default;
     position: absolute;
@@ -997,7 +1003,7 @@ select {
 
 .experience-editor.expand {
     pointer-events: auto;
-    cursor: pointer;
+    cursor: auto;
     opacity: 1;
     transition: opacity 0.25s linear 0.9s;
 }
@@ -1012,6 +1018,24 @@ select {
     transition: height 0.45s ease-out 0.25s;
 }
 
+.experience-description a {
+    pointer-events: none;
+    cursor: default;
+}
+
+.experience-description.expand a {
+    pointer-events: auto;
+    cursor: pointer;
+}
+.experience-editor .btn {
+    pointer-events: none;
+    cursor: default;
+}
+
+.experience-editor.expand .btn {
+    pointer-events: auto;
+    cursor: pointer;
+}
 /* The form by itself ****/
 /* Dates have ugly paddings unuseful... */
 .form-control.editor-date-input {

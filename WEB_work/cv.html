@@ -309,6 +309,9 @@
                             experienceContainer.className = containerClass;
                             // Hidding the description.
                             experienceDiv.className = descriptionClass + " expand";
+                            // Cleaning the form.
+                            var experienceForm = _('experience-0000-form');
+                            experienceForm.reset();
                         }
                     </script>
 
@@ -368,7 +371,7 @@
                                     <div class="col-xs-12">
 
                                         <!-- Begin of the form -->
-                                        <form data-toggle="validator" class="experience-form" role="form" action="cv.html">
+                                        <form data-toggle="validator" class="experience-form" role="form" action="cv.html" id="experience-0000-form">
 
                                             <!-- (Enterprise name) -->
                                             <div class="row">

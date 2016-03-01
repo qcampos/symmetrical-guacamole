@@ -76,7 +76,7 @@ public class DatabaseDAO {
         try {
             emptySector = em.createQuery("SELECT d FROM Sector d WHERE d.name = ''", Sector.class).getSingleResult();
         } catch (NoResultException e) {
-            emptySector = new Sector("");
+            emptySector = new Sector(Sector.DEFAULT_NAME);
         }
 
         // TODO prevent SQL exception is these very code.

@@ -1,6 +1,7 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://java.sun.com/jsf/core">
 
     <!-- This is the editable experience component. -->
     <!-- Loading the js for custom editors -->
@@ -16,201 +17,210 @@
         <div class="panel-body">
 
             <!-- experiences -->
-            <!-- <ui:repeat value="#{employeeExperienceBean.employeeExperiences}" var="_experience"> -->
+            <ui:repeat value="#{employeeExperienceBean.experiences}" var="_experience">
 
-            <!-- (instance experience) -->
-            <div class="experience-editable-container" id="experience-0000-container">
-                <div class="col-xs-12 experience-description expand" id="experience-0000">
-                    <div class="editable show-editable">
-                        <div>
-                            <!-- (titre) -->
-                            <a class="hyperspan" onclick="showExperienceEditor('experience-0000');"></a>
-                            <h4 class="panel-body-title">MSc in Project and Programme Management and Business Development
-                                <span class="glyphicon glyphicon-pencil"/></h4>
-                        </div>
-                    </div>
-
-                    <!-- (nom de l'entreprise) -->
-                    <div class="editable show-editable">
-                        <div>
-                            <!-- (titre) -->
-                            <a class="hyperspan" onclick="showExperienceEditor('experience-0000');"></a>
-                            <p><strong>Dassault System <span class="glyphicon glyphicon-pencil"/></strong></p>
-                        </div>
-                    </div>
-
-
-                    <!-- (date - pays) -->
-                    <div class="editable show-editable">
-                        <div>
-                            <!-- (titre) -->
-                            <a class="hyperspan" onclick="showExperienceEditor('experience-0000');"></a>
-                            <p class="small-text">décembre 2015 - février 2016 (3 mois) | France <span
-                                    class="glyphicon glyphicon-pencil"/>
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- (description) -->
-                    <div class="editable show-editable">
-                        <div>
-                            <!-- (titre) -->
-                            <a class="hyperspan" onclick="showExperienceEditor('experience-0000');"></a>
-                            <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.
-                                <span class="glyphicon glyphicon-pencil"/></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- TEST EDITOR -->
-                <!-- TEST EDITOR -->
-                <div class="col-xs-12 experience-editor" id="experience-0000-editor">
-
-
-                    <div class="col-xs-12">
-
-                        <!-- Begin of the form -->
-                        <form data-toggle="validator" class="experience-form" role="form" action="cv.html">
-
-                            <!-- (Enterprise name) -->
-                            <div class="row">
-                                <div class="row-strip col-sm-12">
-                                    <div class="form-group has-feedback">
-                                        <label for="enterpriseName-0000"
-                                               class="control-label">Nom de l'entreprise </label>
-                                        <span class="help-block with-error">- Champs requis.</span>
-                                        <input type="text" class="form-control" id="enterpriseName-0000"
-                                               data-minlength="1"
-                                               placeholder="Nom de l'entreprise" data-error=" " pattern="^[_A-z0-9]+$"
-                                               required="true"/>
-                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                    </div>
-                                </div>
+                <!-- (instance experience) -->
+                <div class="experience-editable-container" id="experience-#{_experience.id}-container">
+                    <div class="col-xs-12 experience-description expand" id="experience-#{_experience.id}">
+                        <div class="editable show-editable">
+                            <div>
+                                <a class="hyperspan"
+                                   onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
+                                <h4 class="panel-body-title">#{_experience.jobName}
+                                    <span class="glyphicon glyphicon-pencil"/></h4>
                             </div>
-                            <!-- (End of Enterprise name) -->
+                        </div>
 
-                            <!-- (Experience's title) -->
-                            <div class="row">
-                                <div class="row-strip col-sm-12">
-                                    <div class="form-group has-feedback">
-                                        <label for="experienceTitle-0000" class="control-label">Titre </label>
-                                        <span class="help-block with-error">- Champs requis.</span>
-                                        <input type="text" class="form-control" id="experienceTitle-0000"
-                                               data-minlength="1"
-                                               placeholder="Titre" data-error=" " pattern="^[_A-z0-9]+$" required="true"/>
-                                        <span class="glyphicon form-control-feedback" aria-hidden="true"> </span>
-                                    </div>
-                                </div>
+                        <!-- (enterprise name) -->
+                        <div class="editable show-editable">
+                            <div>
+                                <a class="hyperspan"
+                                   onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
+                                <p><strong>#{_experience.companyName} <span
+                                        class="glyphicon glyphicon-pencil"/></strong></p>
                             </div>
-                            <!-- (End of Experience's title) -->
+                        </div>
 
-                            <!-- (Experience's place) -->
-                            <div class="row">
-                                <div class="row-strip col-sm-12">
-                                    <div class="form-group">
-                                        <label for="experiencePlace-0000" class="control-label">Lieu </label>
-                                        <input type="text" class="form-control" id="experiencePlace-0000"
-                                               placeholder="Lieu"
-                                               data-error=" "/>
-                                    </div>
-                                </div>
+
+                        <!-- (date - pays) -->
+                        <div class="editable show-editable">
+                            <div>
+                                <a class="hyperspan"
+                                   onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
+                                <p class="small-text">#{_experience.toDate} | #{_experience.place} <span
+                                        class="glyphicon glyphicon-pencil"/>
+                                </p>
                             </div>
-                            <!-- (End of Experience's place) -->
+                        </div>
+
+                        <!-- (description) -->
+                        <div class="editable show-editable">
+                            <div>
+                                <a class="hyperspan"
+                                   onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
+                                <p>#{_experience.jobDescription}
+                                    <span class="glyphicon glyphicon-pencil"/></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TEST EDITOR -->
+                    <div class="col-xs-12 experience-editor" id="experience-#{_experience.id}-editor">
 
 
-                            <!-- (Experience's Period) -->
-                            <div class="row">
-                                <div class="row-strip col-xs-12 no-margin-bot">
-                                    <div class="form-group has-feedback">
-                                        <label class="control-label">Période </label><span
-                                            class="help-block with-error">- Saisissez deux années comprises entre 1900 et 2016.</span>
+                        <div class="col-xs-12">
 
-                                        <div class="row"></div>
+                            <!-- Begin of the form -->
+                            <h:form prependId="false" p:data-toggle="validator" class="experience-form" p:role="form">
 
-                                        <div class="row-strip col-sm-5 col-xs-5">
-                                            <div class="row-strip col-xs-6">
-                                                <select class="form-control">
-                                                    <option>janvier</option>
-                                                    <option>février</option>
-                                                    <option>mars</option>
-                                                    <option>juin</option>
-                                                    <option>juillet</option>
-                                                    <option>aout</option>
-                                                    <option>septembre</option>
-                                                    <option>octobre</option>
-                                                    <option>septembre</option>
-                                                    <option>novembre</option>
-                                                    <option>décembre</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-6 no-padding-right">
-                                                <input type="text" class="form-control editor-date-input"
-                                                       data-minlength="4"
-                                                       placeholder="Année" pattern="^[0-9]+$" data-error=" " required="true"/>
-                                            </div>
+                                <!-- (Enterprise name) -->
+                                <div class="row">
+                                    <div class="row-strip col-sm-12">
+                                        <div class="form-group has-feedback">
+                                            <label for="enterpriseName-#{_experience.id}"
+                                                   class="control-label">Nom de l'entreprise </label>
+                                            <span class="help-block with-error">- Champs requis.</span>
+                                            <!--p:pattern="^[ _A-z0-9]+$"-->
+                                            <h:inputText p:type="text" class="form-control"
+                                                         id="enterpriseName-#{_experience.id}"
+                                                         value="#{_experience.companyName}"
+                                                         p:data-minlength="1"
+                                                         p:placeholder="Nom de l'entreprise" p:data-error=" "
+                                                         p:required="true"/>
+                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                         </div>
-                                        <div class="text-center col-sm-2 col-xs-2">-</div>
-                                        <div class="row-strip pull-right col-sm-5 col-xs-5 no-padding-right no-margin-left no-margin-bot"
-                                             style="margin-bottom:0;">
-                                            <div class="row-strip col-xs-6">
-                                                <select class="form-control">
-                                                    <option>janvier</option>
-                                                    <option>février</option>
-                                                    <option>mars</option>
-                                                    <option>juin</option>
-                                                    <option>juillet</option>
-                                                    <option>aout</option>
-                                                    <option>septembre</option>
-                                                    <option>octobre</option>
-                                                    <option>septembre</option>
-                                                    <option>novembre</option>
-                                                    <option>décembre</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-5 no-padding-right " style="float:right; padding:0;">
-                                                <input type="text" class="form-control editor-date-input"
-                                                       data-minlength="4"
-                                                       placeholder="Année" pattern="^[0-9]+$" data-error=" " required="true"/>
-                                            </div>
+                                    </div>
+                                </div>
+                                <!-- (End of Enterprise name) -->
+
+                                <!-- (Experience's title) -->
+                                <div class="row">
+                                    <div class="row-strip col-sm-12">
+                                        <div class="form-group has-feedback">
+                                            <label for="experienceTitle-#{_experience.id}"
+                                                   class="control-label">Titre </label>
+                                            <span class="help-block with-error">- Champs requis.</span>
+                                            <!--p:pattern="^[_A-z0-9]+$"-->
+                                            <h:inputText p:type="text" class="form-control"
+                                                         id="experienceTitle-#{_experience.id}"
+                                                         value="#{_experience.jobName}"
+                                                         p:data-minlength="1"
+                                                         p:placeholder="Titre" p:data-error=" "
+                                                         p:required="true"/>
+                                            <span class="glyphicon form-control-feedback" aria-hidden="true"> </span>
                                         </div>
-                                        <div class="row no-margin-bot"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- (End of Experience's Period) -->
+                                <!-- (End of Experience's title) -->
 
-
-                            <!-- (Experience's description) -->
-                            <div class="row">
-                                <div class="row-strip col-sm-12">
-                                    <div class="form-group has-feedback">
-                                        <label for="experienceDescription-0000"
-                                               class="control-label">Description</label>
-                                    <textarea class="form-control" rows="5" id="experienceDescription-0000"
-                                              placeholder="Description..."></textarea>
+                                <!-- (Experience's place) -->
+                                <div class="row">
+                                    <div class="row-strip col-sm-12">
+                                        <div class="form-group">
+                                            <label for="experiencePlace-#{_experience.id}"
+                                                   class="control-label">Lieu </label>
+                                            <h:inputText p:type="text" class="form-control"
+                                                         id="experiencePlace-#{_experience.id}"
+                                                         value="#{_experience.place}"
+                                                         p:placeholder="Lieu"
+                                                         p:data-error=" "/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- (End of Experience's description) -->
+                                <!-- (End of Experience's place) -->
 
 
-                            <div class="row">
-                                <button class="btn btn-default">Enregistrer</button>
-                                <button class="btn btn-redb" onclick="hideExperienceEditor('experience-0000');">Annuler
-                                </button>
-                            </div>
-                        </form>
-                        <!-- End of the form -->
+                                <!-- (Experience's Period) -->
+                                <div class="row">
+                                    <div class="row-strip col-xs-12 no-margin-bot">
+                                        <div class="form-group has-feedback">
+                                            <label class="control-label">Période </label><span
+                                                class="help-block with-error">- Saisissez deux années comprises entre 1900 et 2016.</span>
+
+                                            <div class="row"></div>
+
+                                            <div class="row-strip col-sm-5 col-xs-5">
+                                                <!-- Start date -->
+                                                <div class="row-strip col-xs-6">
+                                                    <h:selectOneMenu styleClass="form-control"
+                                                                     value="#{_experience.startMonth}">
+                                                        <f:selectItems value="#{employeeExperienceBean.months}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="col-xs-6 no-padding-right">
+                                                    <h:inputText p:type="text" class="form-control editor-date-input"
+                                                                 p:data-minlength="4"
+                                                                 value="#{_experience.startYear}"
+                                                                 p:placeholder="Année" p:pattern="^[0-9]+$"
+                                                                 p:data-error=" "
+                                                                 p:required="true"/>
+                                                </div>
+                                            </div>
+                                            <div class="text-center col-sm-2 col-xs-2">-</div>
+                                            <div class="row-strip pull-right col-sm-5 col-xs-5 no-padding-right no-margin-left no-margin-bot"
+                                                 style="margin-bottom:0;">
+                                                <!-- End date -->
+                                                <div class="row-strip col-xs-6">
+                                                    <h:selectOneMenu styleClass="form-control"
+                                                                     value="#{_experience.endMonth}">
+                                                        <f:selectItems value="#{employeeExperienceBean.months}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="col-xs-5 no-padding-right " style="float:right; padding:0;">
+                                                    <h:inputText p:type="text" class="form-control editor-date-input"
+                                                                 p:data-minlength="4"
+                                                                 value="#{_experience.endYear}"
+                                                                 p:placeholder="Année" p:pattern="^[0-9]+$"
+                                                                 p:data-error=" "
+                                                                 p:required="true"/>
+                                                </div>
+                                            </div>
+                                            <div class="row no-margin-bot"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- (End of Experience's Period) -->
+
+
+                                <!-- (Experience's description) -->
+                                <div class="row">
+                                    <div class="row-strip col-sm-12">
+                                        <div class="form-group has-feedback">
+                                            <label for="experienceDescription-#{_experience.id}"
+                                                   class="control-label">Description</label>
+                                            <h:inputTextarea class="form-control" rows="5"
+                                                             id="experienceDescription-#{_experience.id}"
+                                                             placeholder="Description..."
+                                                             value="#{_experience.jobDescription}"></h:inputTextarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- (End of Experience's description) -->
+
+
+                                <div class="row">
+                                    <h:commandButton type="submit" class="btn btn-default" value="Enregistrer">
+                                        <f:ajax/>
+                                    </h:commandButton>
+                                    <h:commandButton type="button" class="btn btn-redb"
+                                                     onclick="hideExperienceEditor('experience-#{_experience.id}');"
+                                                     value="Annuler">
+                                        <f:ajax render="experience-#{_experience.id}-editor"/>
+                                    </h:commandButton>
+                                </div>
+                            </h:form>
+                            <!-- End of the form -->
+                        </div>
                     </div>
+                    <!-- ENDS OF TEST EDITOR -->
                 </div>
-                <!-- ENDS OF TEST EDITOR -->
-            </div>
-            <div class="row"></div>
-            <hr class="dashed"/>
-            <!-- (fin instance experience) -->
+                <div class="row"></div>
+                <hr class="dashed"/>
+                <!-- (fin instance experience) -->
 
-            <!-- </ui:repeat> -->
+            </ui:repeat>
 
-            <c:if test="#{employeeExperienceBean.employeeExperiences.size() == 0}">
+            <c:if test="#{employeeExperienceBean.experiences.size() == 0}">
                 <p><strong>Aucune expérience renseignée</strong></p>
             </c:if>
         </div>

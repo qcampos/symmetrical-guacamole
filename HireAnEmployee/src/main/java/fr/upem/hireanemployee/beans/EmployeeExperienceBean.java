@@ -1,20 +1,15 @@
 package fr.upem.hireanemployee.beans;
 
 import fr.upem.hireanemployee.*;
-import fr.upem.hireanemployee.navigation.Constants;
-import fr.upem.hireanemployee.profildata.Country;
-import fr.upem.hireanemployee.profildata.EmployeeDescription;
 import fr.upem.hireanemployee.profildata.Experience;
-import fr.upem.hireanemployee.validators.Regexes;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.awt.image.BufferedImage;
-import java.util.Collection;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by Baxtalou on 22/02/2016.
@@ -29,7 +24,7 @@ public class EmployeeExperienceBean extends Logger {
 
     // Managed fields.
     @ManagedProperty("#{cvViewedBean.employeeExperiences}")
-    private Collection<Experience> employeeExperiences;
+    private Collection<Experience> originalExperiences;
     @ManagedProperty("#{cvViewedBean.employee}")
     private Employee employee;
     @ManagedProperty("#{notificationBean}")
@@ -41,17 +36,26 @@ public class EmployeeExperienceBean extends Logger {
 
     // Data fields to edit.
     private String newFirstName;
+    private List<String> months;
+    private ArrayList<ExperienceController> experiences;
 
 
     @PostConstruct
     private void init() {
-        log("init - experiences " + employeeExperiences);
-        if (employeeExperiences == null) {
+        log("init - experiences " + originalExperiences);
+        if (originalExperiences == null) {
             throw new NullPointerException("The current experiences are null.");
         }
-        String firstName = employee.getFirstName();
-        String lastName = employee.getLastName();
 
+        months = Arrays.asList(new String[]{"janvier", "février", "mars", "juin", "juillet",
+                "aout", "septembre", "octobre", "septembre", "novembre", "décembre"});
+
+        experiences = new ArrayList<>();
+        SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM");
+        SimpleDateFormat YearFormatter = new SimpleDateFormat("yyyy");
+        for (Experience exp : originalExperiences) {
+            experiences.add(ExperienceController.ExperienceControllerFactory(exp, monthFormatter, YearFormatter));
+        }
 
         // Normalizing null values. We program with the option preventing the use of empty strings.
         // Null strings are handle ate the printing to place placeholder independent from this very model.
@@ -63,10 +67,6 @@ public class EmployeeExperienceBean extends Logger {
 
     }
 
-    public String setNullIfEmpty(String str) {
-        return str.isEmpty() ? null : str;
-    }
-
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
@@ -75,11 +75,176 @@ public class EmployeeExperienceBean extends Logger {
         this.notificationBean = notificationBean;
     }
 
-    public void setEmployeeExperiences(Collection<Experience> employeeExperiences) {
-        this.employeeExperiences = employeeExperiences;
+    public void setOriginalExperiences(Collection<Experience> originalExperiences) {
+        this.originalExperiences = originalExperiences;
     }
 
-    public Collection<Experience> getEmployeeExperiences() {
-        return employeeExperiences;
+    public Collection<Experience> getOriginalExperiences() {
+        return originalExperiences;
+    }
+
+    public ArrayList<ExperienceController> getExperiences() {
+        return experiences;
+    }
+
+    public List<String> getMonths() {
+        return months;
+    }
+
+
+    /**
+     * Controls any data about experiences on jsf pages. It is used in place of Validator to allow us using
+     * custom notifications (replaced by message in Validators).
+     */
+    public static class ExperienceController extends Logger {
+
+        private long id;
+        private String jobName;
+        private String place;
+        private String companyName;
+        private String jobDescription;
+        private Date startDate;
+        private Date endDate;
+        private String toDate;
+        private String startMonth;
+        private String endMonth;
+        private String startYear;
+        private String endYear;
+
+
+        private ExperienceController(long id, String jobName, String place, String companyName, String jobDescription,
+                                     Date startDate, Date endDate, String toDate, String startMonth, String endMonth,
+                                     String startYear, String endYear) {
+            this.id = id;
+            this.jobName = jobName;
+            this.place = place;
+            this.companyName = companyName;
+            this.jobDescription = jobDescription;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.toDate = toDate;
+            this.startMonth = startMonth;
+            this.endMonth = endMonth;
+            this.startYear = startYear;
+            this.endYear = endYear;
+        }
+
+        static ExperienceController ExperienceControllerFactory(Experience experience, SimpleDateFormat monthFormatter,
+                                                                SimpleDateFormat yearFormatter) {
+            Objects.requireNonNull(experience);
+
+            // Saving fields to prevent jsf's get to indirect several times.
+            long id = experience.getId();
+            String place = "France";
+            String jobName = experience.getJobName();
+            String jobDescription = experience.getJobDescription();
+            String companyName = experience.getCompanyName();
+            Date startDate = experience.getStartDate();
+            Date endDate = experience.getEndDate();
+            String toDate = experience.toDate();
+            String startMonth = monthFormatter.format(startDate);
+            String endMonth = monthFormatter.format(endDate);
+            String startYear = yearFormatter.format(startDate);
+            String endYear = yearFormatter.format(endDate);
+
+            return new ExperienceController(id, jobName, place, companyName, jobDescription, startDate, endDate, toDate,
+                    startMonth, endMonth, startYear, endYear);
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public void setJobName(String jobName) {
+            this.jobName = jobName;
+        }
+
+        public void setPlace(String place) {
+            this.place = place;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public void setJobDescription(String jobDescription) {
+            this.jobDescription = jobDescription;
+        }
+
+        public void setStartDate(Date startDate) {
+            this.startDate = startDate;
+        }
+
+        public void setEndDate(Date endDate) {
+            this.endDate = endDate;
+        }
+
+        public void setToDate(String toDate) {
+            this.toDate = toDate;
+        }
+
+        public void setStartMonth(String startMonth) {
+            this.startMonth = startMonth;
+        }
+
+        public void setEndMonth(String endMonth) {
+            this.endMonth = endMonth;
+        }
+
+        public void setStartYear(String startYear) {
+            this.startYear = startYear;
+        }
+
+        public void setEndYear(String endYear) {
+            this.endYear = endYear;
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        public String getJobName() {
+            return jobName;
+        }
+
+        public String getPlace() {
+            return place;
+        }
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public String getJobDescription() {
+            return jobDescription;
+        }
+
+        public Date getStartDate() {
+            return startDate;
+        }
+
+        public Date getEndDate() {
+            return endDate;
+        }
+
+        public String getToDate() {
+            return toDate;
+        }
+
+        public String getStartMonth() {
+            return startMonth;
+        }
+
+        public String getEndMonth() {
+            return endMonth;
+        }
+
+        public String getStartYear() {
+            return startYear;
+        }
+
+        public String getEndYear() {
+            return endYear;
+        }
     }
 }

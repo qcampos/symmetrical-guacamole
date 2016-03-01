@@ -14,7 +14,7 @@
         <div class="panel-body">
 
             <!-- experiences -->
-            <ui:repeat value="#{employeeExperienceBean.employeeExperiences}" var="_experience">
+            <ui:repeat value="#{employeeExperienceBean.experiences}" var="_experience">
 
                 <!-- (instance experience) -->
                 <div class="col-xs-12">
@@ -23,7 +23,7 @@
                     <!-- (nom de l'entreprise) -->
                     <p><strong>#{_experience.companyName}</strong></p>
                     <!-- (date - pays) -->
-                    <p class="small-text">#{_experience.toDate()} | France</p>
+                    <p class="small-text">#{_experience.toDate} | #{_experience.place}</p>
                     <!-- (description) -->
                     <p>#{_experience.jobDescription}</p>
                 </div>
@@ -34,7 +34,7 @@
 
             </ui:repeat>
 
-            <c:if test="#{employeeExperienceBean.employeeExperiences.size() == 0}">
+            <c:if test="#{employeeExperienceBean.experiences.size() == 0}">
                 <p><strong>Aucune expérience renseignée</strong></p>
             </c:if>
         </div>

@@ -111,7 +111,7 @@ public class Experience {
     }
 
     public String toDate() {
-        SimpleDateFormat format = new SimpleDateFormat("MMM yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("MMMM yyyy");
         return format.format(startDate) + " - " + format.format(endDate) + " " + dateDifference(startDate, endDate);//  (3 mois)
     }
 
