@@ -500,7 +500,33 @@
 
 
 
-
+                            <script>
+                                var state = 1;
+                                function operates() {
+                                    switch(state) {
+                                        case 1:
+                                            appendDiv('formation1'); state++; return;
+                                            state=2;
+                                            return;
+                                        case 2: appendDiv('formation2'); state++; return;
+                                        case 3: appendDiv('formation1'); state++; return;
+                                        case 4: deleteDiv('formation2'); state++; return;
+                                    }
+                                }
+                                // Deletes a freaking div.
+                                function deleteDiv(divID) {
+                                    var elem = document.getElementById(divID);
+                                    alert(divID);
+                                    elem.remove();
+                                }
+                                function appendDiv(divID) {
+                                    var elem = document.getElementById(divID);
+                                    var parent = document.getElementById("experience-0000-container");
+                                    alert(divID);
+                                    alert(parent);
+                                    parent.appendChild(elem);
+                                }
+                            </script>
 
 
                             <!-- Add a post -->
@@ -508,12 +534,11 @@
                             <div class="experience-editable-container" id="experience-add-container">
                                 <div class="col-xs-12 experience-description expand" id="experience-add">
                                     <div class="col-xs-12 text-center">
-                                        <a class="btn" id="cv-add-experience"
-                                           onclick="showExperienceEditor('experience-add');">Ajouter un poste</a>
+                                        <a class="btn" id="cv-add-experience" onclick="operates();">Ajouter un poste</a>
                                     </div>
                                 </div>
-                                
-                                
+
+
                                 <div class="col-xs-12 experience-editor" id="experience-add-editor">
 
 
@@ -658,7 +683,7 @@
                         <div class="panel-body">
 
                             <!-- (instance formation) -->
-                            <div class="col-xs-12">
+                            <div class="col-xs-12" id="formation1">
                                 <!-- (ecole) -->
                                 <h4 class="panel-body-title">SKEMA Business School</h4>
                                 <!-- (diplome - discipline) -->
@@ -673,7 +698,7 @@
                             <hr class="dashed">
 
                             <!-- (instance formation) -->
-                            <div class="col-xs-12">
+                            <div class="col-xs-12" id="formation2">
                                 <!-- (ecole) -->
                                 <h4 class="panel-body-title">NEOMA Business School</h4>
                                 <!-- (diplome - discipline) -->

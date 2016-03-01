@@ -113,7 +113,12 @@ public class EmployeeExperienceBean extends Logger {
             log("update - creation with fields : " + companyName + " " + jobName + " " + jobDescription + " " + startDate + "  " + endDate + " " + employee.getId());
             List<Experience> experience = dao.createExperience(companyName, jobName, "jobAbstract", jobDescription, startDate,
                     endDate, employee.getId());
-            setEmptyExperience();
+            // Updating the global list.
+
+            // TODO get ride of this shit.
+            // originalExperiences = experience;
+            // init();
+            //setEmptyExperience();
             log("update - experience created ! ");
             return Constants.CURRENT_PAGE;
         }
@@ -195,7 +200,7 @@ public class EmployeeExperienceBean extends Logger {
             jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
         }
 
-        boolean fieldValidated = true;
+        boolean fieldValidated = false;
 
         public abstract String update();
 
