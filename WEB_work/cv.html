@@ -68,8 +68,8 @@
                                             <div class="input-group form-search">
                                                 <span class="input-group-btn">
                                                 <button type="submit" class="btn btn-warning" data-type="last"><span class="glyphicon glyphicon-search"></span></button>
-                                            </span>
-                                                <input type="text" class="form-control search-query" placeholder="Chercher des personne...">
+                                                </span>
+                                                <input type="text" class="form-control search-query" placeholder="Chercher des personnes...">
                                             </div>
                                         </div>
                                     </form>
@@ -500,95 +500,150 @@
 
 
 
+
+
+
+                            <!-- Add a post -->
                             <!-- (instance experience) -->
-                            <div class="experience-editable-container" id="experience-0001-container">
-                                <div class="col-xs-12 experience-description expand" id="experience-0001">
-                                    <div class="editable show-editable">
-                                        <div>
-                                            <!-- (titre) -->
-                                            <a class="hyperspan" onclick="showExperienceEditor('experience-0001');"></a>
-                                            <h4 class="panel-body-title">MSc in Project and Programme Management and Business Development <span class="glyphicon glyphicon-pencil"/></h4>
-                                        </div>
-                                    </div>
-
-                                    <!-- (nom de l'entreprise) -->
-                                    <div class="editable show-editable">
-                                        <div>
-                                            <!-- (titre) -->
-                                            <a class="hyperspan" onclick="showExperienceEditor('experience-0001');"></a>
-                                            <p><strong>Dassault System <span class="glyphicon glyphicon-pencil"/></strong></p>
-                                        </div>
-                                    </div>
-
-
-                                    <!-- (date - pays) -->
-                                    <div class="editable show-editable">
-                                        <div>
-                                            <!-- (titre) -->
-                                            <a class="hyperspan" onclick="showExperienceEditor('experience-0001');"></a>
-                                            <p class="small-text">décembre 2015 - février 2016 (3 mois) | France <span class="glyphicon glyphicon-pencil" />
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <!-- (description) -->
-                                    <div class="editable show-editable">
-                                        <div>
-                                            <!-- (titre) -->
-                                            <a class="hyperspan" onclick="showExperienceEditor('experience-0001');"></a>
-                                            <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT. <span class="glyphicon glyphicon-pencil" /></p>
-                                        </div>
+                            <div class="experience-editable-container" id="experience-add-container">
+                                <div class="col-xs-12 experience-description expand" id="experience-add">
+                                    <div class="col-xs-12 text-center">
+                                        <a class="btn" id="cv-add-experience"
+                                           onclick="showExperienceEditor('experience-add');">Ajouter un poste</a>
                                     </div>
                                 </div>
-                                <!-- TEST EDITOR -->
-                                <div class="col-xs-12 experience-editor" id="experience-0001-editor">
-                                    <form data-toggle="validator" role="form" action="cv.html">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group has-feedback">
-                                                    <label for="enterpriseName" class="control-label">
-                                                        Nom de l'entreprise
-                                                    </label>
+                                
+                                
+                                <div class="col-xs-12 experience-editor" id="experience-add-editor">
+
+
+                                    <div class="col-xs-12">
+
+                                        <!-- Begin of the form -->
+                                        <form data-toggle="validator" class="experience-form" role="form" action="cv.html" id="experience-add-form">
+
+                                            <!-- (Enterprise name) -->
+                                            <div class="row">
+                                                <div class="row-strip col-sm-12">
+                                                    <div class="form-group has-feedback">
+                                                        <label for="enterpriseName-add" class="control-label">Nom de l'entreprise </label>
+                                                        <span class="help-block with-error">- Champs requis.</span>
+                                                        <input type="text" class="form-control" id="enterpriseName-add" data-minlength="1" placeholder="Nom de l'entreprise" data-error=" " pattern="^[_A-z0-9]+$" required>
+                                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                    editor
-                                    <button class="btn btn-default">OK</button>
-                                    <button class="btn btn-redb" onclick="hideExperienceEditor('experience-0001');">Annuler</button>
+                                            <!-- (End of Enterprise name) -->
+
+                                            <!-- (Experience's title) -->
+                                            <div class="row">
+                                                <div class="row-strip col-sm-12">
+                                                    <div class="form-group has-feedback">
+                                                        <label for="experienceTitle-add" class="control-label">Titre </label>
+                                                        <span class="help-block with-error">- Champs requis.</span>
+                                                        <input type="text" class="form-control" id="experienceTitle-add" data-minlength="1" placeholder="Titre" data-error=" " pattern="^[_A-z0-9]+$" required>
+                                                        <span class="glyphicon form-control-feedback" aria-hidden="true"> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- (End of Experience's title) -->
+
+                                            <!-- (Experience's place) -->
+                                            <div class="row">
+                                                <div class="row-strip col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="experiencePlace-add" class="control-label">Lieu </label>
+                                                        <input type="text" class="form-control" id="experiencePlace-add" placeholder="Lieu" data-error=" ">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- (End of Experience's place) -->
+
+
+
+                                            <!-- (Experience's Period) -->
+                                            <div class="row">
+                                                <div class="row-strip col-xs-12 no-margin-bot">
+                                                    <div class="form-group has-feedback">
+                                                        <label class="control-label">Période </label><span class="help-block with-error">- Saisissez deux années comprises entre 1900 et 2016.</span>
+
+                                                        <div class="row"></div>
+
+                                                        <div class="row-strip col-sm-5 col-xs-5">
+                                                            <div class="row-strip col-xs-6">
+                                                                <select class="form-control">
+                                                                    <option>janvier</option>
+                                                                    <option>février</option>
+                                                                    <option>mars</option>
+                                                                    <option>juin</option>
+                                                                    <option>juillet</option>
+                                                                    <option>aout</option>
+                                                                    <option>septembre</option>
+                                                                    <option>octobre</option>
+                                                                    <option>septembre</option>
+                                                                    <option>novembre</option>
+                                                                    <option>décembre</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xs-6 no-padding-right">
+                                                                <input type="text" class="form-control editor-date-input" data-minlength="4" placeholder="Année" pattern="^[0-9]+$" data-error=" " required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-center col-sm-2 col-xs-2">-</div>
+                                                        <div class="row-strip pull-right col-sm-5 col-xs-5 no-padding-right no-margin-left no-margin-bot" style="margin-bottom:0;">
+                                                            <div class="row-strip col-xs-6">
+                                                                <select class="form-control">
+                                                                    <option>janvier</option>
+                                                                    <option>février</option>
+                                                                    <option>mars</option>
+                                                                    <option>juin</option>
+                                                                    <option>juillet</option>
+                                                                    <option>aout</option>
+                                                                    <option>septembre</option>
+                                                                    <option>octobre</option>
+                                                                    <option>septembre</option>
+                                                                    <option>novembre</option>
+                                                                    <option>décembre</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xs-5 no-padding-right " style="float:right; padding:0;">
+                                                                <input type="text" class="form-control editor-date-input" data-minlength="4" placeholder="Année" pattern="^[0-9]+$" data-error=" " required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row no-margin-bot"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- (End of Experience's Period) -->
+
+
+                                            <!-- (Experience's description) -->
+                                            <div class="row">
+                                                <div class="row-strip col-sm-12">
+                                                    <div class="form-group has-feedback">
+                                                        <label for="experienceDescription-add" class="control-label">Description</label>
+                                                        <textarea class="form-control" rows="5" id="experienceDescription-add" placeholder="Description..."></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- (End of Experience's description) -->
+
+
+                                            <div class="row">
+                                                <button class="btn btn-default">Enregistrer</button>
+                                                <button class="btn btn-redb" onclick="hideExperienceEditor('experience-add');">Annuler</button>
+                                            </div>
+                                        </form>
+                                        <!-- End of the form -->
+
+                                    </div>
                                 </div>
+                                <!-- ENDS OF TEST EDITOR -->
                             </div>
-                            <!-- (fin instance experience) -->
-                            <div class="row"></div>
-                            <hr class="dashed">
-
-
-
-
-
-
-
-
-
-
-                            <!-- (instance experience) -->
-                            <div class="col-xs-12" id="experience-0002">
-                                <!-- (titre) -->
-                                <h4 class="panel-body-title">MSc in Project and Programme Management and Business Development</h4>
-
-                                <!-- (nom de l'entreprise) -->
-                                <p><strong>Dassault System</strong></p>
-                                <!-- (date - pays) -->
-                                <p class="small-text">décembre 2015 - février 2016 (3 mois) | France</p>
-                                <!-- (description) -->
-                                <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
-                            </div>
-                            <!-- (fin instance experience) -->
-                            <div class="row"></div>
-                            <hr class="dashed">
-
+                            <!-- fin de Add a post -->
 
                         </div>
+                        <!-- (fin de body) -->
                     </div>
                     <!-- (fin de experiences) -->
 

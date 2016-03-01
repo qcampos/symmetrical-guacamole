@@ -148,6 +148,7 @@ body {
     margin-right: 17px;
     padding-left: 4px;
     width: 200px;
+    font-size: 13px;
 }
 
 .navbar-inverse .form-search .search-query {
@@ -1074,7 +1075,26 @@ select {
 }
 
 .experience-form .help-block.with-error {
-    font-size: 12px;;
+    font-size: 12px;
+}
+
+/* End of the editor */
+/* Begin of the add-experience button */
+#cv-add-experience {
+    display: block;
+    padding: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    background-color: #eaeaea;
+    color: #838383;
+    border: 0;
+    transition: color 0.25s, background-color 0.25s;
+}
+
+#cv-add-experience:hover {
+    background-color: #ddf4ff;
+    color: #51bee6;
+    transition: color 0.25s, background-color 0.25s;
 }
 
 .no-margin-left {

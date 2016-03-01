@@ -189,7 +189,7 @@
                                                                      class="form-control editor-date-input"
                                                                      p:data-minlength="4"
                                                                      value="#{_experience.endYear}"
-                                                                     p:placeholder="Année" p:pattern="^[0-9]+$"
+                                                                     p:placeholder="Année" p:pattern="#{regexes.date}"
                                                                      p:data-error=" "/>
                                                     </div>
                                                 </div>
@@ -258,7 +258,27 @@
             <c:if test="#{employeeExperienceBean.experiences.size() == 0}">
                 <p><strong>Aucune expérience renseignée</strong></p>
             </c:if>
+
+            <!-- (instance experience) -->
+            <div class="experience-editable-container" id="experience-add-container">
+                <div class="col-xs-12 experience-description expand" id="experience-add">
+                    <div class="col-xs-12 text-center">
+                        <a class="btn" id="cv-add-experience"
+                           onclick="showExperienceEditor('experience-add');">Ajouter un poste</a>
+                    </div>
+                </div>
+
+                <!-- Creation form -->
+                <ui:include src="cv_experience_editor.xhtml">
+                    <ui:param name="_experience" value="#{employeeExperienceBean.experienceFactory}"/>
+                    <ui:param name="id" value="add"/>
+                    <ui:param name="renderList" value="experience-add-script"/>
+                    <!--<ui:param name="renderList" value="experience-#{id}-labels experience-#{id}-script"/>-->
+                </ui:include>
+
+            </div>
         </div>
+        <!-- end of bloc element -->
     </div>
     <!-- (fin de experiences) -->
 

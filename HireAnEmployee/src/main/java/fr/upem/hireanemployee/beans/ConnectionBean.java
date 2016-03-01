@@ -126,7 +126,7 @@ public class ConnectionBean extends Logger {
      */
     private void alreadyExistsCreation() {
         log("connect - connection failed. Wrong fields");
-        setErrorMsg("Désolé " + email + " existe déjà.");
+        setErrorMsg("Désolé, " + email + " existe déjà.");
     }
 
     /**

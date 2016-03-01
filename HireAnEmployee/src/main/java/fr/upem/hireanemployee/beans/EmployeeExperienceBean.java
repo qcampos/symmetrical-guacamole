@@ -42,6 +42,7 @@ public class EmployeeExperienceBean extends Logger {
     private String newFirstName;
     private List<String> months;
     private ArrayList<ExperienceController> experiences;
+    private ExperienceController experienceFactory;
     private SimpleDateFormat monthFormatter;
     private SimpleDateFormat yearFormatter;
 
@@ -53,15 +54,18 @@ public class EmployeeExperienceBean extends Logger {
             throw new NullPointerException("The current experiences are null.");
         }
 
+        // Creating the experiences list.
+        experiences = new ArrayList<>();
         months = Arrays.asList(new String[]{"janvier", "février", "mars", "avril", "mai", "juin", "juillet",
                 "aout", "septembre", "octobre", "novembre", "décembre"});
-
-        experiences = new ArrayList<>();
         monthFormatter = new SimpleDateFormat("MMMM");
         yearFormatter = new SimpleDateFormat("yyyy");
         for (Experience exp : originalExperiences) {
             experiences.add(ExperienceControllerFactory(exp));
         }
+
+        // Creating the experience factory.
+        experienceFactory = ExperienceControllerFactory(new Experience(null, null, null, null, new Date(), new Date()));
 
         // Normalizing null values. We program with the option preventing the use of empty strings.
         // Null strings are handle ate the printing to place placeholder independent from this very model.
@@ -83,6 +87,14 @@ public class EmployeeExperienceBean extends Logger {
 
     public void setOriginalExperiences(Collection<Experience> originalExperiences) {
         this.originalExperiences = originalExperiences;
+    }
+
+    public ExperienceController getExperienceFactory() {
+        return experienceFactory;
+    }
+
+    public void setExperienceFactory(ExperienceController experienceFactory) {
+        this.experienceFactory = experienceFactory;
     }
 
     public Collection<Experience> getOriginalExperiences() {

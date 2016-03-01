@@ -17,6 +17,7 @@ public class Regexes {
     public static final String NUM = "^[0-9]+$";
     public static final String EMAIL = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)" +
             "*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
+    private static final String DATE = "^[0-9]+$";
 
     /**
      * ALPHA only regex.
@@ -47,5 +48,9 @@ public class Regexes {
      */
     public static boolean parseAlpha(String s) {
         return s.matches(NAME);
+    }
+
+    public String getDate() {
+        return DATE;
     }
 }
