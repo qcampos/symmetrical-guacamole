@@ -62,7 +62,7 @@
                                     <!-- (logout button) -->
                                     <c:if test="#{sessionBean.state == 'DISCONNECTED'}">
                                         <h:commandLink id="navbar-logout" p:data-toggle="dropdown"
-                                                       action="connection">
+                                                       action="connection.xhtml?faces-redirect=true&amp;includeViewParams=true;">
                                             <i class="glyphicon glyphicon-play-circle"></i><span
                                                 id="logout-text"> Se connecter</span>
                                         </h:commandLink>

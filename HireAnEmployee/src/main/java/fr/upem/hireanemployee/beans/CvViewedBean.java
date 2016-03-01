@@ -83,7 +83,6 @@ public class CvViewedBean extends Logger {
         return employeeDescription;
     }
 
-    public Collection<Experience> getEmployeeExperiences() {
-        return employeeExperiences;
+    public Collection<Experience> getEmployeeExperiences() { log(initialized +  " " +getId() + " " + employeeExperiences); return employeeExperiences;
     }
 }

@@ -1,1 +1,1 @@
-/Users/Baxtalou/Development/glassfish4.1/glassfish/bin/asadmin start-domain domain1 && /Users/Baxtalou/Development/glassfish4.1/glassfish/bin/asadmin start-database
+/Users/Baxtalou/Development/glassfish4.1/glassfish/bin/asadmin start-database && /Users/Baxtalou/Development/glassfish4.1/glassfish/bin/asadmin start-domain domain1

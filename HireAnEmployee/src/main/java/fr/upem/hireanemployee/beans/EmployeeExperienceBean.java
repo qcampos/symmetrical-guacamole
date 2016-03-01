@@ -52,8 +52,8 @@ public class EmployeeExperienceBean extends Logger {
             throw new NullPointerException("The current experiences are null.");
         }
 
-        months = Arrays.asList(new String[]{"janvier", "février", "mars", "juin", "juillet",
-                "aout", "septembre", "octobre", "septembre", "novembre", "décembre"});
+        months = Arrays.asList(new String[]{"janvier", "février", "mars", "avril", "mai", "juin", "juillet",
+                "aout", "septembre", "octobre", "novembre", "décembre"});
 
         experiences = new ArrayList<>();
         monthFormatter = new SimpleDateFormat("MMMM");
@@ -269,12 +269,23 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         public String update() {
-            startDate.setMonth(months.indexOf(startMonth));
-            startDate.setYear(Integer.valueOf(startYear) - 1900);
-            endDate.setMonth(months.indexOf(endMonth));
-            endDate.setYear(Integer.valueOf(endYear) - 1900);
+            // Parse variables.
+            int startMonth = months.indexOf(this.startMonth);
+            int endMonth = months.indexOf(this.endMonth);
+            int startYear = Integer.valueOf(this.startYear) - 1900;
+            int endYear = Integer.valueOf(this.endYear) - 1900;
 
-            log(startDate.toString());
+            // Parsing dates logic.
+
+
+            startDate.setMonth(startMonth);
+            startDate.setYear(startYear);
+            endDate.setMonth(endMonth);
+            endDate.setYear(endYear);
+            startDate.setDate(1); // To create a 1 month interval (caution 29 is for Febuary).
+            endDate.setDate(29);
+
+
             EmployeeExperienceBean.this.log("update - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
                     jobDescription + " " + startDate + " " + endDate);
             Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, startDate, endDate);

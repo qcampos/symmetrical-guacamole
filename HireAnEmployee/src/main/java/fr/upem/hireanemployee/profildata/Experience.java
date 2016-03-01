@@ -122,7 +122,7 @@ public class Experience {
 
         long diffInDays = TimeUnit.MILLISECONDS.toDays(duration);
         long diffYear = diffInDays / 365;
-        diffInDays -= (diffInDays * diffYear * 365);
+        diffInDays -= (diffYear * 365);
         long diffMonths = Math.round(diffInDays / 31.0);
 
         if (diffMonths + diffYear == 0) {
@@ -130,10 +130,10 @@ public class Experience {
         }
         if (diffMonths > 0) {
             if (diffYear > 0) {
-                return "(" + diffMonths + " mois et " + diffYear + " ans)";
+                return "(" + diffYear + " an" + (diffYear > 1 ? "s" : "") + " et " + diffMonths + " mois)";
             }
             return "(" + diffMonths + " mois)";
         }
-        return diffYear > 0 ? "(" + diffYear + " ans)" : "";
+        return diffYear > 0 ? "(" + diffYear + " an" + (diffYear > 1 ? "s" : "") + ")" : "";
     }
 }

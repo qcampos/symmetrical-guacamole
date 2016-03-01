@@ -78,26 +78,9 @@
                             <h:form prependId="false" p:data-toggle="validator"
                                     id="experience-#{_experience.id}-form" class="experience-form" p:role="form">
 
+
                                 <h:panelGroup layout="block" id="experience-#{_experience.id}-fields">
-                                    <!-- (Enterprise name) -->
-                                    <div class="row">
-                                        <div class="row-strip col-sm-12">
-                                            <div class="form-group has-feedback">
-                                                <label for="enterpriseName-#{_experience.id}"
-                                                       class="control-label">Nom de l'entreprise </label>
-                                                <span class="help-block with-error">- Champs requis.</span>
-                                                <!--p:pattern="^[ _A-z0-9]+$"-->
-                                                <h:inputText p:type="text" class="form-control"
-                                                             id="enterpriseName-#{_experience.id}"
-                                                             value="#{_experience.companyName}"
-                                                             p:data-minlength="1"
-                                                             p:placeholder="Nom de l'entreprise" p:data-error=" "
-                                                             p:required="true"/>
-                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- (End of Enterprise name) -->
+
 
                                     <!-- (Experience's title) -->
                                     <div class="row">
@@ -119,6 +102,28 @@
                                         </div>
                                     </div>
                                     <!-- (End of Experience's title) -->
+
+
+                                    <!-- (Enterprise name) -->
+                                    <div class="row">
+                                        <div class="row-strip col-sm-12">
+                                            <div class="form-group has-feedback">
+                                                <label for="enterpriseName-#{_experience.id}"
+                                                       class="control-label">Nom de l'entreprise </label>
+                                                <span class="help-block with-error">- Champs requis.</span>
+                                                <!--p:pattern="^[ _A-z0-9]+$"-->
+                                                <h:inputText p:type="text" class="form-control"
+                                                             id="enterpriseName-#{_experience.id}"
+                                                             value="#{_experience.companyName}"
+                                                             p:data-minlength="1"
+                                                             p:placeholder="Nom de l'entreprise" p:data-error=" "
+                                                             p:required="true"/>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- (End of Enterprise name) -->
+
 
                                     <!-- (Experience's place) -->
                                     <div class="row">

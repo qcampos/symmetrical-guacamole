@@ -35,4 +35,14 @@
         <error-code>404</error-code>
         <location>/404.xhtml</location>
     </error-page>
+    <!-- Login filter -->
+    <filter>
+        <filter-name>CVFilter</filter-name>
+        <filter-class>fr.upem.hireanemployee.navigation.CVFilter</filter-class>
+    </filter>
+    <!-- Set the login filter to secure all the pages in the /secured/* path of the application  -->
+    <filter-mapping>
+        <filter-name>CVFilter</filter-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </filter-mapping>
 </web-app>
