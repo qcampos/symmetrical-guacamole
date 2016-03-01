@@ -68,7 +68,7 @@
     },
     'minlength': function ($el) {
       var minlength = $el.data('minlength')
-      return !$el.val() || $el.val().length >= minlength
+      return $el.val() == undefined || $el.val().length >= minlength
     }
   }
 

@@ -9,10 +9,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.text.ParseException;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * Created by Baxtalou on 22/02/2016.
@@ -116,7 +117,7 @@ public class EmployeeExperienceBean extends Logger {
         jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
 
         return new ExperienceController(id, jobName, place, companyName, jobDescription, startDate, endDate, toDate,
-                startMonth, endMonth, startYear, endYear);
+                startMonth, endMonth, startYear, endYear, experience);
     }
 
     /**
@@ -137,11 +138,12 @@ public class EmployeeExperienceBean extends Logger {
         private String endMonth;
         private String startYear;
         private String endYear;
+        private Experience experience;
 
 
         private ExperienceController(long id, String jobName, String place, String companyName, String jobDescription,
                                      Date startDate, Date endDate, String toDate, String startMonth, String endMonth,
-                                     String startYear, String endYear) {
+                                     String startYear, String endYear, Experience experience) {
             this.id = id;
             this.jobName = jobName;
             this.place = place;
@@ -154,10 +156,11 @@ public class EmployeeExperienceBean extends Logger {
             this.endMonth = endMonth;
             this.startYear = startYear;
             this.endYear = endYear;
+            this.experience = experience;
         }
 
         void setExperience(Experience experience) {
-            Objects.requireNonNull(experience);
+            this.experience = Objects.requireNonNull(experience);
 
             id = experience.getId();
             place = "France"; // TODO solve this with the persistence BDD !!
@@ -271,9 +274,31 @@ public class EmployeeExperienceBean extends Logger {
             return endYear;
         }
 
+        private boolean fieldValidated = true;
+
         public String update() {
+            EmployeeExperienceBean.this.log("update - " + id + " " + fieldValidated);
+            if (!fieldValidated) {
+                return Constants.CURRENT_PAGE;
+            }
+            //if (validateFields()) return Constants.CURRENT_PAGE;
+            EmployeeExperienceBean.this.log("update - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
+                    jobDescription + " " + startDate + " " + endDate);
+            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, startDate, endDate);
+            setExperience(experience);
+            log("update - experience set.");
+            return Constants.CURRENT_PAGE;
+        }
+
+        private boolean validateFields() {
             notificationBean.clear();
-            EmployeeExperienceBean.this.log("update - " + id);
+
+            // Parsing required field.
+            if (jobName == null) {
+                log("validateFields - empty field");
+                notificationBean.setError(NotificationBean.DEFAULT_MSG);
+                return false;
+            }
 
             // Parse variables with specific controls bound to this very instance class.
             try {
@@ -292,20 +317,32 @@ public class EmployeeExperienceBean extends Logger {
 
                 if (startDate.compareTo(endDate) > 0) {
                     notificationBean.setError("La date de départ doit précéder la date de fin.");
-                    return Constants.CURRENT_PAGE;
+                    return false;
                 }
             } catch (NumberFormatException e) {
                 log("update - " + e.getMessage());
                 notificationBean.setError(NotificationBean.DEFAULT_MSG);
-                return Constants.CURRENT_PAGE;
+                return false;
             }
 
-            EmployeeExperienceBean.this.log("update - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
-                    jobDescription + " " + startDate + " " + endDate);
-            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, startDate, endDate);
-            setExperience(experience);
-            log("update - experience save/set.");
-            return Constants.CURRENT_PAGE;
+            return true;
+        }
+
+        public void dynamicFields(AjaxBehaviorEvent event) {
+            log("dynamicFields - render fields after good state " + fieldValidated);
+            fieldValidated = false || validateFields();
+            log("dynamicFields - validation " + fieldValidated);
+            if (fieldValidated) {
+                UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
+                FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
+            } else {
+                // Reseting fields.
+                setExperience(experience);
+            }
+        }
+
+        public boolean getUpdateState() {
+            return fieldValidated;
         }
     }
 }
