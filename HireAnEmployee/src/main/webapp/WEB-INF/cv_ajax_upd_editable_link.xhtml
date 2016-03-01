@@ -1,0 +1,22 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Calls the render of experience-#{id}-editor and executes the function right after,
+    on the client side. A timeout has to be set since the evaluation of this function calls it. -->
+
+
+    <h:form prependId="false">
+        <h:commandLink class="hyperspan" onclick="">
+            <f:ajax render="experience-#{id}-editor"
+                    event="click"
+                    onevent="function(data) {
+                        if (data.status === 'success') {
+                            setTimeout(function() { showExperienceEditor('experience-#{id}');},1);
+                        }
+                     }" resetValues="true"/>
+        </h:commandLink>
+    </h:form>
+
+</ui:composition>

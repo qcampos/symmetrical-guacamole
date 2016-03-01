@@ -53,21 +53,21 @@
                     <!-- The user's description -->
                     <c:if test="#{sessionBean.id == cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_editable.xhtml"/>
+                        <ui:include src="WEB-INF/cv_experience_editable.xhtml"/>
                     </c:if>
                     <!-- A visitor's description -->
                     <c:if test="#{sessionBean.id != cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_no_editable.xhtml"/>
+                        <ui:include src="WEB-INF/cv_experience_no_editable.xhtml"/>
                     </c:if>
                     <!-- End of the user's description -->
 
 
                     <!-- The user's experiences -->
                     <c:if test="#{sessionBean.id == cvViewedBean.id}">
-                        <ui:include src="WEB-INF/cv_experience_editable.xhtml"/>
                     </c:if>
                     <!-- A visitor's experiences -->
                     <c:if test="#{sessionBean.id != cvViewedBean.id}">
-                        <ui:include src="WEB-INF/cv_experience_no_editable.xhtml"/>
                     </c:if>
                 </div>
 
