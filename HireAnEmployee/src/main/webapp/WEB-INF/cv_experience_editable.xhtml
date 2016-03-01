@@ -80,8 +80,11 @@
                                     id="experience-#{_experience.id}-form" class="experience-form" p:role="form">
 
 
+                                <!-- At the beginin, updateState is true. Then, if an error occures, during form:execute,
+                                if will be false. This very form won't be cleaned (but a notification will be).
+                                If the form is executed right, this will be cleaned (rendered againg), and collapsed
+                                by an inner js. During the next show, good & clean values will show. -->
                                 <h:panelGroup layout="block" id="experience-#{_experience.id}-fields">
-
 
                                     <!-- (Experience's title) -->
                                     <div class="row">
@@ -95,8 +98,7 @@
                                                              p:id="experienceTitle-#{_experience.id}"
                                                              value="#{_experience.jobName}"
                                                              p:data-minlength="1"
-                                                             p:placeholder="Titre" p:data-error=" "
-                                                             p:required="true"/>
+                                                             p:placeholder="Titre" p:data-error=" "/>
                                                 <span class="glyphicon form-control-feedback"
                                                       aria-hidden="true"> </span>
                                             </div>
@@ -117,9 +119,9 @@
                                                              id="enterpriseName-#{_experience.id}"
                                                              value="#{_experience.companyName}"
                                                              p:data-minlength="1"
-                                                             p:placeholder="Nom de l'entreprise" p:data-error=" "
-                                                             p:required="true"/>
-                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                             p:placeholder="Nom de l'entreprise" p:data-error=" "/>
+                                                    <span class="glyphicon form-control-feedback"
+                                                          aria-hidden="true"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -157,7 +159,8 @@
                                                     <div class="row-strip col-xs-6">
                                                         <h:selectOneMenu styleClass="form-control"
                                                                          value="#{_experience.startMonth}">
-                                                            <f:selectItems value="#{employeeExperienceBean.months}"/>
+                                                            <f:selectItems
+                                                                    value="#{employeeExperienceBean.months}"/>
                                                         </h:selectOneMenu>
                                                     </div>
                                                     <div class="col-xs-6 no-padding-right">
@@ -166,8 +169,7 @@
                                                                      p:data-minlength="4"
                                                                      value="#{_experience.startYear}"
                                                                      p:placeholder="Année" p:pattern="^[0-9]+$"
-                                                                     p:data-error=" "
-                                                                     p:required="true"/>
+                                                                     p:data-error=" "/>
                                                     </div>
                                                 </div>
                                                 <div class="text-center col-sm-2 col-xs-2">-</div>
@@ -177,7 +179,8 @@
                                                     <div class="row-strip col-xs-6">
                                                         <h:selectOneMenu styleClass="form-control"
                                                                          value="#{_experience.endMonth}">
-                                                            <f:selectItems value="#{employeeExperienceBean.months}"/>
+                                                            <f:selectItems
+                                                                    value="#{employeeExperienceBean.months}"/>
                                                         </h:selectOneMenu>
                                                     </div>
                                                     <div class="col-xs-5 no-padding-right "
@@ -187,8 +190,7 @@
                                                                      p:data-minlength="4"
                                                                      value="#{_experience.endYear}"
                                                                      p:placeholder="Année" p:pattern="^[0-9]+$"
-                                                                     p:data-error=" "
-                                                                     p:required="true"/>
+                                                                     p:data-error=" "/>
                                                     </div>
                                                 </div>
                                                 <div class="row no-margin-bot"></div>
@@ -211,17 +213,29 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <!-- (End of Experience's description) -->
 
+                                    <!-- Script allowing the panel to close. with hideExperienceEditor. -->
+                                    <h:panelGroup layout="block" id="experience-#{_experience.id}-script">
+                                        <h:outputScript>(function() {
+                                            console.log("resultat de la requete ajax #{_experience.updateState}");
+                                            if (!#{_experience.updateState}) {return;}
+                                            hideExperienceEditor('experience-#{_experience.id}'); })();
+                                        </h:outputScript>
+                                    </h:panelGroup>
+
                                     <div class="row">
+
                                         <h:commandButton type="submit" class="btn btn-default" value="Enregistrer"
                                                          action="#{_experience.update()}">
-                                            <f:ajax execute="@form"
-                                                    render="experience-#{_experience.id}-labels experience-#{_experience.id}-fields
-                                                    #{notificationBean.id}" onevent="function(data) { if (data.status == 'success') {
-                                                                                hideExperienceEditor('experience-#{_experience.id}'); }}"
-                                                    resetValues="true"/>
+
+                                            <!-- Fields will be added dynamically after in the code of the listener. -->
+                                            <f:ajax execute="@form" listener="#{_experience.dynamicFields}"
+                                                    render="experience-#{_experience.id}-labels experience-#{_experience.id}-script
+                                                            #{notificationBean.id}" resetValues="true"/>
                                         </h:commandButton>
+
                                         <h:commandButton type="button" class="btn btn-redb"
                                                          onclick="hideExperienceEditor('experience-#{_experience.id}');"
                                                          value="Annuler">
