@@ -1,123 +1,89 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core"
-        xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://java.sun.com/jsf/core">
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!-- This is the editable experience component. -->
     <!-- Loading the js for custom editors -->
     <h:outputScript library="js" name="experience_editor_bundle.js" target="body"/>
 
     <h:outputScript library="js" name="mojarra-bug.js" target="body"></h:outputScript>
-    <!-- (experiences) -->
+
+    <!-- Experiences -->
     <div class="panel panel-blue cv-bloc-element">
+
+        <!-- Title -->
         <div class="panel-heading">
             <h1 class="panel-title">
                 <span class="glyphicon glyphicon-send" style="margin-right:8px;top:2px;"></span>Expériences
             </h1>
         </div>
+        <!-- End of Title -->
+
         <div class="panel-body">
+
+            <!-- List of experiences updaters. These are prompt able to update an existing experience -->
             <h:panelGroup layout="block" id="experience-list">
-                <!-- experiences -->
+
+                <!-- Initial experience producer. Produced experience already registered. -->
                 <c:forEach var="_experience" items="#{employeeExperienceBean.experiences}" varStatus="status">
 
-                    <!-- (instance experience) -->
-                    <h:panelGroup layout="block" id="experience-#{_experience.id}-handle">
-                        <div class="experience-editable-container" id="experience-#{_experience.id}-container">
-                            <h:panelGroup layout="block" class="col-xs-12 experience-description expand"
-                                          id="experience-#{_experience.id}">
-                                <h:panelGroup layout="block" id="experience-#{_experience.id}-labels">
-                                    <div class="editable show-editable">
-                                        <div>
-                                            <a class="hyperspan"
-                                               onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                            <h4 class="panel-body-title">#{_experience.jobName}
-                                                <span class="glyphicon glyphicon-pencil"/></h4>
-                                        </div>
-                                    </div>
-
-                                    <!-- (enterprise name) -->
-                                    <div class="editable show-editable">
-                                        <div>
-                                            <a class="hyperspan"
-                                               onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                            <p><strong>#{_experience.companyName} <span
-                                                    class="glyphicon glyphicon-pencil"/></strong></p>
-                                        </div>
-                                    </div>
-
-
-                                    <!-- (date - pays) -->
-                                    <div class="editable show-editable">
-                                        <div>
-                                            <a class="hyperspan"
-                                               onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                            <p class="small-text">#{_experience.toDate} | #{_experience.place} <span
-                                                    class="glyphicon glyphicon-pencil"/>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <!-- (description) -->
-                                    <div class="editable show-editable">
-                                        <div>
-                                            <a class="hyperspan"
-                                               onclick="showExperienceEditor('experience-#{_experience.id}');"></a>
-                                            <p>#{_experience.jobDescription == null ?
-                                                    "Ajouter une description" : _experience.jobDescription}
-                                                <span class="glyphicon glyphicon-pencil"/></p>
-                                        </div>
-                                    </div>
-                                </h:panelGroup>
-                            </h:panelGroup>
-
-                            <!-- Creation form -->
-                            <ui:include src="cv_experience_editor.xhtml">
-                                <ui:param name="_experience" value="#{_experience}"/>
-                                <ui:param name="id" value="#{_experience.id}"/>
-                                <ui:param name="renderList" value="experience-#{id}-labels experience-#{id}-script"/>
-                            </ui:include>
-
-                        </div>
-                        <div class="row"></div>
-                        <hr class="dashed"/>
-                    </h:panelGroup>
-                    <!-- (fin instance experience) -->
+                    <!-- The experience updater. It shows an experience with handle to update it. -->
+                    <ui:include src="cv_experience_updater.xhtml">
+                        <ui:param name="_experience" value="#{_experience}"/>
+                    </ui:include>
+                    <!-- End of The experience updater. -->
 
                 </c:forEach>
+                <!-- End of Initial experience producer. -->
+
             </h:panelGroup>
-            <!-- End of experience-list -->
+            <!-- End of List of experiences updaters. -->
+
+            <!-- Experience updater producer. This produces newly added experience_updater.
+                On the client side, a javascript handler will move them outside this group, into the
+                experience producer list of id="experience-list -->
+            <h:panelGroup id="experience_producer_list">
+                Hellow
+
+                <!-- Newly created experience updater. New experience created will be moved to parent
+                when produced by this loop -->
+                <c:forEach var="_experience" items="#{employeeExperienceBean.newExperiences}" varStatus="status">
+
+                    <!-- The experience updater. For the new experience created, a new updater instance -->
+                    <ui:include src="cv_experience_updater.xhtml">
+                        <ui:param name="_experience" value="#{_experience}"/>
+                    </ui:include>
+                    <!-- End of The experience updater. -->
+                    <h:outputScript>
+                        (function(){
+                            var elem = document.getElementById("experience-#{_experience.id}-handle");
+                            var parent = document.getElementById("experience-list");
+                            parent.appendChild(elem);
+                        })();
+                    </h:outputScript>
+                </c:forEach>
+                <!-- End of Newly created experience updater. -->
+
+            </h:panelGroup>
+            <!-- End of Experience updater producer. -->
+
+
             <c:if test="#{employeeExperienceBean.experiences.size() == 0}">
                 <p><strong>Aucune expérience renseignée</strong></p>
             </c:if>
 
-            <h:outputScript>
-                // TODO executed once, by ajax OR put a local guard variable.
-                // Move dummy_produced inside the list of experiences.
-                (function () {
-                    var elem = document.getElementById('dummy_produced');
-                    var parent = document.getElementById('experience-list');
-                    parent.appendChild(elem);
-                })();
-            </h:outputScript>
-
-            <!-- (instance experience) -->
+            <!-- Add Experience button. Used to add a new button -->
             <div class="experience-editable-container" id="experience-add-container">
+
+                <!-- The button itself -->
                 <div class="col-xs-12 experience-description expand" id="experience-add">
                     <div class="col-xs-12 text-center">
                         <a class="btn" id="cv-add-experience"
-                           onclick="removeID();">Ajouter un poste</a>
+                           onclick="showExperienceEditor('experience-add');">Ajouter un poste</a>
                     </div>
                 </div>
-                <h:outputScript>
-                    function removeID() {
-                        var elem = document.getElementById('experience-17-handle');
-                        var parent = document.getElementById('destination-body');
-                        parent.appendChild(elem);
-                    }
-                </h:outputScript>
-                <!--onclick="showExperienceEditor('experience-add');">Ajouter un poste</a>-->
 
-                <!-- Creation form -->
+                <!-- The Experience builder form. It uses our experienceControllerBuilder. -->
                 <ui:include src="cv_experience_editor.xhtml">
                     <ui:param name="_experience" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
                     <ui:param name="id" value="add"/>
@@ -125,6 +91,8 @@
                 </ui:include>
 
             </div>
+            <!-- End of Add Experience button. -->
+
         </div>
         <!-- end of bloc element -->
     </div>

@@ -37,6 +37,7 @@ public class EmployeeExperienceBean extends Logger {
     // Data fields to edit.
     private List<String> months;
     private ArrayList<ExperienceControllerUpdater> experiences;
+    private ArrayList<ExperienceControllerUpdater> newExperiences;
     private ExperienceController experienceControllerBuilder;
     private SimpleDateFormat monthFormatter;
     private SimpleDateFormat yearFormatter;
@@ -49,10 +50,17 @@ public class EmployeeExperienceBean extends Logger {
             throw new NullPointerException("The current experiences are null.");
         }
 
-        // Creating the lsit of experiences updater. They will wrapp real experience inside the DB.
-        experiences = createExperienceControllerUpdater();
+        monthFormatter = new SimpleDateFormat("MMMM");
+        yearFormatter = new SimpleDateFormat("yyyy");
 
-        // Creating the experience factory.
+        // Creating the lsit of experiences updater. They will wrapp real experience inside the DB.
+        experiences = createExperienceControllerUpdaterList();
+
+        // List receiving new experiences created. When they are created, and then pull,
+        // They are transferred to the former experiences list.
+        newExperiences = new ArrayList<>();
+
+        // Creating the experiewnce factory.
         experienceControllerBuilder = createExperienceControllerBuilder();
 
         // Creating the list of months.
@@ -101,7 +109,7 @@ public class EmployeeExperienceBean extends Logger {
         private ExperienceControllerBuilder(Date startDate, Date endDate, String startMonth,
                                             String endMonth, String startYear, String endYear) {
             super();
-            // TODO solve "France" with init test (Countries...) !!
+            // TODO solve "France" with init values test (Countries...) !!
         }
 
         @Override
@@ -113,20 +121,33 @@ public class EmployeeExperienceBean extends Logger {
             log("update - creation with fields : " + companyName + " " + jobName + " " + jobDescription + " " + startDate + "  " + endDate + " " + employee.getId());
             List<Experience> experience = dao.createExperience(companyName, jobName, "jobAbstract", jobDescription, startDate,
                     endDate, employee.getId());
-            // Updating the global list.
-
-            // TODO get ride of this shit.
-            // originalExperiences = experience;
-            // init();
-            //setEmptyExperience();
             log("update - experience created ! ");
+
+            log("update - new experiences ids ");
+            newExperiences.clear();
+            // Updating the newly added values.
+            for (Experience newExp : experience) {
+                if (!originalExperiences.contains(newExp)) {
+                    log("update - id :" + newExp.getId());
+                    newExperiences.add(ExperienceControllerFactory(newExp));
+                }
+            }
+            originalExperiences.addAll(experience);
+            log("update - end of the update call.");
+
+            // TODO ?? setEmptyExperience();
             return Constants.CURRENT_PAGE;
         }
 
         @Override
         void updateAjaxRenders(AjaxBehaviorEvent event) {
+            // Adding the re render of the form field and the re render of the list producer of experiences.
+            FacesContext currentInstance = FacesContext.getCurrentInstance();
             UIComponent target = event.getComponent().findComponent("experience-add-fields");
-            FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
+            UIComponent producerTarget = currentInstance.getViewRoot().findComponent("experience_producer_list");
+            Collection<String> renderIds = currentInstance.getPartialViewContext().getRenderIds();
+            renderIds.add(target.getClientId());
+            renderIds.add(producerTarget.getClientId());
         }
     }
 
@@ -360,10 +381,8 @@ public class EmployeeExperienceBean extends Logger {
         }
     }
 
-    private ArrayList<ExperienceControllerUpdater> createExperienceControllerUpdater() {
+    private ArrayList<ExperienceControllerUpdater> createExperienceControllerUpdaterList() {
         ArrayList<ExperienceControllerUpdater> experiences = new ArrayList<>();
-        monthFormatter = new SimpleDateFormat("MMMM");
-        yearFormatter = new SimpleDateFormat("yyyy");
         for (Experience exp : originalExperiences) {
             experiences.add(ExperienceControllerFactory(exp));
         }
@@ -423,6 +442,11 @@ public class EmployeeExperienceBean extends Logger {
 
     public ArrayList<ExperienceControllerUpdater> getExperiences() {
         return experiences;
+    }
+
+    public ArrayList<ExperienceControllerUpdater> getNewExperiences() {
+        log("getNewExperiences - " + newExperiences.size());
+        return newExperiences;
     }
 
     public List<String> getMonths() {

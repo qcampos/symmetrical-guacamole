@@ -1,0 +1,89 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+    <h:outputScript library="js" name="experience_editor_bundle.js" target="body"/>
+
+    <h:outputScript library="js" name="mojarra-bug.js" target="body"></h:outputScript>
+
+
+    <h:panelGroup layout="block" id="experience-#{_experience.id}-handle">
+        <div class="experience-editable-container" id="experience-#{_experience.id}-container">
+
+            <!-- The experience -->
+            <h:panelGroup layout="block" class="col-xs-12 experience-description expand"
+                          id="experience-#{_experience.id}">
+
+                <!-- Labels group -->
+                <h:panelGroup layout="block" id="experience-#{_experience.id}-labels">
+
+                    <!-- Job name -->
+                    <div class="editable show-editable">
+                        <div>
+                            <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
+                            <h4 class="panel-body-title">#{_experience.jobName}
+                                <span class="glyphicon glyphicon-pencil"/></h4>
+                        </div>
+                    </div>
+                    <!-- End of Job name -->
+
+                    <!-- Company name -->
+                    <div class="editable show-editable">
+                        <div>
+                            <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
+                            <p><strong>#{_experience.companyName} <span class="glyphicon glyphicon-pencil"/></strong>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End of Company name -->
+
+
+                    <!-- Date and Country -->
+                    <div class="editable show-editable">
+                        <div>
+                            <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
+                            <p class="small-text">#{_experience.toDate} | #{_experience.place}
+                                <span class="glyphicon glyphicon-pencil"/>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End of Date and Country -->
+
+                    <!-- Description -->
+                    <div class="editable show-editable">
+                        <div>
+                            <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
+                            <p>#{_experience.jobDescription == null ?
+                                    "Ajouter une description" : _experience.jobDescription}
+                                <span class="glyphicon glyphicon-pencil"/></p>
+                        </div>
+                    </div>
+                    <!-- End of Description -->
+
+                </h:panelGroup>
+                <!-- End of Labels group -->
+
+            </h:panelGroup>
+            <!-- End of the experience -->
+
+            <!-- Experience editor form (Hidden at first) -->
+            <ui:include src="cv_experience_editor.xhtml">
+                <ui:param name="_experience" value="#{_experience}"/>
+                <ui:param name="id" value="#{_experience.id}"/>
+                <ui:param name="renderList" value="experience-#{id}-labels experience-#{id}-script"/>
+            </ui:include>
+            <!-- End of Experience editor form -->
+
+        </div>
+
+        <!-- Separation line filled with dashes -->
+        <div class="row"></div>
+        <hr class="dashed"/>
+
+    </h:panelGroup>
+    <!-- (end of instance experience) -->
+
+
+</ui:composition>
+

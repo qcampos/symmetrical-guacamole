@@ -1,4 +1,4 @@
-sf.ajax.addOnEvent(function(data) {
+jsf.ajax.addOnEvent(function(data) {
     if (data.status == "success") {
         fixViewState(data.responseXML);
     }

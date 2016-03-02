@@ -115,6 +115,16 @@ public class Experience {
         return format.format(startDate) + " - " + format.format(endDate) + " " + dateDifference(startDate, endDate);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        // Careful, our equal is a handle by id.
+        if (!(obj instanceof Experience)) {
+            return false;
+        }
+        Experience experience = (Experience) obj;
+        return id == experience.id;
+    }
+
     private String dateDifference(Date startDate, Date endDate) {
         //in milliseconds
 
