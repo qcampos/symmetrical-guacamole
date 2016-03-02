@@ -133,10 +133,12 @@ public class EmployeeExperienceBean extends Logger {
                     ExperienceControllerUpdater e = ExperienceControllerFactory(newExp);
                    // experiences.add(e);
                     tmp.add(e);
-                    newExperiences.add(e);
+                   // newExperiences.add(e);
                     originalExperiences.add(newExp);
                 }
             }
+            originalExperiences = experience;
+            experiences = createExperienceControllerUpdaterList();
             log("update - tmp : " + ids(tmp));
             log("update - experiences : " + ids(experiences));
             log("update - newExperiences : " + ids(newExperiences));
@@ -167,7 +169,7 @@ public class EmployeeExperienceBean extends Logger {
             // Adding the re render of the form field and the re render of the list producer of experiences.
             FacesContext currentInstance = FacesContext.getCurrentInstance();
             UIComponent target = event.getComponent().findComponent("experience-add-fields");
-            UIComponent producerTarget = currentInstance.getViewRoot().findComponent("experience_producer_list");
+            UIComponent producerTarget = currentInstance.getViewRoot().findComponent("experience-list"/*"experience_producer_list"*/);
             Collection<String> renderIds = currentInstance.getPartialViewContext().getRenderIds();
             renderIds.add(target.getClientId());
             renderIds.add(producerTarget.getClientId());
