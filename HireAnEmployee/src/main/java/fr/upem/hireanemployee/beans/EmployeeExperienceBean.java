@@ -53,14 +53,14 @@ public class EmployeeExperienceBean extends Logger {
         monthFormatter = new SimpleDateFormat("MMMM");
         yearFormatter = new SimpleDateFormat("yyyy");
 
-        // Creating the lsit of experiences updater. They will wrapp real experience inside the DB.
+        // Creating the lsit of experiences updater. They will wrap real experience inside the DB.
         experiences = createExperienceControllerUpdaterList();
 
         // List receiving new experiences created. When they are created, and then pull,
         // They are transferred to the former experiences list.
         newExperiences = new ArrayList<>();
 
-        // Creating the experiewnce factory.
+        // Creating the experience factory.
         experienceControllerBuilder = createExperienceControllerBuilder();
 
         // Creating the list of months.
@@ -84,7 +84,7 @@ public class EmployeeExperienceBean extends Logger {
 
         @Override
         public String update() {
-            EmployeeExperienceBean.this.log("update - " + id + " " + fieldValidated);
+            EmployeeExperienceBean.this.log("update - id : " + id + " field validation : " + fieldValidated + " hashcode : " + hashCode());
             if (!fieldValidated) {
                 return Constants.CURRENT_PAGE;
             }
@@ -96,11 +96,12 @@ public class EmployeeExperienceBean extends Logger {
 
         @Override
         void updateAjaxRenders(AjaxBehaviorEvent event) {
-            UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
-            FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
+           // UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
+            //FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
         }
     }
 
+    ArrayList<ExperienceControllerUpdater> tmp = new ArrayList();
     /**
      * Performs updates on the database values of the experience wrapped(id) during its perform call.
      */
@@ -129,14 +130,36 @@ public class EmployeeExperienceBean extends Logger {
             for (Experience newExp : experience) {
                 if (!originalExperiences.contains(newExp)) {
                     log("update - id :" + newExp.getId());
-                    newExperiences.add(ExperienceControllerFactory(newExp));
+                    ExperienceControllerUpdater e = ExperienceControllerFactory(newExp);
+                   // experiences.add(e);
+                    tmp.add(e);
+                    newExperiences.add(e);
+                    originalExperiences.add(newExp);
                 }
             }
-            originalExperiences.addAll(experience);
+            log("update - tmp : " + ids(tmp));
+            log("update - experiences : " + ids(experiences));
+            log("update - newExperiences : " + ids(newExperiences));
+            log("update - originalExperiences : " + ids(originalExperiences));
             log("update - end of the update call.");
 
             // TODO ?? setEmptyExperience();
             return Constants.CURRENT_PAGE;
+        }
+
+        private String ids(Collection<? extends Experience> experiences) {
+            StringBuilder n = new StringBuilder();
+            for (Experience e : experiences) {
+                n.append(e.getId());
+            }
+            return n.toString();
+        }
+        private String ids(ArrayList<? extends ExperienceController> experiences) {
+            StringBuilder n = new StringBuilder();
+            for (ExperienceController e : experiences) {
+                n.append(e.id);
+            }
+            return n.toString();
         }
 
         @Override
@@ -226,7 +249,7 @@ public class EmployeeExperienceBean extends Logger {
         public abstract String update();
 
         private boolean validateFields() {
-            EmployeeExperienceBean.this.log("validateFields - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
+            log("validateFields - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
                     jobDescription + " " + startYear + " " + startMonth + " " + endYear + " " + endMonth);
             notificationBean.clear();
 
@@ -266,9 +289,9 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         public void dynamicFields(AjaxBehaviorEvent event) {
-            log("dynamicFields - render fields. state before validation " + fieldValidated);
+            log("dynamicFields - before test of the fields : " + fieldValidated);
             fieldValidated = false || validateFields();
-            log("dynamicFields - validation. state after validation  " + fieldValidated);
+            log("dynamicFields - after validation result :  " + fieldValidated);
             if (fieldValidated) {
                 updateAjaxRenders(event);
             } else {
@@ -445,7 +468,6 @@ public class EmployeeExperienceBean extends Logger {
     }
 
     public ArrayList<ExperienceControllerUpdater> getNewExperiences() {
-        log("getNewExperiences - " + newExperiences.size());
         return newExperiences;
     }
 

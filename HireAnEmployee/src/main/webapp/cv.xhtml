@@ -53,12 +53,12 @@
                     <!-- The user's description -->
                     <c:if test="#{sessionBean.id == cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_editable.xhtml"/>
-                        <ui:include src="WEB-INF/cv_experience_editable.xhtml"/>
+                        <ui:include src="WEB-INF/cv_experiences_editable.xhtml"/>
                     </c:if>
                     <!-- A visitor's description -->
                     <c:if test="#{sessionBean.id != cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_no_editable.xhtml"/>
-                        <ui:include src="WEB-INF/cv_experience_no_editable.xhtml"/>
+                        <ui:include src="WEB-INF/cv_experiences_no_editable.xhtml"/>
                     </c:if>
                     <!-- End of the user's description -->
 
@@ -89,7 +89,6 @@
     <!-- footer -->
     <ui:include src="WEB-INF/footer.xhtml"/>
 
-    <h:outputScript library="js" name="mojarra-bug.js"/>
     <h:outputScript library="js" name="validator.js"/>
     <h:outputScript>
         /* TODO put it in description_editors.js */

@@ -55,7 +55,6 @@ public class SessionBean extends Logger {
      * @return Session's state connected or disconnected.
      */
     public State getState() {
-        log("getState - " + state);
         return state;
     }
 

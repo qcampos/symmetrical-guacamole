@@ -117,7 +117,8 @@ public class Experience {
 
     @Override
     public boolean equals(Object obj) {
-        // Careful, our equal is a handle by id.
+        // Careful, our equal is a handle with an id
+        // (only thing needed inside EmployeeExperienceBean class).
         if (!(obj instanceof Experience)) {
             return false;
         }
