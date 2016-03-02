@@ -70,189 +70,13 @@
                                 </h:panelGroup>
                             </h:panelGroup>
 
-                            <!-- TEST EDITOR -->
-                            <h:panelGroup layout="block" class="col-xs-12 experience-editor"
-                                          id="experience-#{_experience.id}-editor">
+                            <!-- Creation form -->
+                            <ui:include src="cv_experience_editor.xhtml">
+                                <ui:param name="_experience" value="#{_experience}"/>
+                                <ui:param name="id" value="#{_experience.id}"/>
+                                <ui:param name="renderList" value="experience-#{id}-labels experience-#{id}-script"/>
+                            </ui:include>
 
-                                <div class="col-xs-12">
-
-                                    <!-- Begin of the form -->
-                                    <h:form prependId="false" p:data-toggle="validator"
-                                            id="experience-#{_experience.id}-form" class="experience-form"
-                                            p:role="form">
-
-
-                                        <!-- At the beginin, updateState is true. Then, if an error occures, during form:execute,
-                                        if will be false. This very form won't be cleaned (but a notification will be).
-                                        If the form is executed right, this will be cleaned (rendered againg), and collapsed
-                                        by an inner js. During the next show, good & clean values will show. -->
-                                        <h:panelGroup layout="block" id="experience-#{_experience.id}-fields">
-
-                                            <!-- (Experience's title) -->
-                                            <div class="row">
-                                                <div class="row-strip col-sm-12">
-                                                    <div class="form-group has-feedback">
-                                                        <label for="experienceTitle-#{_experience.id}"
-                                                               class="control-label">Titre </label>
-                                                        <span class="help-block with-error">- Champs requis.</span>
-                                                        <!--p:pattern="^[_A-z0-9]+$"-->
-                                                        <h:inputText p:type="text" class="form-control"
-                                                                     p:id="experienceTitle-#{_experience.id}"
-                                                                     value="#{_experience.jobName}"
-                                                                     p:data-minlength="1"
-                                                                     p:placeholder="Titre" p:data-error=" "/>
-                                                <span class="glyphicon form-control-feedback"
-                                                      aria-hidden="true"> </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- (End of Experience's title) -->
-
-
-                                            <!-- (Enterprise name) -->
-                                            <div class="row">
-                                                <div class="row-strip col-sm-12">
-                                                    <div class="form-group has-feedback">
-                                                        <label for="enterpriseName-#{_experience.id}"
-                                                               class="control-label">Nom de l'entreprise </label>
-                                                        <span class="help-block with-error">- Champs requis.</span>
-                                                        <!--p:pattern="^[ _A-z0-9]+$"-->
-                                                        <h:inputText p:type="text" class="form-control"
-                                                                     id="enterpriseName-#{_experience.id}"
-                                                                     value="#{_experience.companyName}"
-                                                                     p:data-minlength="1"
-                                                                     p:placeholder="Nom de l'entreprise"
-                                                                     p:data-error=" "/>
-                                                    <span class="glyphicon form-control-feedback"
-                                                          aria-hidden="true"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- (End of Enterprise name) -->
-
-
-                                            <!-- (Experience's place) -->
-                                            <div class="row">
-                                                <div class="row-strip col-sm-12">
-                                                    <div class="form-group">
-                                                        <label for="experiencePlace-#{_experience.id}"
-                                                               class="control-label">Lieu </label>
-                                                        <h:inputText p:type="text" class="form-control"
-                                                                     id="experiencePlace-#{_experience.id}"
-                                                                     value="#{_experience.place}"
-                                                                     p:placeholder="Lieu"
-                                                                     p:data-error=" "/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- (End of Experience's place) -->
-
-
-                                            <!-- (Experience's Period) -->
-                                            <div class="row">
-                                                <div class="row-strip col-xs-12 no-margin-bot">
-                                                    <div class="form-group has-feedback">
-                                                        <label class="control-label">Période </label><span
-                                                            class="help-block with-error">- Saisissez deux années comprises entre 1900 et 2016.</span>
-
-                                                        <div class="row"></div>
-
-                                                        <div class="row-strip col-sm-5 col-xs-5">
-                                                            <!-- Start date -->
-                                                            <div class="row-strip col-xs-6">
-                                                                <h:selectOneMenu styleClass="form-control"
-                                                                                 value="#{_experience.startMonth}">
-                                                                    <f:selectItems
-                                                                            value="#{employeeExperienceBean.months}"/>
-                                                                </h:selectOneMenu>
-                                                            </div>
-                                                            <div class="col-xs-6 no-padding-right">
-                                                                <h:inputText p:type="text"
-                                                                             class="form-control editor-date-input"
-                                                                             p:data-minlength="4"
-                                                                             value="#{_experience.startYear}"
-                                                                             p:placeholder="Année" p:pattern="^[0-9]+$"
-                                                                             p:data-error=" "/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="text-center col-sm-2 col-xs-2">-</div>
-                                                        <div class="row-strip pull-right col-sm-5 col-xs-5 no-padding-right no-margin-left no-margin-bot"
-                                                             style="margin-bottom:0;">
-                                                            <!-- End date -->
-                                                            <div class="row-strip col-xs-6">
-                                                                <h:selectOneMenu styleClass="form-control"
-                                                                                 value="#{_experience.endMonth}">
-                                                                    <f:selectItems
-                                                                            value="#{employeeExperienceBean.months}"/>
-                                                                </h:selectOneMenu>
-                                                            </div>
-                                                            <div class="col-xs-5 no-padding-right "
-                                                                 style="float:right; padding:0;">
-                                                                <h:inputText p:type="text"
-                                                                             class="form-control editor-date-input"
-                                                                             p:data-minlength="4"
-                                                                             value="#{_experience.endYear}"
-                                                                             p:placeholder="Année"
-                                                                             p:pattern="#{regexes.date}"
-                                                                             p:data-error=" "/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row no-margin-bot"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- (End of Experience's Period) -->
-
-
-                                            <!-- (Experience's description) -->
-                                            <div class="row">
-                                                <div class="row-strip col-sm-12">
-                                                    <div class="form-group has-feedback">
-                                                        <label for="experienceDescription-#{_experience.id}"
-                                                               class="control-label">Description</label>
-                                                        <h:inputTextarea class="form-control" rows="5"
-                                                                         id="experienceDescription-#{_experience.id}"
-                                                                         p:placeholder="Description..."
-                                                                         value="#{_experience.jobDescription}"></h:inputTextarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- (End of Experience's description) -->
-
-                                            <!-- Script allowing the panel to close. with hideExperienceEditor. -->
-                                            <h:panelGroup layout="block" id="experience-#{_experience.id}-script">
-                                                <h:outputScript>(function() {
-                                                    console.log("resultat de la requete ajax #{_experience.updateState}");
-                                                    if (!#{_experience.updateState}) {return;}
-                                                    hideExperienceEditor('experience-#{_experience.id}'); })();
-                                                </h:outputScript>
-                                            </h:panelGroup>
-
-                                            <div class="row">
-
-                                                <h:commandButton type="submit" class="btn btn-default"
-                                                                 value="Enregistrer"
-                                                                 action="#{_experience.update()}">
-
-                                                    <!-- Fields will be added dynamically after in the code of the listener. -->
-                                                    <f:ajax execute="@form" listener="#{_experience.dynamicFields}"
-                                                            render="experience-#{_experience.id}-labels experience-#{_experience.id}-script
-                                                            #{notificationBean.id}" resetValues="true"/>
-                                                </h:commandButton>
-
-                                                <h:commandButton type="button" class="btn btn-redb"
-                                                                 onclick="hideExperienceEditor('experience-#{_experience.id}');"
-                                                                 value="Annuler">
-                                                    <f:ajax render="experience-#{_experience.id}-fields"/>
-                                                </h:commandButton>
-                                            </div>
-                                        </h:panelGroup>
-                                    </h:form>
-                                    <!-- End of the form -->
-                                </div>
-                            </h:panelGroup>
-                            <!-- ENDS OF TEST EDITOR -->
                         </div>
                         <div class="row"></div>
                         <hr class="dashed"/>
@@ -298,7 +122,6 @@
                     <ui:param name="_experience" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
                     <ui:param name="id" value="add"/>
                     <ui:param name="renderList" value="experience-add-script"/>
-                    <!-- <ui:param name="renderList" value="experience-#{id}-labels experience-#{id}-script"/>-->
                 </ui:include>
 
             </div>
