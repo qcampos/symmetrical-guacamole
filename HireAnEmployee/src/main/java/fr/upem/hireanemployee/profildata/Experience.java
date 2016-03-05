@@ -110,11 +110,6 @@ public class Experience {
                 '}';
     }
 
-    public String toDate() {
-        SimpleDateFormat format = new SimpleDateFormat("MMMM yyyy");
-        return format.format(startDate) + " - " + format.format(endDate) + " " + dateDifference(startDate, endDate);
-    }
-
     @Override
     public boolean equals(Object obj) {
         // Careful, our equal is a handle with an id
@@ -124,27 +119,5 @@ public class Experience {
         }
         Experience experience = (Experience) obj;
         return id == experience.id;
-    }
-
-    private String dateDifference(Date startDate, Date endDate) {
-        //in milliseconds
-
-        long duration = endDate.getTime() - startDate.getTime();
-
-        long diffInDays = TimeUnit.MILLISECONDS.toDays(duration);
-        long diffYear = diffInDays / 365;
-        diffInDays -= (diffYear * 365);
-        long diffMonths = Math.round(diffInDays / 31.0);
-
-        if (diffMonths + diffYear == 0) {
-            return "";
-        }
-        if (diffMonths > 0) {
-            if (diffYear > 0) {
-                return "(" + diffYear + " an" + (diffYear > 1 ? "s" : "") + " et " + diffMonths + " mois)";
-            }
-            return "(" + diffMonths + " mois)";
-        }
-        return diffYear > 0 ? "(" + diffYear + " an" + (diffYear > 1 ? "s" : "") + ")" : "";
     }
 }

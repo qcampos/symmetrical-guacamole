@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * Created by Quentin on 21/02/2016.
@@ -67,7 +68,7 @@ public class EmployeeDescription {
             public int compare(final Formation o1, final Formation o2) {
                 return o2.getLevel().getYears() - o1.getLevel().getYears();
             }
-        }).findFirst().orElse(new Formation("", "", Formation.DegreeType.NONE, new School("", Country.NONE))).getSchool().getName();
+        }).findFirst().orElse(new Formation("", "", Formation.DegreeType.NONE, new School("", Country.NONE), new Date(), new Date())).getSchool().getName();
     }
 
     public Country getCountry() {

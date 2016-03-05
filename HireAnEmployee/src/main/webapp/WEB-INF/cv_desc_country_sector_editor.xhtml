@@ -31,7 +31,7 @@
                         <div class="form-group has-feedback">
                             <h:selectOneMenu value="#{employeeDescriptionBean.newCountry}" styleClass="form-control">
                                 <f:selectItems value="#{employeeDescriptionBean.countries}" var="_country"
-                                               itemLabel="#{_country.toString()}" itemValue="#{_country}"/>
+                                               itemLabel="#{_country}" itemValue="#{_country.name()}"/>
                             </h:selectOneMenu>
                             <h:selectOneMenu value="#{employeeDescriptionBean.newSector}" styleClass="form-control">
                                 <f:selectItems value="#{employeeDescriptionBean.sectors}" var="_sector"

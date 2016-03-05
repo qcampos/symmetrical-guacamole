@@ -65,7 +65,7 @@ public class EmployeeDescriptionBean extends Logger {
     private Part newImage;
     private String newSector;
     private String newFormation;
-    private List<String> countries;
+    private List<Country> countries;
     private List<String> sectors;
     private String imagePath;
 
@@ -99,9 +99,9 @@ public class EmployeeDescriptionBean extends Logger {
         newFirstName = firstName;
         newLastName = lastName;
         newProfessionalTitle = professionalTitle;
-        newCountry = country;
+        newCountry = employeeDescription.getCountry().name();
         newSector = sector;
-        countries = ddao.getCountryList();
+        countries = ddao.getCountries();
         sectors = ddao.getSectorList();
 
         imagePath = "img/photo1.jpg";
@@ -171,7 +171,7 @@ public class EmployeeDescriptionBean extends Logger {
             // Updating the country.
             Country resultCountry = Country.stringToCountry(newCountry);
             dao.updateCountry(employeeDescription, resultCountry);
-            this.country = newCountry;
+            this.country = resultCountry.toString();
             // updating the sector.
             dao.updateSector(employeeDescription, newSector);
             this.sector = newSector;
@@ -279,7 +279,7 @@ public class EmployeeDescriptionBean extends Logger {
         return newFormation;
     }
 
-    public List<String> getCountries() {
+    public List<Country> getCountries() {
         return countries;
     }
 

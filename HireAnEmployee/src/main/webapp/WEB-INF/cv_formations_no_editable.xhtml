@@ -1,0 +1,47 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- This is the description component. Not Editable -->
+
+    <!-- (Formations) -->
+    <div class="panel panel-blue cv-bloc-element">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <span class="glyphicon glyphicon-send" style="margin-right:8px;top:2px;"></span>Formations
+            </h1>
+        </div>
+        <div class="panel-body">
+
+            <!-- formations -->
+            <ui:repeat value="#{employeeFormationBean.formations}" var="_formation">
+
+                <!-- (instance formation) -->
+                <div class="col-xs-12" id="formation1">
+                    <!-- (school) -->
+                    <h4 class="panel-body-title">#{_formation.school.name}</h4>
+                    <!-- (diploma - name) -->
+                    <p>
+                        <strong>#{_formation.name}</strong>
+                    </p>
+                    <!-- (date - country) -->
+                    <p class="small-text">#{_formation.toDate} | #{_formation.country}</p>
+                    <!-- (description) -->
+                    <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
+                </div>
+
+                <div class="row"></div>
+                <hr class="dashed"/>
+                <!-- (end of instance experience) -->
+
+            </ui:repeat>
+
+            <c:if test="#{employeeFormationBean.originalFormations.size() == 0}">
+                <p><strong>Aucune formation renseignée</strong></p>
+            </c:if>
+        </div>
+    </div>
+    <!-- (end of Formations) -->
+
+</ui:composition>
+

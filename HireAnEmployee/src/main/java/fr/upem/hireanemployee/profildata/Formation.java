@@ -1,6 +1,7 @@
 package fr.upem.hireanemployee.profildata;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Quentin on 18/02/2016.
@@ -34,19 +35,27 @@ public class Formation {
     @GeneratedValue
     private long id;
     private String name;
+    @Column(length = 2000)
     private String description;
     private DegreeType level;
     @ManyToOne(cascade = CascadeType.ALL)
     private School school;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    // @Past
+    private Date startDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date endDate;
 
     public Formation() {
     }
 
-    public Formation(final String name, final String description, final DegreeType level, final School school) {
+    public Formation(final String name, final String description, final DegreeType level, final School school, final Date startDate, final Date endDate) {
         this.name = name;
         this.description = description;
         this.level = level;
         this.school = school;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public long getId() {
@@ -89,8 +98,35 @@ public class Formation {
         this.school = school;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(final Date from) {
+        this.startDate = from;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(final Date to) {
+        this.endDate = to;
+    }
+
     @Override
     public String toString() {
         return String.format("%s : %s at %s", level, description, school);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        // Careful, our equal is a handle with an id
+        // (only thing needed inside EmployeeFormationeBean class).
+        if (!(obj instanceof Formation)) {
+            return false;
+        }
+        Formation formation = (Formation) obj;
+        return id == formation.id;
     }
 }

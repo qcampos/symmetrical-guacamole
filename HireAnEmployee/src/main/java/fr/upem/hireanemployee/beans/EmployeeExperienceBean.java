@@ -3,6 +3,7 @@ package fr.upem.hireanemployee.beans;
 import fr.upem.hireanemployee.*;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.Experience;
+import fr.upem.hireanemployee.validators.DateTranslator;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -38,6 +39,7 @@ public class EmployeeExperienceBean extends Logger {
     private List<String> months;
     private ArrayList<ExperienceControllerUpdater> experiences;
     private ArrayList<ExperienceControllerUpdater> newExperiences;
+    private int newExperiencesStart;
     private ExperienceController experienceControllerBuilder;
     private SimpleDateFormat monthFormatter;
     private SimpleDateFormat yearFormatter;
@@ -64,9 +66,7 @@ public class EmployeeExperienceBean extends Logger {
         experienceControllerBuilder = createExperienceControllerBuilder();
 
         // Creating the list of months.
-        months = Arrays.asList("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout", "septembre",
-                "octobre", "novembre", "décembre");
-
+        months = DateTranslator.getMonths();
     }
 
 
@@ -78,8 +78,8 @@ public class EmployeeExperienceBean extends Logger {
         private ExperienceControllerUpdater(String jobDescription, String startYear, String startMonth, String endYear,
                                             String endMonth, Experience experience) {
             super(experience.getId(), experience.getJobName(), "France", experience.getCompanyName(), jobDescription,
-                    experience.getStartDate(), experience.getEndDate(), experience.toDate(), startMonth, endMonth,
-                    startYear, endYear, experience);// TODO solve "France" with init test (Countries...) !!
+                    experience.getStartDate(), experience.getEndDate(), DateTranslator.toDate(experience.getStartDate(), experience.getEndDate()),
+                    startMonth, endMonth, startYear, endYear, experience);// TODO solve "France" with init test (Countries...) !!
         }
 
         @Override
@@ -96,12 +96,13 @@ public class EmployeeExperienceBean extends Logger {
 
         @Override
         void updateAjaxRenders(AjaxBehaviorEvent event) {
-           // UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
+            // UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
             //FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
         }
     }
 
     ArrayList<ExperienceControllerUpdater> tmp = new ArrayList();
+
     /**
      * Performs updates on the database values of the experience wrapped(id) during its perform call.
      */
@@ -125,15 +126,16 @@ public class EmployeeExperienceBean extends Logger {
             log("update - experience created ! ");
 
             log("update - new experiences ids ");
-            newExperiences.clear();
+            // newExperiences.clear();
             // Updating the newly added values.
+            newExperiencesStart = originalExperiences.size();
             for (Experience newExp : experience) {
                 if (!originalExperiences.contains(newExp)) {
                     log("update - id :" + newExp.getId());
                     ExperienceControllerUpdater e = ExperienceControllerFactory(newExp);
-                   // experiences.add(e);
+                    // experiences.add(e);
                     tmp.add(e);
-                   // newExperiences.add(e);
+                    // newExperiences.add(e);
                     originalExperiences.add(newExp);
                 }
             }
@@ -156,6 +158,7 @@ public class EmployeeExperienceBean extends Logger {
             }
             return n.toString();
         }
+
         private String ids(ArrayList<? extends ExperienceController> experiences) {
             StringBuilder n = new StringBuilder();
             for (ExperienceController e : experiences) {
@@ -237,7 +240,7 @@ public class EmployeeExperienceBean extends Logger {
             companyName = experience.getCompanyName();
             startDate = experience.getStartDate();
             endDate = experience.getEndDate();
-            toDate = experience.toDate();
+            toDate = DateTranslator.toDate(experience.getStartDate(), experience.getEndDate());
             startMonth = monthFormatter.format(startDate);
             endMonth = monthFormatter.format(endDate);
             startYear = yearFormatter.format(startDate);
@@ -471,6 +474,10 @@ public class EmployeeExperienceBean extends Logger {
 
     public ArrayList<ExperienceControllerUpdater> getNewExperiences() {
         return newExperiences;
+    }
+
+    public int getNewExperiencesStart() {
+        return newExperiencesStart;
     }
 
     public List<String> getMonths() {

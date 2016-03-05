@@ -6,6 +6,7 @@ import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.EmployeeDescription;
 import fr.upem.hireanemployee.profildata.Experience;
+import fr.upem.hireanemployee.profildata.Formation;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -28,6 +29,7 @@ public class CvViewedBean extends Logger {
     private Employee employee;
     private EmployeeDescription employeeDescription;
     private Collection<Experience> employeeExperiences;
+    private Collection<Formation> employeeFormations;
 
     // Current CV id
     private long id;
@@ -59,7 +61,9 @@ public class CvViewedBean extends Logger {
         // Setting fields accordingly.
         employeeDescription = employee.getDescription();
         employeeExperiences = employee.getExperiences();
-        log("init - employee " + employee.getFirstName() + " Exp : " + employeeExperiences + " Desc : " + employeeDescription);
+        employeeFormations = employee.getFormations();
+        log("init - employee " + employee.getFirstName() + " Exp : " + employeeExperiences + " Desc : " + employeeDescription
+                + " Form : " + employeeFormations);
         return Constants.CURRENT_PAGE;
     }
 
@@ -85,5 +89,9 @@ public class CvViewedBean extends Logger {
 
     public Collection<Experience> getEmployeeExperiences() {
         return employeeExperiences;
+    }
+
+    public Collection<Formation> getEmployeeFormations() {
+        return employeeFormations;
     }
 }

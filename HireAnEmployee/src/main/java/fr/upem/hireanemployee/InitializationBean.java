@@ -61,8 +61,11 @@ public class InitializationBean extends Logger {
         edao.updateCountry(description, Country.FRANCE);
         edao.updateProfessionalTitle(description, "MSc in Project and Programme Management and Business Development");
 
-        fdao.createFormation("SKEMA Business School", "Master’s Degree, Master of Science in Project and Programme Management and Business Development",
-                Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), employee);
+        fdao.createFormation("Master’s Degree, Master of Science in Project and Programme Management and Business Development",
+                "Programme entirely taught in English with in-company projects and assignments. Professional project management certifications: PRINCE 2 and PMI " +
+                        "The only MSc programme in France that is 100% project management oriented. Ranked 3rd in France and 11th worldwide in its category by SMBG " +
+                        "Global project management framework, tools and techniques; Sustainable project management and operational readiness; Organisation and Leadership, Strategy and business development ...",
+                Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), new Date(115, 1, 1), new Date(116, 1, 1), employee);
 
         exdao.createExperience("Cartier", "Chargé du retailing", "jobAbstract", null, new Date(113, 2, 1), new Date(113, 10, 29), employee);
 

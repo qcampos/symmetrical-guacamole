@@ -23,11 +23,12 @@
             <h:panelGroup layout="block" id="experience-list">
 
                 <!-- Initial experience producer. Produced experience already registered. -->
-                <c:forEach var="_experience" items="#{employeeExperienceBean.experiences}" varStatus="status">
+                <c:forEach var="i" begin="#{employeeExperienceBean.newExperiencesStart}"
+                           end="#{employeeExperienceBean.experiences.size() -1}" varStatus="status">
 
                     <!-- The experience updater. It shows an experience with handle to update it. -->
                     <ui:include src="cv_experience_updater.xhtml">
-                        <ui:param name="_experience" value="#{_experience}"/>
+                        <ui:param name="_experience" value="#{employeeExperienceBean.experiences.get(i)}"/>
                     </ui:include>
                     <!-- End of The experience updater. -->
 
@@ -45,21 +46,7 @@
 
                 <!-- Newly created experience updater. New experience created will be moved to parent
                 when produced by this loop -->
-                <c:forEach var="_experience" items="#{employeeExperienceBean.newExperiences}" varStatus="status">
 
-                    <!-- The experience updater. For the new experience created, a new updater instance -->
-                    <ui:include src="cv_experience_updater.xhtml">
-                        <ui:param name="_experience" value="#{_experience}"/>
-                    </ui:include>
-                    <!-- End of The experience updater. -->
-                    <h:outputScript>
-                        (function(){
-                            var elem = document.getElementById("experience-#{_experience.id}-handle");
-                            var parent = document.getElementById("experience-list");
-                            parent.appendChild(elem);
-                        })();
-                    </h:outputScript>
-                </c:forEach>
                 <!-- End of Newly created experience updater. -->
 
             </h:panelGroup>

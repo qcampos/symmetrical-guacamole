@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -159,5 +160,13 @@ public class DatabaseDAO {
      */
     public List<String> getSectorList() {
         return em.createQuery("Select s.name From Sector s", String.class).getResultList();
+    }
+
+    public List<Country> getCountries() {
+        List<Country> result = new ArrayList<>();
+        for (Country c : Country.values()) {
+            result.add(c);
+        }
+        return result;
     }
 }
