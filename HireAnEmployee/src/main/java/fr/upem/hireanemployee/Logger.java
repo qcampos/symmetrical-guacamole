@@ -11,8 +11,8 @@ import java.io.Serializable;
 public class Logger implements Serializable {
 
     private static final boolean DEBUG = true;
-    private static final String BEAN = "[BEAN]";
-    private static final String DATABASE = "[DATABASE]";
+    public static final String BEAN = "[BEAN]";
+    public static final String DATABASE = "[DATABASE]";
 
     public Logger() {
     }
@@ -40,5 +40,12 @@ public class Logger implements Serializable {
             return;
         }
         System.out.println(filter + " " + caller.getClass().getCanonicalName() + " : " + msg);
+    }
+
+    public static void log(String msg, String filter) {
+        if (!DEBUG) {
+            return;
+        }
+        System.out.println(filter + " : " + msg);
     }
 }

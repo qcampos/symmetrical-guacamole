@@ -8,7 +8,7 @@ package fr.upem.hireanemployee.profildata;
  */
 public enum Visibility {
 
-    PUBLIC("Publique"), PRIVATE("Privé"), RELATION("Relation");
+    PUBLIC("Publique"), PRIVATE("Privée"), RELATION("Relations");
 
     private final String textValue;
 

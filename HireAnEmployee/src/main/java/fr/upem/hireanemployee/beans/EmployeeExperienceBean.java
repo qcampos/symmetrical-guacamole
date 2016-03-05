@@ -48,6 +48,7 @@ public class EmployeeExperienceBean extends Logger {
     private ExperienceController experienceControllerBuilder;
     private SimpleDateFormat monthFormatter;
     private SimpleDateFormat yearFormatter;
+    private List<Visibility> visibilities;
 
 
     @PostConstruct
@@ -71,8 +72,27 @@ public class EmployeeExperienceBean extends Logger {
 
         // Creating the list of countries.
         countries = ddao.getCountries();
+
+        // Creating the list of visibilities.
+        visibilities = ddao.getVisibilities();
     }
 
+    public int size() {
+        int size = 0;
+        for (ExperienceController e : experiences) {
+            log("size : " + e.id + " dead ? " + e.isRemoved());
+            size += e.isRemoved() ? 0 : 1;
+        }
+        log("size - " + size);
+        return size;
+    }
+
+    public boolean experienceToDelete() {
+        for (ExperienceController e : experiences) {
+            if (e.isRemoved()) return true;
+        }
+        return false;
+    }
 
     /**
      * Performs updates on the database values of the experience wrapped(id) during its perform call.
@@ -88,15 +108,11 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         @Override
-        public String update() {
-            EmployeeExperienceBean.this.log("update - id : " + id + " field validation : " + fieldValidated + " hashcode : " + hashCode());
-            if (!fieldValidated) {
-                return Constants.CURRENT_PAGE;
-            }
-            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription,
-                    country, visibility, startDate, endDate);
+        public String performUpdate() {
+            log("performUpdate - experience set.");
+            // Updates inner experiences' fields. Set them to the global updater to update calculated fields.
+            dao.updateExperience(experience, companyName, jobName, "job abstract", jobDescription, country, visibility, startDate, endDate);
             setExperience(experience);
-            log("update - experience set.");
             return Constants.CURRENT_PAGE;
         }
 
@@ -112,55 +128,28 @@ public class EmployeeExperienceBean extends Logger {
      */
     public class ExperienceControllerBuilder extends ExperienceController {
 
-        private ExperienceControllerBuilder() {
-            super();
-            // TODO solve "France" with init values test (Countries...) !!
-        }
-
         @Override
-        public String update() {
-            EmployeeExperienceBean.this.log("update - " + id + " " + fieldValidated);
-            if (!fieldValidated) {
-                return Constants.CURRENT_PAGE;
-            }
-            log("update - creation with fields : " + companyName + " " + jobName + " " + jobDescription + " " + country + " " +
-                    startDate + "  " + endDate + " " + employee.getId() + " " + visibility);
-            List<Experience> experience = dao.createExperience(companyName, jobName, "jobAbstract", jobDescription,
-                    country, visibility, startDate, endDate, employee.getId());
-            log("update - experience created ! ");
-            // Updating the newly added values.
-            originalExperiences = experience;
-            experiences = createExperienceControllerUpdaterList();
-            log("update - experiences : " + ids(experiences));
-            log("update - originalExperiences : " + ids(originalExperiences));
-            log("update - end of the update call.");
+        public String performUpdate() {
+            // Creating the new newExperiences. Updates the employee.
+            List<Experience> newExperiences = dao.createExperience(companyName, jobName, "jobAbstract",
+                    jobDescription, country, visibility, startDate, endDate, employee);
 
+            // Updating new values.
+            originalExperiences = newExperiences;
+            experiences = createExperienceControllerUpdaterList();
             experienceControllerBuilder.setEmptyExperience();
+            log("performUpdate - originalExperiences : " + Experience.printIds(originalExperiences));
+            log("performUpdate - newExperiences created ! End of the update call.");
             return Constants.CURRENT_PAGE;
         }
 
-        private String ids(Collection<? extends Experience> experiences) {
-            StringBuilder n = new StringBuilder();
-            for (Experience e : experiences) {
-                n.append(e.getId());
-            }
-            return n.toString();
-        }
-
-        private String ids(ArrayList<? extends ExperienceController> experiences) {
-            StringBuilder n = new StringBuilder();
-            for (ExperienceController e : experiences) {
-                n.append(e.id);
-            }
-            return n.toString();
-        }
 
         @Override
         void updateAjaxRenders(AjaxBehaviorEvent event) {
             // Adding the re render of the form field and the re render of the list producer of experiences.
             FacesContext currentInstance = FacesContext.getCurrentInstance();
             UIComponent target = event.getComponent().findComponent("experience-addExp-fields");
-            UIComponent producerTarget = currentInstance.getViewRoot().findComponent("experience-list"/*"experience_producer_list"*/);
+            UIComponent producerTarget = currentInstance.getViewRoot().findComponent("experience-list");
             Collection<String> renderIds = currentInstance.getPartialViewContext().getRenderIds();
             renderIds.add(target.getClientId());
             renderIds.add(producerTarget.getClientId());
@@ -191,7 +180,11 @@ public class EmployeeExperienceBean extends Logger {
         private String startYear;
         private String endYear;
         Visibility visibility;
-        private Experience experience;
+        Experience experience;
+
+        // Flag indicating our fields validity
+        boolean fieldValidated;
+        boolean removed;
 
 
         private ExperienceController() {
@@ -219,6 +212,7 @@ public class EmployeeExperienceBean extends Logger {
             this.endYear = endYear;
             this.visibility = visibility;
             this.experience = experience;
+            removed = false;
         }
 
         void setExperience(Experience experience) {
@@ -238,11 +232,29 @@ public class EmployeeExperienceBean extends Logger {
             endYear = yearFormatter.format(endDate);
             visibility = experience.getVisibility();
             jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
+            removed = false;
         }
 
-        boolean fieldValidated = false;
+        /**
+         * Method called when an update form the current field values is requested and the enclosing
+         * state is valid.
+         * Sub-classes has to override it to specify the update operation.
+         *
+         * @return The page to move on.
+         */
+        protected abstract String performUpdate();
 
-        public abstract String update();
+
+        public String update() {
+            log("update - creation with fields : " + id + " " + fieldValidated + " " + companyName + " " + jobName + " " +
+                    jobDescription + " " + country + " " + startDate + "  " + endDate + " " + employee.getId() + " " + visibility);
+            // If fields not validated, aborting.
+            if (!fieldValidated || removed) {
+                return Constants.CURRENT_PAGE;
+            }
+            return performUpdate();
+        }
+
 
         private boolean validateFields() {
             log("validateFields - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
@@ -286,7 +298,8 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         public void dynamicFields(AjaxBehaviorEvent event) {
-            log("dynamicFields - before test of the fields : " + fieldValidated);
+            log("dynamicFields - removed : " + removed + " before test of the fields:" + fieldValidated);
+            if (removed) return;
             fieldValidated = false || validateFields();
             log("dynamicFields - after validation result :  " + fieldValidated);
             if (fieldValidated) {
@@ -299,10 +312,30 @@ public class EmployeeExperienceBean extends Logger {
 
         abstract void updateAjaxRenders(AjaxBehaviorEvent event);
 
+
+        public void setRemoved(long id) {
+            log("setRemoved - receiving : " + id + " Effective id : " + id);
+            // First deleting pending keys of removed experiences.
+            employee.removeExperienceById(experience);
+            // Merging it with the database.
+            dao.deleteExperience(employee);
+            // TODO rename the name of the deleteExperience function and its documentation to fit.
+
+            removed = true;
+            fieldValidated = false;
+
+            size(); // TODO delete debugs calls like these.
+
+            return;
+        }
+
+        public boolean isRemoved() {
+            return removed;
+        }
+
         public boolean getUpdateState() {
             return fieldValidated;
         }
-
 
         public void setId(long id) {
             this.id = id;
@@ -391,6 +424,7 @@ public class EmployeeExperienceBean extends Logger {
         public Visibility getVisibility() {
             return visibility;
         }
+
     }
 
     private ArrayList<ExperienceControllerUpdater> createExperienceControllerUpdaterList() {
@@ -451,5 +485,9 @@ public class EmployeeExperienceBean extends Logger {
 
     public List<Country> getCountries() {
         return countries;
+    }
+
+    public List<Visibility> getVisibilities() {
+        return visibilities;
     }
 }

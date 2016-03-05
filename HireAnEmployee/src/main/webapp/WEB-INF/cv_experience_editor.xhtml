@@ -1,7 +1,8 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://java.sun.com/jsf/core">
+        xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!-- This is the editable experience component. -->
     <!-- Loading the js for custom editors -->
@@ -74,7 +75,7 @@
                                 <label for="experiencePlace-#{id}"
                                        class="control-label">Lieu </label>
                                 <h:selectOneMenu styleClass="form-control" id="experiencePlace-#{id}"
-                                                 value="#{_experience.country}"  p:style="height: 36px;">
+                                                 value="#{_experience.country}" p:style="height: 36px;">
                                     <f:selectItems
                                             value="#{employeeExperienceBean.countries}" var="_country"
                                             itemLabel="#{_country}" itemValue="#{_country.name()}"/>
@@ -164,8 +165,28 @@
                         </h:outputScript>
                     </h:panelGroup>
 
+                    <!-- (Experience's visiblity) -->
+                    <div class="row">
+                        <div class="row-strip col-sm-12">
+                            <div class="form-group">
+                                <label for="experienceVisibility-#{id}"
+                                       class="control-label">Visibilité </label>
+                                <h:selectOneMenu styleClass="form-control" id="experienceVisibility-#{id}"
+                                                 value="#{_experience.visibility}" p:style="height: 36px;">
+                                    <f:selectItems
+                                            value="#{employeeExperienceBean.visibilities}" var="_visibility"
+                                            itemLabel="#{_visibility}" itemValue="#{_visibility.name()}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (End of Experience's visiblity) -->
+
+
+                    <!-- Form's Buttons -->
                     <div class="row">
 
+                        <!-- Save Button -->
                         <h:commandButton type="submit" class="btn btn-default" value="Enregistrer"
                                          action="#{_experience.update()}">
 
@@ -173,13 +194,28 @@
                             <f:ajax execute="@form" listener="#{_experience.dynamicFields}"
                                     render="#{renderList} #{notificationBean.id}"
                                     resetValues="true"/>
-                        </h:commandButton><!--#{renderList}-->
+                        </h:commandButton>
+                        <!-- End of Save Button -->
 
+                        <!-- Cancel Button -->
                         <h:commandButton type="button" class="btn btn-redb"
                                          onclick="hideExperienceEditor('experience-#{id}');"
                                          value="Annuler">
                             <f:ajax render="experience-#{id}-fields"/>
                         </h:commandButton>
+                        <!-- End of Cancel Button -->
+
+                        <!-- Remove Button -->
+                        <c:if test="#{!isAdding}">
+                            <h:commandButton type="button" class="remove-mycv-entry"
+                                             value="Retirer ce poste">
+                                <f:ajax listener="#{_experience.setRemoved(id)}"
+                                        onevent="function(data) {
+                                                    onSuccess(data, removeID, 'experience-#{id}-handle');
+                                               }" render="no-experience-hint"/>
+                            </h:commandButton>
+                        </c:if>
+                        <!-- End of Remove Button -->
                     </div>
                 </h:panelGroup>
             </h:form>

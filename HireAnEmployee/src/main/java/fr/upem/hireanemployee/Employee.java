@@ -4,8 +4,7 @@ import fr.upem.hireanemployee.profildata.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Created by Quentin on 18/02/2016.
@@ -36,9 +35,9 @@ public class Employee {
     private Collection<Language> skills;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Employee> relations;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Collection<Formation> formations;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Collection<Experience> experiences;
 
     public Employee() {
@@ -167,6 +166,13 @@ public class Employee {
 
     public void addExperience(Experience experience) {
         experiences.add(experience);
+    }
+
+    public void removeExperienceById(Experience experience) {
+        Logger.log("Employee removeExperienceById experience ids to delete : " + experience.getId(), Logger.BEAN);
+        Logger.log("Employee removeExperienceById Before the deletion : " + Experience.printIds(experiences), Logger.BEAN);
+        experiences.remove(experience);
+        Logger.log("Employee removeExperienceById After the deletion : " + Experience.printIds(experiences), Logger.BEAN);
     }
 
     public int getNbRelations() {

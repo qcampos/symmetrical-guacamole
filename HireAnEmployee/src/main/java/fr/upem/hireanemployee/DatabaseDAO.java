@@ -3,6 +3,7 @@ package fr.upem.hireanemployee;
 import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.Language;
 import fr.upem.hireanemployee.profildata.Sector;
+import fr.upem.hireanemployee.profildata.Visibility;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -163,10 +164,18 @@ public class DatabaseDAO {
     }
 
     public List<Country> getCountries() {
-        List<Country> result = new ArrayList<>();
+        List<Country> countries = new ArrayList<>();
         for (Country c : Country.values()) {
-            result.add(c);
+            countries.add(c);
         }
-        return result;
+        return countries;
+    }
+
+    public List<Visibility> getVisibilities() {
+        List<Visibility> visibilities = new ArrayList<>();
+        for (Visibility v : Visibility.values()) {
+            visibilities.add(v);
+        }
+        return visibilities;
     }
 }

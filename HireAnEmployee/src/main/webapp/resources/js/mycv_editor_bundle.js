@@ -41,15 +41,30 @@ function hideCVEditor(id) {
     var experienceDiv = _(id);
     var experienceEditor = _(id + '-editor');
     var experienceContainer = _(id + '-container');
-    // Hidding the editor.
+    // Hiding the editor.
     experienceEditor.className = editorClass;
     // Making the container the right new size.
     experienceContainer.className = containerClass;
-    // Hidding the description.
+    // Hiding the description.
     experienceDiv.className = descriptionClass + " expand";
     // Cleaning the form.
-    var experienceForm = _(id+'-form');
+    var experienceForm = _(id + '-form');
     experienceForm.reset();
+}
+
+/* Calls fun on param only when data contains success.
+    This is used for ajax result handling functions.
+ */
+function onSuccess(data, fun, param) {
+    if (data.status == "success") {
+        fun(param);
+    }
+}
+
+function removeID(id) {
+    var elem = _(id);
+    if (elem == null) {console.log(id + ' not found.'); return;}
+    elem.remove();
 }
 
 // Setting all childs to now call hide onclick.
@@ -57,3 +72,4 @@ function hideCVEditor(id) {
  for (var i = 0; i < links.length; i++) {
  links[i].setAttribute("onClick", "hideExperienceEditor('"+id+"');");
  }*/
+

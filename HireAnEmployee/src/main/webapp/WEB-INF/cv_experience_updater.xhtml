@@ -1,12 +1,17 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 
     <h:outputScript library="js" name="mycv_editor_bundle.js" target="body"/>
 
 
-    <h:panelGroup layout="block" id="experience-#{_experience.id}-handle">
+    <!-- Since jsf is reexecute in every AJAX request. I have to keep removed form in the parsing when indexes are
+    set until the next re draw. If you have form 1, 2, 3, 4 and 2 is under a new condition, a next request for 3
+    will set it for 4. (It's a shame, yeah... After ~3 days of work I finally understand it). So I have to keep
+    deleted form hidden, in the indexing step until a complete refresh of the form list is done - during an add -
+    to get rid of remaining forms. -->
+    <h:panelGroup layout="block" id="experience-#{_experience.id}-handle" p:style="#{hidden?'visibility=hidden;':''}">
         <div class="mycv-editable-container" id="experience-#{_experience.id}-container">
 
             <!-- The experience -->
@@ -70,6 +75,7 @@
             <ui:include src="cv_experience_editor.xhtml">
                 <ui:param name="_experience" value="#{_experience}"/>
                 <ui:param name="id" value="#{_experience.id}"/>
+                <ui:param name="isAdding" value="#{false}"/>
                 <ui:param name="renderList" value="experience-#{id}-labels experience-#{id}-script"/>
             </ui:include>
             <!-- End of Experience editor form -->

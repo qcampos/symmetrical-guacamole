@@ -1012,7 +1012,7 @@ select {
 }
 
 .mycv-editable-container.expand {
-    height: 500px;
+    height: 578px;
     transition: height 0.45s ease-out 0.25s;
 }
 
@@ -1132,6 +1132,15 @@ select {
 }
 
 
+.remove-mycv-entry {
+    font-weight: 500;
+    font-size: 14px;
+    margin-left: 4px;
+    color: #3296ba;
+    background: transparent no-repeat;
+    border: none;
+
+}
 /*
 .demo {
     margin-bottom: -99999px;

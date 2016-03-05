@@ -23,11 +23,12 @@
             <h:panelGroup layout="block" id="experience-list">
 
                 <!-- Initial experience producer. Produced experience already registered. -->
-                <c:forEach var="_experience" items="#{employeeExperienceBean.experiences}"  varStatus="status">
+                <c:forEach var="_experience" items="#{employeeExperienceBean.experiences}" varStatus="status">
 
                     <!-- The experience updater. It shows an experience with handle to update it. -->
                     <ui:include src="cv_experience_updater.xhtml">
                         <ui:param name="_experience" value="#{_experience}"/>
+                        <ui:param name="hidden" value="#{_experience.removed}"/>
                     </ui:include>
                     <!-- End of The experience updater. -->
 
@@ -37,9 +38,11 @@
             </h:panelGroup>
             <!-- End of List of experiences updaters. -->
 
-            <c:if test="#{employeeExperienceBean.experiences.size() == 0}">
-                <p><strong>Aucune expérience renseignée</strong></p>
-            </c:if>
+            <h:panelGroup id="no-experience-hint">
+                <c:if test="#{employeeExperienceBean.size() == 0}">
+                    <p><strong>Aucune expérience renseignée</strong></p>
+                </c:if>
+            </h:panelGroup>
 
             <!-- Add Experience button. Used to add a new formation -->
             <div class="mycv-editable-container" id="experience-addExp-container">
@@ -56,6 +59,7 @@
                 <ui:include src="cv_experience_editor.xhtml">
                     <ui:param name="_experience" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
                     <ui:param name="id" value="addExp"/>
+                    <ui:param name="isAdding" value="#{true}"/>
                     <ui:param name="renderList" value="mycv-addExp-script"/>
                 </ui:include>
 

@@ -1,6 +1,7 @@
 package fr.upem.hireanemployee.profildata;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -136,5 +137,16 @@ public class Experience {
         }
         Experience experience = (Experience) obj;
         return id == experience.id;
+    }
+
+    /**
+     * @return The concatenation of every ids in the given Experience Collection.
+     */
+    public static String printIds(Collection<? extends Experience> experiences) {
+        StringBuilder n = new StringBuilder();
+        for (Experience e : experiences) {
+            n.append(e.getId()).append(' ');
+        }
+        return n.toString();
     }
 }
