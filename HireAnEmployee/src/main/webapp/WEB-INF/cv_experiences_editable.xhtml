@@ -58,10 +58,10 @@
             </c:if>
 
             <!-- Add Experience button. Used to add a new button -->
-            <div class="experience-editable-container" id="experience-add-container">
+            <div class="mycv-editable-container" id="experience-add-container">
 
                 <!-- The button itself -->
-                <div class="col-xs-12 experience-description expand" id="experience-add">
+                <div class="col-xs-12 mycv-description expand" id="experience-add">
                     <div class="col-xs-12 text-center">
                         <a class="btn" id="cv-add-experience"
                            onclick="showExperienceEditor('experience-add');">Ajouter un poste</a>
@@ -72,7 +72,7 @@
                 <ui:include src="cv_experience_editor.xhtml">
                     <ui:param name="_experience" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
                     <ui:param name="id" value="add"/>
-                    <ui:param name="renderList" value="experience-add-script"/>
+                    <ui:param name="renderList" value="mycv-add-script"/>
                 </ui:include>
 
             </div>

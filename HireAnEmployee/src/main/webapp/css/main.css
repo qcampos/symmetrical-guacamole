@@ -163,7 +163,8 @@ body {
 }
 
 .navbar-inverse .btn {
-    border-radius: 0;/*
+    border-radius: 0;
+    /*
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;*/
 }
@@ -339,8 +340,10 @@ p {
 }
 
 .panel-blue {
-    box-shadow: 0 1px 0.5px rgba(0,0,0,.4);
+    box-shadow: 0 1px 0.5px rgba(0, 0, 0, .4);
 }
+
+
 /*
 .panel-blue .panel-heading {
     -webkit-transition: opacity 0.2s ease-in-out;
@@ -967,25 +970,24 @@ select {
 /* END OF System for edition - Description ****/
 
 
-/* BEGIN OF System for edition - Experiences
-    Used to desactivate click.
-    pointer-events: none;
-    cursor: default;
+/* BEGIN OF System for edition - MYCV
+    Used to edit any content of the cv (except the description)
+    When the user is looking at its "own cv".
 ****/
 
-.experience-description {
+.mycv-description {
     opacity: 0;
     overflow: hidden;
     transition: opacity 0.25s ease-in;
 }
 
-.experience-description.expand {
+.mycv-description.expand {
     opacity: 1;
     overflow: hidden;
     transition: opacity 0.25s ease-in 0.25s;
 }
 
-.experience-editor {
+.mycv-editor {
     /* Used to block inputs on the editor when not expanded */
     pointer-events: none;
     cursor: default;
@@ -996,90 +998,109 @@ select {
     transition: opacity 0.2s linear;
 }
 
-.experience-editor.expand {
+.mycv-editor.expand {
     pointer-events: auto;
     cursor: auto;
     opacity: 1;
     transition: opacity 0.25s linear 0.9s;
 }
 
-.experience-editable-container {
+.mycv-editable-container {
     height: 10px;
     transition: height 0.945s ease-out 0.25s;
 }
 
-.experience-editable-container.expand {
+.mycv-editable-container.expand {
     height: 480px;
     transition: height 0.45s ease-out 0.25s;
 }
 
-.experience-description a {
+.formation-editable-container {
+    height: 10px;
+    transition: height 0.945s ease-out 0.25s;
+}
+
+.mycv-editable-container.expand.formation-container-height {
+    height: 398px;
+    transition: height 0.45s ease-out 0.25s;
+}
+
+.mycv-description a {
     pointer-events: none;
     cursor: default;
 }
 
-.experience-description.expand a {
+.mycv-description.expand a {
     pointer-events: auto;
     cursor: pointer;
 }
 
-.experience-editor.expand .btn {
+.mycv-editor.expand .btn {
     pointer-events: auto;
     cursor: pointer;
 }
 
-.experience-editor .btn,
-.experience-editor.expand .btn.disabled{
+.mycv-editor .btn,
+.mycv-editor.expand .btn.disabled {
     pointer-events: none;
     cursor: default;
 }
 
 
 /* The form by itself ****/
+
+
 /* Dates have ugly paddings unuseful... */
+
 .form-control.editor-date-input {
     padding-right: 12px;
     padding-left: 12px;
 }
 
-.experience-form .editor-date-input {
+.mycv-form .editor-date-input {
     margin-left: 0;
-    height: 24px;
+    height: 30px;
     padding-right: 4px;
-    padding-left: 4px;
-    float:right;
+    padding-left: 8px;
+    float: right;
     margin-right: 0;
 }
-.experience-form select {
+
+.mycv-form select {
     font-size: 12px;
     font-weight: 600;
-    height: 24px;
+    height: 30px;
 }
 
-.experience-form label {
+.mycv-form label {
     font-size: 14px;
     font-weight: 600;
 }
 
-.experience-form input {
+.mycv-form input {
     font-size: 13px;
     font-weight: 600;
 }
 
-.experience-form .row {
+.mycv-form .row {
     margin-bottom: 10px;
 }
 
-.experience-form textarea {
+.mycv-form textarea {
     resize: none;
 }
 
-.experience-form .help-block.with-error {
+.mycv-form .help-block.with-error {
     font-size: 12px;
+;
 }
 
+
 /* End of the editor */
+
+
 /* Begin of the add-experience button */
+
 #cv-add-experience {
     display: block;
     padding: 8px;
@@ -1100,12 +1121,16 @@ select {
 .no-margin-left {
     margin-left: 0;
 }
+
 .no-padding-right {
     padding-right: 0;
 }
+
 .row.no-margin-bot {
     margin-bottom: 0;
 }
+
+
 /*
 .demo {
     margin-bottom: -99999px;
