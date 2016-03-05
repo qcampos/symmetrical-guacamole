@@ -20,6 +20,7 @@ public class Experience {
     private String CompanyName;
     private String jobName;
     private String jobAbstract;
+    private Country country;
     @Column(length = 2000)
     private String jobDescription;
 
@@ -32,11 +33,13 @@ public class Experience {
     public Experience() {
     }
 
-    public Experience(final String companyName, final String jobName, final String jobAbstract, final String jobDescription, final Date startDate, final Date endDate) {
+    public Experience(final String companyName, final String jobName, final String jobAbstract, final String jobDescription,
+                      Country country, final Date startDate, final Date endDate) {
         CompanyName = companyName;
         this.jobName = jobName;
         this.jobAbstract = jobAbstract;
         this.jobDescription = jobDescription;
+        this.country = country;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -95,6 +98,14 @@ public class Experience {
 
     public void setEndDate(final Date to) {
         this.endDate = to;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     @Override

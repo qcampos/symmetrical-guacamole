@@ -23,12 +23,11 @@
             <h:panelGroup layout="block" id="experience-list">
 
                 <!-- Initial experience producer. Produced experience already registered. -->
-                <c:forEach var="i" begin="#{employeeExperienceBean.newExperiencesStart}"
-                           end="#{employeeExperienceBean.experiences.size() -1}" varStatus="status">
+                <c:forEach var="_experience" items="#{employeeExperienceBean.experiences}"  varStatus="status">
 
                     <!-- The experience updater. It shows an experience with handle to update it. -->
                     <ui:include src="cv_experience_updater.xhtml">
-                        <ui:param name="_experience" value="#{employeeExperienceBean.experiences.get(i)}"/>
+                        <ui:param name="_experience" value="#{_experience}"/>
                     </ui:include>
                     <!-- End of The experience updater. -->
 

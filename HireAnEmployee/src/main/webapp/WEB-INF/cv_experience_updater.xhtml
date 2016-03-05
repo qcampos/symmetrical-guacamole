@@ -37,11 +37,12 @@
                     <!-- End of Company name -->
 
 
-                    <!-- Date and Country -->
+                    <!-- Date and Country (country toString is overriden) -->
                     <div class="editable show-editable">
                         <div>
                             <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
-                            <p class="small-text">#{_experience.toDate} | #{_experience.place}
+                            <p class="small-text">#{_experience.toDate} | #{_experience.country eq "NONE" ? "Ajouter un lieu" :
+                            _experience.country.toString()}
                                 <span class="glyphicon glyphicon-pencil"/>
                             </p>
                         </div>

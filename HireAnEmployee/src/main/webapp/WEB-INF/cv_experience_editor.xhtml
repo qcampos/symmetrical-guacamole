@@ -67,21 +67,22 @@
                     <!-- (End of Enterprise name) -->
 
 
-                    <!-- (Experience's place) -->
+                    <!-- (Experience's country) -->
                     <div class="row">
                         <div class="row-strip col-sm-12">
                             <div class="form-group">
                                 <label for="experiencePlace-#{id}"
                                        class="control-label">Lieu </label>
-                                <h:inputText p:type="text" class="form-control"
-                                             id="experiencePlace-#{id}"
-                                             value="#{_experience.place}"
-                                             p:placeholder="Lieu"
-                                             p:data-error=" "/>
+                                <h:selectOneMenu styleClass="form-control" id="experiencePlace-#{id}"
+                                                 value="#{_experience.country}"  p:style="height: 36px;">
+                                    <f:selectItems
+                                            value="#{employeeExperienceBean.countries}" var="_country"
+                                            itemLabel="#{_country}" itemValue="#{_country.name()}"/>
+                                </h:selectOneMenu>
                             </div>
                         </div>
                     </div>
-                    <!-- (End of Experience's place) -->
+                    <!-- (End of Experience's country) -->
 
 
                     <!-- (Experience's Period) -->

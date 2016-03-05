@@ -1,6 +1,7 @@
 package fr.upem.hireanemployee;
 
 import com.google.common.collect.Lists;
+import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.Experience;
 
 import javax.ejb.Stateless;
@@ -19,8 +20,8 @@ public class EmployeeExperienceDAO {
     @PersistenceContext(unitName = "hireaePU")
     private EntityManager em;
 
-    public Experience updateExperience(long id, final String companyName, final String jobName, final String jobAbstract, final String jobDescription, final Date startDate, final Date endDate) {
-        Experience experience = new Experience(companyName, jobName, jobAbstract, jobDescription, startDate, endDate);
+    public Experience updateExperience(long id, final String companyName, final String jobName, final String jobAbstract, final String jobDescription, final Country country, final Date startDate, final Date endDate) {
+        Experience experience = new Experience(companyName, jobName, jobAbstract, jobDescription, country, startDate, endDate);
         experience.setId(id);
         em.merge(experience);
         em.flush();
@@ -32,17 +33,17 @@ public class EmployeeExperienceDAO {
      * With employee ID.
      */
     public List<Experience> createExperience(final String companyName, final String jobName, final String jobAbstract,
-                                             final String jobDescription, final Date startDate, final Date endDate,
+                                             final String jobDescription, final Country country, final Date startDate, final Date endDate,
                                              final long employeeId) {
         Employee employee = em.find(Employee.class, employeeId);
-        return createExperience(companyName, jobName, jobAbstract, jobDescription, startDate, endDate, employee);
+        return createExperience(companyName, jobName, jobAbstract, jobDescription, country, startDate, endDate, employee);
     }
 
     /**
      * Surcharge needed for some cases.
      */
-    public List<Experience> createExperience(final String companyName, final String jobName, final String jobAbstract, final String jobDescription, final Date startDate, final Date endDate, final Employee employee) {
-        Experience experience = new Experience(companyName, jobName, jobAbstract, jobDescription, startDate, endDate);
+    public List<Experience> createExperience(final String companyName, final String jobName, final String jobAbstract, final String jobDescription, final Country country, final Date startDate, final Date endDate, final Employee employee) {
+        Experience experience = new Experience(companyName, jobName, jobAbstract, jobDescription, country, startDate, endDate);
         employee.addExperience(experience);
         em.merge(employee);
         em.flush();

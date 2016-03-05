@@ -2,6 +2,7 @@ package fr.upem.hireanemployee.beans;
 
 import fr.upem.hireanemployee.*;
 import fr.upem.hireanemployee.navigation.Constants;
+import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.Experience;
 import fr.upem.hireanemployee.validators.DateTranslator;
 
@@ -24,8 +25,12 @@ import java.util.*;
 @ViewScoped
 public class EmployeeExperienceBean extends Logger {
 
+    // DAOs.
+    @EJB
+    private DatabaseDAO ddao;
     @EJB
     private EmployeeExperienceDAO dao;
+    ;
 
     // Managed fields.
     @ManagedProperty("#{cvViewedBean.employeeExperiences}")
@@ -37,9 +42,8 @@ public class EmployeeExperienceBean extends Logger {
 
     // Data fields to edit.
     private List<String> months;
+    private List<Country> countries;
     private ArrayList<ExperienceControllerUpdater> experiences;
-    private ArrayList<ExperienceControllerUpdater> newExperiences;
-    private int newExperiencesStart;
     private ExperienceController experienceControllerBuilder;
     private SimpleDateFormat monthFormatter;
     private SimpleDateFormat yearFormatter;
@@ -58,15 +62,14 @@ public class EmployeeExperienceBean extends Logger {
         // Creating the lsit of experiences updater. They will wrap real experience inside the DB.
         experiences = createExperienceControllerUpdaterList();
 
-        // List receiving new experiences created. When they are created, and then pull,
-        // They are transferred to the former experiences list.
-        newExperiences = new ArrayList<>();
-
         // Creating the experience factory.
-        experienceControllerBuilder = createExperienceControllerBuilder();
+        experienceControllerBuilder = new ExperienceControllerBuilder();
 
         // Creating the list of months.
         months = DateTranslator.getMonths();
+
+        // Creating the list of countries.
+        countries = ddao.getCountries();
     }
 
 
@@ -77,9 +80,10 @@ public class EmployeeExperienceBean extends Logger {
 
         private ExperienceControllerUpdater(String jobDescription, String startYear, String startMonth, String endYear,
                                             String endMonth, Experience experience) {
-            super(experience.getId(), experience.getJobName(), "France", experience.getCompanyName(), jobDescription,
-                    experience.getStartDate(), experience.getEndDate(), DateTranslator.toDate(experience.getStartDate(), experience.getEndDate()),
-                    startMonth, endMonth, startYear, endYear, experience);// TODO solve "France" with init test (Countries...) !!
+            super(experience.getId(), experience.getJobName(), experience.getCountry(), experience.getCompanyName(), jobDescription,
+                    experience.getStartDate(), experience.getEndDate(),
+                    DateTranslator.toDate(experience.getStartDate(), experience.getEndDate()),
+                    startMonth, endMonth, startYear, endYear, experience); // TODO solve "France" with init test (Countries...) !!
         }
 
         @Override
@@ -88,7 +92,7 @@ public class EmployeeExperienceBean extends Logger {
             if (!fieldValidated) {
                 return Constants.CURRENT_PAGE;
             }
-            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, startDate, endDate);
+            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, country, startDate, endDate);
             setExperience(experience);
             log("update - experience set.");
             return Constants.CURRENT_PAGE;
@@ -96,20 +100,17 @@ public class EmployeeExperienceBean extends Logger {
 
         @Override
         void updateAjaxRenders(AjaxBehaviorEvent event) {
-            // UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
-            //FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
+            UIComponent target = event.getComponent().findComponent("experience-" + id + "-fields");
+            FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(target.getClientId());
         }
     }
-
-    ArrayList<ExperienceControllerUpdater> tmp = new ArrayList();
 
     /**
      * Performs updates on the database values of the experience wrapped(id) during its perform call.
      */
     public class ExperienceControllerBuilder extends ExperienceController {
 
-        private ExperienceControllerBuilder(Date startDate, Date endDate, String startMonth,
-                                            String endMonth, String startYear, String endYear) {
+        private ExperienceControllerBuilder() {
             super();
             // TODO solve "France" with init values test (Countries...) !!
         }
@@ -120,30 +121,14 @@ public class EmployeeExperienceBean extends Logger {
             if (!fieldValidated) {
                 return Constants.CURRENT_PAGE;
             }
-            log("update - creation with fields : " + companyName + " " + jobName + " " + jobDescription + " " + startDate + "  " + endDate + " " + employee.getId());
-            List<Experience> experience = dao.createExperience(companyName, jobName, "jobAbstract", jobDescription, startDate,
+            log("update - creation with fields : " + companyName + " " + jobName + " " + jobDescription + " " + country + " " + startDate + "  " + endDate + " " + employee.getId());
+            List<Experience> experience = dao.createExperience(companyName, jobName, "jobAbstract", jobDescription, country, startDate,
                     endDate, employee.getId());
             log("update - experience created ! ");
-
-            log("update - new experiences ids ");
-            // newExperiences.clear();
             // Updating the newly added values.
-            newExperiencesStart = originalExperiences.size();
-            for (Experience newExp : experience) {
-                if (!originalExperiences.contains(newExp)) {
-                    log("update - id :" + newExp.getId());
-                    ExperienceControllerUpdater e = ExperienceControllerFactory(newExp);
-                    // experiences.add(e);
-                    tmp.add(e);
-                    // newExperiences.add(e);
-                    originalExperiences.add(newExp);
-                }
-            }
             originalExperiences = experience;
             experiences = createExperienceControllerUpdaterList();
-            log("update - tmp : " + ids(tmp));
             log("update - experiences : " + ids(experiences));
-            log("update - newExperiences : " + ids(newExperiences));
             log("update - originalExperiences : " + ids(originalExperiences));
             log("update - end of the update call.");
 
@@ -180,7 +165,7 @@ public class EmployeeExperienceBean extends Logger {
     }
 
     /**
-     * Controls any data about experiences on jsf pages. It is used in place of Validator to allow us to use
+     * Controls any data about experiences on jsf pages. It is used in country of Validator to allow us to use
      * custom notifications (replaced by message in Validators).
      * This abstract class is used in the creation and update experiences'states.
      * Two implementations are derived : The ExperienceControllerUpdater and the ExperienceControllerBuilder.
@@ -191,7 +176,7 @@ public class EmployeeExperienceBean extends Logger {
 
         long id;
         String jobName;
-        private String place;
+        Country country;
         String companyName;
         String jobDescription;
         Date startDate;
@@ -209,15 +194,15 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         void setEmptyExperience() {
-            setExperience(new Experience(null, null, null, null, new Date(), new Date()));
+            setExperience(new Experience(null, null, null, null, Country.NONE, new Date(), new Date()));
         }
 
-        private ExperienceController(long id, String jobName, String place, String companyName, String jobDescription,
+        private ExperienceController(long id, String jobName, Country country, String companyName, String jobDescription,
                                      Date startDate, Date endDate, String toDate, String startMonth, String endMonth,
                                      String startYear, String endYear, Experience experience) {
             this.id = id;
             this.jobName = jobName;
-            this.place = place;
+            this.country = country;
             this.companyName = companyName;
             this.jobDescription = jobDescription;
             this.startDate = startDate;
@@ -234,7 +219,7 @@ public class EmployeeExperienceBean extends Logger {
             this.experience = Objects.requireNonNull(experience);
 
             id = experience.getId();
-            place = "France"; // TODO solve this with the persistence BDD !!
+            country = experience.getCountry();
             jobName = experience.getJobName();
             jobDescription = experience.getJobDescription();
             companyName = experience.getCompanyName();
@@ -320,8 +305,8 @@ public class EmployeeExperienceBean extends Logger {
             this.jobName = jobName;
         }
 
-        public void setPlace(String place) {
-            this.place = place;
+        public void setCountry(Country country) {
+            this.country = country;
         }
 
         public void setCompanyName(String companyName) {
@@ -330,14 +315,6 @@ public class EmployeeExperienceBean extends Logger {
 
         public void setJobDescription(String jobDescription) {
             this.jobDescription = jobDescription;
-        }
-
-        public void setStartDate(Date startDate) {
-            this.startDate = startDate;
-        }
-
-        public void setEndDate(Date endDate) {
-            this.endDate = endDate;
         }
 
         public void setToDate(String toDate) {
@@ -368,8 +345,8 @@ public class EmployeeExperienceBean extends Logger {
             return jobName;
         }
 
-        public String getPlace() {
-            return place;
+        public Country getCountry() {
+            return country;
         }
 
         public String getCompanyName() {
@@ -378,14 +355,6 @@ public class EmployeeExperienceBean extends Logger {
 
         public String getJobDescription() {
             return jobDescription;
-        }
-
-        public Date getStartDate() {
-            return startDate;
-        }
-
-        public Date getEndDate() {
-            return endDate;
         }
 
         public String getToDate() {
@@ -416,17 +385,6 @@ public class EmployeeExperienceBean extends Logger {
         }
         return experiences;
     }
-
-    private ExperienceControllerBuilder createExperienceControllerBuilder() {
-        Date startDate = new Date();
-        Date endDate = new Date();
-        String startMonth = monthFormatter.format(startDate);
-        String endMonth = monthFormatter.format(endDate);
-        String startYear = yearFormatter.format(startDate);
-        String endYear = yearFormatter.format(endDate);
-        return new ExperienceControllerBuilder(startDate, endDate, startMonth, endMonth, startYear, endYear);
-    }
-
 
     private ExperienceControllerUpdater ExperienceControllerFactory(Experience experience) {
         Objects.requireNonNull(experience);
@@ -472,15 +430,11 @@ public class EmployeeExperienceBean extends Logger {
         return experiences;
     }
 
-    public ArrayList<ExperienceControllerUpdater> getNewExperiences() {
-        return newExperiences;
-    }
-
-    public int getNewExperiencesStart() {
-        return newExperiencesStart;
-    }
-
     public List<String> getMonths() {
         return months;
+    }
+
+    public List<Country> getCountries() {
+        return countries;
     }
 }
