@@ -4,6 +4,7 @@ import fr.upem.hireanemployee.*;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.Experience;
+import fr.upem.hireanemployee.profildata.Visibility;
 import fr.upem.hireanemployee.validators.DateTranslator;
 
 import javax.annotation.PostConstruct;
@@ -83,7 +84,7 @@ public class EmployeeExperienceBean extends Logger {
             super(experience.getId(), experience.getJobName(), experience.getCountry(), experience.getCompanyName(), jobDescription,
                     experience.getStartDate(), experience.getEndDate(),
                     DateTranslator.toDate(experience.getStartDate(), experience.getEndDate()),
-                    startMonth, endMonth, startYear, endYear, experience); // TODO solve "France" with init test (Countries...) !!
+                    startMonth, endMonth, startYear, endYear, experience.getVisibility(), experience);
         }
 
         @Override
@@ -92,7 +93,8 @@ public class EmployeeExperienceBean extends Logger {
             if (!fieldValidated) {
                 return Constants.CURRENT_PAGE;
             }
-            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription, country, startDate, endDate);
+            Experience experience = dao.updateExperience(id, companyName, jobName, "job abstract", jobDescription,
+                    country, visibility, startDate, endDate);
             setExperience(experience);
             log("update - experience set.");
             return Constants.CURRENT_PAGE;
@@ -121,9 +123,10 @@ public class EmployeeExperienceBean extends Logger {
             if (!fieldValidated) {
                 return Constants.CURRENT_PAGE;
             }
-            log("update - creation with fields : " + companyName + " " + jobName + " " + jobDescription + " " + country + " " + startDate + "  " + endDate + " " + employee.getId());
-            List<Experience> experience = dao.createExperience(companyName, jobName, "jobAbstract", jobDescription, country, startDate,
-                    endDate, employee.getId());
+            log("update - creation with fields : " + companyName + " " + jobName + " " + jobDescription + " " + country + " " +
+                    startDate + "  " + endDate + " " + employee.getId() + " " + visibility);
+            List<Experience> experience = dao.createExperience(companyName, jobName, "jobAbstract", jobDescription,
+                    country, visibility, startDate, endDate, employee.getId());
             log("update - experience created ! ");
             // Updating the newly added values.
             originalExperiences = experience;
@@ -132,7 +135,7 @@ public class EmployeeExperienceBean extends Logger {
             log("update - originalExperiences : " + ids(originalExperiences));
             log("update - end of the update call.");
 
-            // TODO ?? setEmptyExperience();
+            experienceControllerBuilder.setEmptyExperience();
             return Constants.CURRENT_PAGE;
         }
 
@@ -156,11 +159,12 @@ public class EmployeeExperienceBean extends Logger {
         void updateAjaxRenders(AjaxBehaviorEvent event) {
             // Adding the re render of the form field and the re render of the list producer of experiences.
             FacesContext currentInstance = FacesContext.getCurrentInstance();
-            UIComponent target = event.getComponent().findComponent("experience-add-fields");
+            UIComponent target = event.getComponent().findComponent("experience-addExp-fields");
             UIComponent producerTarget = currentInstance.getViewRoot().findComponent("experience-list"/*"experience_producer_list"*/);
             Collection<String> renderIds = currentInstance.getPartialViewContext().getRenderIds();
             renderIds.add(target.getClientId());
             renderIds.add(producerTarget.getClientId());
+            notificationBean.setSuccess("Nouvelle expérience ajoutée");
         }
     }
 
@@ -186,6 +190,7 @@ public class EmployeeExperienceBean extends Logger {
         private String endMonth;
         private String startYear;
         private String endYear;
+        Visibility visibility;
         private Experience experience;
 
 
@@ -194,12 +199,12 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         void setEmptyExperience() {
-            setExperience(new Experience(null, null, null, null, Country.NONE, new Date(), new Date()));
+            setExperience(new Experience(null, null, null, null, Country.NONE, new Date(), new Date(), Visibility.PUBLIC));
         }
 
         private ExperienceController(long id, String jobName, Country country, String companyName, String jobDescription,
                                      Date startDate, Date endDate, String toDate, String startMonth, String endMonth,
-                                     String startYear, String endYear, Experience experience) {
+                                     String startYear, String endYear, Visibility visibility, Experience experience) {
             this.id = id;
             this.jobName = jobName;
             this.country = country;
@@ -212,6 +217,7 @@ public class EmployeeExperienceBean extends Logger {
             this.endMonth = endMonth;
             this.startYear = startYear;
             this.endYear = endYear;
+            this.visibility = visibility;
             this.experience = experience;
         }
 
@@ -230,7 +236,7 @@ public class EmployeeExperienceBean extends Logger {
             endMonth = monthFormatter.format(endDate);
             startYear = yearFormatter.format(startDate);
             endYear = yearFormatter.format(endDate);
-
+            visibility = experience.getVisibility();
             jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
         }
 
@@ -240,7 +246,8 @@ public class EmployeeExperienceBean extends Logger {
 
         private boolean validateFields() {
             log("validateFields - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
-                    jobDescription + " " + startYear + " " + startMonth + " " + endYear + " " + endMonth);
+                    jobDescription + " " + startYear + " " + startMonth + " " + endYear + " " + endMonth +
+                    " " + visibility);
             notificationBean.clear();
 
             // Parsing required field.
@@ -337,6 +344,10 @@ public class EmployeeExperienceBean extends Logger {
             this.endYear = endYear;
         }
 
+        public void setVisibility(Visibility visibility) {
+            this.visibility = visibility;
+        }
+
         public long getId() {
             return id;
         }
@@ -375,6 +386,10 @@ public class EmployeeExperienceBean extends Logger {
 
         public String getEndYear() {
             return endYear;
+        }
+
+        public Visibility getVisibility() {
+            return visibility;
         }
     }
 

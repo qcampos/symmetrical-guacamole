@@ -870,7 +870,8 @@ body {
     transition: color 0.5s, opacity 0.5s;
 }
 
-.cv-bloc-element:hover .editable div,
+#description-container:hover .editable div,
+.mycv-editable-container:hover .editable div,
 .cv-bloc-element .show-editable div {
     background-color: #eaeaea;
     transition: background-color 0.5s;
@@ -1011,7 +1012,7 @@ select {
 }
 
 .mycv-editable-container.expand {
-    height: 480px;
+    height: 500px;
     transition: height 0.45s ease-out 0.25s;
 }
 

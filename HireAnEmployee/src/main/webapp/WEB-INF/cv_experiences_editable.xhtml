@@ -4,7 +4,7 @@
 
     <!-- This is the editable experience component. -->
     <!-- Loading the js for custom editors -->
-    <h:outputScript library="js" name="experience_editor_bundle.js" target="body"/>
+    <h:outputScript library="js" name="mycv_editor_bundle.js" target="body"/>
 
     <!-- Experiences -->
     <div class="panel panel-blue cv-bloc-element">
@@ -37,41 +37,26 @@
             </h:panelGroup>
             <!-- End of List of experiences updaters. -->
 
-            <!-- Experience updater producer. This produces newly added experience_updater.
-                On the client side, a javascript handler will move them outside this group, into the
-                experience producer list of id="experience-list -->
-            <h:panelGroup id="experience_producer_list">
-                Hellow
-
-                <!-- Newly created experience updater. New experience created will be moved to parent
-                when produced by this loop -->
-
-                <!-- End of Newly created experience updater. -->
-
-            </h:panelGroup>
-            <!-- End of Experience updater producer. -->
-
-
             <c:if test="#{employeeExperienceBean.experiences.size() == 0}">
                 <p><strong>Aucune expérience renseignée</strong></p>
             </c:if>
 
-            <!-- Add Experience button. Used to add a new button -->
-            <div class="mycv-editable-container" id="experience-add-container">
+            <!-- Add Experience button. Used to add a new formation -->
+            <div class="mycv-editable-container" id="experience-addExp-container">
 
                 <!-- The button itself -->
-                <div class="col-xs-12 mycv-description expand" id="experience-add">
+                <div class="col-xs-12 mycv-description expand" id="experience-addExp">
                     <div class="col-xs-12 text-center">
-                        <a class="btn" id="cv-add-experience"
-                           onclick="showExperienceEditor('experience-add');">Ajouter un poste</a>
+                        <a class="btn" id="cv-addExp-experience"
+                           onclick="showExperienceEditor('experience-addExp');">Ajouter un poste</a>
                     </div>
                 </div>
 
                 <!-- The Experience builder form. It uses our experienceControllerBuilder. -->
                 <ui:include src="cv_experience_editor.xhtml">
                     <ui:param name="_experience" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
-                    <ui:param name="id" value="add"/>
-                    <ui:param name="renderList" value="mycv-add-script"/>
+                    <ui:param name="id" value="addExp"/>
+                    <ui:param name="renderList" value="mycv-addExp-script"/>
                 </ui:include>
 
             </div>
@@ -79,6 +64,7 @@
 
         </div>
         <!-- end of bloc element -->
+
     </div>
     <!-- (fin de experiences) -->
 

@@ -1,0 +1,72 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- This is the editable experience component. -->
+    <!-- Loading the js for custom editors -->
+    <h:outputScript library="js" name="mycv_editor_bundle.js" target="body"/>
+
+    <!-- Experiences -->
+    <div class="panel panel-blue cv-bloc-element">
+
+        <!-- Title -->
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <span class="glyphicon glyphicon-send" style="margin-right:8px;top:2px;"></span>Formations
+            </h1>
+        </div>
+        <!-- End of Title -->
+
+        <div class="panel-body">
+
+            <!-- List of formations updaters. These are prompt able to update an existing formation -->
+            <h:panelGroup layout="block" id="formations-list">
+
+                <!-- Initial experience producer. Produced formation already registered. -->
+                <c:forEach var="_formation" items="#{employeeFormationBean.formations}"  varStatus="status">
+
+                    <!-- The formation updater. It shows a formation with handle to update it. -->
+                    <!--<ui:include src="cv_formation_updater.xhtml">
+                        <ui:param name="_formation" value="#{_formation}"/>
+                    </ui:include> -->
+                    <!-- End of The formation updater. -->
+
+                </c:forEach>
+                <!-- End of Initial formation producer. -->
+
+            </h:panelGroup>
+            <!-- End of List of formation updaters. -->
+
+            <!-- Only if there are no existing formations. -->
+            <c:if test="#{employeeFormationBean.formations.size() == 0}">
+                <p><strong>Aucune formation renseignée</strong></p>
+            </c:if>
+
+            <!-- Add Formation button. Used to add a new Formation -->
+            <div class="mycv-editable-container" id="formation-addForma-container">
+
+                <!-- The button itself -->
+                <div class="col-xs-12 mycv-description expand" id="formation-addForma">
+                    <div class="col-xs-12 text-center">
+                        <a class="btn" id="cv-addForma-formation"
+                           onclick="showFormationEditor('formation-addForma');">Ajouter une formation</a>
+                    </div>
+                </div>
+
+                <!-- The Formation builder form. It uses our formationControllerBuilder. -->
+               <!-- <ui:include src="cv_experience_editor.xhtml">
+                    <ui:param name="_formation" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
+                    <ui:param name="id" value="add"/>
+                    <ui:param name="renderList" value="mycv-add-script"/>
+                </ui:include>-->
+
+            </div>
+            <!-- End of Add Experience button. -->
+
+        </div>
+        <!-- end of bloc element -->
+    </div>
+    <!-- (fin de experiences) -->
+
+</ui:composition>
+

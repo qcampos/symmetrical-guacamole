@@ -4,10 +4,7 @@ package fr.upem.hireanemployee;
 import fr.upem.hireanemployee.DatabaseDAO;
 import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.EmployeeDescriptionDAO;
-import fr.upem.hireanemployee.profildata.Country;
-import fr.upem.hireanemployee.profildata.EmployeeDescription;
-import fr.upem.hireanemployee.profildata.Formation;
-import fr.upem.hireanemployee.profildata.School;
+import fr.upem.hireanemployee.profildata.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -70,21 +67,21 @@ public class InitializationBean extends Logger {
         fdao.createFormation("", "",
                 Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), null, null, employee);
 
-        exdao.createExperience("Cartier", "Chargé du retailing", "jobAbstract", null, Country.AMERICAN_SAMOA, new Date(113, 2, 1), new Date(113, 10, 29), employee);
+        exdao.createExperience("Cartier", "Chargé du retailing", "jobAbstract", null, Country.AMERICAN_SAMOA, Visibility.PUBLIC, new Date(113, 2, 1), new Date(113, 10, 29), employee);
 
         exdao.createExperience("Weekendesk", "Asistant Marketing Manager", "jobAbstract",
                 "Weekendesk is an European Online Travel Agency, operating in the French, Spanish, Belgian, Dutch and Italian markets, " +
                         "focused on delivering the best experience for short breaks and holidays. http://www.weekendesk.fr/ As a Marketing " +
                         "Assistant, I managed the digital presence of the Weekendesk brand in Spain on social networks: Facebook, Twitter and " +
-                        "Google +.", Country.UNITED_ARAB_EMIRATES,
+                        "Google +.", Country.UNITED_ARAB_EMIRATES, Visibility.PRIVATE,
                 new Date(114, 6, 1), new Date(114, 11, 29), employee);
-        // Begun the 1 and ended the 31 always. (1 Juiller <-> 29 Décembre (problem with 31 Fevrier does not exists).
+        // Begun the 1 and ended the 31 always. (1 Juillet <-> 29 Décembre (problem with 31 Fevrier does not exists).
 
         exdao.createExperience("Dassault System", "MSc in Project and Programme Management and Business Development", "jobAbstract",
                 "Member of the ICT Team The ICT team will deliver all communications and related services, " +
                         "as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, " +
                         "set-up, operations and change management of all deliverables within the scope of ICT.", Country.ANTIGUA_AND_BARBUDA,
-                new Date(115, 11, 1), new Date(116, 1, 29), employee);
+                Visibility.PUBLIC, new Date(115, 11, 1), new Date(116, 1, 29), employee);
         // Begun the 1 and ended the 31 always. (1 Décembre <-> 29 Février (problem with 31 Fevrier does not exists).
 
 

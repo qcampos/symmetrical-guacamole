@@ -1,11 +1,7 @@
 package fr.upem.hireanemployee.profildata;
 
 import javax.persistence.*;
-import javax.validation.constraints.Past;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Quentin on 18/02/2016.
@@ -21,6 +17,7 @@ public class Experience {
     private String jobName;
     private String jobAbstract;
     private Country country;
+    private Visibility visibility;
     @Column(length = 2000)
     private String jobDescription;
 
@@ -34,7 +31,7 @@ public class Experience {
     }
 
     public Experience(final String companyName, final String jobName, final String jobAbstract, final String jobDescription,
-                      Country country, final Date startDate, final Date endDate) {
+                      Country country, final Date startDate, final Date endDate, final Visibility visibility) {
         CompanyName = companyName;
         this.jobName = jobName;
         this.jobAbstract = jobAbstract;
@@ -42,6 +39,7 @@ public class Experience {
         this.country = country;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.visibility = visibility;
     }
 
     public long getId() {
@@ -102,6 +100,14 @@ public class Experience {
 
     public Country getCountry() {
         return country;
+    }
+
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
     }
 
     public void setCountry(Country country) {

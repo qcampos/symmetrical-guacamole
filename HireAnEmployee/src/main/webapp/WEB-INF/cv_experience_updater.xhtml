@@ -3,7 +3,7 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 
-    <h:outputScript library="js" name="experience_editor_bundle.js" target="body"/>
+    <h:outputScript library="js" name="mycv_editor_bundle.js" target="body"/>
 
 
     <h:panelGroup layout="block" id="experience-#{_experience.id}-handle">
@@ -17,7 +17,7 @@
                 <h:panelGroup layout="block" id="experience-#{_experience.id}-labels">
 
                     <!-- Job name -->
-                    <div class="editable show-editable">
+                    <div class="editable">
                         <div>
                             <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
                             <h4 class="panel-body-title">#{_experience.jobName}
@@ -27,7 +27,7 @@
                     <!-- End of Job name -->
 
                     <!-- Company name -->
-                    <div class="editable show-editable">
+                    <div class="editable">
                         <div>
                             <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
                             <p><strong>#{_experience.companyName} <span class="glyphicon glyphicon-pencil"/></strong>
@@ -38,11 +38,11 @@
 
 
                     <!-- Date and Country (country toString is overriden) -->
-                    <div class="editable show-editable">
+                    <div class="editable">
                         <div>
                             <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
                             <p class="small-text">#{_experience.toDate} | #{_experience.country eq "NONE" ? "Ajouter un lieu" :
-                            _experience.country.toString()}
+                                    _experience.country.toString()}
                                 <span class="glyphicon glyphicon-pencil"/>
                             </p>
                         </div>
@@ -50,7 +50,7 @@
                     <!-- End of Date and Country -->
 
                     <!-- Description -->
-                    <div class="editable show-editable">
+                    <div class="editable">
                         <div>
                             <a class="hyperspan" onclick="showExperienceEditor('experience-#{_experience.id}');"/>
                             <p>#{_experience.jobDescription == null ?
