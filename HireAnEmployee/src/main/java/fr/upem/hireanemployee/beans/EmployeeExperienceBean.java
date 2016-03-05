@@ -31,11 +31,8 @@ public class EmployeeExperienceBean extends Logger {
     private DatabaseDAO ddao;
     @EJB
     private EmployeeExperienceDAO dao;
-    ;
 
-    // Managed fields.
-    @ManagedProperty("#{cvViewedBean.employeeExperiences}")
-    private Collection<Experience> originalExperiences;
+    // Properties managed.
     @ManagedProperty("#{cvViewedBean.employee}")
     private Employee employee;
     @ManagedProperty("#{notificationBean}")
@@ -53,16 +50,21 @@ public class EmployeeExperienceBean extends Logger {
 
     @PostConstruct
     private void init() {
+        Collection<Experience> originalExperiences = employee.getExperiences();
         log("init - experiences " + originalExperiences);
+
+        // Security log - insanity check.
         if (originalExperiences == null) {
-            throw new NullPointerException("The current experiences are null.");
+            originalExperiences = new ArrayList<>();
+            log("The current experiences are null employee : " + employee.getId());
         }
 
         monthFormatter = new SimpleDateFormat("MMMM");
         yearFormatter = new SimpleDateFormat("yyyy");
 
-        // Creating the lsit of experiences updater. They will wrap real experience inside the DB.
-        experiences = createExperienceControllerUpdaterList();
+        // Creating the list of experiences updater. They will wrap real experiences present
+        // inside the DB.
+        this.experiences = createExperienceControllerUpdaterList(originalExperiences);
 
         // Creating the experience factory.
         experienceControllerBuilder = new ExperienceControllerBuilder();
@@ -77,21 +79,19 @@ public class EmployeeExperienceBean extends Logger {
         visibilities = ddao.getVisibilities();
     }
 
-    public int size() {
+    /**
+     * @return The number of currently shown/visible experience by this very bean.
+     * This is needed since the life cycle of jsf needs to perform indexing multiple
+     * times on the same number of forms, often. So we keep deleted experienceController
+     * until a new total AJAX refresh of the entire list (new indexing).
+     */
+    public int nbOfExperienceShown() {
         int size = 0;
         for (ExperienceController e : experiences) {
-            log("size : " + e.id + " dead ? " + e.isRemoved());
             size += e.isRemoved() ? 0 : 1;
         }
-        log("size - " + size);
+        log("nbOfExperienceShown - " + size);
         return size;
-    }
-
-    public boolean experienceToDelete() {
-        for (ExperienceController e : experiences) {
-            if (e.isRemoved()) return true;
-        }
-        return false;
     }
 
     /**
@@ -131,15 +131,15 @@ public class EmployeeExperienceBean extends Logger {
         @Override
         public String performUpdate() {
             // Creating the new newExperiences. Updates the employee.
-            List<Experience> newExperiences = dao.createExperience(companyName, jobName, "jobAbstract",
+            dao.createExperience(companyName, jobName, "jobAbstract",
                     jobDescription, country, visibility, startDate, endDate, employee);
 
+            Collection<Experience> newExperiences = employee.getExperiences();
+
             // Updating new values.
-            originalExperiences = newExperiences;
-            experiences = createExperienceControllerUpdaterList();
+            experiences = createExperienceControllerUpdaterList(newExperiences);
             experienceControllerBuilder.setEmptyExperience();
-            log("performUpdate - originalExperiences : " + Experience.printIds(originalExperiences));
-            log("performUpdate - newExperiences created ! End of the update call.");
+            log("performUpdate - newExperiences handled : " + Experience.printIds(newExperiences));
             return Constants.CURRENT_PAGE;
         }
 
@@ -149,10 +149,12 @@ public class EmployeeExperienceBean extends Logger {
             // Adding the re render of the form field and the re render of the list producer of experiences.
             FacesContext currentInstance = FacesContext.getCurrentInstance();
             UIComponent target = event.getComponent().findComponent("experience-addExp-fields");
-            UIComponent producerTarget = currentInstance.getViewRoot().findComponent("experience-list");
+            UIComponent hintTarget = currentInstance.getViewRoot().findComponent("no-experience-hint");
+            UIComponent experiencesListTarget = currentInstance.getViewRoot().findComponent("experience-list");
             Collection<String> renderIds = currentInstance.getPartialViewContext().getRenderIds();
             renderIds.add(target.getClientId());
-            renderIds.add(producerTarget.getClientId());
+            renderIds.add(hintTarget.getClientId());
+            renderIds.add(experiencesListTarget.getClientId());
             notificationBean.setSuccess("Nouvelle expérience ajoutée");
         }
     }
@@ -313,19 +315,21 @@ public class EmployeeExperienceBean extends Logger {
         abstract void updateAjaxRenders(AjaxBehaviorEvent event);
 
 
-        public void setRemoved(long id) {
-            log("setRemoved - receiving : " + id + " Effective id : " + id);
+        /**
+         * Removes the inner Experience from the database. But does not delete it from
+         * the current Controller until a refresh of the list. Setting
+         * a flag Removed to do so. (This is needed since JSF needs to have
+         * the same number of formulaire to indexe them, until you refresh
+         * the whole set. Yes, it's the biggest bug ever existed).
+         */
+        public void setRemoved() {
+            log("setRemoved - : " + id);
             // First deleting pending keys of removed experiences.
             employee.removeExperienceById(experience);
             // Merging it with the database.
-            dao.deleteExperience(employee);
-            // TODO rename the name of the deleteExperience function and its documentation to fit.
-
+            ddao.mergeEmployee(employee);
             removed = true;
             fieldValidated = false;
-
-            size(); // TODO delete debugs calls like these.
-
             return;
         }
 
@@ -427,9 +431,10 @@ public class EmployeeExperienceBean extends Logger {
 
     }
 
-    private ArrayList<ExperienceControllerUpdater> createExperienceControllerUpdaterList() {
+    private ArrayList<ExperienceControllerUpdater>
+    createExperienceControllerUpdaterList(Collection<Experience> newExperiences) {
         ArrayList<ExperienceControllerUpdater> experiences = new ArrayList<>();
-        for (Experience exp : originalExperiences) {
+        for (Experience exp : newExperiences) {
             experiences.add(ExperienceControllerFactory(exp));
         }
         return experiences;
@@ -459,20 +464,12 @@ public class EmployeeExperienceBean extends Logger {
         this.notificationBean = notificationBean;
     }
 
-    public void setOriginalExperiences(Collection<Experience> originalExperiences) {
-        this.originalExperiences = originalExperiences;
-    }
-
     public ExperienceController getExperienceControllerBuilder() {
         return experienceControllerBuilder;
     }
 
     public void setExperienceControllerBuilder(ExperienceController experienceControllerBuilder) {
         this.experienceControllerBuilder = experienceControllerBuilder;
-    }
-
-    public Collection<Experience> getOriginalExperiences() {
-        return originalExperiences;
     }
 
     public ArrayList<ExperienceControllerUpdater> getExperiences() {

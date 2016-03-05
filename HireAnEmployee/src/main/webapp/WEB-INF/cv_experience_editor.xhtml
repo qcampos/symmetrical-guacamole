@@ -209,7 +209,7 @@
                         <c:if test="#{!isAdding}">
                             <h:commandButton type="button" class="remove-mycv-entry"
                                              value="Retirer ce poste">
-                                <f:ajax listener="#{_experience.setRemoved(id)}"
+                                <f:ajax listener="#{_experience.setRemoved()}"
                                         onevent="function(data) {
                                                     onSuccess(data, removeID, 'experience-#{id}-handle');
                                                }" render="no-experience-hint"/>

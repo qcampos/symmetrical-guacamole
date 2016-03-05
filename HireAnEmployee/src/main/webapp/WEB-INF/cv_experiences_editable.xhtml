@@ -39,7 +39,7 @@
             <!-- End of List of experiences updaters. -->
 
             <h:panelGroup id="no-experience-hint">
-                <c:if test="#{employeeExperienceBean.size() == 0}">
+                <c:if test="#{employeeExperienceBean.nbOfExperienceShown() == 0}">
                     <p><strong>Aucune expérience renseignée</strong></p>
                 </c:if>
             </h:panelGroup>

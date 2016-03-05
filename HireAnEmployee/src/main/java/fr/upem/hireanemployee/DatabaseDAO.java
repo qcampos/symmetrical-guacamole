@@ -1,9 +1,6 @@
 package fr.upem.hireanemployee;
 
-import fr.upem.hireanemployee.profildata.Country;
-import fr.upem.hireanemployee.profildata.Language;
-import fr.upem.hireanemployee.profildata.Sector;
-import fr.upem.hireanemployee.profildata.Visibility;
+import fr.upem.hireanemployee.profildata.*;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -140,6 +137,11 @@ public class DatabaseDAO {
         return em.find(Employee.class, id);
     }
 
+    /**
+     * Merges the given employee into the database.
+     * @param employee
+     */
+    public void mergeEmployee(Employee employee) { em.merge(employee); em.flush(); }
     /**
      * Get a list of all the possible countries in the Country enumeration.
      *

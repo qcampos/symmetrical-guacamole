@@ -730,7 +730,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	-moz-box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
 	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
-/* Tablet Portrait size to standard 960 (devices and browsers) */
+/* Tablet Portrait nbOfExperienceShown to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px)
 {
 	.color-picker{
