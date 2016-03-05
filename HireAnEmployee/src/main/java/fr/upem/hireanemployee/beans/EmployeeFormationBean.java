@@ -31,7 +31,7 @@ public class EmployeeFormationBean extends Logger {
     private EmployeeFormationDAO dao;
 
     // Managed fields.
-    @ManagedProperty("#{cvViewedBean.employeeFormation}")
+    @ManagedProperty("#{cvViewedBean.employeeFormations}")
     private Collection<Formation> originalFormations;
     @ManagedProperty("#{cvViewedBean.employee}")
     private Employee employee;
@@ -57,6 +57,7 @@ public class EmployeeFormationBean extends Logger {
         // Creating the list of months.
         months = DateTranslator.getMonths();
 
+        formations = new ArrayList<>();
         for (Formation f : originalFormations) {
             formations.add(new FormationController(f));
         }
@@ -91,8 +92,8 @@ public class EmployeeFormationBean extends Logger {
             this.startDate = formation.getStartDate();
             this.endDate = formation.getEndDate();
             toDate = DateTranslator.toDateYears(formation.getStartDate(), formation.getEndDate());
-            startYear = yearFormatter.format(startDate);
-            endYear = yearFormatter.format(endDate);
+            startYear = startYear == null ? null : yearFormatter.format(startDate);
+            endYear = endYear == null ? null : yearFormatter.format(endDate);
             country = (school.getCountry().equals(Country.NONE) ? Country.FRANCE : school.getCountry()).toString();
         }
 

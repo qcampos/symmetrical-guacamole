@@ -67,6 +67,9 @@ public class InitializationBean extends Logger {
                         "Global project management framework, tools and techniques; Sustainable project management and operational readiness; Organisation and Leadership, Strategy and business development ...",
                 Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), new Date(115, 1, 1), new Date(116, 1, 1), employee);
 
+        fdao.createFormation("", "",
+                Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), null, null, employee);
+
         exdao.createExperience("Cartier", "Chargé du retailing", "jobAbstract", null, new Date(113, 2, 1), new Date(113, 10, 29), employee);
 
         exdao.createExperience("Weekendesk", "Asistant Marketing Manager", "jobAbstract",

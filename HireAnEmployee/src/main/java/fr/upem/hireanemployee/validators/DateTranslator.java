@@ -17,6 +17,7 @@ public class DateTranslator {
     }
 
     public static String toDateYears(Date startDate, Date endDate) {
+        if (startDate == null && endDate == null) { return ""; }
         SimpleDateFormat format = new SimpleDateFormat("yyyy");
         return format.format(startDate) + " - " + format.format(endDate) + " " + dateDifference(startDate, endDate, true);
     }

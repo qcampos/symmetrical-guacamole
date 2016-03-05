@@ -54,11 +54,13 @@
                     <c:if test="#{sessionBean.id == cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_editable.xhtml"/>
                         <ui:include src="WEB-INF/cv_experiences_editable.xhtml"/>
+                        <ui:include src="WEB-INF/cv_formations_no_editable.xhtml"/>
                     </c:if>
                     <!-- A visitor's description -->
                     <c:if test="#{sessionBean.id != cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_no_editable.xhtml"/>
                         <ui:include src="WEB-INF/cv_experiences_no_editable.xhtml"/>
+                        <ui:include src="WEB-INF/cv_formations_no_editable.xhtml"/>
                     </c:if>
                     <!-- End of the user's description -->
 
@@ -70,16 +72,6 @@
                     <c:if test="#{sessionBean.id != cvViewedBean.id}">
                     </c:if>
 
-                    <!-- Receiving new handles -->
-                    <div class="panel panel-blue cv-bloc-element">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">
-                                <span class="glyphicon glyphicon-send" style="margin-right:8px;top:2px;"></span>Expériences
-                            </h1>
-                        </div>
-                        <div class="panel-body" id="destination-body">
-                        </div>
-                    </div>
                 </div>
 
                 <!-- (end of content of the page) -->

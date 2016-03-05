@@ -27,7 +27,7 @@
                     <!-- (date - country) -->
                     <p class="small-text">#{_formation.toDate} | #{_formation.country}</p>
                     <!-- (description) -->
-                    <p>Member of the ICT Team The ICT team will deliver all communications and related services, as well as hardware and specialised solutions and applications during the event. ICT is responsible for the concept, set-up, operations and change management of all deliverables within the scope of ICT.</p>
+                    <p>#{_formation.description}</p>
                 </div>
 
                 <div class="row"></div>
@@ -36,7 +36,7 @@
 
             </ui:repeat>
 
-            <c:if test="#{employeeFormationBean.originalFormations.size() == 0}">
+            <c:if test="#{employeeFormationBean.formations.size() == 0}">
                 <p><strong>Aucune formation renseignée</strong></p>
             </c:if>
         </div>
