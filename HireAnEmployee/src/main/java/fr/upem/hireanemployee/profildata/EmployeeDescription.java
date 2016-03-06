@@ -1,6 +1,7 @@
 package fr.upem.hireanemployee.profildata;
 
 import fr.upem.hireanemployee.Employee;
+import fr.upem.hireanemployee.Logger;
 
 import javax.imageio.ImageIO;
 import javax.persistence.*;
@@ -72,9 +73,13 @@ public class EmployeeDescription {
             public int compare(final Formation o1, final Formation o2) {
                 Date endDate1 = o1.getEndDate();
                 Date endDate2 = o2.getEndDate();
-                if (endDate1 == null) { return -1; }
-                if (endDate2 == null) { return 1; }
-                return endDate1.compareTo(endDate2);
+                if (endDate1 == null) {
+                    return -1;
+                }
+                if (endDate2 == null) {
+                    return 1;
+                }
+                return endDate2.getYear() - endDate1.getYear();
             }
         });
         return sortedList.size() == 0 ? "" : sortedList.get(0).getSchool().getName();
