@@ -169,6 +169,7 @@ public class EmployeeFormationBean extends Logger {
         private String description;
         private DegreeType level;
         private School school;
+        private String schoolName;
         private Date startDate;
         private Date endDate;
         private String toDate;
@@ -214,18 +215,19 @@ public class EmployeeFormationBean extends Logger {
 
 
         private boolean validateFields() {
-            log("validateFields - " + id + " " + school.getName() + " " + name + " " + country +
+            log("validateFields - " + id + " " + school.getName() + " " + schoolName + " " + name + " " + country +
                     " " + startYear + " " + endYear + " " + visibility + " " + description);
             notificationBean.clear();
 
             // Parsing required field.
-            if (school == null || school.getName() == null || startYear == null || endYear == null ||
-                    school.getName().trim().isEmpty() || startYear.trim().isEmpty() || endYear.trim().isEmpty()) {
+            if (school == null || schoolName == null || startYear == null || endYear == null
+                    || schoolName.trim().isEmpty() || startYear.trim().isEmpty() || endYear.trim().isEmpty()) {
                 log("validateFields - empty field");
                 notificationBean.setError("Veuillez remplir les champs requis.");
                 return false;
             }
 
+            school.setName(schoolName);
             // Parse variables with specific controls bound to this very instance class.
             try {
 
@@ -298,6 +300,7 @@ public class EmployeeFormationBean extends Logger {
             this.description = formation.getDescription();
             this.level = formation.getLevel();
             this.school = formation.getSchool() == null ? new School(null, Country.NONE) : formation.getSchool();
+            schoolName = school.getName();
             this.country = school.getCountry();
             this.startDate = formation.getStartDate() == null ? new Date() : formation.getStartDate();
             this.endDate = formation.getEndDate() == null ? new Date() : formation.getEndDate();
@@ -369,6 +372,14 @@ public class EmployeeFormationBean extends Logger {
 
         public void setLevel(DegreeType level) {
             this.level = level;
+        }
+
+        public String getSchoolName() {
+            return schoolName;
+        }
+
+        public void setSchoolName(String schoolName) {
+            this.schoolName = schoolName;
         }
 
         public void setSchool(School school) {
