@@ -214,7 +214,7 @@ public class EmployeeFormationBean extends Logger {
 
 
         private boolean validateFields() {
-            log("validateFields - " + id + " " + school.getName() + " " + name + " " + school.getCountry() +
+            log("validateFields - " + id + " " + school.getName() + " " + name + " " + country +
                     " " + startYear + " " + endYear + " " + visibility + " " + description);
             notificationBean.clear();
 
@@ -250,6 +250,7 @@ public class EmployeeFormationBean extends Logger {
                     notificationBean.setError("La date de départ doit précéder la date de fin.");
                     return false;
                 }
+                school.setCountry(country);
             } catch (NumberFormatException e) {
                 log("update - " + e.getMessage());
                 notificationBean.setError(NotificationBean.DEFAULT_MSG);

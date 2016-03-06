@@ -44,16 +44,17 @@
                     <!-- End of Diploma name -->
 
 
-                    <!-- Date -->
+                    <!-- Date and Country (toString is overriden)-->
                     <div class="editable">
                         <div>
                             <a class="hyperspan" onclick="showFormationEditor('formation-#{_formation.id}');"/>
                             <p class="small-text">#{_formation.toDate == null ? "Ajouter les dates de vos études" :
-                                    _formation.toDate} <span class="glyphicon glyphicon-pencil"/>
+                                    _formation.toDate} | #{_formation.country eq 'NONE' ? "Ajouter un lieu" :
+                                    _formation.country.toString()} <span class="glyphicon glyphicon-pencil"/>
                             </p>
                         </div>
                     </div>
-                    <!-- End of Date -->
+                    <!-- End of Date (toString is overriden) -->
 
                     <!-- Description -->
                     <div class="editable">
