@@ -20,7 +20,7 @@ import java.util.Date;
 /**
  * Created by Quentin on 21/02/2016.
  */
-@Entity
+@Entity(name = "EMPLOYEE_DESCRIPTION")
 public class EmployeeDescription {
 
     @Id

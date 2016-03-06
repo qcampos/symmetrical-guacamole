@@ -34,8 +34,8 @@ public class StarterClass {
 
     public String printCoucou() {
 
-//        Language l = new Language("Ponylang");
-//        List<Language> languages = Arrays.asList(l);
+//        Skill l = new Skill("Ponylang");
+//        List<Skill> languages = Arrays.asList(l);
 //        bdu.register(l);
 //
 //        Employee e = new Employee("Nicolas", "Borie", "Teacher", Country.FRANCE, new Sector("Combinatorics"), "nborie@award.fr", "pony77");

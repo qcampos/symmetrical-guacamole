@@ -1,6 +1,6 @@
 package fr.upem.hireanemployee;
 
-import fr.upem.hireanemployee.profildata.Language;
+import fr.upem.hireanemployee.profildata.Skill;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,8 +25,8 @@ public class DatabaseUtils {
         }
     }
 
-    public List<Language> getSkillsByName(final String name) {
-        return em.createQuery("SELECT s FROM Language s WHERE s.name LIKE :name").setParameter("name", name).getResultList();
+    public List<Skill> getSkillsByName(final String name) {
+        return em.createQuery("SELECT s FROM Skill s WHERE s.name LIKE :name").setParameter("name", name).getResultList();
     }
 
     public void cleanAll() {

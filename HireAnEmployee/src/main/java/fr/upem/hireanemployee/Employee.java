@@ -31,8 +31,8 @@ public class Employee {
     private String password;
 
     // Profile data.
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Collection<Language> skills;
+    @OneToMany(mappedBy = "employee")
+    private Collection<SkillAssociation> skills;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Employee> relations;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -55,7 +55,8 @@ public class Employee {
         experiences = new ArrayList<>();
     }
 
-    public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password, final Collection<Language> skills, final Collection<Employee> relations, final Collection<Formation> formations, final Collection<Experience> experiences) {
+    public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password,
+                    final Collection<SkillAssociation> skills, final Collection<Employee> relations, final Collection<Formation> formations, final Collection<Experience> experiences) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = new EmployeeDescription(this, professionalTitle, country, sector);
@@ -115,11 +116,11 @@ public class Employee {
         this.password = password;
     }
 
-    public Collection<Language> getSkills() {
+    public Collection<SkillAssociation> getSkills() {
         return skills;
     }
 
-    public void setSkills(final Collection<Language> skills) {
+    public void setSkills(final Collection<SkillAssociation> skills) {
         this.skills = skills;
     }
 
@@ -147,9 +148,9 @@ public class Employee {
         this.experiences = experience;
     }
 
-    public void addSkill(Language skill) {
+    /*public void addSkill(Skill skill) {
         skills.add(skill);
-    }
+    }*/
 
     public void addRelation(Employee relation) {
         relations.add(relation);

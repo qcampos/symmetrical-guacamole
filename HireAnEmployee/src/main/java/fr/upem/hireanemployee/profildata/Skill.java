@@ -10,20 +10,20 @@ import java.util.List;
  * Created by Quentin on 18/02/2016.
  */
 @Entity
-public class Language {
+public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
 
-    @ManyToMany(mappedBy = "skills", cascade = CascadeType.ALL)
-    private Collection<Employee> employee;
+    @OneToMany(mappedBy = "skill")
+    private Collection<SkillAssociation> employees;
 
-    public Language() {
+    public Skill() {
     }
 
-    public Language(final String name) {
+    public Skill(final String name) {
         this.name = name;
     }
 
