@@ -4,10 +4,12 @@ import com.google.common.collect.Lists;
 import fr.upem.hireanemployee.profildata.Formation;
 import fr.upem.hireanemployee.profildata.School;
 import fr.upem.hireanemployee.profildata.Visibility;
+import fr.upem.hireanemployee.validators.CollectionsSort;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +50,9 @@ public class EmployeeFormationDAO {
         employee.addFormation(formation);
         em.merge(employee);
         em.flush();
-        return Lists.newArrayList(employee.getFormations());
+        Collection<Formation> formations = employee.getFormations();
+        CollectionsSort.sortFormation(formations);
+        return Lists.newArrayList(formations);
     }
 
 }

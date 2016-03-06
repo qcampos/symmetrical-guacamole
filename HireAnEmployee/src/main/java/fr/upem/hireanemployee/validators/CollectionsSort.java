@@ -1,6 +1,7 @@
 package fr.upem.hireanemployee.validators;
 
 import fr.upem.hireanemployee.profildata.Experience;
+import fr.upem.hireanemployee.profildata.Formation;
 
 import java.util.*;
 
@@ -16,16 +17,35 @@ public class CollectionsSort {
     public static void sortExperience(Collection<Experience> experiences) {
         if (experiences.size() <= 1) return;
         ArrayList<Experience> sortedList = new ArrayList<>(experiences);
-        Collections.sort(sortedList, new Comparator<Experience>() {
+        Comparator<Experience> comparator = new Comparator<Experience>() {
             @Override
             public int compare(final Experience o1, final Experience o2) {
-                Date endDate1 = o1.getEndDate();
-                Date endDate2 = o2.getEndDate();
-                return compareDate(endDate1, endDate2);
+                return compareDate(o1.getEndDate(), o2.getEndDate());
             }
-        });
-        experiences.clear();
-        experiences.addAll(sortedList);
+        };
+        sortCollection(experiences, sortedList, comparator);
+    }
+
+    /**
+     * Sorts by date a collection of formation.
+     */
+    public static void sortFormation(Collection<Formation> formations) {
+        if (formations.size() <= 1) return;
+        ArrayList<Formation> sortedList = new ArrayList<>(formations);
+        Comparator<Formation> comparator = new Comparator<Formation>() {
+            @Override
+            public int compare(final Formation o1, final Formation o2) {
+                return compareDate(o1.getEndDate(), o2.getEndDate());
+            }
+        };
+        sortCollection(formations, sortedList, comparator);
+    }
+
+    private static <E> void sortCollection(Collection<E> results, List<E> list,
+                                           Comparator<E> comparator) {
+        Collections.sort(list, comparator);
+        results.clear();
+        results.addAll(list);
     }
 
     private static int compareDate(Date endDate1, Date endDate2) {
