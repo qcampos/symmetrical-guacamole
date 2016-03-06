@@ -147,7 +147,7 @@ public class EmployeeFormationBean extends Logger {
             notificationBean.setSuccess("Nouvelle formation créée !");
         }
 
-        private  Formation emptyFormation() {
+        private Formation emptyFormation() {
             return new Formation(null, null, DegreeType.PHD, new School(null, Country.NONE), new Date(),
                     new Date(), Visibility.PUBLIC);
         }
@@ -219,7 +219,8 @@ public class EmployeeFormationBean extends Logger {
             notificationBean.clear();
 
             // Parsing required field.
-            if (school == null || school.getName() == null || startYear == null || endYear == null) {
+            if (school == null || school.getName() == null || startYear == null || endYear == null ||
+                    school.getName().trim().isEmpty() || startYear.trim().isEmpty() || endYear.trim().isEmpty()) {
                 log("validateFields - empty field");
                 notificationBean.setError("Veuillez remplir les champs requis.");
                 return false;
@@ -231,7 +232,7 @@ public class EmployeeFormationBean extends Logger {
                 int startYear = Integer.valueOf(this.startYear) - 1900;
                 int endYear = Integer.valueOf(this.endYear) - 1900;
 
-                log("validateFields - " + startYear + " " +endYear);
+                log("validateFields - " + startYear + " " + endYear);
                 if (startYear < 0 || endYear < 0) {
                     notificationBean.setError("Les deux années doivent être supérieures à 1899.");
                     return false;
@@ -241,7 +242,7 @@ public class EmployeeFormationBean extends Logger {
                     return false;
                 }
 
-                log("validateFields - " + startYear + " " +endYear);
+                log("validateFields - " + startYear + " " + endYear);
                 // Setting dates to compare.
                 startDate = new Date(startYear, 0, 1);
                 endDate = new Date(endYear, 11, 30);
@@ -450,6 +451,7 @@ public class EmployeeFormationBean extends Logger {
         log("nbOfFormationPublic - " + size);
         return size;
     }
+
     /**
      * Factory list method.
      */

@@ -870,7 +870,7 @@ body {
     transition: color 0.5s, opacity 0.5s;
 }
 
-.expand#experience-0000-editor ~ #no-formation-hint {
+#experience-0000-handle>.expand#experience-0000-container ~ #no-formation-hint {
     
 }
 
