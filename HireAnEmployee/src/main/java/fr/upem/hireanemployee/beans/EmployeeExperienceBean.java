@@ -155,7 +155,7 @@ public class EmployeeExperienceBean extends Logger {
             renderIds.add(target.getClientId());
             renderIds.add(hintTarget.getClientId());
             renderIds.add(experiencesListTarget.getClientId());
-            notificationBean.setSuccess("Nouvelle expérience ajoutée");
+            notificationBean.setSuccess("Nouvelle expérience créée !");
         }
     }
 

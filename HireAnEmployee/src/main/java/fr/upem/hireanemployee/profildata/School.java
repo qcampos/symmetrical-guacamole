@@ -51,6 +51,6 @@ public class School {
 
     @Override
     public String toString() {
-        return name + " in " + country;
+        return name;
     }
 }

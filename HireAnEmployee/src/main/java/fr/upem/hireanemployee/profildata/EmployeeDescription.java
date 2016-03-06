@@ -4,11 +4,14 @@ import fr.upem.hireanemployee.Employee;
 
 import javax.imageio.ImageIO;
 import javax.persistence.*;
+import javax.persistence.metamodel.CollectionAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -63,13 +66,14 @@ public class EmployeeDescription {
     }
 
     public String getFormation() {
-        return employee.getFormations().stream().sorted(new Comparator<Formation>() {
+        ArrayList<Formation> sortedList = new ArrayList<>(employee.getFormations());
+        Collections.sort(sortedList, new Comparator<Formation>() {
             @Override
             public int compare(final Formation o1, final Formation o2) {
                 return o2.getLevel().getYears() - o1.getLevel().getYears();
             }
-        }).findFirst().orElse(new Formation("", "", Formation.DegreeType.NONE, new School("", Country.NONE), new Date(), new Date(),
-                Visibility.PUBLIC)).getSchool().getName();
+        });
+        return sortedList.size() == 0 ? "" : sortedList.get(0).getSchool().getName();
     }
 
     public Country getCountry() {

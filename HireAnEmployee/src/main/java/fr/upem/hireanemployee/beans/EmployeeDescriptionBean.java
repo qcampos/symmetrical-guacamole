@@ -83,7 +83,7 @@ public class EmployeeDescriptionBean extends Logger {
         names = firstName + " " + lastName;
         country = employeeDescription.getCountry().equals(Country.NONE) ? "" : employeeDescription.getCountry().toString();
         sector = employeeDescription.getSector().toString();
-        formation = employeeDescription.getFormation().equals("") ? "" : employeeDescription.getFormation();
+        formation = employeeDescription.getFormation();
         nbRelations = employeeDescription.getNbRelations();
         professionalTitle = employeeDescription.getProfessionalTitle();
 
@@ -204,7 +204,9 @@ public class EmployeeDescriptionBean extends Logger {
     }
 
     public String getFormation() {
-        return formation;
+        // Returning updated field.
+        String formation = employeeDescription.getFormation();
+        return formation.isEmpty() ? null : formation;// this.formation;
     }
 
     public String getNbRelations() {

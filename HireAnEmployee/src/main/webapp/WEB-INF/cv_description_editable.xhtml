@@ -40,14 +40,14 @@
                         <ui:include src="cv_desc_country_sector_editor.xhtml"/>
 
                         <!-- (formation) -->
-                        <div class="editable">
+                        <h:panelGroup class="editable" id="description_current_formation">
                             <div>
                                 <a class="hyperspan" onclick="expandEditor('formation');" id="formation_toggler"></a>
                                 <p>#{employeeDescriptionBean.formation == null ?
                                         "Ajouter une formation" : employeeDescriptionBean.formation} <span
                                         class="glyphicon glyphicon-pencil"/></p>
                             </div>
-                        </div>
+                        </h:panelGroup>
 
                         <!-- (Relation button) -->
                         <div class="col-xs-6 row-strip">

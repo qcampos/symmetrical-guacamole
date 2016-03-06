@@ -4,11 +4,9 @@ import fr.upem.hireanemployee.DatabaseDAO;
 import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.EmployeeFormationDAO;
 import fr.upem.hireanemployee.Logger;
-import fr.upem.hireanemployee.profildata.Country;
-import fr.upem.hireanemployee.profildata.Formation;
+import fr.upem.hireanemployee.navigation.Constants;
+import fr.upem.hireanemployee.profildata.*;
 import fr.upem.hireanemployee.profildata.Formation.DegreeType;
-import fr.upem.hireanemployee.profildata.School;
-import fr.upem.hireanemployee.profildata.Visibility;
 import fr.upem.hireanemployee.validators.DateTranslator;
 
 import javax.annotation.PostConstruct;
@@ -16,9 +14,14 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Baxtalou on 22/02/2016.
@@ -42,6 +45,7 @@ public class EmployeeFormationBean extends Logger {
     // Data fields to edit.
 
     private ArrayList<FormationController> formations;
+    private FormationControllerBuilder formationControllerBuilder;
     private SimpleDateFormat yearFormatter;
     private List<Visibility> visibilities;
     private List<Country> countries;
@@ -58,11 +62,10 @@ public class EmployeeFormationBean extends Logger {
         yearFormatter = new SimpleDateFormat("yyyy");
 
         // Creating formationsControllers.
-        formations = new ArrayList<>();
-        for (Formation f : originalFormations) {
-            formations.add(new FormationControllerUpdater(f));
-        }
+        formations = createFormationControllers(originalFormations);
 
+        // Creating our builder.
+        formationControllerBuilder = new FormationControllerBuilder();
         // Setting visibilities in cache.
         visibilities = ddao.getVisibilities();
         // Setting countries in cache.
@@ -85,12 +88,68 @@ public class EmployeeFormationBean extends Logger {
 
         @Override
         protected String performUpdate() {
-            return null;
+            log("performUpdate - formation set.");
+            // TODO update the country for Formations.
+            // Updates inner formation's fields.
+            dao.updateFormation(formation, getName(), getDescription(), DegreeType.PHD, getSchool(),
+                    getStartDate(), getEndDate(), getVisibility());
+            // Calculating new field in cache from this new formation.
+            updateWrappedFormation(formation);
+            return Constants.CURRENT_PAGE;
         }
 
         @Override
         void updateAjaxRenders(AjaxBehaviorEvent event) {
+            UIComponent target = event.getComponent().findComponent("formation-" + getId() + "-fields");
+            UIComponent currentFormationTarget = event.getComponent().findComponent(":description_current_formation");
+            Collection<String> renderIds = FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds();
+            renderIds.add(target.getClientId());
+            renderIds.add(currentFormationTarget.getClientId());
+        }
+    }
 
+    public class FormationControllerBuilder extends FormationController {
+
+        public FormationControllerBuilder() {
+            super(new Formation(null, null, DegreeType.PHD, new School(null, Country.NONE), new Date(),
+                    new Date(), Visibility.PUBLIC));
+        }
+
+
+        @Override
+        protected String performUpdate() {
+            // Creating the new newFormations. Updates the employee.
+            dao.createFormation(getName(), getDescription(), getLevel(), getSchool(), getStartDate(), getEndDate(),
+                    employee, getVisibility());
+
+            Collection<Formation> newFormations = employee.getFormations();
+
+            // Updating new values.
+            formations = createFormationControllers(newFormations);
+            formationControllerBuilder.updateWrappedFormation(emptyFormation());
+            log("performUpdate - newFormations handled : " + Formation.printIds(newFormations));
+            return Constants.CURRENT_PAGE;
+        }
+
+        @Override
+        void updateAjaxRenders(AjaxBehaviorEvent event) {
+            // Adding the re render of the form field and the re render of the list producer of formations.
+            FacesContext currentInstance = FacesContext.getCurrentInstance();
+            UIComponent target = event.getComponent().findComponent("formation-addForma-fields");
+            UIComponent currentFormationTarget = event.getComponent().findComponent(":description_current_formation");
+            UIComponent hintTarget = currentInstance.getViewRoot().findComponent("no-formation-hint");
+            UIComponent formationsListTarget = currentInstance.getViewRoot().findComponent("formations-list");
+            Collection<String> renderIds = currentInstance.getPartialViewContext().getRenderIds();
+            renderIds.add(target.getClientId());
+            renderIds.add(hintTarget.getClientId());
+            renderIds.add(currentFormationTarget.getClientId());
+            renderIds.add(formationsListTarget.getClientId());
+            notificationBean.setSuccess("Nouvelle formation créée !");
+        }
+
+        private  Formation emptyFormation() {
+            return new Formation(null, null, DegreeType.PHD, new School(null, Country.NONE), new Date(),
+                    new Date(), Visibility.PUBLIC);
         }
     }
 
@@ -104,7 +163,7 @@ public class EmployeeFormationBean extends Logger {
      */
     public abstract class FormationController extends Logger {
         // Caching parameters.
-        private Formation formation;
+        Formation formation;
         private long id;
         private String name;
         private String description;
@@ -143,45 +202,51 @@ public class EmployeeFormationBean extends Logger {
 
 
         public String update() {
-            /*log("update - creation with fields : " + id + " " + fieldValidated + " " + companyName + " " + jobName + " " +
-                    jobDescription + " " + country + " " + startDate + "  " + endDate + " " + employee.getId() + " " + visibility);
+            log("update - creation ?");
             // If fields not validated, aborting.
             if (!fieldValidated || removed) {
+                log("update - creation ? Impossible.");
                 return Constants.CURRENT_PAGE;
             }
-            return performUpdate();*/
-            return "";
+            log("update - creation ? Ok");
+            return performUpdate();
         }
 
 
         private boolean validateFields() {
-        /*    log("validateFields - " + id + " " + companyName + " " + jobName + " " + "job abstract" + " " +
-                    jobDescription + " " + startYear + " " + startMonth + " " + endYear + " " + endMonth +
-                    " " + visibility);
+            log("validateFields - " + id + " " + school.getName() + " " + name + " " + school.getCountry() +
+                    " " + startYear + " " + endYear + " " + visibility + " " + description);
             notificationBean.clear();
 
             // Parsing required field.
-            if (jobName == null || companyName == null || startYear == null || endYear == null) {
+            if (school == null || startYear == null || endYear == null) {
                 log("validateFields - empty field");
-                notificationBean.setError("Veuillez remplire les champs requis.");
+                notificationBean.setError("Veuillez remplir les champs requis.");
                 return false;
             }
 
             // Parse variables with specific controls bound to this very instance class.
             try {
-                int startMonth = months.indexOf(this.startMonth);
-                int endMonth = months.indexOf(this.endMonth);
+
                 int startYear = Integer.valueOf(this.startYear) - 1900;
                 int endYear = Integer.valueOf(this.endYear) - 1900;
 
-                // Parsing dates logic.
-                startDate.setMonth(startMonth);
-                startDate.setYear(startYear);
-                endDate.setMonth(endMonth);
-                endDate.setYear(endYear);
-                startDate.setDate(1); // To create a 1 month interval (caution 29 is for February).
-                endDate.setDate(29);
+                if (startYear < 0 || endYear < 0) {
+                    notificationBean.setError("Les deux années doivent être supérieures à 1899.");
+                    return false;
+                }
+                if (startYear > 2100 || endYear > 2100) {
+                    notificationBean.setError("Les deux années doivent être inférieure à 2100.");
+                    return false;
+                }
 
+                // Setting dates to compare.
+                startDate.setDate(1);
+                startDate.setMonth(0);
+                endDate.setDate(31);
+                endDate.setMonth(11);
+                startDate.setYear(startYear);
+                endDate.setYear(endYear);
                 if (startDate.compareTo(endDate) > 0) {
                     notificationBean.setError("La date de départ doit précéder la date de fin.");
                     return false;
@@ -191,12 +256,12 @@ public class EmployeeFormationBean extends Logger {
                 notificationBean.setError(NotificationBean.DEFAULT_MSG);
                 return false;
             }
-*/
+
             return true;
         }
 
         public void dynamicFields(AjaxBehaviorEvent event) {
-            log("dynamicFields - removed : " + removed + " before test of the fields:" + fieldValidated);
+            log("dynamicFields - removed : " + removed + " Before test of the fields :" + fieldValidated);
             if (removed) return;
             fieldValidated = false || validateFields();
             log("dynamicFields - Validation result :  " + fieldValidated);
@@ -215,7 +280,7 @@ public class EmployeeFormationBean extends Logger {
          * the same number of formulaire to indexe them, until you refresh
          * the whole set. Yes, it's the biggest bug which has ever existed).
          */
-        public void setRemoved() {
+        public void setRemoved(AjaxBehaviorEvent event) {
             log("setRemoved - : " + id);
             // First deleting pending keys of removed formations.
             employee.removeFormationById(formation);
@@ -225,20 +290,23 @@ public class EmployeeFormationBean extends Logger {
             fieldValidated = false;
         }
 
-        private void updateWrappedFormation(Formation formation) {
+        void updateWrappedFormation(Formation formation) {
             this.formation = formation;
             this.id = formation.getId();
             this.name = formation.getName();
             this.description = formation.getDescription();
             this.level = formation.getLevel();
-            this.school = formation.getSchool();
+            this.school = formation.getSchool() == null ? new School(null, Country.NONE) : formation.getSchool();
             this.country = school.getCountry();
-            this.startDate = formation.getStartDate();
-            this.endDate = formation.getEndDate();
+            this.startDate = formation.getStartDate() == null ? new Date() : formation.getStartDate();
+            this.endDate = formation.getEndDate() == null ? new Date() : formation.getStartDate();
             this.visibility = formation.getVisibility();
             toDate = DateTranslator.toDateYears(formation.getStartDate(), formation.getEndDate());
-            startYear = startYear == null ? null : yearFormatter.format(startDate);
-            endYear = endYear == null ? null : yearFormatter.format(endDate);
+            startYear = yearFormatter.format(startDate);
+            endYear = yearFormatter.format(endDate);
+            // Done after toDate, which sets specific formatting when these dates are not set.
+            startDate = startDate == null ? new Date() : startDate;
+            endDate = endDate == null ? new Date() : endDate;
 
             description = description != null ? (description.isEmpty() ? null : description) : null;
             toDate = toDate != null ? (toDate.isEmpty() ? null : toDate) : null;
@@ -325,6 +393,14 @@ public class EmployeeFormationBean extends Logger {
         public Country getCountry() {
             return country;
         }
+
+        public Date getStartDate() {
+            return startDate;
+        }
+
+        public Date getEndDate() {
+            return endDate;
+        }
     }
 
     public ArrayList<FormationController> getFormations() {
@@ -347,6 +423,10 @@ public class EmployeeFormationBean extends Logger {
         this.notificationBean = notificationBean;
     }
 
+    public FormationControllerBuilder getFormationControllerBuilder() {
+        return formationControllerBuilder;
+    }
+
     /**
      * @return The number of currently shown/visible experience by this very bean.
      * This is needed since the life cycle of jsf needs to perform indexing multiple
@@ -360,5 +440,16 @@ public class EmployeeFormationBean extends Logger {
         }
         log("nbOfExperienceShown - " + size);
         return size;
+    }
+
+    /**
+     * Factory list method.
+     */
+    private ArrayList<FormationController> createFormationControllers(Collection<Formation> originalFormations) {
+        ArrayList<FormationController> controllers = new ArrayList<>();
+        for (Formation f : originalFormations) {
+            controllers.add(new FormationControllerUpdater(f));
+        }
+        return controllers;
     }
 }

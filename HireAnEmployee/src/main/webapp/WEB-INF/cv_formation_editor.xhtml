@@ -31,7 +31,7 @@
                         <div class="row-strip col-sm-12">
                             <div class="form-group has-feedback">
                                 <label for="formationSchoolName-#{id}"
-                                       class="control-label">École </label>
+                                       class="control-label">École *</label>
                                 <span class="help-block with-error">- Champs requis.</span>
                                 <!--p:pattern="^[_A-z0-9]+$"-->
                                 <h:inputText p:type="text" class="form-control"
@@ -88,15 +88,15 @@
                     <div class="row">
                         <div class="row-strip col-xs-12 no-margin-bot">
                             <div class="form-group has-feedback">
-                                <label class="control-label">Période </label><span
-                                    class="help-block with-error">- Saisissez deux années comprises entre 1900 et 2016.</span>
+                                <label class="control-label">Période *</label><span
+                                    class="help-block with-error">- Saisissez deux années comprises entre 1900 et 2100.</span>
 
                                 <div class="row"></div>
 
                                 <div class="row-strip col-sm-2 col-xs-3">
                                     <h:inputText p:type="text" class="form-control editor-date-input" p:data-minlength="4"
                                                  p:placeholder="Année" p:pattern="^[0-9]+$" p:data-error=" "
-                                    value="#{_formation.startYear}"/>
+                                                 value="#{_formation.startYear}"/>
                                 </div>
                                 <div class="text-center col-sm-1 col-xs-2">-</div>
                                 <div class="row-strip text-center col-sm-2 col-xs-3 no-padding-right  no-margin-bot"
@@ -181,10 +181,10 @@
                         <c:if test="#{!isAdding}">
                             <h:commandButton type="button" class="remove-mycv-entry"
                                              value="Retirer ce poste">
-                                <f:ajax listener="#{_formation.setRemoved()}"
+                                <f:ajax listener="#{_formation.setRemoved}"
                                         onevent="function(data) {
                                                     onSuccess(data, removeID, 'formation-#{id}-handle');
-                                               }" render="no-formation-hint"/>
+                                               }" render="no-formation-hint :description_current_formation"/>
                             </h:commandButton>
                         </c:if>
                         <!-- End of Remove Button -->

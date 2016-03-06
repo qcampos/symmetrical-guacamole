@@ -1,7 +1,6 @@
 package fr.upem.hireanemployee;
 
 import com.google.common.collect.Lists;
-import com.oracle.tools.packager.Log;
 import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.Experience;
 import fr.upem.hireanemployee.profildata.Visibility;

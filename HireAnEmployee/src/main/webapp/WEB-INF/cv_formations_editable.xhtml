@@ -58,8 +58,8 @@
 
                 <!-- The Formation builder form. It uses our formationControllerBuilder. -->
                 <ui:include src="cv_formation_editor.xhtml">
-                    <!-- TODO <ui:param name="_formation" value="#{employeeFormationBean.}"/> -->
-                    <ui:param name="id" value="add"/>
+                    <ui:param name="_formation" value="#{employeeFormationBean.formationControllerBuilder}"/>
+                    <ui:param name="id" value="addForma"/>
                     <ui:param name="renderList" value="mycv-add-script"/>
                 </ui:include>
 
