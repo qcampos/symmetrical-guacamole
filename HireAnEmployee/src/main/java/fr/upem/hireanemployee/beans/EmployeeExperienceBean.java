@@ -112,7 +112,7 @@ public class EmployeeExperienceBean extends Logger {
             log("performUpdate - experience set.");
             // Updates inner experiences' fields. Set them to the global updater to update calculated fields.
             dao.updateExperience(experience, companyName, jobName, "job abstract", jobDescription, country, visibility, startDate, endDate);
-            setExperience(experience);
+            updateWrappedExperience(experience);
             return Constants.CURRENT_PAGE;
         }
 
@@ -160,12 +160,12 @@ public class EmployeeExperienceBean extends Logger {
     }
 
     /**
-     * Controls any data about experiences on jsf pages. It is used in country of Validator to allow us to use
+     * Controls any data about experiences on jsf pages. It is replaces Validator to allow us to use
      * custom notifications (replaced by message in Validators).
-     * This abstract class is used in the creation and update experiences'states.
-     * Two implementations are derived : The ExperienceControllerUpdater and the ExperienceControllerBuilder.
-     * The former updates the database values of the experience wrapped during the perform call.
-     * The later creates a new one during the perform call.
+     * This abstract class can be specialize in the creation and update of Experience.
+     * Two implementations are currently inheriting : The ExperienceControllerUpdater and the ExperienceControllerBuilder.
+     * The former updates database values of the Experience wrapped during its perform call.
+     * The later creates a new Formation during its perform call.
      */
     public abstract class ExperienceController extends Logger {
 
@@ -194,7 +194,7 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         void setEmptyExperience() {
-            setExperience(new Experience(null, null, null, null, Country.NONE, new Date(), new Date(), Visibility.PUBLIC));
+            updateWrappedExperience(new Experience(null, null, null, null, Country.NONE, new Date(), new Date(), Visibility.PUBLIC));
         }
 
         private ExperienceController(long id, String jobName, Country country, String companyName, String jobDescription,
@@ -217,7 +217,7 @@ public class EmployeeExperienceBean extends Logger {
             removed = false;
         }
 
-        void setExperience(Experience experience) {
+        void updateWrappedExperience(Experience experience) {
             this.experience = Objects.requireNonNull(experience);
 
             id = experience.getId();
@@ -246,6 +246,7 @@ public class EmployeeExperienceBean extends Logger {
          */
         protected abstract String performUpdate();
 
+        abstract void updateAjaxRenders(AjaxBehaviorEvent event);
 
         public String update() {
             log("update - creation with fields : " + id + " " + fieldValidated + " " + companyName + " " + jobName + " " +
@@ -303,16 +304,15 @@ public class EmployeeExperienceBean extends Logger {
             log("dynamicFields - removed : " + removed + " before test of the fields:" + fieldValidated);
             if (removed) return;
             fieldValidated = false || validateFields();
-            log("dynamicFields - after validation result :  " + fieldValidated);
+            log("dynamicFields - Validation result :  " + fieldValidated);
             if (fieldValidated) {
                 updateAjaxRenders(event);
             } else {
                 // Resetting fields to normal.
-                setExperience(experience);
+                updateWrappedExperience(experience);
             }
         }
 
-        abstract void updateAjaxRenders(AjaxBehaviorEvent event);
 
 
         /**
@@ -330,7 +330,6 @@ public class EmployeeExperienceBean extends Logger {
             ddao.mergeEmployee(employee);
             removed = true;
             fieldValidated = false;
-            return;
         }
 
         public boolean isRemoved() {

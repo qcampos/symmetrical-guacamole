@@ -23,12 +23,13 @@
             <h:panelGroup layout="block" id="formations-list">
 
                 <!-- Initial experience producer. Produced formation already registered. -->
-                <c:forEach var="_formation" items="#{employeeFormationBean.formations}"  varStatus="status">
+                <c:forEach var="_formation" items="#{employeeFormationBean.formations}" varStatus="status">
 
                     <!-- The formation updater. It shows a formation with handle to update it. -->
-                    <!--<ui:include src="cv_formation_updater.xhtml">
+                    <ui:include src="cv_formation_updater.xhtml">
                         <ui:param name="_formation" value="#{_formation}"/>
-                    </ui:include> -->
+                        <ui:param name="hidden" value="#{_experience.removed}"/>
+                    </ui:include>
                     <!-- End of The formation updater. -->
 
                 </c:forEach>
@@ -38,9 +39,11 @@
             <!-- End of List of formation updaters. -->
 
             <!-- Only if there are no existing formations. -->
-            <c:if test="#{employeeFormationBean.formations.size() == 0}">
-                <p><strong>Aucune formation renseignée</strong></p>
-            </c:if>
+            <h:panelGroup id="no-formation-hint">
+                <c:if test="#{employeeFormationBean.nbOfExperienceShown() == 0}">
+                    <p><strong>Aucune formation renseignée</strong></p>
+                </c:if>
+            </h:panelGroup>
 
             <!-- Add Formation button. Used to add a new Formation -->
             <div class="mycv-editable-container" id="formation-addForma-container">
@@ -54,11 +57,11 @@
                 </div>
 
                 <!-- The Formation builder form. It uses our formationControllerBuilder. -->
-               <!-- <ui:include src="cv_experience_editor.xhtml">
-                    <ui:param name="_formation" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
+                <ui:include src="cv_formation_editor.xhtml">
+                    <!-- TODO <ui:param name="_formation" value="#{employeeFormationBean.}"/> -->
                     <ui:param name="id" value="add"/>
                     <ui:param name="renderList" value="mycv-add-script"/>
-                </ui:include>-->
+                </ui:include>
 
             </div>
             <!-- End of Add Experience button. -->

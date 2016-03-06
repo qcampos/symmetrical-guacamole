@@ -68,7 +68,8 @@ public class EmployeeDescription {
             public int compare(final Formation o1, final Formation o2) {
                 return o2.getLevel().getYears() - o1.getLevel().getYears();
             }
-        }).findFirst().orElse(new Formation("", "", Formation.DegreeType.NONE, new School("", Country.NONE), new Date(), new Date())).getSchool().getName();
+        }).findFirst().orElse(new Formation("", "", Formation.DegreeType.NONE, new School("", Country.NONE), new Date(), new Date(),
+                Visibility.PUBLIC)).getSchool().getName();
     }
 
     public Country getCountry() {

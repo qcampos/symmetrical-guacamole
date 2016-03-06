@@ -62,10 +62,10 @@ public class InitializationBean extends Logger {
                 "Programme entirely taught in English with in-company projects and assignments. Professional project management certifications: PRINCE 2 and PMI " +
                         "The only MSc programme in France that is 100% project management oriented. Ranked 3rd in France and 11th worldwide in its category by SMBG " +
                         "Global project management framework, tools and techniques; Sustainable project management and operational readiness; Organisation and Leadership, Strategy and business development ...",
-                Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), new Date(115, 1, 1), new Date(116, 1, 1), employee);
+                Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), new Date(115, 1, 1), new Date(116, 1, 1), employee, Visibility.PUBLIC);
 
         fdao.createFormation("", "",
-                Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), null, null, employee);
+                Formation.DegreeType.MASTER, new School("SKEMA Business School", Country.FRANCE), null, null, employee, Visibility.PUBLIC);
 
         exdao.createExperience("Cartier", "Chargé du retailing", "jobAbstract", null, Country.AMERICAN_SAMOA, Visibility.PUBLIC, new Date(113, 2, 1), new Date(113, 10, 29), employee);
 

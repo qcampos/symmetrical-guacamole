@@ -1,0 +1,199 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- This is the editable formation component. -->
+    <!-- Loading the js for custom editors -->
+    <h:outputScript library="js" name="mycv_editor_bundle.js" target="body"/>
+
+    <!-- (formation) -->
+
+    <!-- FORMATION : TEST EDITOR -->
+    <h:panelGroup layout="block" class="col-xs-12 mycv-editor" id="formation-#{id}-editor">
+
+        <div class="col-xs-12">
+
+            <!-- Begin of the form -->
+            <h:form prependId="false" p:data-toggle="validator"
+                    id="formation-#{id}-form" class="mycv-form" p:role="form">
+
+
+                <!-- At the beginin, updateState is true. Then, if an error occures, during form:execute,
+                if will be false. This very form won't be cleaned (but a notification will be set).
+                If the form is executed right, this will be cleaned (rendered againg), and collapsed
+                by an inner js. During the next show, good & clean values will shown. -->
+                <h:panelGroup layout="block" id="formation-#{id}-fields">
+
+                    <!-- (School name) -->
+                    <div class="row">
+                        <div class="row-strip col-sm-12">
+                            <div class="form-group has-feedback">
+                                <label for="formationSchoolName-#{id}"
+                                       class="control-label">École </label>
+                                <span class="help-block with-error">- Champs requis.</span>
+                                <!--p:pattern="^[_A-z0-9]+$"-->
+                                <h:inputText p:type="text" class="form-control"
+                                             p:id="formationSchoolName-#{id}"
+                                             value="#{_formation.school.name}"
+                                             p:data-minlength="1"
+                                             p:placeholder="Titre" p:data-error=" "/>
+                                                <span class="glyphicon form-control-feedback"
+                                                      aria-hidden="true"> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (End of School name) -->
+
+
+                    <!-- (Diploma name) -->
+                    <div class="row">
+                        <div class="row-strip col-sm-12">
+                            <div class="form-group has-feedback">
+                                <label for="formationDiploma-#{id}"
+                                       class="control-label">Diplôme </label>
+                                <span class="help-block with-error">- Champs requis.</span>
+                                <!--p:pattern="^[ _A-z0-9]+$"-->
+                                <h:inputText p:type="text" class="form-control"
+                                             id="formationDiploma-#{id}"
+                                             value="#{_formation.name}"
+                                             p:placeholder="Nom de l'entreprise" p:data-error=" "/>
+                                                    <span class="glyphicon form-control-feedback"
+                                                          aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (End of Enterprise name) -->
+
+                    <!-- (Formation's country) -->
+                    <div class="row">
+                        <div class="row-strip col-sm-12">
+                            <div class="form-group">
+                                <label for="formationPlace-#{id}"
+                                       class="control-label">Lieu </label>
+                                <h:selectOneMenu styleClass="form-control" id="formationPlace-#{id}"
+                                                 value="#{_formation.country}" p:style="height: 36px;">
+                                    <f:selectItems
+                                            value="#{employeeFormationBean.countries}" var="_country"
+                                            itemLabel="#{_country}" itemValue="#{_country.name()}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (End of Formation's country) -->
+
+
+                    <!-- (Formation's Period) -->
+                    <div class="row">
+                        <div class="row-strip col-xs-12 no-margin-bot">
+                            <div class="form-group has-feedback">
+                                <label class="control-label">Période </label><span
+                                    class="help-block with-error">- Saisissez deux années comprises entre 1900 et 2016.</span>
+
+                                <div class="row"></div>
+
+                                <div class="row-strip col-sm-2 col-xs-3">
+                                    <h:inputText p:type="text" class="form-control editor-date-input" p:data-minlength="4"
+                                                 p:placeholder="Année" p:pattern="^[0-9]+$" p:data-error=" "
+                                    value="#{_formation.startYear}"/>
+                                </div>
+                                <div class="text-center col-sm-1 col-xs-2">-</div>
+                                <div class="row-strip text-center col-sm-2 col-xs-3 no-padding-right  no-margin-bot"
+                                     style="margin-bottom:0;">
+                                    <h:inputText p:type="text" class="form-control editor-date-input" p:data-minlength="4"
+                                                 p:placeholder="Année" p:pattern="^[0-9]+$" p:data-error=" "
+                                                 value="#{_formation.endYear}"/>
+                                </div>
+                                <div class="row no-margin-bot"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (End of Formation's Period) -->
+
+
+                    <!-- (Formation's description) -->
+                    <div class="row">
+                        <div class="row-strip col-sm-12">
+                            <div class="form-group has-feedback">
+                                <label for="formationDescription-#{id}"
+                                       class="control-label">Description</label>
+                                <h:inputTextarea class="form-control" rows="5"
+                                                 id="formationDescription-#{id}"
+                                                 p:placeholder="Description..."
+                                                 value="#{_formation.description}"></h:inputTextarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (End of Formation's description) -->
+
+                    <!-- Script allowing the panel to close. with hideFormationEditor. -->
+                    <h:panelGroup layout="block" id="formation-#{id}-script">
+                        <h:outputScript>(function() {
+                            console.log("resultat de la requete ajax #{_formation.areFieldValidated()}");
+                            if (!#{_formation.areFieldValidated()}) {return;}
+                            hideFormationEditor('formation-#{id}'); })();
+                        </h:outputScript>
+                    </h:panelGroup>
+
+                    <!-- (Formation's visiblity) -->
+                    <div class="row">
+                        <div class="row-strip col-sm-12">
+                            <div class="form-group">
+                                <label for="formationVisibility-#{id}"
+                                       class="control-label">Visibilité </label>
+                                <h:selectOneMenu styleClass="form-control" id="formationVisibility-#{id}"
+                                                 value="#{_formation.visibility}" p:style="height: 36px;">
+                                    <f:selectItems
+                                            value="#{employeeFormationBean.visibilities}" var="_visibility"
+                                            itemLabel="#{_visibility}" itemValue="#{_visibility.name()}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (End of Formation's visiblity) -->
+
+
+                    <!-- Form's Buttons -->
+                    <div class="row">
+
+                        <!-- Save Button -->
+                        <h:commandButton type="submit" class="btn btn-default" value="Enregistrer"
+                                         action="#{_formation.update()}">
+
+                            <!-- Fields will be added dynamically after in the code of the listener. -->
+                            <f:ajax execute="@form" listener="#{_formation.dynamicFields}"
+                                    render="#{renderList} #{notificationBean.id}"
+                                    resetValues="true"/>
+                        </h:commandButton>
+                        <!-- End of Save Button -->
+
+                        <!-- Cancel Button -->
+                        <h:commandButton type="button" class="btn btn-redb"
+                                         onclick="hideFormationEditor('formation-#{id}');"
+                                         value="Annuler">
+                            <f:ajax render="formation-#{id}-fields"/>
+                        </h:commandButton>
+                        <!-- End of Cancel Button -->
+
+                        <!-- Remove Button -->
+                        <c:if test="#{!isAdding}">
+                            <h:commandButton type="button" class="remove-mycv-entry"
+                                             value="Retirer ce poste">
+                                <f:ajax listener="#{_formation.setRemoved()}"
+                                        onevent="function(data) {
+                                                    onSuccess(data, removeID, 'formation-#{id}-handle');
+                                               }" render="no-formation-hint"/>
+                            </h:commandButton>
+                        </c:if>
+                        <!-- End of Remove Button -->
+                    </div>
+                </h:panelGroup>
+            </h:form>
+            <!-- End of the form -->
+        </div>
+    </h:panelGroup>
+    <!-- ENDS OF FORMATION : TEST EDITOR -->
+</ui:composition>
+

@@ -175,6 +175,13 @@ public class Employee {
         Logger.log("Employee removeExperienceById After the deletion : " + Experience.printIds(experiences), Logger.BEAN);
     }
 
+    public void removeFormationById(Formation formation) {
+        Logger.log("Employee removeFormationById experience ids to delete : " + formation.getId(), Logger.BEAN);
+        Logger.log("Employee removeFormationById Before the deletion : " + Formation.printIds(formations), Logger.BEAN);
+        formations.remove(formation);
+        Logger.log("Employee removeFormationById After the deletion : " + Formation.printIds(formations), Logger.BEAN);
+    }
+
     public int getNbRelations() {
         return relations.size();
     }
@@ -194,5 +201,4 @@ public class Employee {
                 ", experiences=" + experiences +
                 '}';
     }
-
 }

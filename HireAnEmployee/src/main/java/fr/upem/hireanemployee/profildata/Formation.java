@@ -1,6 +1,7 @@
 package fr.upem.hireanemployee.profildata;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -35,6 +36,7 @@ public class Formation {
     @GeneratedValue
     private long id;
     private String name;
+    private Visibility visibility;
     @Column(length = 2000)
     private String description;
     private DegreeType level;
@@ -49,13 +51,15 @@ public class Formation {
     public Formation() {
     }
 
-    public Formation(final String name, final String description, final DegreeType level, final School school, final Date startDate, final Date endDate) {
+    public Formation(final String name, final String description, final DegreeType level, final School school,
+                     final Date startDate, final Date endDate, final Visibility visibility) {
         this.name = name;
         this.description = description;
         this.level = level;
         this.school = school;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.visibility = visibility;
     }
 
     public long getId() {
@@ -114,6 +118,14 @@ public class Formation {
         this.endDate = to;
     }
 
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
+    }
+
     @Override
     public String toString() {
         return String.format("%s : %s at %s", level, description, school);
@@ -128,5 +140,16 @@ public class Formation {
         }
         Formation formation = (Formation) obj;
         return id == formation.id;
+    }
+
+    /**
+     * @return The concatenation of every ids in the given Formation Collection.
+     */
+    public static String printIds(Collection<Formation> formations) {
+        StringBuilder n = new StringBuilder();
+        for (Formation e : formations) {
+            n.append(e.getId()).append(' ');
+        }
+        return n.toString();
     }
 }

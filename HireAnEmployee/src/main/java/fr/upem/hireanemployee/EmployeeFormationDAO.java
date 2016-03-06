@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import fr.upem.hireanemployee.profildata.Experience;
 import fr.upem.hireanemployee.profildata.Formation;
 import fr.upem.hireanemployee.profildata.School;
+import fr.upem.hireanemployee.profildata.Visibility;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,28 +31,13 @@ public class EmployeeFormationDAO {
      * @param school      the new school of the formation.
      * @return the modified formation.
      */
-    public Formation updateFormation(final long id, final String name, final String description, final Formation.DegreeType level, final School school, final Date startDate, final Date endDate) {
-        Formation formation = new Formation(name, description, level, school, startDate, endDate);
+    public Formation updateFormation(final long id, final String name, final String description, final Formation.DegreeType level,
+                                     final School school, final Date startDate, final Date endDate, final Visibility visibility) {
+        Formation formation = new Formation(name, description, level, school, startDate, endDate, visibility);
         formation.setId(id);
         em.merge(formation);
         em.flush();
         return formation;
-    }
-
-
-    /**
-     * Add a formation to the the Employee corresponding to the given Id.
-     *
-     * @param name        name of the formation.
-     * @param description description of the formation.
-     * @param level       degree type of this formation.
-     * @param school      school of the formation.
-     * @param employeeId  id of the employee.
-     * @return the list of all the formations of the employee.
-     */
-    public List<Formation> createFormation(final String name, final String description, final Formation.DegreeType level, final School school, final Date startDate, final Date endDate, final long employeeId) {
-        Employee employee = em.find(Employee.class, employeeId);
-        return createFormation(name, description, level, school, startDate, endDate, employee);
     }
 
     /**
@@ -64,8 +50,10 @@ public class EmployeeFormationDAO {
      * @param employee    to employee.
      * @return the list of all the formations of the employee.
      */
-    public List<Formation> createFormation(final String name, final String description, final Formation.DegreeType level, final School school, final Date startDate, final Date endDate, final Employee employee) {
-        Formation formation = new Formation(name, description, level, school, startDate, endDate);
+    public List<Formation> createFormation(final String name, final String description, final Formation.DegreeType level,
+                                           final School school, final Date startDate, final Date endDate, final Employee employee,
+                                           Visibility visibility) {
+        Formation formation = new Formation(name, description, level, school, startDate, endDate, visibility);
         employee.addFormation(formation);
         em.merge(employee);
         em.flush();

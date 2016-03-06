@@ -34,7 +34,7 @@
 
             </ui:repeat>
 
-            <c:if test="#{employeeExperienceBean.experiences.size() == 0}">
+            <c:if test="#{employeeExperienceBean.nbOfExperienceShown() == 0}">
                 <p><strong>Aucune expérience renseignée</strong></p>
             </c:if>
         </div>
