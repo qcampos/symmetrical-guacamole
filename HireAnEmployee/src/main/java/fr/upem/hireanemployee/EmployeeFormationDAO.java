@@ -26,7 +26,6 @@ public class EmployeeFormationDAO {
      */
     public void updateFormation(final Formation formation, final String name, final String description, final Formation.DegreeType level,
                                 final School school, final Date startDate, final Date endDate, final Visibility visibility) {
-
         formation.setName(name);
         formation.setDescription(description);
         formation.setLevel(level);
@@ -40,12 +39,6 @@ public class EmployeeFormationDAO {
 
     /**
      * Add the formation corresponding to the given values to the given employee.
-     *
-     * @param name        name of the formation.
-     * @param description description of the formation.
-     * @param level       degree type of this formation.
-     * @param school      school of the formation.
-     * @param employee    to employee.
      * @return the list of all the formations of the employee.
      */
     public List<Formation> createFormation(final String name, final String description, final Formation.DegreeType level,

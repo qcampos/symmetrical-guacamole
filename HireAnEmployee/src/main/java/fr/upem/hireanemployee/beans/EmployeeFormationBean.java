@@ -88,7 +88,7 @@ public class EmployeeFormationBean extends Logger {
 
         @Override
         protected String performUpdate() {
-            log("performUpdate - formation set.");
+            log("performUpdate - formation set " + " " + getStartDate() + " " + getEndDate() + " ");
             // TODO update the country for Formations.
             // Updates inner formation's fields.
             dao.updateFormation(formation, getName(), getDescription(), DegreeType.PHD, getSchool(),
@@ -202,13 +202,13 @@ public class EmployeeFormationBean extends Logger {
 
 
         public String update() {
-            log("update - creation ?");
+            log("update - can we update");
             // If fields not validated, aborting.
             if (!fieldValidated || removed) {
-                log("update - creation ? Impossible.");
+                log("update - update Impossible.");
                 return Constants.CURRENT_PAGE;
             }
-            log("update - creation ? Ok");
+            log("update - Starting update");
             return performUpdate();
         }
 
@@ -219,7 +219,7 @@ public class EmployeeFormationBean extends Logger {
             notificationBean.clear();
 
             // Parsing required field.
-            if (school == null || startYear == null || endYear == null) {
+            if (school == null || school.getName() == null || startYear == null || endYear == null) {
                 log("validateFields - empty field");
                 notificationBean.setError("Veuillez remplir les champs requis.");
                 return false;
@@ -231,22 +231,21 @@ public class EmployeeFormationBean extends Logger {
                 int startYear = Integer.valueOf(this.startYear) - 1900;
                 int endYear = Integer.valueOf(this.endYear) - 1900;
 
+                log("validateFields - " + startYear + " " +endYear);
                 if (startYear < 0 || endYear < 0) {
                     notificationBean.setError("Les deux années doivent être supérieures à 1899.");
                     return false;
                 }
-                if (startYear > 2100 || endYear > 2100) {
+                if (startYear > 300 || endYear > 300) {
                     notificationBean.setError("Les deux années doivent être inférieure à 2100.");
                     return false;
                 }
 
+                log("validateFields - " + startYear + " " +endYear);
                 // Setting dates to compare.
-                startDate.setDate(1);
-                startDate.setMonth(0);
-                endDate.setDate(31);
-                endDate.setMonth(11);
-                startDate.setYear(startYear);
-                endDate.setYear(endYear);
+                startDate = new Date(startYear, 0, 1);
+                endDate = new Date(endYear, 11, 30);
+                log("validateFields - calculated dates : " + startDate + " end : " + endDate);
                 if (startDate.compareTo(endDate) > 0) {
                     notificationBean.setError("La date de départ doit précéder la date de fin.");
                     return false;
@@ -299,7 +298,7 @@ public class EmployeeFormationBean extends Logger {
             this.school = formation.getSchool() == null ? new School(null, Country.NONE) : formation.getSchool();
             this.country = school.getCountry();
             this.startDate = formation.getStartDate() == null ? new Date() : formation.getStartDate();
-            this.endDate = formation.getEndDate() == null ? new Date() : formation.getStartDate();
+            this.endDate = formation.getEndDate() == null ? new Date() : formation.getEndDate();
             this.visibility = formation.getVisibility();
             toDate = DateTranslator.toDateYears(formation.getStartDate(), formation.getEndDate());
             startYear = yearFormatter.format(startDate);

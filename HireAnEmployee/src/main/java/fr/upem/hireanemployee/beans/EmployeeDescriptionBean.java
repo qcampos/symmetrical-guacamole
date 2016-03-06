@@ -206,7 +206,7 @@ public class EmployeeDescriptionBean extends Logger {
     public String getFormation() {
         // Returning updated field.
         String formation = employeeDescription.getFormation();
-        return formation.isEmpty() ? null : formation;// this.formation;
+        return (formation != null && formation.isEmpty()) ? null : formation;// this.formation;
     }
 
     public String getNbRelations() {

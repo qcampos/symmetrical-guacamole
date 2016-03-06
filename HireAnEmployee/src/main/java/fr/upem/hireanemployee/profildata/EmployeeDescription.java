@@ -70,7 +70,11 @@ public class EmployeeDescription {
         Collections.sort(sortedList, new Comparator<Formation>() {
             @Override
             public int compare(final Formation o1, final Formation o2) {
-                return o2.getLevel().getYears() - o1.getLevel().getYears();
+                Date endDate1 = o1.getEndDate();
+                Date endDate2 = o2.getEndDate();
+                if (endDate1 == null) { return -1; }
+                if (endDate2 == null) { return 1; }
+                return endDate1.compareTo(endDate2);
             }
         });
         return sortedList.size() == 0 ? "" : sortedList.get(0).getSchool().getName();
