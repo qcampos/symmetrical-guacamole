@@ -11,7 +11,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -117,6 +120,20 @@ public class DatabaseDAO {
 
     public List<Employee> searchEmployeeByName(String name) {
         return em.createQuery("SELECT e FROM Employee e WHERE e.firstName LIKE :name OR e.lastName LIKE :name").setParameter("name", name).getResultList();
+    }
+
+    public List<Employee> searchEmployeeBySkill(final String skillname) {
+        List<Employee> employees = em.createQuery("SELECT e FROM Employee e").getResultList();
+        List<Employee> skilledEmployees = new ArrayList<>();
+
+        for (Employee e : employees) {
+            for (Language s : e.getSkills()) {
+                if (s.getName().contains(skillname)) {
+                    skilledEmployees.add(e);
+                }
+            }
+        }
+        return skilledEmployees;
     }
 
     public void register(Object o) {
