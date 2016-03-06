@@ -100,6 +100,15 @@ public class EmployeeExperienceBean extends Logger {
         return size;
     }
 
+    public int nbOfExperiencePublic() {
+        int size = 0;
+        for (ExperienceController e : experiences) {
+            size += e.experience.getVisibility().equals(Visibility.PUBLIC) ? 1 : 0;
+        }
+        log("nbOfExperiencePublic - " + size);
+        return size;
+    }
+
     /**
      * Performs updates on the database values of the experience wrapped(id) during its perform call.
      */

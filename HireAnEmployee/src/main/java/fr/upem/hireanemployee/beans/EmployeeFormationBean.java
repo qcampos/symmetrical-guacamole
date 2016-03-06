@@ -442,6 +442,14 @@ public class EmployeeFormationBean extends Logger {
         return size;
     }
 
+    public int nbOfFormationPublic() {
+        int size = 0;
+        for (FormationController f : formations) {
+            size += f.formation.getVisibility().equals(Visibility.PUBLIC) ? 1 : 0;
+        }
+        log("nbOfFormationPublic - " + size);
+        return size;
+    }
     /**
      * Factory list method.
      */

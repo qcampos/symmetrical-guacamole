@@ -59,6 +59,7 @@
                 <ui:include src="cv_experience_editor.xhtml">
                     <ui:param name="_experience" value="#{employeeExperienceBean.experienceControllerBuilder}"/>
                     <ui:param name="id" value="addExp"/>
+                    <ui:param name="_onevent" value="function handle(data) { handleAjaxCreationInMyCVList(data, 'experience-list');}"/>
                     <ui:param name="isAdding" value="#{true}"/>
                     <ui:param name="renderList" value="mycv-addExp-script"/>
                 </ui:include>

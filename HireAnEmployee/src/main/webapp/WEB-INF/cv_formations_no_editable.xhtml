@@ -1,6 +1,6 @@
 <ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <!-- This is the description component. Not Editable -->
 
@@ -8,7 +8,7 @@
     <div class="panel panel-blue cv-bloc-element">
         <div class="panel-heading">
             <h1 class="panel-title">
-                <span class="glyphicon glyphicon-send" style="margin-right:8px;top:2px;"></span>Formations
+                <span class="glyphicon glyphicon-globe" style="margin-right:8px;top:2px;"></span>Formations
             </h1>
         </div>
         <div class="panel-body">
@@ -16,27 +16,30 @@
             <!-- formations -->
             <ui:repeat value="#{employeeFormationBean.formations}" var="_formation">
 
-                <!-- (instance formation) -->
-                <div class="col-xs-12" id="formation1">
-                    <!-- (school) -->
-                    <h4 class="panel-body-title">#{_formation.school.name}</h4>
-                    <!-- (diploma - name) -->
-                    <p>
-                        <strong>#{_formation.name}</strong>
-                    </p>
-                    <!-- (date - country) toString is overriden-->
-                    <p class="small-text">#{_formation.toDate} | #{_formation.country.toString()}</p>
-                    <!-- (description) -->
-                    <p>#{_formation.description}</p>
-                </div>
+                <!-- Here we are certain that we are not on our main page (because the file
+                is in state no_editable) -->
+                <h:panelGroup rendered="#{_formation.visibility eq 'PUBLIC'}">
+                    <!-- (instance formation) -->
+                    <div class="col-xs-12" id="formation1">
+                        <!-- (school) -->
+                        <h4 class="panel-body-title">#{_formation.school.name}</h4>
+                        <!-- (diploma - name) -->
+                        <p>
+                            <strong>#{_formation.name}</strong>
+                        </p>
+                        <!-- (date - country) toString is overriden-->
+                        <p class="small-text">#{_formation.toDate} | #{_formation.country.toString()}</p>
+                        <!-- (description) -->
+                        <p>#{_formation.description}</p>
+                    </div>
 
-                <div class="row"></div>
-                <hr class="dashed"/>
-                <!-- (end of instance experience) -->
-
+                    <div class="row"></div>
+                    <hr class="dashed"/>
+                    <!-- (end of instance experience) -->
+                </h:panelGroup>
             </ui:repeat>
 
-            <c:if test="#{employeeFormationBean.formations.size() == 0}">
+            <c:if test="#{employeeFormationBean.nbOfFormationPublic() == 0}">
                 <p><strong>Aucune formation renseignée</strong></p>
             </c:if>
         </div>

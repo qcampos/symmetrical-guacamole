@@ -191,9 +191,10 @@
                                          action="#{_experience.update()}">
 
                             <!-- Fields will be added dynamically after in the code of the listener. -->
+                            <!-- TODO AJAX ONVEVENT CALL -->
                             <f:ajax execute="@form" listener="#{_experience.dynamicFields}"
                                     render="#{renderList} #{notificationBean.id}"
-                                    resetValues="true"/>
+                                    onevent="#{_onevent}" resetValues="true"/>
                         </h:commandButton>
                         <!-- End of Save Button -->
 

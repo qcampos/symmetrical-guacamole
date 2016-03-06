@@ -1,6 +1,7 @@
 <ui:composition
-        xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:h="http://java.sun.com/jsf/html">
 
     <!-- This is the description component. Editable -->
 
@@ -16,25 +17,28 @@
             <!-- experiences -->
             <ui:repeat value="#{employeeExperienceBean.experiences}" var="_experience">
 
-                <!-- (instance experience) -->
-                <div class="col-xs-12">
-                    <!-- (titre) -->
-                    <h4 class="panel-body-title">#{_experience.jobName}</h4>
-                    <!-- (nom de l'entreprise) -->
-                    <p><strong>#{_experience.companyName}</strong></p>
-                    <!-- (date - pays) toString is overriden-->
-                    <p class="small-text">#{_experience.toDate} | #{_experience.country.toString()}</p>
-                    <!-- (description) -->
-                    <p>#{_experience.jobDescription}</p>
-                </div>
+                <!-- Here we are certain that we are not on our main page (because the file
+                is in state no_editable) -->
+                <h:panelGroup rendered="#{_experience.visibility eq 'PUBLIC'}">
+                    <!-- (instance experience) -->
+                    <div class="col-xs-12">
+                        <!-- (titre) -->
+                        <h4 class="panel-body-title">#{_experience.jobName}</h4>
+                        <!-- (nom de l'entreprise) -->
+                        <p><strong>#{_experience.companyName}</strong></p>
+                        <!-- (date - pays) toString is overriden-->
+                        <p class="small-text">#{_experience.toDate} | #{_experience.country.toString()}</p>
+                        <!-- (description) -->
+                        <p>#{_experience.jobDescription}</p>
+                    </div>
 
-                <div class="row"></div>
-                <hr class="dashed"/>
-                <!-- (fin instance experience) -->
-
+                    <div class="row"></div>
+                    <hr class="dashed"/>
+                    <!-- (fin instance experience) -->
+                </h:panelGroup>
             </ui:repeat>
 
-            <c:if test="#{employeeExperienceBean.nbOfExperienceShown() == 0}">
+            <c:if test="#{employeeExperienceBean.nbOfExperiencePublic() == 0}">
                 <p><strong>Aucune expérience renseignée</strong></p>
             </c:if>
         </div>

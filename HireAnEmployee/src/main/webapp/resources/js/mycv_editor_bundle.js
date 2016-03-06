@@ -32,11 +32,23 @@ function showCVElementEditor(id, containerSupClass) {
     experienceEditor.className = editorClass + " expand";
     // Making the container the right new size.
     experienceContainer.className = containerClass + " expand " + containerSupClass;
-    // Hidding the description.
+    // Hiding the description.
     experienceDiv.className = descriptionClass;
 }
 
-
+function handleAjaxCreationInMyCVList(data, id) {
+    var div = _(id);
+    // TODO make this method.
+    div.visibility = "hidden";
+    switch (data.status) {
+        case "begin" :
+            break;
+        case "success" :
+            div.visibility = "hidden";
+            break;
+    }
+    // div.style
+}
 function hideCVEditor(id) {
     var experienceDiv = _(id);
     var experienceEditor = _(id + '-editor');
@@ -53,7 +65,7 @@ function hideCVEditor(id) {
 }
 
 /* Calls fun on param only when data contains success.
-    This is used for ajax result handling functions.
+ This is used for ajax result handling functions.
  */
 function onSuccess(data, fun, param) {
     if (data.status == "success") {
@@ -63,7 +75,10 @@ function onSuccess(data, fun, param) {
 
 function removeID(id) {
     var elem = _(id);
-    if (elem == null) {console.log(id + ' not found.'); return;}
+    if (elem == null) {
+        console.log(id + ' not found.');
+        return;
+    }
     elem.remove();
 }
 
