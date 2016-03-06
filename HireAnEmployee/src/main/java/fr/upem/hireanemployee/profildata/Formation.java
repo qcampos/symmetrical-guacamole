@@ -57,8 +57,8 @@ public class Formation {
         this.description = description;
         this.level = level;
         this.school = school;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = startDate == null ? new Date() : startDate;
+        this.endDate = endDate == null ? new Date() : startDate;
         this.visibility = visibility;
     }
 

@@ -7,6 +7,7 @@ import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.*;
 import fr.upem.hireanemployee.profildata.Formation.DegreeType;
+import fr.upem.hireanemployee.validators.CollectionsSort;
 import fr.upem.hireanemployee.validators.DateTranslator;
 
 import javax.annotation.PostConstruct;
@@ -54,6 +55,7 @@ public class EmployeeFormationBean extends Logger {
     @PostConstruct
     private void init() {
         Collection<Formation> originalFormations = employee.getFormations();
+        CollectionsSort.sortFormation(originalFormations);
         log("init - formations " + originalFormations);
         if (originalFormations == null) {
             throw new NullPointerException("The current formations are null.");
