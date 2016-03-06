@@ -341,6 +341,8 @@ public class EmployeeExperienceBean extends Logger {
             employee.removeExperienceById(experience);
             // Merging it with the database.
             ddao.mergeEmployee(employee);
+            // No need to retrieve new values since it is an update.
+            // TODO check if the remove without updating list of Experience handles when we edit outside of the database.
             removed = true;
             fieldValidated = false;
         }

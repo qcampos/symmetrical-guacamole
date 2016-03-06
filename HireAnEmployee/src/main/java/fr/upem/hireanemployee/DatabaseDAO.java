@@ -139,9 +139,15 @@ public class DatabaseDAO {
 
     /**
      * Merges the given employee into the database.
-     * @param employee
+     *
+     * @param employee merge result.
      */
-    public void mergeEmployee(Employee employee) { em.merge(employee); em.flush(); }
+    public Employee mergeEmployee(Employee employee) {
+        Employee merge = em.merge(employee);
+        em.flush();
+        return merge;
+    }
+
     /**
      * Get a list of all the possible countries in the Country enumeration.
      *
