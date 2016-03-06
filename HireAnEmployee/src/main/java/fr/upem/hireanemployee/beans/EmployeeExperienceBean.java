@@ -5,6 +5,7 @@ import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.Country;
 import fr.upem.hireanemployee.profildata.Experience;
 import fr.upem.hireanemployee.profildata.Visibility;
+import fr.upem.hireanemployee.validators.CollectionsSort;
 import fr.upem.hireanemployee.validators.DateTranslator;
 
 import javax.annotation.PostConstruct;
@@ -51,6 +52,11 @@ public class EmployeeExperienceBean extends Logger {
     @PostConstruct
     private void init() {
         Collection<Experience> originalExperiences = employee.getExperiences();
+        // This manual sort is needed once. Because automatic entities merge does not support
+        // Order by clauses. We want the experiences to be sorted.
+        // Moreover, Employee#getExperiences does not perform this sort. Since the method is
+        // not called only once. And we don't want to perform it every time.
+        CollectionsSort.sortExperience(originalExperiences);
         log("init - experiences " + originalExperiences);
 
         // Security log - insanity check.
@@ -135,7 +141,6 @@ public class EmployeeExperienceBean extends Logger {
                     jobDescription, country, visibility, startDate, endDate, employee);
 
             Collection<Experience> newExperiences = employee.getExperiences();
-
             // Updating new values.
             experiences = createExperienceControllerUpdaterList(newExperiences);
             experienceControllerBuilder.setEmptyExperience();
@@ -312,7 +317,6 @@ public class EmployeeExperienceBean extends Logger {
                 updateWrappedExperience(experience);
             }
         }
-
 
 
         /**
