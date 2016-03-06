@@ -4,6 +4,13 @@
 
     <!-- This is the description component. Editable -->
 
+    <h:outputScript>
+        function scrollToElement(id, speed) {
+            $('html, body').animate({
+                scrollTop: $('#' + id).offset().top-70
+            }, speed);
+        }
+    </h:outputScript>
     <div class="cv-bloc-element">
         <!-- (descripton) -->
         <div class="panel panel-blue">
@@ -42,7 +49,8 @@
                         <!-- (formation) -->
                         <h:panelGroup class="editable" id="description_current_formation">
                             <div>
-                                <a class="hyperspan" onclick="expandEditor('formation');" id="formation_toggler"></a>
+                                <a class="hyperspan" onclick="scrollToElement('formation-section', 500)"
+                                   id="formation_toggler"></a>
                                 <p>#{employeeDescriptionBean.formation == null ?
                                         "Ajouter une formation" : employeeDescriptionBean.formation} <span
                                         class="glyphicon glyphicon-pencil"/></p>

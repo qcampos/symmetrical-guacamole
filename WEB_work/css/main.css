@@ -6,7 +6,7 @@ html {
 }
 
 body {
-    background-color: rgb(228, 235, 240);
+    background-color: rgb(74, 74, 74);
 }
 
 #connection_body {
@@ -868,6 +868,10 @@ body {
     opacity: 0;
     font-size: 80%;
     transition: color 0.5s, opacity 0.5s;
+}
+
+.expand#experience-0000-editor ~ #no-formation-hint {
+    
 }
 
 #description-container:hover .editable div,
