@@ -84,13 +84,23 @@ public class InitializationBean extends Logger {
         // Begun the 1 and ended the 31 always. (1 Décembre <-> 29 Février (problem with 31 Fevrier does not exists).
 
         // Adding skills.
-        Skill skill = new Skill("JAVA");
-        skill = dao.merge(skill);
+        dao.merge(new Skill("JAVA"));
+        dao.merge(new Skill("C"));
+        dao.merge(new Skill("C++"));
+        dao.merge(new Skill("CORBA"));
+        dao.merge(new Skill("Gestion de projet"));
+        dao.merge(new Skill("Big Data"));
+        dao.merge(new Skill("Map Reduce"));
+        dao.merge(new Skill("Java Enterprise Edition 7"));
+        dao.merge(new Skill("Échec"));
+        List<Skill> skills = dao.getSkills();
 
-        employee.addSkill(skill);
+        for (Skill s : skills) {
+            employee.addSkill(s);
+        }
         dao.mergeEmployee(employee);
         log("init - skills : " + employee.getSkills().size());
-        employee.removeSkill(skill);
+        employee.removeSkill(skills.get(8));
         log("init - skills : " + employee.getSkills().size());
         dao.mergeEmployee(employee);
         log("init - " + description.getEmployee().getFirstName());

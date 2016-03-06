@@ -211,4 +211,8 @@ public class DatabaseDAO {
         em.flush();
         return merge;
     }
+
+    public List<Skill> getSkills() {
+        return em.createQuery("Select s From Skill s", Skill.class).getResultList();
+    }
 }
