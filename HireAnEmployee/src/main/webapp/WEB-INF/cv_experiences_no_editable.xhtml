@@ -22,8 +22,8 @@
                     <h4 class="panel-body-title">#{_experience.jobName}</h4>
                     <!-- (nom de l'entreprise) -->
                     <p><strong>#{_experience.companyName}</strong></p>
-                    <!-- (date - pays) -->
-                    <p class="small-text">#{_experience.toDate} | #{_experience.country}</p>
+                    <!-- (date - pays) toString is overriden-->
+                    <p class="small-text">#{_experience.toDate} | #{_experience.country.toString()}</p>
                     <!-- (description) -->
                     <p>#{_experience.jobDescription}</p>
                 </div>

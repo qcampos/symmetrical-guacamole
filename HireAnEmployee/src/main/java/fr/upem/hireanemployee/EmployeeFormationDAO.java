@@ -48,10 +48,11 @@ public class EmployeeFormationDAO {
                                            Visibility visibility) {
         Formation formation = new Formation(name, description, level, school, startDate, endDate, visibility);
         employee.addFormation(formation);
-        em.merge(employee);
+        Employee merge = em.merge(employee);
         em.flush();
-        Collection<Formation> formations = employee.getFormations();
+        Collection<Formation> formations = merge.getFormations();
         CollectionsSort.sortFormation(formations);
+        employee.setFormations(formations);
         return Lists.newArrayList(formations);
     }
 

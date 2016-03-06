@@ -24,8 +24,8 @@
                     <p>
                         <strong>#{_formation.name}</strong>
                     </p>
-                    <!-- (date - country) -->
-                    <p class="small-text">#{_formation.toDate} | #{_formation.country}</p>
+                    <!-- (date - country) toString is overriden-->
+                    <p class="small-text">#{_formation.toDate} | #{_formation.country.toString()}</p>
                     <!-- (description) -->
                     <p>#{_formation.description}</p>
                 </div>
