@@ -49,6 +49,7 @@
                 <!-- The description part -->
                 <div class="col-md-9" id="cv-left-row">
 
+                    <!-- We can easily change our layout -->
 
                     <!-- The user's description -->
                     <c:if test="#{sessionBean.id == cvViewedBean.id}">
@@ -60,6 +61,7 @@
                     <c:if test="#{sessionBean.id != cvViewedBean.id}">
                         <ui:include src="WEB-INF/cv_description_no_editable.xhtml"/>
                         <ui:include src="WEB-INF/cv_experiences_no_editable.xhtml"/>
+                        <ui:include src="WEB-INF/cv_skills_no_editable.xhtml"/>
                         <ui:include src="WEB-INF/cv_formations_no_editable.xhtml"/>
                     </c:if>
                     <!-- End of the user's description -->

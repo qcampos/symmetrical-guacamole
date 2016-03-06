@@ -85,6 +85,7 @@ public class InitializationBean extends Logger {
         // Begun the 1 and ended the 31 always. (1 Décembre <-> 29 Février (problem with 31 Fevrier does not exists).
 
 
+
         log("init - " + description.getEmployee().getFirstName());
     }
 }

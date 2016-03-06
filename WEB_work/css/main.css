@@ -1094,7 +1094,7 @@ select {
 
 .mycv-form .help-block.with-error {
     font-size: 12px;
-;
+    ;
 }
 
 
@@ -1132,7 +1132,6 @@ select {
     margin-bottom: 0;
 }
 
-
 .remove-mycv-entry {
     font-weight: 500;
     font-size: 14px;
@@ -1140,15 +1139,98 @@ select {
     color: #3296ba;
     background: transparent no-repeat;
     border: none;
-
-}
-/*
-.demo {
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
 }
 
-#equalheight {
-    overflow: hidden;
+.my-token,
+.my-token-hint {
+    margin-top: 10px;
+    height: 30px;
 }
-*/
+
+.my-token {
+    border-radius: 4px;
+    height: 30px;
+    font-size: 13px;
+    margin: 0;
+    margin-top: 10px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    /* width: 400px;*/
+    background-color: #fff;
+    border: 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1.5px 1.5px 0.5px;
+    /*-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px 0px;*/
+    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 1.5px 0.5px;
+}
+
+.my-token-hint {
+    vertical-align: middle;
+    padding-top: 3px;
+}
+
+
+/* Inner score */
+
+.my-token-score {
+    display: inline-block;
+    float: left;
+    border-radius: 4px 0 0 4px;
+    text-align: center;
+    font-weight: 800;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(74, 74, 74);
+    background-color: #2998cd;
+}
+
+.my-token-btn {
+    display: inline-block;
+    float: right;
+    height: 30px;
+    width: 30px;
+    border-left: solid 1px #bec9ce;
+}
+
+.my-token-btn span {
+    color: #2998cd;
+}
+
+.my-token-btn span.inactive {
+    color: #bec9ce;
+}
+
+.my-token-btn:hover + my-token-hint {
+    margin-right: 10px;
+}
+
+.my-token-btn:hover {
+    background-color: #cbcbcb;
+    border-radius: 0 4px 4px 0;
+}
+
+.my-token-hint p {
+    color: white;
+}
+
+
+/* Inner label */
+
+.my-token p {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+
+.my-token-name {}
+
+.main-blue-panel {
+    background-color: rgb(74, 74, 74);
+}
+
+.my-token *,
+.main-blue-panel #skills-title,
+.main-blue-panel h1 {
+    color: white;
+}
