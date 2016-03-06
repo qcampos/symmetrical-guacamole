@@ -5,7 +5,7 @@
         <jta-data-source>java:app/hireaedb</jta-data-source>
 
         <properties>
-            <property name="eclipselink.target-database" value="Derby"/>
+
             <!-- JDBC connection properties -->
             <property name="eclipselink.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
             <property name="eclipselink.jdbc.url"
@@ -13,6 +13,7 @@
             <property name="eclipselink.jdbc.user" value="APP"/>
             <property name="eclipselink.jdbc.password" value="APP"/>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <property name="javax.persistence.sql-load-script-source" value="META-INF/;,insert.sql"/>
         </properties>
     </persistence-unit>
 </persistence>

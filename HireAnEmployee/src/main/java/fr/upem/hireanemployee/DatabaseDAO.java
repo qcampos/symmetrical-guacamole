@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ public class DatabaseDAO {
      * Encrypt the password in order to store in with some security.
      *
      * @param password the password to be encrypted.
-     *
      * @return the String representation of the encryted password.
      */
     private static String encrypt(String password) {
@@ -43,9 +43,8 @@ public class DatabaseDAO {
     /**
      * Check if the given credentials are bind to a user into the database and return the right one. Otherwise, return <code>null</code>
      *
-     * @param email the user's email used as a login.
+     * @param email    the user's email used as a login.
      * @param password the user's password.
-     *
      * @return the corresponding Employee object, or null if the credential does not match.
      */
     public Employee connect(String email, String password) {
@@ -64,9 +63,8 @@ public class DatabaseDAO {
      *
      * @param firstName
      * @param lastName
-     * @param email the user's email which will be used as login.
-     * @param password the use's password.
-     *
+     * @param email     the user's email which will be used as login.
+     * @param password  the use's password.
      * @return the newly created Employee object.
      */
     public Employee signup(String firstName, String lastName, String email, String password) {
@@ -93,7 +91,6 @@ public class DatabaseDAO {
      * Check if the given email is already in use in the database.
      *
      * @param email the email to check.
-     *
      * @return <code>true</code> if the user is already in use, <code>false</code> otherwise.
      */
     public boolean emailExists(String email) {
@@ -104,7 +101,6 @@ public class DatabaseDAO {
      * Update the given employee to get the last version stored in the database.
      *
      * @param employee the employee to update.
-     *
      * @return another Employee object with up-to-date values.
      */
     public Employee update(Employee employee) {
@@ -143,7 +139,7 @@ public class DatabaseDAO {
     }
 
     public List<Skill> getSkillsByName(final String name) {
-        return em.createQuery("SELECT s FROM Skill s WHERE s.name LIKE :name").setParameter("name", name).getResultList();
+        return em.createQuery("SELECT s FROM Skill s WHERE s.name LIKE :name").setParameter("name", "%" + name + "%").getResultList();
     }
 
     public void cleanAll() {
@@ -154,7 +150,6 @@ public class DatabaseDAO {
      * Retrieves the corresponding employee in the database.
      *
      * @param id primary key of the employee wanted.
-     *
      * @return The employee found, null otherwise.
      */
     public Employee getEmployeeByID(long id) {
@@ -183,7 +178,7 @@ public class DatabaseDAO {
             public String apply(final Country country) {
                 return country.toString();
             }
-        }).collect(Collectors.<String> toList());
+        }).collect(Collectors.<String>toList());
     }
 
     /**
@@ -209,5 +204,11 @@ public class DatabaseDAO {
             visibilities.add(v);
         }
         return visibilities;
+    }
+
+    public <T> T merge(T obj) {
+        T merge = em.merge(obj);
+        em.flush();
+        return merge;
     }
 }

@@ -1,19 +1,14 @@
 package fr.upem.hireanemployee;
 
 
-import fr.upem.hireanemployee.DatabaseDAO;
-import fr.upem.hireanemployee.Employee;
-import fr.upem.hireanemployee.EmployeeDescriptionDAO;
 import fr.upem.hireanemployee.profildata.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.Startup;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Named;
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Baxtalou on 10/02/2016.
@@ -24,7 +19,7 @@ public class InitializationBean extends Logger {
 
 
     @EJB
-    private DatabaseDAO bdu;
+    private DatabaseDAO dao;
     @EJB
     private EmployeeDescriptionDAO edao;
     @EJB
@@ -39,19 +34,23 @@ public class InitializationBean extends Logger {
     @PostConstruct
     public void init() {
         logDB("init - initialializationBean called");
-        if (!bdu.emailExists("nborie@upem.fr")) {
-            bdu.signup("Nicolas", "Borie", "nborie@upem.fr", "pony17");
+
+        // TODO load the play test in the persistence.xml
+        //dao.initScript("insert.sql");
+
+        if (!dao.emailExists("nborie@upem.fr")) {
+            dao.signup("Nicolas", "Borie", "nborie@upem.fr", "pony17");
         }
-        Employee employee = bdu.connect("nborie@upem.fr", "pony17");
+        Employee employee = dao.connect("nborie@upem.fr", "pony17");
 
         EmployeeDescription description = employee.getDescription();
         edao.updateSector(description, "Combinatorics");
         edao.updateSector(description, "Logiciels informatiques");
 
-        if (!bdu.emailExists("jmangue@u.com")) {
-            bdu.signup("Jefferson", "Mangue", "jmangue@u.com", "12345");
+        if (!dao.emailExists("jmangue@u.com")) {
+            dao.signup("Jefferson", "Mangue", "jmangue@u.com", "12345");
         }
-        employee = bdu.connect("jmangue@u.com", "12345");
+        employee = dao.connect("jmangue@u.com", "12345");
 
         description = employee.getDescription();
 
@@ -84,8 +83,16 @@ public class InitializationBean extends Logger {
                 Visibility.PUBLIC, new Date(115, 11, 1), new Date(116, 1, 29), employee);
         // Begun the 1 and ended the 31 always. (1 Décembre <-> 29 Février (problem with 31 Fevrier does not exists).
 
+        // Adding skills.
+        Skill skill = new Skill("JAVA");
+        skill = dao.merge(skill);
 
-
+        employee.addSkill(skill);
+        dao.mergeEmployee(employee);
+        log("init - skills : " + employee.getSkills().size());
+        employee.removeSkill(skill);
+        log("init - skills : " + employee.getSkills().size());
+        dao.mergeEmployee(employee);
         log("init - " + description.getEmployee().getFirstName());
     }
 }

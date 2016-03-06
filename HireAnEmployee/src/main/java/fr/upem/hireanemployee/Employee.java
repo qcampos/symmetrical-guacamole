@@ -31,7 +31,7 @@ public class Employee {
     private String password;
 
     // Profile data.
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Collection<SkillAssociation> skills;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Employee> relations;
@@ -148,9 +148,17 @@ public class Employee {
         this.experiences = experience;
     }
 
-    /*public void addSkill(Skill skill) {
-        skills.add(skill);
-    }*/
+    public void addSkill(Skill skill) { // TODO auto delete with an interceptor.
+        SkillAssociation association = new SkillAssociation();
+        association.setEmployee(this);
+        association.setEmployeeId(id);
+        association.setSkill(skill);
+        association.setSkillId(skill.getId());
+        // Adding on skills side
+        Collection<SkillAssociation> employees = skill.getEmployees();
+        employees.add(association);
+        skills.add(association);
+    }
 
     public void addRelation(Employee relation) {
         relations.add(relation);
@@ -158,7 +166,6 @@ public class Employee {
         if (!relation.relations.contains(this)) {
             relation.relations.add(this);
         }
-
     }
 
     public void addFormation(Formation formation) {
@@ -227,5 +234,38 @@ public class Employee {
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    // Care of infinite calls (calling with this then removeEmployee call here with
+    // The same skill.
+    public boolean removeSkill(Skill skill) { // TODO auto delete with an interceptor.
+        Iterator<SkillAssociation> it = skills.iterator();
+        while (it.hasNext()) {
+            SkillAssociation association = it.next();
+            // equals only compares ids.
+            if (association.getSkillId() == (skill.getId())) {
+                skill.removeAssociation(association);
+                it.remove();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Only removes the association on this side without calling the other part of it.
+     *
+     * @return true if deleted, false otherwise if not found.
+     */
+    public boolean removeAssociation(SkillAssociation association) {
+        Iterator<SkillAssociation> it = skills.iterator();
+        while (it.hasNext()) {
+            // Compares ids.
+            if (it.next().getEmployeeId() == association.getEmployeeId()) {
+                it.remove();
+                return true;
+            }
+        }
+        return false;
     }
 }
