@@ -168,6 +168,14 @@ public class Employee {
         experiences.add(experience);
     }
 
+    public void removeRelation(Employee relation) {
+        relations.remove(relation);
+        // Relations are always bidirectional.
+        if (relation.relations.contains(this)) {
+            relation.removeRelation(this);
+        }
+    }
+
     public void removeExperienceById(Experience experience) {
         Logger.log("Employee removeExperienceById experience ids to delete : " + experience.getId(), Logger.BEAN);
         Logger.log("Employee removeExperienceById Before the deletion : " + Experience.printIds(experiences), Logger.BEAN);
@@ -200,5 +208,23 @@ public class Employee {
                 ", formations=" + formations +
                 ", experiences=" + experiences +
                 '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Employee employee = (Employee) o;
+        return id == employee.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

@@ -29,6 +29,7 @@ public class DatabaseDAO {
      * Encrypt the password in order to store in with some security.
      *
      * @param password the password to be encrypted.
+     *
      * @return the String representation of the encryted password.
      */
     private static String encrypt(String password) {
@@ -42,8 +43,9 @@ public class DatabaseDAO {
     /**
      * Check if the given credentials are bind to a user into the database and return the right one. Otherwise, return <code>null</code>
      *
-     * @param email    the user's email used as a login.
+     * @param email the user's email used as a login.
      * @param password the user's password.
+     *
      * @return the corresponding Employee object, or null if the credential does not match.
      */
     public Employee connect(String email, String password) {
@@ -62,8 +64,9 @@ public class DatabaseDAO {
      *
      * @param firstName
      * @param lastName
-     * @param email     the user's email which will be used as login.
-     * @param password  the use's password.
+     * @param email the user's email which will be used as login.
+     * @param password the use's password.
+     *
      * @return the newly created Employee object.
      */
     public Employee signup(String firstName, String lastName, String email, String password) {
@@ -90,6 +93,7 @@ public class DatabaseDAO {
      * Check if the given email is already in use in the database.
      *
      * @param email the email to check.
+     *
      * @return <code>true</code> if the user is already in use, <code>false</code> otherwise.
      */
     public boolean emailExists(String email) {
@@ -100,6 +104,7 @@ public class DatabaseDAO {
      * Update the given employee to get the last version stored in the database.
      *
      * @param employee the employee to update.
+     *
      * @return another Employee object with up-to-date values.
      */
     public Employee update(Employee employee) {
@@ -108,6 +113,10 @@ public class DatabaseDAO {
 
     public Employee getEmployeeByMail(final String email) {
         return em.createQuery("SELECT e from Employee e where e.email = :email", Employee.class).setParameter("email", email).getSingleResult();
+    }
+
+    public List<Employee> searchEmployeeByName(String name) {
+        return em.createQuery("SELECT e FROM Employee e WHERE e.firstName LIKE :name OR e.lastName LIKE :name").setParameter("name", name).getResultList();
     }
 
     public void register(Object o) {
@@ -131,6 +140,7 @@ public class DatabaseDAO {
      * Retrieves the corresponding employee in the database.
      *
      * @param id primary key of the employee wanted.
+     *
      * @return The employee found, null otherwise.
      */
     public Employee getEmployeeByID(long id) {
@@ -139,9 +149,14 @@ public class DatabaseDAO {
 
     /**
      * Merges the given employee into the database.
+     *
      * @param employee
      */
-    public void mergeEmployee(Employee employee) { em.merge(employee); em.flush(); }
+    public void mergeEmployee(Employee employee) {
+        em.merge(employee);
+        em.flush();
+    }
+
     /**
      * Get a list of all the possible countries in the Country enumeration.
      *
@@ -153,7 +168,7 @@ public class DatabaseDAO {
             public String apply(final Country country) {
                 return country.toString();
             }
-        }).collect(Collectors.<String>toList());
+        }).collect(Collectors.<String> toList());
     }
 
     /**
