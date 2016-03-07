@@ -18,7 +18,7 @@ import java.util.List;
  * Handles Skills'/Employee's database merges.
  */
 @Stateless
-public class EmployeeSkillDAO {
+public class EmployeeSkillDAO extends Logger {
 
     @PersistenceContext(unitName = "hireaePU")
     private EntityManager em;
@@ -40,10 +40,8 @@ public class EmployeeSkillDAO {
      */
     public void addSkill(Employee employee, Skill skill) {
         employee.addSkill(skill);
-        Employee merge = em.merge(employee);
-        em.flush();
         // Updates the given reference.
-        employee.setSkills(merge.getSkills());
+        employee.setSkills(merge(employee).getSkills());
     }
 
     /**
@@ -52,10 +50,25 @@ public class EmployeeSkillDAO {
      */
     public void removeSkill(Employee employee, Skill skill) {
         employee.removeSkill(skill);
-        Employee merge = em.merge(employee);
-        em.flush();
         // Normally no needs to update the current list,
         // But for sanity check purposes.
-        employee.setSkills(merge.getSkills());
+        employee.setSkills(merge(employee).getSkills());
+    }
+
+
+    public void increaseSkill(Employee employee, String skillName) {
+        log("increaseSkill - skill increased : " + employee.increaseSkill(skillName));
+        employee.setSkills(merge(employee).getSkills());
+    }
+
+    public void decreaseSkill(Employee employee, String skillName) {
+        log("decreaseSkill - skill decreased : " + employee.decreaseSkill(skillName));
+        employee.setSkills(merge(employee).getSkills());
+    }
+
+    private Employee merge(Employee employee) {
+        Employee merge = em.merge(employee);
+        em.flush();
+        return merge;
     }
 }

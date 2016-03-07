@@ -14,11 +14,8 @@
         <div class="panel-body">
 
             <!-- formations -->
-            <ui:repeat value="#{employeeFormationBean.formations}" var="_formation">
+           <!-- TODO CREATE EMPLOYEESKILLBEAN <ui:repeat value="#{employeeSkillBean.formations}" var="_formation"> -->
 
-                <!-- Here we are certain that we are not on our main page (because the file
-                is in state no_editable) -->
-                <h:panelGroup rendered="#{_formation.visibility eq 'PUBLIC'}">
                     <!-- (instance formation) -->
                     <div class="col-xs-12" id="formation1">
                         <!-- (school) -->
@@ -36,12 +33,12 @@
                     <div class="row"></div>
                     <hr class="dashed"/>
                     <!-- (end of instance experience) -->
-                </h:panelGroup>
             </ui:repeat>
 
+            <!-- TODO manages empty skills section.
             <c:if test="#{employeeFormationBean.nbOfFormationPublic() == 0}">
                 <p><strong>Aucune formation renseignée</strong></p>
-            </c:if>
+            </c:if> -->
         </div>
     </div>
     <!-- (end of Formations) -->

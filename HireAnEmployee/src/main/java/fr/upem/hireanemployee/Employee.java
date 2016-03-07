@@ -268,4 +268,36 @@ public class Employee {
         }
         return false;
     }
+
+    /**
+     * Increases the given skill of 1 point.
+     *
+     * @param skillName name of the skill.
+     * @return true if done, false if not found.
+     */
+    public boolean increaseSkill(String skillName) {
+        for (SkillAssociation association : skills) {
+            if (association.getSkill().getName().equals(skillName)) {
+                association.increaseLevel();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Decreases the given skill of 1 point.
+     *
+     * @param skillName name of the skill.
+     * @return true if done, false if not found.
+     */
+    public boolean decreaseSkill(String skillName) {
+        for (SkillAssociation association : skills) {
+            if (association.getSkill().getName().equals(skillName)) {
+                association.decreaseLevel();
+                return true;
+            }
+        }
+        return false;
+    }
 }

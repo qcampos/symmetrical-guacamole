@@ -26,6 +26,8 @@ public class InitializationBean extends Logger {
     private EmployeeFormationDAO fdao;
     @EJB
     private EmployeeExperienceDAO exdao;
+    @EJB
+    private EmployeeSkillDAO sdao;
 
     public InitializationBean() {
 
@@ -84,25 +86,34 @@ public class InitializationBean extends Logger {
         // Begun the 1 and ended the 31 always. (1 Décembre <-> 29 Février (problem with 31 Fevrier does not exists).
 
         // Adding skills.
-        dao.merge(new Skill("JAVA"));
-        dao.merge(new Skill("C"));
-        dao.merge(new Skill("C++"));
-        dao.merge(new Skill("CORBA"));
-        dao.merge(new Skill("Gestion de projet"));
-        dao.merge(new Skill("Big Data"));
-        dao.merge(new Skill("Map Reduce"));
-        dao.merge(new Skill("Java Enterprise Edition 7"));
-        dao.merge(new Skill("Échec"));
+        sdao.createSkill("JAVA");
+        sdao.createSkill("C");
+        sdao.createSkill("C++");
+        sdao.createSkill("CORBA");
+        sdao.createSkill("Gestion de projet");
+        sdao.createSkill("Big Data");
+        sdao.createSkill("Map Reduce");
+        sdao.createSkill("Java Enterprise Edition 7");
+        sdao.createSkill("Spaghetti Code");
         List<Skill> skills = dao.getSkills();
 
         for (Skill s : skills) {
-            employee.addSkill(s);
+            sdao.addSkill(employee, s);
         }
-        dao.mergeEmployee(employee);
+
         log("init - skills : " + employee.getSkills().size());
-        employee.removeSkill(skills.get(8));
+        sdao.removeSkill(employee, skills.get(8));
+        sdao.increaseSkill(employee, "JAVA");
+        sdao.increaseSkill(employee, "JAVA");
+        sdao.increaseSkill(employee, "JAVA");
+        sdao.increaseSkill(employee, "JAVA");
+        sdao.decreaseSkill(employee, "JAVA");
+        sdao.decreaseSkill(employee, "JAVA");
+        sdao.decreaseSkill(employee, "JAVA");
+        sdao.decreaseSkill(employee, "JAVA");
+        sdao.decreaseSkill(employee, "JAVA");
+        sdao.increaseSkill(employee, "__");
         log("init - skills : " + employee.getSkills().size());
-        dao.mergeEmployee(employee);
         log("init - " + description.getEmployee().getFirstName());
     }
 }

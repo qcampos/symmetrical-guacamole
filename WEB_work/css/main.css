@@ -870,10 +870,6 @@ body {
     transition: color 0.5s, opacity 0.5s;
 }
 
-#experience-0000-handle>.expand#experience-0000-container ~ #no-formation-hint {
-    
-}
-
 #description-container:hover .editable div,
 .mycv-editable-container:hover .editable div,
 .cv-bloc-element .show-editable div {

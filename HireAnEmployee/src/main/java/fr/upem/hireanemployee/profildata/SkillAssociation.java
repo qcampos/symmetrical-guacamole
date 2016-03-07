@@ -13,13 +13,13 @@ public class SkillAssociation {
     private long employeeId;
     @Id
     private long skillId;
-    @Column(name="LEVEL")
-    private  int level;
+    @Column(name = "LEVEL")
+    private int level;
     @ManyToOne
-    @PrimaryKeyJoinColumn(name="EMPLOYEEID", referencedColumnName = "ID")
+    @PrimaryKeyJoinColumn(name = "EMPLOYEEID", referencedColumnName = "ID")
     private Employee employee;
     @ManyToOne
-    @PrimaryKeyJoinColumn(name="SKILLID", referencedColumnName = "ID")
+    @PrimaryKeyJoinColumn(name = "SKILLID", referencedColumnName = "ID")
     private Skill skill;
 
     public long getEmployeeId() {
@@ -60,5 +60,14 @@ public class SkillAssociation {
 
     public void setSkill(Skill sill) {
         this.skill = sill;
+    }
+
+    public void increaseLevel() {
+        level++;
+    }
+
+    public void decreaseLevel() {
+        level--;
+        if (level < 0) level = 0;
     }
 }
