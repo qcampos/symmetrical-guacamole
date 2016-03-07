@@ -55,11 +55,16 @@ public class EmployeeFormationBean extends Logger {
     @PostConstruct
     private void init() {
         Collection<Formation> originalFormations = employee.getFormations();
-        CollectionsSort.sortFormation(originalFormations);
         log("init - formations " + originalFormations);
         if (originalFormations == null) {
-            throw new NullPointerException("The current formations are null.");
+            originalFormations = new ArrayList<>();
+            log("The current formations are null. For employee : " + employee.getId());
         }
+        // This manual sort is needed once. Because automatic entities merge does not support
+        // Order by clauses. We want the formation to be sorted.
+        // Moreover, Employee#getExperiences does not perform this sort. Since the method is
+        // not called only once. And we don't want to perform it every time.
+        CollectionsSort.sortFormation(originalFormations);
 
         yearFormatter = new SimpleDateFormat("yyyy");
 

@@ -2,6 +2,8 @@ package fr.upem.hireanemployee.validators;
 
 import fr.upem.hireanemployee.profildata.Experience;
 import fr.upem.hireanemployee.profildata.Formation;
+import fr.upem.hireanemployee.profildata.Skill;
+import fr.upem.hireanemployee.profildata.SkillAssociation;
 
 import java.util.*;
 
@@ -41,6 +43,18 @@ public class CollectionsSort {
         sortCollection(formations, sortedList, comparator);
     }
 
+    public static void sortSkillByLevel(Collection<SkillAssociation> skills) {
+        if (skills.size() <= 1) return;
+        ArrayList<SkillAssociation> sortedList = new ArrayList<>(skills);
+        Comparator<SkillAssociation> comparator = new Comparator<SkillAssociation>() {
+            @Override
+            public int compare(final SkillAssociation o1, final SkillAssociation o2) {
+                return o1.getLevel() - o2.getLevel();
+            }
+        };
+        sortCollection(skills, sortedList, comparator);
+    }
+
     private static <E> void sortCollection(Collection<E> results, List<E> list,
                                            Comparator<E> comparator) {
         Collections.sort(list, comparator);
@@ -57,4 +71,5 @@ public class CollectionsSort {
         }
         return endDate2.getYear() - endDate1.getYear();
     }
+
 }

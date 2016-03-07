@@ -149,6 +149,7 @@ public class Employee {
     }
 
     public void addSkill(Skill skill) { // TODO auto delete with an interceptor.
+        if (hasSkill(skill)) return;
         SkillAssociation association = new SkillAssociation();
         association.setEmployee(this);
         association.setEmployeeId(id);
@@ -160,12 +161,37 @@ public class Employee {
         skills.add(association);
     }
 
+    /**
+     * @return true if the current entity has the given skill, false otherwise.
+     */
+    private boolean hasSkill(Skill skill) {
+        for (SkillAssociation association : skills) {
+            if (association.getSkillId() == skill.getId()) {
+                Logger.log("[BEAN] ERROR skill " + skill.getName() +
+                        " already get by employee " + id, Logger.BEAN);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void addRelation(Employee relation) {
         relations.add(relation);
         // Relations are always bidirectional.
         if (!relation.relations.contains(this)) {
             relation.relations.add(this);
         }
+    }
+
+    /**
+     * @return A list of the curent employee's skills.
+     */
+    public List<Skill> getSkillsList() {
+        List<Skill> skillList = new ArrayList<>();
+        for (SkillAssociation association : skills) {
+            skillList.add(association.getSkill());
+        }
+        return skillList;
     }
 
     public void addFormation(Formation formation) {

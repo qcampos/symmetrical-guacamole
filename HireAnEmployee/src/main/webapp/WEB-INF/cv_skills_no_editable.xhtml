@@ -13,27 +13,37 @@
         </div>
         <div class="panel-body">
 
-            <!-- formations -->
-           <!-- TODO CREATE EMPLOYEESKILLBEAN <ui:repeat value="#{employeeSkillBean.formations}" var="_formation"> -->
-
-                    <!-- (instance formation) -->
-                    <div class="col-xs-12" id="formation1">
-                        <!-- (school) -->
-                        <h4 class="panel-body-title">#{_formation.school.name}</h4>
-                        <!-- (diploma - name) -->
-                        <p>
-                            <strong>#{_formation.name}</strong>
-                        </p>
-                        <!-- (date - country) toString is overriden-->
-                        <p class="small-text">#{_formation.toDate} | #{_formation.country.toString()}</p>
-                        <!-- (description) -->
-                        <p>#{_formation.description}</p>
-                    </div>
-
+            <!-- (Skills handle) -->
+            <div class="">
+                <!-- (instance formation) -->
+                <div class="col-sm-12 col-xs-12">
+                    <p id="skills-title"><strong>Compétences informatiques : </strong></p>
                     <div class="row"></div>
-                    <hr class="dashed"/>
-                    <!-- (end of instance experience) -->
-            </ui:repeat>
+
+                    <!-- Skills list -->
+                    <c:forEach var="_skill" items="#{employeeSkillBean.skillControllers}" varStatus="status">
+
+                        <!-- Skill item -->
+                        <div class="col-sm-6">
+                            <div class="my-token">
+                                <div class="my-token-score">#{_skill.level}</div>
+                                <p>#{_skill.name}</p>
+                                <a href="#" class="my-token-btn">
+                                    <span class="glyphicon glyphicon-plus #{_skill.hasVoted() ? 'inactive' : ''}"></span></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 my-token-hint">
+                            <p>#{_skill.hasVoted() ? 'Supprimez la recommendation' : 'Recommendez cette compétence'}</p>
+                        </div>
+                        <div class="row"></div>
+                        <!-- End of Skill item -->
+
+                    </c:forEach>
+                    <!-- End of Skills list -->
+                </div>
+            </div>
+            <div class="row"></div>
+            <hr class="dashed"/>
 
             <!-- TODO manages empty skills section.
             <c:if test="#{employeeFormationBean.nbOfFormationPublic() == 0}">
@@ -41,7 +51,7 @@
             </c:if> -->
         </div>
     </div>
-    <!-- (end of Formations) -->
+    <!-- (end of Skills) -->
 
 </ui:composition>
 
