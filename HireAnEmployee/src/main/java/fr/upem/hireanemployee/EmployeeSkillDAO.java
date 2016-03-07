@@ -48,12 +48,12 @@ public class EmployeeSkillDAO extends Logger {
     }
 
 
-    public void increaseSkill(Employee voter, String skillName, Employee employee) {
+    public void increaseSkill(Employee employee, String skillName, Employee voter) {
         log("increaseSkill - skill increased : " + employee.increaseSkill(skillName, voter));
         employee.setSkills(merge(employee).getSkills());
     }
 
-    public void decreaseSkill(Employee voter, String skillName, Employee employee) {
+    public void decreaseSkill(Employee employee, String skillName, Employee voter) {
         log("decreaseSkill - skill decreased : " + employee.decreaseSkill(skillName, voter));
         employee.setSkills(merge(employee).getSkills());
     }

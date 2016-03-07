@@ -33,11 +33,15 @@ public class EmployeeSkillBean extends Logger {
     private Employee employee;
     @ManagedProperty("#{notificationBean}")
     private NotificationBean notificationBean;
+    @ManagedProperty("#{sessionBean}")
+    private SessionBean sessionBean;
 
     // Caches for jsf gets & Data fields to edit.
     private List<Skill> skillsList;
     private List<BaseSkillController> skillControllers;
-
+    // Visitor data.
+    private long visitorId;
+    private boolean visitorConnected;
 
     @PostConstruct
     private void init() {
@@ -52,6 +56,9 @@ public class EmployeeSkillBean extends Logger {
         // Moreover, Employee#getExperiences does not perform this sort. Since the method is
         // not called only once. And we don't want to perform it every time.
         CollectionsSort.sortSkillByLevel(employeeSkills);
+        // Setting right now the visitor ids to determine skills' states.
+        visitorConnected = sessionBean.isConnected();
+        visitorId = sessionBean.getId();
         // Initializing list of available skillsList.
         skillsList = ddao.getSkills();
         // Creating list of updaters.
@@ -70,12 +77,14 @@ public class EmployeeSkillBean extends Logger {
         // Caches for JSF getters.
         private final SkillAssociation skill;
         private final String name;
+        private boolean hasVoted; // If the current visitor has voted for this very skill or not.
         private int level;
 
         public BaseSkillController(SkillAssociation skill) {
             this.skill = skill;
             name = skill.getSkill().getName();
             level = skill.getLevel();
+            hasVoted = visitorConnected && skill.hasVoted(visitorId);
         }
 
 
@@ -88,7 +97,7 @@ public class EmployeeSkillBean extends Logger {
         }
 
         public boolean hasVoted() {
-            return false; // TODO update in ternary to allow the vote of a person.
+            return hasVoted;
         }
 
     }
@@ -115,5 +124,9 @@ public class EmployeeSkillBean extends Logger {
 
     public void setNotificationBean(NotificationBean notificationBean) {
         this.notificationBean = notificationBean;
+    }
+
+    public void setSessionBean(SessionBean sessionBean) {
+        this.sessionBean = sessionBean;
     }
 }

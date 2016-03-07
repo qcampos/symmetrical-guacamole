@@ -103,10 +103,14 @@ public class InitializationBean extends Logger {
 
         log("init - skills : " + employee.getSkills().size());
         sdao.removeSkill(employee, skills.get(8));
-        sdao.increaseSkill(employee1, "JAVA", employee);
-        sdao.increaseSkill(employee1, "CORBA", employee);
-        sdao.increaseSkill(employee1, "C++", employee);
-        sdao.decreaseSkill(employee1, "C++", employee);
+        sdao.increaseSkill(employee, "JAVA", employee1);
+        sdao.increaseSkill(employee, "CORBA", employee1);
+        sdao.increaseSkill(employee, "C++", employee1);
+        sdao.decreaseSkill(employee, "C++", employee1);
+
+        Employee linus = dao.signup("Linus", "Torvald", "jmangue@test.com", "12345");
+        sdao.increaseSkill(employee, "Big Data", linus);
+        sdao.increaseSkill(employee, "Big Data", employee1);
 
         log("init - skills : " + employee.getSkills().size());
         log("init - " + description.getEmployee().getFirstName());

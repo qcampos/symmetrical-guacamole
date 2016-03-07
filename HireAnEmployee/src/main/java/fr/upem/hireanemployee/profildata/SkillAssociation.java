@@ -86,13 +86,24 @@ public class SkillAssociation {
     }
 
     public boolean decreaseLevel(Employee voter) {
-        level--;
-        if (level < 0) level = 0;
-        boolean remove = voters.remove(voter);
-        if (!remove) {
+        if (!voters.remove(voter)) {
             Logger.log("[BEAN] SkillAssociation#increaseLevel - voter " +
                     voter.getId() + " not exists " + employeeId, Logger.BEAN);
+            return false;
         }
-        return remove;
+        level--;
+        if (level < 0) level = 0;
+        return true;
+    }
+
+    public boolean hasVoted(long voterId) {
+        for (Employee employee : voters) {
+            if (employee.getId() == voterId) {
+                Logger.log("[BEAN] SkillAssociation#hasVoted - " + voterId + " has voted ", Logger.BEAN);
+                return true;
+            }
+        }
+        Logger.log("[BEAN] SkillAssociation#hasVoted - has not voted ", Logger.BEAN);
+        return false;
     }
 }

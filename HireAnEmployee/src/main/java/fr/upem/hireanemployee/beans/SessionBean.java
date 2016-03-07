@@ -36,6 +36,13 @@ public class SessionBean extends Logger {
     }
 
     /**
+     * @return true if connected, false otherwise.
+     */
+    public boolean isConnected() {
+        return state == State.CONNECTED;
+    }
+
+    /**
      * Disconnects the current employee.
      *
      * @return the current page.
