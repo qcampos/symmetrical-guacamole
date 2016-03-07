@@ -49,7 +49,7 @@ public class CollectionsSort {
         Comparator<SkillAssociation> comparator = new Comparator<SkillAssociation>() {
             @Override
             public int compare(final SkillAssociation o1, final SkillAssociation o2) {
-                return o1.getLevel() - o2.getLevel();
+                return o2.getLevel() - o1.getLevel();
             }
         };
         sortCollection(skills, sortedList, comparator);

@@ -299,13 +299,13 @@ public class Employee {
      * Increases the given skill of 1 point.
      *
      * @param skillName name of the skill.
+     * @param voter
      * @return true if done, false if not found.
      */
-    public boolean increaseSkill(String skillName) {
+    public boolean increaseSkill(String skillName, Employee voter) {
         for (SkillAssociation association : skills) {
             if (association.getSkill().getName().equals(skillName)) {
-                association.increaseLevel();
-                return true;
+                return association.increaseLevel(voter);
             }
         }
         return false;
@@ -317,11 +317,10 @@ public class Employee {
      * @param skillName name of the skill.
      * @return true if done, false if not found.
      */
-    public boolean decreaseSkill(String skillName) {
+    public boolean decreaseSkill(String skillName, Employee voter) {
         for (SkillAssociation association : skills) {
             if (association.getSkill().getName().equals(skillName)) {
-                association.decreaseLevel();
-                return true;
+                return association.decreaseLevel(voter);
             }
         }
         return false;

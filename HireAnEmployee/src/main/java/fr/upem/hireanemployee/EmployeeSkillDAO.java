@@ -1,18 +1,10 @@
 package fr.upem.hireanemployee;
 
-import com.google.common.collect.Lists;
-import fr.upem.hireanemployee.profildata.Country;
-import fr.upem.hireanemployee.profildata.Experience;
 import fr.upem.hireanemployee.profildata.Skill;
-import fr.upem.hireanemployee.profildata.Visibility;
-import fr.upem.hireanemployee.validators.CollectionsSort;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Handles Skills'/Employee's database merges.
@@ -56,13 +48,13 @@ public class EmployeeSkillDAO extends Logger {
     }
 
 
-    public void increaseSkill(Employee employee, String skillName) {
-        log("increaseSkill - skill increased : " + employee.increaseSkill(skillName));
+    public void increaseSkill(Employee voter, String skillName, Employee employee) {
+        log("increaseSkill - skill increased : " + employee.increaseSkill(skillName, voter));
         employee.setSkills(merge(employee).getSkills());
     }
 
-    public void decreaseSkill(Employee employee, String skillName) {
-        log("decreaseSkill - skill decreased : " + employee.decreaseSkill(skillName));
+    public void decreaseSkill(Employee voter, String skillName, Employee employee) {
+        log("decreaseSkill - skill decreased : " + employee.decreaseSkill(skillName, voter));
         employee.setSkills(merge(employee).getSkills());
     }
 

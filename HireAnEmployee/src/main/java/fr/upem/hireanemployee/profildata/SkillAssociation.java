@@ -1,8 +1,10 @@
 package fr.upem.hireanemployee.profildata;
 
 import fr.upem.hireanemployee.Employee;
+import fr.upem.hireanemployee.Logger;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "EMPLOYEE_SKILL")
@@ -21,6 +23,8 @@ public class SkillAssociation {
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "SKILLID", referencedColumnName = "ID")
     private Skill skill;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Employee> voters;
 
     public long getEmployeeId() {
         return employeeId;
@@ -62,12 +66,33 @@ public class SkillAssociation {
         this.skill = sill;
     }
 
-    public void increaseLevel() {
-        level++;
+    public List<Employee> getVoters() {
+        return voters;
     }
 
-    public void decreaseLevel() {
+    public void setVoters(List<Employee> voters) {
+        this.voters = voters;
+    }
+
+    public boolean increaseLevel(Employee voter) {
+        if (voters.contains(voter)) {
+            Logger.log("[BEAN] SkillAssociation#increaseLevel - voter id : " +
+                    voter.getId() + "already exists in : " + employeeId, Logger.BEAN);
+            return false;
+        }
+        level++;
+        voters.add(voter);
+        return true;
+    }
+
+    public boolean decreaseLevel(Employee voter) {
         level--;
         if (level < 0) level = 0;
+        boolean remove = voters.remove(voter);
+        if (!remove) {
+            Logger.log("[BEAN] SkillAssociation#increaseLevel - voter " +
+                    voter.getId() + " not exists " + employeeId, Logger.BEAN);
+        }
+        return remove;
     }
 }

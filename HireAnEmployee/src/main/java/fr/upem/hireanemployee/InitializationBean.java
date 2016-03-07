@@ -43,16 +43,16 @@ public class InitializationBean extends Logger {
         if (!dao.emailExists("nborie@upem.fr")) {
             dao.signup("Nicolas", "Borie", "nborie@upem.fr", "pony17");
         }
-        Employee employee = dao.connect("nborie@upem.fr", "pony17");
+        Employee employee1 = dao.connect("nborie@upem.fr", "pony17");
 
-        EmployeeDescription description = employee.getDescription();
+        EmployeeDescription description = employee1.getDescription();
         edao.updateSector(description, "Combinatorics");
         edao.updateSector(description, "Logiciels informatiques");
 
         if (!dao.emailExists("jmangue@u.com")) {
             dao.signup("Jefferson", "Mangue", "jmangue@u.com", "12345");
         }
-        employee = dao.connect("jmangue@u.com", "12345");
+        Employee employee = dao.connect("jmangue@u.com", "12345");
 
         description = employee.getDescription();
 
@@ -103,16 +103,11 @@ public class InitializationBean extends Logger {
 
         log("init - skills : " + employee.getSkills().size());
         sdao.removeSkill(employee, skills.get(8));
-        sdao.increaseSkill(employee, "JAVA");
-        sdao.increaseSkill(employee, "JAVA");
-        sdao.increaseSkill(employee, "JAVA");
-        sdao.increaseSkill(employee, "JAVA");
-        sdao.decreaseSkill(employee, "JAVA");
-        sdao.decreaseSkill(employee, "JAVA");
-        sdao.decreaseSkill(employee, "JAVA");
-        sdao.decreaseSkill(employee, "JAVA");
-        sdao.decreaseSkill(employee, "JAVA");
-        sdao.increaseSkill(employee, "__");
+        sdao.increaseSkill(employee1, "JAVA", employee);
+        sdao.increaseSkill(employee1, "CORBA", employee);
+        sdao.increaseSkill(employee1, "C++", employee);
+        sdao.decreaseSkill(employee1, "C++", employee);
+
         log("init - skills : " + employee.getSkills().size());
         log("init - " + description.getEmployee().getFirstName());
     }
