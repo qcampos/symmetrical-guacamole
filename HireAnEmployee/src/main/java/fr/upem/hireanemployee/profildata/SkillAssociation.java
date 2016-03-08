@@ -96,10 +96,11 @@ public class SkillAssociation {
         return true;
     }
 
-    public boolean hasVoted(long voterId) {
+    public boolean hasVoted(Employee voter) {
         for (Employee employee : voters) {
-            if (employee.getId() == voterId) {
-                Logger.log("[BEAN] SkillAssociation#hasVoted - " + voterId + " has voted ", Logger.BEAN);
+            if (employee.getId() == voter.getId()) {
+                Logger.log("[BEAN] SkillAssociation#hasVoted - " + voter.getId() + " has voted ",
+                        Logger.BEAN);
                 return true;
             }
         }

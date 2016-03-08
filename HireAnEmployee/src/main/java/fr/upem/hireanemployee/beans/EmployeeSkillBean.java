@@ -4,6 +4,7 @@ import fr.upem.hireanemployee.DatabaseDAO;
 import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.EmployeeSkillDAO;
 import fr.upem.hireanemployee.Logger;
+import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.profildata.Skill;
 import fr.upem.hireanemployee.profildata.SkillAssociation;
 import fr.upem.hireanemployee.validators.CollectionsSort;
@@ -40,7 +41,7 @@ public class EmployeeSkillBean extends Logger {
     private List<Skill> skillsList;
     private List<BaseSkillController> skillControllers;
     // Visitor data.
-    private long visitorId;
+    private Employee visitor;
     private boolean visitorConnected;
 
     @PostConstruct
@@ -58,7 +59,7 @@ public class EmployeeSkillBean extends Logger {
         CollectionsSort.sortSkillByLevel(employeeSkills);
         // Setting right now the visitor ids to determine skills' states.
         visitorConnected = sessionBean.isConnected();
-        visitorId = sessionBean.getId();
+        if (visitorConnected) visitor = ddao.getEmployeeByID(sessionBean.getId());
         // Initializing list of available skillsList.
         skillsList = ddao.getSkills();
         // Creating list of updaters.
@@ -72,21 +73,49 @@ public class EmployeeSkillBean extends Logger {
 
 
     // TODO make it abstract.
+    // Here we are sure that visitor is not null. Otherwise we are in the SkillControllerObserver class.
     public class BaseSkillController extends Logger {
 
         // Caches for JSF getters.
         private final SkillAssociation skill;
         private final String name;
         private boolean hasVoted; // If the current visitor has voted for this very skill or not.
+        private long skillId;
         private int level;
 
         public BaseSkillController(SkillAssociation skill) {
             this.skill = skill;
+            skillId = skill.getSkillId();
             name = skill.getSkill().getName();
             level = skill.getLevel();
-            hasVoted = visitorConnected && skill.hasVoted(visitorId);
+            hasVoted = visitorConnected && skill.hasVoted(visitor);
         }
 
+
+        /**
+         * Performs the click action on a skill.
+         * If the visitor has already voted, it will be removed.
+         * Otherwise it will add one recommandation to the given skill.
+         */
+        public String perform() {
+            log("perform - Visitor " + visitor.getId() + " has voted : " + hasVoted);
+            if (!visitorConnected) return Constants.CURRENT_PAGE;
+            if (!hasVoted) {
+                dao.increaseSkill(employee, name, visitor);
+                // Updating cache values.
+                skill.increaseLevel(visitor);
+                level = skill.getLevel();
+                hasVoted = !hasVoted;
+                return Constants.CURRENT_PAGE;
+            }
+            // Otherwise decreasing.
+            dao.decreaseSkill(employee, name, visitor);
+            // Updating cache values.
+            skill.decreaseLevel(visitor);
+            level = skill.getLevel();
+            hasVoted = !hasVoted;
+            return Constants.CURRENT_PAGE;
+        }
 
         public String getName() {
             return name;
@@ -100,6 +129,9 @@ public class EmployeeSkillBean extends Logger {
             return hasVoted;
         }
 
+        public long getSkillId() {
+            return skillId;
+        }
     }
 
     public List<BaseSkillController> getSkillControllers() {
