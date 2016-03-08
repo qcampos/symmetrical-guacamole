@@ -88,7 +88,8 @@ public class EmployeeSkillBean extends Logger {
             skillId = skill.getSkillId();
             name = skill.getSkill().getName();
             level = skill.getLevel();
-            hasVoted = visitorConnected && skill.hasVoted(visitor);
+            hasVoted = visitorConnected && skill.hasVoted(visitor) &&
+                    (visitor != null && visitor.getId() != employee.getId());
         }
 
 

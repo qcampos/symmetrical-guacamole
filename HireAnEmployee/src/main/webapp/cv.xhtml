@@ -12,7 +12,7 @@
 
 <!-- The view takes id -->
 <f:metadata>
-    <f:viewParam name="id" value="#{cvViewedBean.id}"/>
+    <f:viewParam name="id" value="#{cvViewedBean.idToParse}"/>
     <f:viewAction action="#{cvViewedBean.viewActionInit}"/>
 </f:metadata>
 
@@ -67,15 +67,27 @@
                     </c:if>
                     <!-- End of the user's description -->
 
-
-                    <!-- The user's experiences -->
-                    <c:if test="#{sessionBean.id == cvViewedBean.id}">
-                    </c:if>
-                    <!-- A visitor's experiences -->
-                    <c:if test="#{sessionBean.id != cvViewedBean.id}">
-                    </c:if>
-
                 </div>
+
+
+                <!-- (Right row, can disappear if the screen is to small) -->
+                <div class="col-md-3 hidden-sm panel panel-blue" style="height:600px;">
+                    <div class="panel-heading text-center">
+                        <c:if test="#{sessionBean.connected}">
+                            <h4 style="font-size:13px;">Qui a consulté votre profil ?</h4>
+                        </c:if>
+                    </div>
+                    <div class="panel-body">
+                        <div class="panel-body" style="height:150px">
+                            <hr class="dashed"/>
+
+                            <div style="height:150px"/>
+                            <hr class="dashed"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- end of right col -->
+
 
                 <!-- (end of content of the page) -->
             </div>

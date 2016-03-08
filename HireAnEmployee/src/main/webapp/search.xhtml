@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<!-- Head cartridge -->
+<ui:include src="WEB-INF/head.xhtml">
+    <ui:param name="title" value="recherche"/>
+</ui:include>
+
+<!-- The view takes id -->
+<f:metadata>
+    <f:viewParam name="search" value="#{searchBean.search}"/>
+    <f:viewAction action="#{searchBean.searchActionInit()}"/>
+</f:metadata>
+
+<h:body>
+
+    <!-- (top fixed navbar + notification system -->
+    <h:panelGroup layout="block" class="navbbar-top">
+
+        <!-- The navbar -->
+        <ui:include src="WEB-INF/navbar_composite.xhtml"/>
+
+        <!-- Notification system composite -->
+        <ui:include src="WEB-INF/notification_composite.xhtml">
+            <ui:param name="notifierBean" value="connectionBean"/>
+        </ui:include>
+
+    </h:panelGroup>
+
+
+    <div id="search-body-content">
+        <!-- (Wall Photo section) -->
+        <div class="top-photo">
+            <div class="container text-center">
+                <h4><a href="#"><span class="glyphicon glyphicon-camera"></span>Ajouter une photo d'arrière plan</a>
+                </h4>
+            </div>
+        </div>
+
+        <div class="container">
+
+
+            <!-- (row) -->
+            <div class="row" id="search-content">
+
+                <!-- (left row) -->
+                <div class="col-md-12" id="cv-left-row">
+
+                    <div class="row"></div>
+                    <!-- (descripton) -->
+
+                    <div class="panel panel-blue">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">
+                                <span class="glyphicon glyphicon-search" style="margin-right:8px;top:5px;">
+                                </span>Résultats de la recherche
+                            </h1>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="search-group col-lg-6 col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-8 col-xs-12 ">
+                                <div class="row"></div>
+                                <hr class="dashed"/>
+
+                                <c:forEach var="_employee" items="#{searchBean.employees}" varStatus="status">
+                                    <!-- Search group item -->
+                                    <div class="search-group-inner">
+                                        <h:graphicImage class="col-xs-3 search-group-img" name="img/no-photo.png"
+                                                        alt="photo de profil"/>
+                                        <div><a class="search-link" href="#">#{_employee.firstName} #{_employee.lastName}</a></div>
+                                        <p class="search-group-title">#{_employee.description.professionalTitle}</p>
+                                        <p class="search-group-sub-title">#{_employee.description.country.toString()} | #{_employee.description.sector}</p>
+                                        <p class="search-group-competence">Java - 100 recommandations</p>
+                                        <div class="row"></div>
+                                        <hr class="dashed"/>
+                                    </div>
+                                    <!-- End of Search group item -->
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- (fin de formations) -->
+
+            </div>
+            <!-- (fin de left row) -->
+        </div>
+        <!-- (fin de cv-content) -->
+
+
+    </div>
+    <!-- footer -->
+    <ui:include src="WEB-INF/footer.xhtml"/>
+</h:body>
+
+</html>

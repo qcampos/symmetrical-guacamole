@@ -30,17 +30,23 @@
                                 <div class="my-token">
                                     <div class="my-token-score">#{_skill.level}</div>
                                     <p>#{_skill.name}</p>
-                                    <h:form prependId="false" p:style="display:inline;">
-                                        <h:commandLink action="#{_skill.perform()}" class="my-token-btn">
-                                            <f:ajax execute="@this" render="skill-#{_skill.skillId}"/>
-                                            <span class="#{_skill.hasVoted() ? 'glyphicon glyphicon-minus inactive' : 'glyphicon glyphicon-plus'}"></span>
-                                        </h:commandLink>
-                                    </h:form>
+
+                                    <!-- If connected allowing click -->
+                                    <c:if test="#{sessionBean.connected}">
+                                        <h:form prependId="false" p:style="display:inline;">
+                                            <h:commandLink action="#{_skill.perform()}" class="my-token-btn">
+                                                <f:ajax execute="@this" render="skill-#{_skill.skillId}"/>
+                                                <span class="#{_skill.hasVoted() ? 'glyphicon glyphicon-minus inactive' : 'glyphicon glyphicon-plus'}"></span>
+                                            </h:commandLink>
+                                        </h:form>
+                                    </c:if>
                                 </div>
                             </div>
-                            <div class="col-sm-6 my-token-hint">
-                                <p>#{_skill.hasVoted() ? 'Supprimez la recommendation' : 'Recommendez cette compétence'}</p>
-                            </div>
+                            <c:if test="#{sessionBean.connected}">
+                                <div class="col-sm-6 my-token-hint">
+                                    <p>#{_skill.hasVoted() ? 'Supprimez la recommendation' : 'Recommendez cette compétence'}</p>
+                                </div>
+                            </c:if>
                         </h:panelGroup>
                         <div class="row"></div>
                         <!-- End of Skill item -->

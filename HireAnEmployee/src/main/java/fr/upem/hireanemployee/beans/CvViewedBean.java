@@ -4,6 +4,7 @@ import fr.upem.hireanemployee.DatabaseDAO;
 import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
+import fr.upem.hireanemployee.navigation.Navigations;
 import fr.upem.hireanemployee.profildata.EmployeeDescription;
 import fr.upem.hireanemployee.profildata.Experience;
 import fr.upem.hireanemployee.profildata.Formation;
@@ -32,6 +33,7 @@ public class CvViewedBean extends Logger {
     private Collection<Formation> employeeFormations;
 
     // Current CV id
+    private String idToParse;
     private long id;
     private boolean initialized;
 
@@ -56,7 +58,7 @@ public class CvViewedBean extends Logger {
         employee = dao.getEmployeeByID(id);
         if (employee == null) {
             // TODO redirect on a special page for unknown employee + search bar.
-            return "404";
+            return Navigations.redirect(Constants.ERROR);
         }
         // Setting fields accordingly.
         employeeDescription = employee.getDescription();
@@ -77,6 +79,22 @@ public class CvViewedBean extends Logger {
             return;
         }
         this.id = id;
+    }
+
+    public String getIdToParse() {
+        return idToParse;
+    }
+
+    public void setIdToParse(String idToParse) {
+        if (initialized) {
+            return;
+        }
+        try {
+            this.id = Long.parseLong(idToParse);
+        } catch (NumberFormatException e) {
+            log("ERROR setId numberFormat for : " + idToParse);
+            this.id = -1;
+        }
     }
 
     public Employee getEmployee() {

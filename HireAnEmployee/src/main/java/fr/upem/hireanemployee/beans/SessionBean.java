@@ -49,13 +49,13 @@ public class SessionBean extends Logger {
      */
     public String setDisconnected() {
         if (state == State.DISCONNECTED) {
-            return Navigations.redirect("cv.xhtml") + ";includeViewParams=true";
+            return Navigations.redirect(Constants.CURRENT_PAGE) + ";includeViewParams=true";
         }
         String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         log("setDisconnected - " + employee.getFirstName() + " on " + viewId + "?includeViewParams=true");
         state = State.DISCONNECTED;
         employee = null;
-        return Navigations.redirect("cv.xhtml") + ";includeViewParams=true";
+        return Navigations.redirect(Constants.CURRENT_PAGE) + ";includeViewParams=true";
     }
 
     /**

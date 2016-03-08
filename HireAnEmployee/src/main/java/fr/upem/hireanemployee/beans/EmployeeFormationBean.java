@@ -447,9 +447,9 @@ public class EmployeeFormationBean extends Logger {
     }
 
     /**
-     * @return The number of currently shown/visible experience by this very bean.
+     * @return The number of currently shown/visible formation by this very bean.
      * This is needed since the life cycle of jsf needs to perform indexing multiple
-     * times on the same number of forms, often. So we keep deleted experienceController
+     * times on the same number of forms, often. So we keep deleted formationController
      * until a new total AJAX refresh of the entire list (new indexing).
      */
     public int nbOfExperienceShown() {
@@ -457,7 +457,7 @@ public class EmployeeFormationBean extends Logger {
         for (FormationController f : formations) {
             size += f.isRemoved() ? 0 : 1;
         }
-        log("nbOfExperienceShown - " + size);
+        log("nbOfFormationShown - " + size);
         return size;
     }
 

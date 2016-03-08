@@ -8,4 +8,6 @@ public class Constants {
     public static final String CONNECTION = "connection.xhtml";
 
     public static final String CURRENT_PAGE = "";
+    public static final String SEARCH = "search.xhtml";
+    public static final String ERROR = "404.xhtml";
 }

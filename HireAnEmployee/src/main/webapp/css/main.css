@@ -18,6 +18,21 @@ body {
 
 #body-content {
     animation: opacityin 0.5s linear;
+    padding-top: 201px;
+}
+
+#connection-body-content {
+    animation: opacityin 0.5s linear;
+    padding-top: 0;
+}
+
+#search-body-content {
+    animation: opacityin 0.5s linear;
+    padding-top: 100px;
+}
+
+#search-content {
+    min-height: 400px;
 }
 
 @keyframes opacityin {
@@ -213,8 +228,14 @@ body {
     font-size: 24px;
     font-weight: 700;
     padding: auto 18px;
-    background-color: #2998cd;
+    background-color: rgb(74, 74, 74);
+;
     color: #ffffff;
+    line-height: 14px;
+}
+
+.ee-brand {
+    color: #2998cd;
 }
 
 .navbar-inverse .navbar-nav > li > a,
@@ -298,7 +319,12 @@ p {
 /* BEGIN Top Photo *************/
 
 .top-photo {
-    height: 201px;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    background-color: rgb(228, 235, 240);
+    /*background-color: rgb(74, 74, 74);*/
+    height: 301px;
     align-content: center;
 }
 
@@ -332,7 +358,7 @@ p {
 
 /* Panel-blue transition */
 
-.panel-blue img {
+.panel-blue img#profil {
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -357,12 +383,12 @@ p {
     /* background-color: #FFFFFC; */
 }
 
-.panel-blue img {
+.panel-blue img#profil {
     top: 0;
     position: relative;
 }
 
-.panel-blue:hover img {
+.panel-blue:hover img#profil {
     top: -10px;
     -webkit-box-shadow: 3px 10px 10px rgba(0, 0, 0, .6);
     -moz-box-shadow: 3px 10px 10px rgba(0, 0, 0, .6);
@@ -402,8 +428,14 @@ p {
 /* BEGIN CV left row *************/
 
 #cv-content {
+    /*border-radius: 4px;*/
+    /*border: 1px solid #2eb2f0;*/
     position: relative;
     animation: fadein 0.9s ease-out;
+}
+
+#cv-left-row {
+    /*padding-left: 0;*/
 }
 
 @keyframes fadein {
@@ -971,6 +1003,7 @@ select {
 
 /* END OF System for edition - Description ****/
 
+
 /* BEGIN OF System for edition - MYCV
     Used to edit any content of the cv (except the description)
     When the user is looking at its "own cv".
@@ -1158,9 +1191,6 @@ select {
     /* width: 400px;*/
     background-color: #fff;
     border: 0;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1.5px 1.5px 0.5px;
-    /*-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px 0px;*/
-    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 1.5px 0.5px;
 }
 
 .my-token-hint {
@@ -1232,4 +1262,36 @@ select {
 .main-blue-panel #skills-title,
 .main-blue-panel h1 {
     color: white;
+}
+
+.search-link {
+    background: transparent no-repeat;
+    border: none;
+    font-weight: 700;
+    color: #3290ba;
+}
+
+.search-group-title {
+    margin-bottom: 0;
+}
+
+.search-group-sub-title {
+    font-size: 14px;
+    color: #7d8a9b;
+    margin-bottom: 0;
+}
+
+.search-group-img {
+    max-width: 22%;
+    max-height: 22%;
+}
+
+.search-group .dashed {
+    width: 120%;
+}
+
+@media (max-width: 767px) {
+    .search-group .dashed {
+        width: 100%;
+    }
 }
