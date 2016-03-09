@@ -166,6 +166,15 @@ body {
     font-size: 13px;
 }
 
+/** Search autocomplet **/
+#search-autocomplete {
+    height: 100px;
+    width: 200px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 60px;
+}
+
 .navbar-inverse .form-search .search-query {
     padding-left: 15px;
     border-radius: 0;
@@ -294,6 +303,7 @@ body {
         /* display: none;*/
     }
 }
+
 
 
 /*** COLLAPSE ***/
@@ -902,6 +912,8 @@ body {
     transition: color 0.5s, opacity 0.5s;
 }
 
+
+#description-container .editable div:hover div,
 #description-container:hover .editable div,
 .mycv-editable-container:hover .editable div,
 .cv-bloc-element .show-editable div {
@@ -909,11 +921,13 @@ body {
     transition: background-color 0.5s;
 }
 
+#description-container .editable div:hover,
 .cv-bloc-element .editable div:hover {
     background-color: #caecfc;
     transition: background-color 0.5s;
 }
 
+#description-container .editable div:hover,
 .cv-bloc-element .editable div:hover *,
 .cv-bloc-element .editable div:hover .glyphicon {
     color: #00a9e8;
@@ -1260,8 +1274,17 @@ select {
 
 .my-token *,
 .main-blue-panel #skills-title,
+.main-blue-panel #skills-title-add,
 .main-blue-panel h1 {
     color: white;
+}
+
+#skills-add-editor {
+    padding-top: 8px;
+}
+
+#skills-tokens-group {
+    margin-bottom: 20px;   
 }
 
 .search-link {
@@ -1282,10 +1305,15 @@ select {
 }
 
 .search-group-img {
-    max-width: 22%;
-    max-height: 22%;
+    max-width: 19%;
+    max-height: 19%;
 }
 
+.search-group-competence {
+    color: #43a131;
+    font-weight: 400;
+    font-size: 13px;
+}
 .search-group .dashed {
     width: 120%;
 }

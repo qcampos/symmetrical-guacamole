@@ -32,7 +32,7 @@
                                     <p>#{_skill.name}</p>
 
                                     <!-- If connected allowing click -->
-                                    <c:if test="#{sessionBean.connected}">
+                                    <c:if test="#{sessionBean.connected and sessionBean.id != cvViewedBean.id}">
                                         <h:form prependId="false" p:style="display:inline;">
                                             <h:commandLink action="#{_skill.perform()}" class="my-token-btn">
                                                 <f:ajax execute="@this" render="skill-#{_skill.skillId}"/>
@@ -42,7 +42,7 @@
                                     </c:if>
                                 </div>
                             </div>
-                            <c:if test="#{sessionBean.connected}">
+                            <c:if test="#{sessionBean.connected and sessionBean.id != cvViewedBean.id}">
                                 <div class="col-sm-6 my-token-hint">
                                     <p>#{_skill.hasVoted() ? 'Supprimez la recommendation' : 'Recommendez cette compétence'}</p>
                                 </div>
@@ -58,9 +58,8 @@
             <div class="row"></div>
             <hr class="dashed"/>
 
-            <!-- TODO manages empty skills section.
-            <c:if test="#{employeeFormationBean.nbOfFormationPublic() == 0}">
-                <p><strong>Aucune formation renseignée</strong></p>
+            <c:if test="#{employeeSkillBean.size == 0}">
+                <p class="white" style="padding-left: 15px;"><strong>Aucune formation renseignée</strong></p>
             </c:if> -->
         </div>
     </div>

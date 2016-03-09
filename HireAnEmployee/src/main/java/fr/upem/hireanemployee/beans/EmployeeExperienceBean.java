@@ -232,6 +232,7 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         void updateWrappedExperience(Experience experience) {
+            log("updateWrappedExperience - Cancelling edit " + startDate);
             this.experience = Objects.requireNonNull(experience);
 
             id = experience.getId();
@@ -249,6 +250,7 @@ public class EmployeeExperienceBean extends Logger {
             visibility = experience.getVisibility();
             jobDescription = jobDescription != null ? (jobDescription.isEmpty() ? null : jobDescription) : null;
             removed = false;
+            log("updateWrappedExperience - Cancelling edit END " + startDate);
         }
 
         /**
@@ -315,8 +317,9 @@ public class EmployeeExperienceBean extends Logger {
         }
 
         public void dynamicFields(AjaxBehaviorEvent event) {
-            log("dynamicFields - removed : " + removed + " before test of the fields:" + fieldValidated);
+            log("dynamicFields - removed : " + removed + " before test of the fields:" + fieldValidated + " " + startDate);
             if (removed) return;
+
             fieldValidated = false || validateFields();
             log("dynamicFields - Validation result :  " + fieldValidated);
             if (fieldValidated) {

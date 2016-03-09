@@ -143,7 +143,7 @@ public class EmployeeDescriptionBean extends Logger {
         newFirstName = firstName;
         newLastName = lastName;
         log("updateNames - names " + names);
-        notificationBean.setSuccess("Names updated to : " + newFirstName + " " + newLastName);
+        notificationBean.setSuccess("Nouvelle identitée enregistrée");
         return Constants.CURRENT_PAGE;
     }
 
@@ -156,7 +156,7 @@ public class EmployeeDescriptionBean extends Logger {
         dao.updateProfessionalTitle(employeeDescription, newProfessionalTitle);
         professionalTitle = newProfessionalTitle;
         log("updateTitle - title " + professionalTitle);
-        notificationBean.setSuccess("New Professional title set.");
+        notificationBean.setSuccess("Nouvelle profession enregistrée.");
         return Constants.CURRENT_PAGE;
     }
 
@@ -176,7 +176,7 @@ public class EmployeeDescriptionBean extends Logger {
             dao.updateSector(employeeDescription, newSector);
             this.sector = newSector;
             log("updateCountryAndSector - country " + resultCountry + " sector " + newSector);
-            notificationBean.setSuccess("New Country and Sector set.");
+            notificationBean.setSuccess("Pays et secteurs mis à jour.");
         } catch (IllegalArgumentException e) {
             notificationBean.setError("The value : " + newCountry + " is not correct. " + e.getMessage());
         }

@@ -44,7 +44,6 @@ public class EmployeeFormationBean extends Logger {
     private NotificationBean notificationBean;
 
     // Data fields to edit.
-
     private ArrayList<FormationController> formations;
     private FormationControllerBuilder formationControllerBuilder;
     private SimpleDateFormat yearFormatter;

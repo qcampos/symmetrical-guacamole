@@ -69,6 +69,10 @@ public class EmployeeSkillBean extends Logger {
         }
     }
 
+    public int getSize() {
+        return skillControllers.size();
+    }
+
     // There are !3 updater : One for a relation. One for visitor. One for the owner.
 
 
@@ -96,7 +100,7 @@ public class EmployeeSkillBean extends Logger {
         /**
          * Performs the click action on a skill.
          * If the visitor has already voted, it will be removed.
-         * Otherwise it will add one recommandation to the given skill.
+         * Otherwise it will add one recommendation to the given skill.
          */
         public String perform() {
             log("perform - Visitor " + visitor.getId() + " has voted : " + hasVoted);

@@ -1,0 +1,89 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+    <!-- This is the skills component. Not Editable -->
+
+    <!-- (Skills) -->
+    <div class="panel panel-blue main-blue-panel cv-bloc-element">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <span class="glyphicon glyphicon-send" style="margin-right:8px;top:4px;"></span>Compétences
+            </h1>
+        </div>
+        <div class="panel-body">
+
+            <!-- (Skills handle) -->
+            <div class="">
+                <!-- Skills list -->
+                <h:panelGroup layout="block" class="col-sm-6 col-xs-12" id="skills-tokens-group">
+                    <p id="skills-title"><strong>Compétences informatiques : </strong></p>
+                    <div class="row"></div>
+
+                    <!-- Skills iteration -->
+                    <c:forEach var="_skill" items="#{employeeSkillBean.skillControllers}" varStatus="status">
+
+                        <!-- Skill item -->
+                        <h:panelGroup id="skill-#{_skill.skillId}">
+                            <div class="col-sm-12">
+                                <div class="my-token">
+                                    <div class="my-token-score">#{_skill.level}</div>
+                                    <p>#{_skill.name}</p>
+
+                                    <!-- Removing button -->
+                                    <h:form prependId="false" p:style="display:inline;">
+                                        <h:commandLink action="#{_skill.perform()}" class="my-token-btn">
+                                            <f:ajax execute="@this" render="skill-#{_skill.skillId}"/>
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </h:commandLink>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <div class="row"></div>
+                        <!-- End of Skill item -->
+
+                    </c:forEach>
+                    <!-- End of Skills iteration -->
+
+                </h:panelGroup>
+                <!-- End of Skills list -->
+
+                <!-- Skill editor. Only one instance of this very form allowing
+                 the add of skills. -->
+                <div class="col-sm-6 col-xs-12">
+                    <p id="skills-title-add"><strong>Ajouter une compétence : </strong></p>
+                    <div class="row"></div>
+
+                    <div class="row">
+                        <div class="row-strip col-sm-12" id="skills-add-editor">
+                            <form>
+                                <div class="form-group">
+                                    <select class="form-control" style="height: 36px;">
+                                        <option>Java 10</option>
+                                        <option>C++</option>
+                                        <option>Game design</option>
+                                    </select>
+                                </div>
+                                <div class="row text-center">
+                                    <button class="btn btn-default">Ajouter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row"></div>
+            <hr class="dashed"/>
+
+            <c:if test="#{employeeSkillBean.size == 0}">
+                <p class="white" style="padding-left: 15px;"><strong>Aucune formation renseignée</strong></p>
+            </c:if> -->
+        </div>
+    </div>
+    <!-- (end of Skills) -->
+
+</ui:composition>
+

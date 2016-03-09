@@ -57,7 +57,7 @@ public class InitializationBean extends Logger {
         description = employee.getDescription();
 
         edao.updateCountry(description, Country.FRANCE);
-        edao.updateProfessionalTitle(description, "MSc in Project and Programme Management and Business Development");
+        edao.updateProfessionalTitle(description, "MSc in Management and Business Development");
 
         fdao.createFormation("Master’s Degree, Master of Science in Project and Programme Management and Business Development",
                 "Programme entirely taught in English with in-company projects and assignments. Professional project management certifications: PRINCE 2 and PMI " +

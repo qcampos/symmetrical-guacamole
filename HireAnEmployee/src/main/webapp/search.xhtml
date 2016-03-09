@@ -71,10 +71,14 @@
                                     <div class="search-group-inner">
                                         <h:graphicImage class="col-xs-3 search-group-img" name="img/no-photo.png"
                                                         alt="photo de profil"/>
-                                        <div><a class="search-link" href="#">#{_employee.firstName} #{_employee.lastName}</a></div>
+                                        <div>
+                                            <h:link class="search-link" outcome="cv.xhtml?id=#{_employee.id}">
+                                                #{_employee.firstName} #{_employee.lastName}
+                                            </h:link>
+                                        </div>
                                         <p class="search-group-title">#{_employee.description.professionalTitle}</p>
                                         <p class="search-group-sub-title">#{_employee.description.country.toString()} | #{_employee.description.sector}</p>
-                                        <p class="search-group-competence">Java - 100 recommandations</p>
+                                        <p class="search-group-competence">Meilleur compétence : Java - niveau 100</p>
                                         <div class="row"></div>
                                         <hr class="dashed"/>
                                     </div>

@@ -58,7 +58,7 @@ public class CvViewedBean extends Logger {
         employee = dao.getEmployeeByID(id);
         if (employee == null) {
             // TODO redirect on a special page for unknown employee + search bar.
-            return Navigations.redirect(Constants.ERROR);
+            return "404";
         }
         // Setting fields accordingly.
         employeeDescription = employee.getDescription();
@@ -93,7 +93,7 @@ public class CvViewedBean extends Logger {
             this.id = Long.parseLong(idToParse);
         } catch (NumberFormatException e) {
             log("ERROR setId numberFormat for : " + idToParse);
-            this.id = -1;
+            this.id = 0;
         }
     }
 
