@@ -62,13 +62,14 @@ public class EmployeeSkillBean extends Logger {
         visitorConnected = sessionBean.isConnected();
         if (visitorConnected) visitor = dataDao.getEmployeeByID(sessionBean.getId());
         // Initializing list of available skillsList.
-        skillsList = dataDao.getSkills();
+        skillsList = getSkillsAddable(employeeSkills);
         // Creating list of updaters.
         skillControllers = new ArrayList<>();
         // If we are a visitor, or a visitor connected, using Controllers updater.
         buildSkillControllers(employeeSkills);
         builder = new SkillControllerBuilder();
     }
+
 
     /**
      * Builds a collection of SkillControllers wrapping the given employee's skills.
@@ -98,6 +99,18 @@ public class EmployeeSkillBean extends Logger {
         }
     }
 
+    /**
+     * Returns the list of skills which can be added to the user.
+     */
+    private List<Skill> getSkillsAddable(Collection<SkillAssociation> employeeSkills) {
+        List<Skill> skills = dataDao.getSkills();
+        // Filtering this list.
+        for (SkillAssociation a : employeeSkills) {
+            skills.remove(a.getSkill());
+        }
+        return skills;
+    }
+
     // There are 3 : One for a relation. One for visitor. One for the owner.
 
     /**
@@ -112,7 +125,10 @@ public class EmployeeSkillBean extends Logger {
         public String perform() {
             log("perform (Remover) - Visitor " + visitor.getId());
             dao.removeSkill(employee, skill.getSkill());
-            buildControllerRemovers(employee.getSkills());
+            Collection<SkillAssociation> employeeSkills = employee.getSkills();
+            // New removers and addable skills.
+            buildControllerRemovers(employeeSkills);
+            skillsList = getSkillsAddable(employeeSkills);
             return Constants.CURRENT_PAGE;
         }
     }
@@ -133,8 +149,13 @@ public class EmployeeSkillBean extends Logger {
         @Override
         public String perform() {
             log("perform (Builder) - Visitor " + visitor.getId() + " skill built : " + skillBuilt);
+            // When the user has all the skills and the list is empty, guarding this case.
+            if (skillBuilt == null) return Constants.CURRENT_PAGE;
             dao.addSkill(employee, skillBuilt);
+            Collection<SkillAssociation> employeeSkills = employee.getSkills();
+            // New removers and addable skills.
             buildControllerRemovers(employee.getSkills());
+            skillsList = getSkillsAddable(employeeSkills);
             return Constants.CURRENT_PAGE;
         }
 
