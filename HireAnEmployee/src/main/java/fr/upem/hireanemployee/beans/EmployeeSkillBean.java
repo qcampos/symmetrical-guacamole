@@ -64,16 +64,36 @@ public class EmployeeSkillBean extends Logger {
         skillsList = ddao.getSkills();
         // Creating list of updaters.
         skillControllers = new ArrayList<>();
-        // TODO detect if we are updating (connected) or removing (mySkills) or nothing (visitor).
+        // If we are a visitor, or a visitor connected, using Controllers updater.
+        buildSkillControllers(employeeSkills);
+    }
+
+    /**
+     * Builds a collection of SkillControllers wrapping the given employee's skills.
+     *
+     * @see BaseSkillController
+     */
+    private void buildSkillControllers(Collection<SkillAssociation> employeeSkills) {
         if (!visitorConnected || visitor.getId() != employee.getId()) {
-            for (SkillAssociation association : employeeSkills) {
-                skillControllers.add(new SkillControllerUpdater(association));
-            }
+            buildControllerUpdaters(employeeSkills);
+        } else {
+            // Otherwise, using a controller remover.
+            buildControllerRemovers(employeeSkills);
         }
     }
 
-    public int getSize() {
-        return skillControllers.size();
+    private void buildControllerRemovers(Collection<SkillAssociation> employeeSkills) {
+        skillControllers.clear();
+        for (SkillAssociation association : employeeSkills) {
+            skillControllers.add(new SkillControllerRemover(association));
+        }
+    }
+
+    private void buildControllerUpdaters(Collection<SkillAssociation> employeeSkills) {
+        skillControllers.clear();
+        for (SkillAssociation association : employeeSkills) {
+            skillControllers.add(new SkillControllerUpdater(association));
+        }
     }
 
     // There are !3 updater : One for a relation. One for visitor. One for the owner.
@@ -108,6 +128,23 @@ public class EmployeeSkillBean extends Logger {
         }
     }
 
+    /**
+     * This controller skill allows the suppression of a skill.
+     */
+    public class SkillControllerRemover extends BaseSkillController {
+        public SkillControllerRemover(SkillAssociation skill) {
+            super(skill);
+        }
+
+        @Override
+        public String perform() {
+            log("perform (Remover) - Visitor " + visitor.getId());
+            dao.removeSkill(employee, skill.getSkill());
+            buildControllerRemovers(employee.getSkills());
+            return Constants.CURRENT_PAGE;
+        }
+    }
+
     // TODO make it abstract.
     // Here we are sure that visitor is not null. Otherwise we are in the SkillControllerObserver class.
     public abstract class BaseSkillController extends Logger {
@@ -124,8 +161,7 @@ public class EmployeeSkillBean extends Logger {
             skillId = skill.getSkillId();
             name = skill.getSkill().getName();
             level = skill.getLevel();
-            hasVoted = visitorConnected && skill.hasVoted(visitor) &&
-                    (visitor != null && visitor.getId() != employee.getId());
+            hasVoted = visitorConnected && skill.hasVoted(visitor);
         }
 
 
@@ -180,4 +216,9 @@ public class EmployeeSkillBean extends Logger {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
+
+    public int getSize() {
+        return skillControllers.size();
+    }
+
 }
