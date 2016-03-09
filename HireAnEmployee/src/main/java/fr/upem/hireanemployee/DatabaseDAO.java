@@ -137,8 +137,14 @@ public class DatabaseDAO {
         }
     }
 
-    public Skill getSkillsByName(final String name) {
-        return em.createQuery("SELECT s FROM Skill s WHERE s.name LIKE :name", Skill.class).setParameter("name", "%" + name + "%")
+
+    /**
+     * Finds a skill by its name.
+     * @param name has to be the exact skill's name.
+     * @return the skill found, null otherwise.
+     */
+    public Skill getSkillByName(final String name) {
+        return em.createQuery("SELECT s FROM Skill s WHERE s.name = :name", Skill.class).setParameter("name", name)
                 .getSingleResult();
     }
 
