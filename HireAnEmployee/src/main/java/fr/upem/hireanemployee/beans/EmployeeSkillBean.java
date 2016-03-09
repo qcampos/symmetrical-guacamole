@@ -64,8 +64,11 @@ public class EmployeeSkillBean extends Logger {
         skillsList = ddao.getSkills();
         // Creating list of updaters.
         skillControllers = new ArrayList<>();
-        for (SkillAssociation association : employeeSkills) {
-            skillControllers.add(new BaseSkillController(association));
+        // TODO detect if we are updating (connected) or removing (mySkills) or nothing (visitor).
+        if (!visitorConnected || visitor.getId() != employee.getId()) {
+            for (SkillAssociation association : employeeSkills) {
+                skillControllers.add(new SkillControllerUpdater(association));
+            }
         }
     }
 
@@ -75,33 +78,15 @@ public class EmployeeSkillBean extends Logger {
 
     // There are !3 updater : One for a relation. One for visitor. One for the owner.
 
-
-    // TODO make it abstract.
-    // Here we are sure that visitor is not null. Otherwise we are in the SkillControllerObserver class.
-    public class BaseSkillController extends Logger {
-
-        // Caches for JSF getters.
-        private final SkillAssociation skill;
-        private final String name;
-        private boolean hasVoted; // If the current visitor has voted for this very skill or not.
-        private long skillId;
-        private int level;
-
-        public BaseSkillController(SkillAssociation skill) {
-            this.skill = skill;
-            skillId = skill.getSkillId();
-            name = skill.getSkill().getName();
-            level = skill.getLevel();
-            hasVoted = visitorConnected && skill.hasVoted(visitor) &&
-                    (visitor != null && visitor.getId() != employee.getId());
+    /**
+     * This controller skill allows the update of a skill by voting up or down values.
+     */
+    public class SkillControllerUpdater extends BaseSkillController {
+        public SkillControllerUpdater(SkillAssociation skill) {
+            super(skill);
         }
 
-
-        /**
-         * Performs the click action on a skill.
-         * If the visitor has already voted, it will be removed.
-         * Otherwise it will add one recommendation to the given skill.
-         */
+        @Override
         public String perform() {
             log("perform - Visitor " + visitor.getId() + " has voted : " + hasVoted);
             if (!visitorConnected) return Constants.CURRENT_PAGE;
@@ -121,6 +106,35 @@ public class EmployeeSkillBean extends Logger {
             hasVoted = !hasVoted;
             return Constants.CURRENT_PAGE;
         }
+    }
+
+    // TODO make it abstract.
+    // Here we are sure that visitor is not null. Otherwise we are in the SkillControllerObserver class.
+    public abstract class BaseSkillController extends Logger {
+
+        // Caches for JSF getters.
+        final SkillAssociation skill;
+        final String name;
+        boolean hasVoted; // If the current visitor has voted for this very skill or not.
+        long skillId;
+        int level;
+
+        public BaseSkillController(SkillAssociation skill) {
+            this.skill = skill;
+            skillId = skill.getSkillId();
+            name = skill.getSkill().getName();
+            level = skill.getLevel();
+            hasVoted = visitorConnected && skill.hasVoted(visitor) &&
+                    (visitor != null && visitor.getId() != employee.getId());
+        }
+
+
+        /**
+         * Performs the click action on a skill.
+         * If the visitor has already voted, it will be removed.
+         * Otherwise it will add one recommendation to the given skill.
+         */
+        public abstract String perform();
 
         public String getName() {
             return name;

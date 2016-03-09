@@ -54,13 +54,12 @@
                     </c:forEach>
                     <!-- End of Skills list -->
                 </div>
+                <c:if test="#{employeeSkillBean.size == 0}">
+                    <p class="white" style="padding-left: 15px;"><strong>Aucune compétence renseignée</strong></p>
+                </c:if>
             </div>
             <div class="row"></div>
             <hr class="dashed"/>
-
-            <c:if test="#{employeeSkillBean.size == 0}">
-                <p class="white" style="padding-left: 15px;"><strong>Aucune formation renseignée</strong></p>
-            </c:if> -->
         </div>
     </div>
     <!-- (end of Skills) -->

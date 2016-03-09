@@ -1318,6 +1318,10 @@ select {
     width: 120%;
 }
 
+p.white {
+    color: #ffffff;
+}
+
 @media (max-width: 767px) {
     .search-group .dashed {
         width: 100%;

@@ -34,7 +34,7 @@
                                     <!-- Removing button -->
                                     <h:form prependId="false" p:style="display:inline;">
                                         <h:commandLink action="#{_skill.perform()}" class="my-token-btn">
-                                            <f:ajax execute="@this" render="skill-#{_skill.skillId}"/>
+                                            <f:ajax execute="@this" render="skills-tokens-group"/>
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </h:commandLink>
                                     </h:form>
@@ -60,11 +60,10 @@
                         <div class="row-strip col-sm-12" id="skills-add-editor">
                             <form>
                                 <div class="form-group">
-                                    <select class="form-control" style="height: 36px;">
-                                        <option>Java 10</option>
-                                        <option>C++</option>
-                                        <option>Game design</option>
-                                    </select>
+                                    <h:selectOneMenu class="form-control" p:style="height: 36px;" > <!-- TODO add value = builder.set -->
+                                        <f:selectItems value="#{employeeSkillBean.skillsList}" var="_skill"
+                                                       itemLabel="#{_skill}" itemValue="#{_skill.id}"/> <!-- TODO pass a converter for skill obj -->
+                                    </h:selectOneMenu>
                                 </div>
                                 <div class="row text-center">
                                     <button class="btn btn-default">Ajouter</button>
@@ -77,10 +76,6 @@
             </div>
             <div class="row"></div>
             <hr class="dashed"/>
-
-            <c:if test="#{employeeSkillBean.size == 0}">
-                <p class="white" style="padding-left: 15px;"><strong>Aucune formation renseignée</strong></p>
-            </c:if> -->
         </div>
     </div>
     <!-- (end of Skills) -->
