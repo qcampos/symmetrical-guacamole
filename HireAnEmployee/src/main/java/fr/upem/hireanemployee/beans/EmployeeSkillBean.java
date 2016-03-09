@@ -28,7 +28,7 @@ public class EmployeeSkillBean extends Logger {
     @EJB
     private EmployeeSkillDAO dao;
     @EJB
-    private DatabaseDAO ddao;
+    private DatabaseDAO dataDao;
 
     @ManagedProperty("#{cvViewedBean.employee}")
     private Employee employee;
@@ -40,6 +40,7 @@ public class EmployeeSkillBean extends Logger {
     // Caches for jsf gets & Data fields to edit.
     private List<Skill> skillsList;
     private List<BaseSkillController> skillControllers;
+    private SkillControllerBuilder builder;
     // Visitor data.
     private Employee visitor;
     private boolean visitorConnected;
@@ -59,13 +60,14 @@ public class EmployeeSkillBean extends Logger {
         CollectionsSort.sortSkillByLevel(employeeSkills);
         // Setting right now the visitor ids to determine skills' states.
         visitorConnected = sessionBean.isConnected();
-        if (visitorConnected) visitor = ddao.getEmployeeByID(sessionBean.getId());
+        if (visitorConnected) visitor = dataDao.getEmployeeByID(sessionBean.getId());
         // Initializing list of available skillsList.
-        skillsList = ddao.getSkills();
+        skillsList = dataDao.getSkills();
         // Creating list of updaters.
         skillControllers = new ArrayList<>();
         // If we are a visitor, or a visitor connected, using Controllers updater.
         buildSkillControllers(employeeSkills);
+        builder = new SkillControllerBuilder();
     }
 
     /**
@@ -96,7 +98,54 @@ public class EmployeeSkillBean extends Logger {
         }
     }
 
-    // There are !3 updater : One for a relation. One for visitor. One for the owner.
+    // There are 3 : One for a relation. One for visitor. One for the owner.
+
+    /**
+     * This controller skill allows the suppression of a skill.
+     */
+    public class SkillControllerRemover extends BaseSkillController {
+        public SkillControllerRemover(SkillAssociation skill) {
+            super(skill);
+        }
+
+        @Override
+        public String perform() {
+            log("perform (Remover) - Visitor " + visitor.getId());
+            dao.removeSkill(employee, skill.getSkill());
+            buildControllerRemovers(employee.getSkills());
+            return Constants.CURRENT_PAGE;
+        }
+    }
+
+
+    /**
+     * This controller skill allows the build of a new skill.
+     */
+    public class SkillControllerBuilder extends BaseSkillController {
+        // The handle on the new skill to build.
+        private Skill skillBuilt;
+
+        public SkillControllerBuilder() {
+            // Null pattern for this very builder.
+            super();
+        }
+
+        @Override
+        public String perform() {
+            log("perform (Builder) - Visitor " + visitor.getId() + " skill built : " + skillBuilt);
+            dao.addSkill(employee, skillBuilt);
+            buildControllerRemovers(employee.getSkills());
+            return Constants.CURRENT_PAGE;
+        }
+
+        public Skill getSkillBuilt() {
+            return skillBuilt;
+        }
+
+        public void setSkillBuilt(Skill skillBuilt) {
+            this.skillBuilt = skillBuilt;
+        }
+    }
 
     /**
      * This controller skill allows the update of a skill by voting up or down values.
@@ -108,7 +157,7 @@ public class EmployeeSkillBean extends Logger {
 
         @Override
         public String perform() {
-            log("perform - Visitor " + visitor.getId() + " has voted : " + hasVoted);
+            log("perform - (Updater) Visitor " + visitor.getId() + " has voted : " + hasVoted);
             if (!visitorConnected) return Constants.CURRENT_PAGE;
             if (!hasVoted) {
                 dao.increaseSkill(employee, name, visitor);
@@ -128,40 +177,36 @@ public class EmployeeSkillBean extends Logger {
         }
     }
 
-    /**
-     * This controller skill allows the suppression of a skill.
-     */
-    public class SkillControllerRemover extends BaseSkillController {
-        public SkillControllerRemover(SkillAssociation skill) {
-            super(skill);
-        }
-
-        @Override
-        public String perform() {
-            log("perform (Remover) - Visitor " + visitor.getId());
-            dao.removeSkill(employee, skill.getSkill());
-            buildControllerRemovers(employee.getSkills());
-            return Constants.CURRENT_PAGE;
-        }
-    }
-
-    // TODO make it abstract.
     // Here we are sure that visitor is not null. Otherwise we are in the SkillControllerObserver class.
     public abstract class BaseSkillController extends Logger {
 
         // Caches for JSF getters.
         final SkillAssociation skill;
         final String name;
+        final long skillId;
         boolean hasVoted; // If the current visitor has voted for this very skill or not.
-        long skillId;
         int level;
 
+        /**
+         * Constructor wrapping the given skill.
+         */
         public BaseSkillController(SkillAssociation skill) {
             this.skill = skill;
             skillId = skill.getSkillId();
             name = skill.getSkill().getName();
             level = skill.getLevel();
-            hasVoted = visitorConnected && skill.hasVoted(visitor);
+            hasVoted = visitorConnected && (visitor != null && skill.hasVoted(visitor));
+        }
+
+        /**
+         * Null pattern constructor.
+         */
+        public BaseSkillController() {
+            this.skill = null;
+            skillId = -1;
+            name = "skill_name";
+            level = 0;
+            hasVoted = false;
         }
 
 
@@ -221,4 +266,7 @@ public class EmployeeSkillBean extends Logger {
         return skillControllers.size();
     }
 
+    public SkillControllerBuilder getBuilder() {
+        return builder;
+    }
 }

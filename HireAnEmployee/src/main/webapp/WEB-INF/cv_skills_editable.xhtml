@@ -15,7 +15,7 @@
         <div class="panel-body">
 
             <!-- (Skills handle) -->
-            <div class="">
+            <h:panelGroup layout="block" id="skill-panel">
                 <!-- Skills list -->
                 <h:panelGroup layout="block" class="col-sm-6 col-xs-12" id="skills-tokens-group">
                     <p id="skills-title"><strong>Compétences informatiques : </strong></p>
@@ -58,22 +58,33 @@
 
                     <div class="row">
                         <div class="row-strip col-sm-12" id="skills-add-editor">
-                            <form>
+                            <h:form prependId="false">
+
                                 <div class="form-group">
-                                    <h:selectOneMenu class="form-control" p:style="height: 36px;" > <!-- TODO add value = builder.set -->
+                                    <!-- Select of new skills, using a SkillConverter -->
+                                    <h:selectOneMenu class="form-control" converter="#{skillConverter}"
+                                                     value="#{employeeSkillBean.builder.skillBuilt}"
+                                                     p:style="height: 36px;">
                                         <f:selectItems value="#{employeeSkillBean.skillsList}" var="_skill"
-                                                       itemLabel="#{_skill}" itemValue="#{_skill.id}"/> <!-- TODO pass a converter for skill obj -->
+                                                       itemLabel="#{_skill.name}" itemValue="#{_skill}"/>
                                     </h:selectOneMenu>
+                                    <!-- End of Select of new skills -->
                                 </div>
+
                                 <div class="row text-center">
-                                    <button class="btn btn-default">Ajouter</button>
+                                    <!-- Add button -->
+                                    <h:commandButton type="submit" class="btn btn-default" value="Ajouter"
+                                                     action="#{employeeSkillBean.builder.perform()}">
+                                        <f:ajax execute="@form" render="skill-panel" resetValues="true"/>
+                                    </h:commandButton>
+                                    <!-- End of Save Button -->
                                 </div>
-                            </form>
+                            </h:form>
                         </div>
                     </div>
                 </div>
 
-            </div>
+            </h:panelGroup>
             <div class="row"></div>
             <hr class="dashed"/>
         </div>

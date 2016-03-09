@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -138,8 +137,9 @@ public class DatabaseDAO {
         }
     }
 
-    public List<Skill> getSkillsByName(final String name) {
-        return em.createQuery("SELECT s FROM Skill s WHERE s.name LIKE :name").setParameter("name", "%" + name + "%").getResultList();
+    public Skill getSkillsByName(final String name) {
+        return em.createQuery("SELECT s FROM Skill s WHERE s.name LIKE :name", Skill.class).setParameter("name", "%" + name + "%")
+                .getSingleResult();
     }
 
     public void cleanAll() {
