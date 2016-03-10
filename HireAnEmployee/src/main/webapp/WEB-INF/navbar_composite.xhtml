@@ -42,13 +42,12 @@
                                     <div class="form-search search-only input-group">
                                         <div class="input-group form-search">
                                                 <span class="input-group-btn">
-                                                <a type="submit" class="btn btn-warning" data-type="last">
-                                                    Advanced
-                                                </a>
+                                                <h:link class="btn btn-warning" data-type="last" outcome="search">
+                                                    Filtres
+                                                </h:link>
                                                     <h:commandButton style="position: absolute; left: -9999px;" type="submit" class="btn btn-warning"
-                                                                     value="Advanced" p:data-type="last" action="#{searchBean.performSearch}">
+                                                                     value="Filtres" p:data-type="last" action="#{searchBean.performSearch}">
                                                     <f:ajax execute="@form"/>
-                                                   <!-- <span class="glyphicon glyphicon-search"></span>-->
                                                 </h:commandButton>
                                             </span>
                                             <h:inputText p:type="text" value="#{searchBean.search}" class="form-control search-query"

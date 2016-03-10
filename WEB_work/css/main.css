@@ -79,7 +79,6 @@ body {
 }
 
 
-
 /*
 .navbar-inverse .navbar-brand {
     -webkit-border-radius: 0 0 0 4px;
@@ -1414,6 +1413,10 @@ input[type="checkbox"].search-checkbox {
     padding-bottom: 4px;
     height: 36px;
     border-radius: 4px;
+}
+
+#advanced-filter input[type=submit] {
+    margin-left: 3px;
 }
 
 p.white {

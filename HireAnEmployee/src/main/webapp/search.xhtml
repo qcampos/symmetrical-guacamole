@@ -89,39 +89,42 @@
                             <!-- Advanced Filter -->
                             <div class="col-sm-3" id="advanced-filter">
                                 <!-- Form for place -->
-                                <h:form>
+                                <h:form prependId="false">
                                     <label class="control-label">Lieu </label>
                                     <div class="form-group">
-                                        <h:form>
-                                            <ul class="search-ul-list">
-                                                <li>
-                                                    <h:form>
-                                                        <input type="checkbox" class="search-checkbox"/>Italie
-                                                    </h:form>
-                                                </li>
-                                                <li>
-                                                    <h:form>
-                                                        <input type="checkbox" class="search-checkbox"/>Norvège
-                                                    </h:form>
-                                                </li>
-                                                <li>
-                                                    <h:form>
-                                                        <input type="checkbox" class="search-checkbox"/>USA
-                                                    </h:form>
-                                                </li>
-                                            </ul>
-                                        </h:form>
+                                        <ul class="search-ul-list">
+                                            <c:forEach var="_countrySelectedWrapper"
+                                                       items="#{searchBean.countriesSelected}">
+                                                <h:panelGroup layout="bloc" rendered="#{not _countrySelectedWrapper.dead}">
+                                                    <li>
+                                                        <h:selectBooleanCheckbox
+                                                                id="country-select-#{_countrySelectedWrapper.get().name()}"
+                                                                type="checkbox" value="true" p:checked="checked"
+                                                                class="search-checkbox">
+                                                            <f:ajax event="click"
+                                                                    listener="#{searchBean.removeCountry(_countrySelectedWrapper)}"
+                                                                    render="@form"/>
+                                                        </h:selectBooleanCheckbox>#{_countrySelectedWrapper.get().toString()}
+                                                    </li>
+                                                </h:panelGroup>
+                                            </c:forEach>
+                                        </ul>
                                     </div>
 
-                                    <!-- Filter's country -->
+                                    <!-- Select for country -->
                                     <div class="form-group">
-                                        <h:selectOneMenu styleClass="form-control" p:style="height: 36px;">
+                                        <h:selectOneMenu id="select-country-filter" value="#{searchBean.countryAdded}"
+                                                         styleClass="form-control" converter="countryConverter"
+                                                         p:style="height: 36px;">
                                             <f:selectItems value="#{searchBean.countries}" var="_country"
-                                                    itemLabel="#{_country}" itemValue="#{_country.name()}"/>
+                                                           itemLabel="#{_country}" itemValue="#{_country.name()}"/>
                                         </h:selectOneMenu>
-                                        <a class="btn btn-default">+</a>
+                                        <h:commandButton type="submit" class="btn btn-default"
+                                                         action="#{searchBean.addCountry}" value="+">
+                                            <f:ajax render="@form" execute="select-country-filter"/>
+                                        </h:commandButton>
                                     </div>
-                                    <!-- End of Filter's country -->
+                                    <!-- End of Select for country -->
                                 </h:form>
                                 <div class="row"></div>
                                 <hr class="dashed"/>

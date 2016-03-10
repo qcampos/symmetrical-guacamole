@@ -1,4 +1,4 @@
-package fr.upem.hireanemployee.beans;
+package fr.upem.hireanemployee.converters;
 
 import fr.upem.hireanemployee.DatabaseDAO;
 import fr.upem.hireanemployee.Logger;
@@ -22,7 +22,6 @@ public class SkillConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Logger.log("[BEAN] Type of converted : " + s, Logger.BEAN);
         return  dao.getSkillByName(s);
     }
 
