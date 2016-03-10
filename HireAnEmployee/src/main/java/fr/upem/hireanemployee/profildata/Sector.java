@@ -2,6 +2,7 @@ package fr.upem.hireanemployee.profildata;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -13,7 +14,7 @@ public class Sector {
     // Recognized by the application to be a valid default value.
     public static final String DEFAULT_NAME = "---";
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
 
