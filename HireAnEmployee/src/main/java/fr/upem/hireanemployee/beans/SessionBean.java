@@ -4,14 +4,10 @@ import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.navigation.Navigations;
-import fr.upem.hireanemployee.profildata.EmployeeDescription;
-import fr.upem.hireanemployee.profildata.Experience;
-import org.omg.PortableInterceptor.DISCARDING;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import java.util.Collection;
 
 /**
  * Created by Baxtalou on 21/02/2016.

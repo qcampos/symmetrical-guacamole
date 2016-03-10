@@ -38,13 +38,14 @@
 
     <!-- Login filter -->
     <filter>
-        <filter-name>CVFilter</filter-name>
-        <filter-class>fr.upem.hireanemployee.navigation.CVFilter</filter-class>
+        <filter-name>RequestFilter</filter-name>
+        <filter-class>fr.upem.hireanemployee.navigation.RequestFilter</filter-class>
     </filter>
-    <!-- Set the login filter to secure all the pages in the /secured/* path of the application  -->
+    <!-- Set the login filter to secure all the pages in the *.xhtml path of the application
+    or managed by the Faces Servlet in general. -->
     <filter-mapping>
-        <filter-name>CVFilter</filter-name>
-        <url-pattern>*.xhtml</url-pattern>
+        <filter-name>RequestFilter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
 
     <!-- Cv filter -->

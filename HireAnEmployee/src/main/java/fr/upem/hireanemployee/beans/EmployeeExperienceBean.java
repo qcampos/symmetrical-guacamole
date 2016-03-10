@@ -55,7 +55,7 @@ public class EmployeeExperienceBean extends Logger {
         log("init - experiences " + originalExperiences);
 
         // Security log - insanity check.
-        if (originalExperiences == null) {
+        if (employee == null) {
             originalExperiences = new ArrayList<>();
             log("The current experiences are null employee : " + employee.getId());
         }

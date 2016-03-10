@@ -5,9 +5,7 @@ import fr.upem.hireanemployee.Employee;
 import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.navigation.Navigations;
-import fr.upem.hireanemployee.profildata.EmployeeDescription;
-import fr.upem.hireanemployee.profildata.Experience;
-import fr.upem.hireanemployee.profildata.Formation;
+import fr.upem.hireanemployee.profildata.*;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -98,7 +96,13 @@ public class CvViewedBean extends Logger {
     }
 
     public Employee getEmployee() {
-        return employee;
+        // Java null pattern. This case is to prevent unusual problems like pressing the back button.
+        // Jsf does not automatically save form's indexes valid even if it keeps the page's state.
+        // We have to implement a post-get-redirect to pass get values in the back direction in the near future.
+
+        // EDIT : Setting no cache works on every browser except Safari 9.0.3.
+        // So we have to put the null pattern.
+        return employee == null ? new Employee("", "", "", Country.NONE, new Sector(Sector.DEFAULT_NAME), "", "") : employee;
     }
 
     public EmployeeDescription getEmployeeDescription() {

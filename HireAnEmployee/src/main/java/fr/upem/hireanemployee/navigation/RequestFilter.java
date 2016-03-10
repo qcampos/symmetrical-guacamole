@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Baxtalou on 01/03/2016.
+ * Performs checks for session expired, and tells the client's browser to no cache its
+ * Web pages (when using the back button for example).
  */
-public class CVFilter extends Logger implements Filter {
+public class RequestFilter extends Logger implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -30,7 +32,13 @@ public class CVFilter extends Logger implements Filter {
             return;
         }
 
+        // Telling the client's browser to not cache JSF dynamic web pages.
+        HttpServletResponse res = (HttpServletResponse) response;
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        res.setDateHeader("Expires", 0); // Proxies.
         chain.doFilter(request, response);
+
     }
 
     @Override

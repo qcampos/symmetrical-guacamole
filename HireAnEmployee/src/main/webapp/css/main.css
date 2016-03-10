@@ -79,6 +79,7 @@ body {
 }
 
 
+
 /*
 .navbar-inverse .navbar-brand {
     -webkit-border-radius: 0 0 0 4px;
@@ -158,15 +159,29 @@ body {
     border: 0;
 }
 
-.navbar-inverse .form-search .input-group input {
-    padding-right: 4px;
+.navbar-inverse input[type="submit"] {
+    height: 34px;
+    margin: 0;
+    font-weight: bold;
+    padding: 6px 12px;
     margin-right: 17px;
-    padding-left: 4px;
-    width: 200px;
-    font-size: 13px;
 }
 
+.navbar-inverse span.input-group-btn {
+    vertical-align: top;
+    height: 34px;
+    position: relative;
+}
+
+.navbar-inverse div.input-group.form-search {
+    padding: 0;
+    height: 34px;
+    margin: 0;
+}
+
+
 /** Search autocomplet **/
+
 #search-autocomplete {
     height: 100px;
     width: 200px;
@@ -303,7 +318,6 @@ body {
         /* display: none;*/
     }
 }
-
 
 
 /*** COLLAPSE ***/
@@ -912,7 +926,6 @@ body {
     transition: color 0.5s, opacity 0.5s;
 }
 
-
 #description-container .editable div:hover div,
 #description-container:hover .editable div,
 .mycv-editable-container:hover .editable div,
@@ -1305,8 +1318,8 @@ select {
 }
 
 .search-group-img {
-    max-width: 19%;
-    max-height: 19%;
+    max-width: 17%;
+    max-height: 17%;
 }
 
 .search-group-competence {
@@ -1314,16 +1327,94 @@ select {
     font-weight: 400;
     font-size: 13px;
 }
-.search-group .dashed {
-    width: 120%;
-}
 
-p.white {
-    color: #ffffff;
+.search-group .dashed {
+    width: 110%;
 }
 
 @media (max-width: 767px) {
     .search-group .dashed {
         width: 100%;
     }
+}
+
+#search-panel-hint-step {
+    color: white;
+    max-height: 410px;
+    overflow: hidden;
+    opacity: 1;
+    padding: 0;
+    transition: max-height 0.8s ease-out, opacity 0.3s linear;
+}
+
+#search-panel-hint-content {
+    max-width: 580px;
+    margin: auto auto;
+}
+
+#search-panel-hint-content div {
+    display: inline-block;
+    float: none;
+    clear: both;
+    max-height: 70px;
+    max-width: 280px;
+}
+
+#search-panel-hint-step.closeAnimation {
+    max-height: 0;
+    opacity: 0;
+}
+
+.employee-add-cvlist {
+    top: 60px;
+    padding: 5px;
+    right: 0;
+    position: absolute;
+    background-color: #ffffff;
+    width: 100px;
+    height: 100px;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #b2b6bc;
+    box-shadow: 0 1.5px 1.5px rgba(0, 0, 0, .5);
+}
+
+.employee-add-cvlist .form-group {
+    margin-bottom: 4px;
+}
+
+.search-ul-list {
+    list-style-type: none;
+    padding-left: 4px;
+    font-size: 14px;
+}
+
+input[type="checkbox"].search-checkbox {
+    /*Desired sz*/
+    margin-right: 5px;
+    padding: 0 0 100px;
+    cursor: pointer;
+}
+
+#advanced-filter select {
+    width: 120px;
+    font-size: 12px;
+    font-weight: 600;
+    height: 20px;
+    display: inline;
+}
+
+#advanced-filter .dashed {
+    margin-top: 10px;
+}
+
+#advanced-filter input[type="text"] {
+    display: inline-block;
+    width: 60px;
+    padding-bottom: 4px;
+    height: 36px;
+    border-radius: 4px;
+}
+
+p.white {
+    color: #ffffff;
 }

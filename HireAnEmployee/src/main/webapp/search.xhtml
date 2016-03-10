@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 
 <!-- Head cartridge -->
@@ -29,17 +29,13 @@
             <ui:param name="notifierBean" value="connectionBean"/>
         </ui:include>
 
+        <!-- Javascript data for the search page -->
+        <h:outputScript library="js" name="my_search_bundle.js"/>
+
     </h:panelGroup>
 
 
     <div id="search-body-content">
-        <!-- (Wall Photo section) -->
-        <div class="top-photo">
-            <div class="container text-center">
-                <h4><a href="#"><span class="glyphicon glyphicon-camera"></span>Ajouter une photo d'arrière plan</a>
-                </h4>
-            </div>
-        </div>
 
         <div class="container">
 
@@ -50,18 +46,149 @@
                 <!-- (left row) -->
                 <div class="col-md-12" id="cv-left-row">
 
-                    <div class="row"></div>
-                    <!-- (descripton) -->
 
+                    <!-- Hint alert -->
+                    <div class="alert alert-info alert-dismissable" id="search-panel-hint-step">
+                        <div style="padding:15px 40px 15px 15px; display:block;">
+                            <!-- Hack because padding transition are too slow @see css search-panel -->
+                            <button type="button" class="close" onclick="closeAnimation('search-panel-hint-step');">×
+                            </button>
+                            <div class="text-left" id="search-panel-hint-content">
+                                <div class="col-sm-6 col-xs-12">
+                                    <span class="number"
+                                          style="float:left; font-size:500%;margin-top:-22px;margin-right:4px">1</span>
+                                    <p>Améliorez vos <b>filtres</b> et trouvez les profils répondant à vos attentes.</p>
+                                </div>
+                                <div class="col-sm-6 col-sx-12">
+                                    <span class="number"
+                                          style="float:left; font-size:500%;margin-top:-22px;margin-right:4px;">2</span>
+                                    <p>Ajoutez les employés qui vous conviennent à vos <b>listes de curriculum vitae</b>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Hint alert -->
+
+                    <div class="row"></div>
+
+                    <!-- Main panel -->
                     <div class="panel panel-blue">
+                        <!-- Heading -->
                         <div class="panel-heading">
                             <h1 class="panel-title">
                                 <span class="glyphicon glyphicon-search" style="margin-right:8px;top:5px;">
                                 </span>Résultats de la recherche
                             </h1>
                         </div>
+                        <!-- End of Heading -->
+
+                        <!-- Begin of the search body -->
                         <div class="panel-body">
 
+                            <!-- Advanced Filter -->
+                            <div class="col-sm-3" id="advanced-filter">
+                                <!-- Form for place -->
+                                <h:form>
+                                    <label class="control-label">Lieu </label>
+                                    <div class="form-group">
+                                        <h:form>
+                                            <ul class="search-ul-list">
+                                                <li>
+                                                    <h:form>
+                                                        <input type="checkbox" class="search-checkbox"/>Italie
+                                                    </h:form>
+                                                </li>
+                                                <li>
+                                                    <h:form>
+                                                        <input type="checkbox" class="search-checkbox"/>Norvège
+                                                    </h:form>
+                                                </li>
+                                                <li>
+                                                    <h:form>
+                                                        <input type="checkbox" class="search-checkbox"/>USA
+                                                    </h:form>
+                                                </li>
+                                            </ul>
+                                        </h:form>
+                                    </div>
+
+                                    <!-- Filter's country -->
+                                    <div class="form-group">
+                                        <h:selectOneMenu styleClass="form-control" p:style="height: 36px;">
+                                            <f:selectItems value="#{searchBean.countries}" var="_country"
+                                                    itemLabel="#{_country}" itemValue="#{_country.name()}"/>
+                                        </h:selectOneMenu>
+                                        <a class="btn btn-default">+</a>
+                                    </div>
+                                    <!-- End of Filter's country -->
+                                </h:form>
+                                <div class="row"></div>
+                                <hr class="dashed"/>
+                                <!-- End of Form for place -->
+
+
+                                <!-- Form for sector -->
+                                <h:form>
+                                    <label class="control-label">Secteur </label>
+                                    <div class="form-group">
+                                        <select class="form-control" style="height: 36px;">
+                                            <option>---</option>
+                                            <option>Informatique</option>
+                                            <option>Game design</option>
+                                            <option>MAO</option>
+                                        </select>
+                                    </div>
+                                </h:form>
+                                <div class="row"></div>
+                                <hr class="dashed"/>
+                                <!-- End of Form for sector -->
+
+                                <!-- Form for skills -->
+                                <h:form>
+                                    <label class="control-label">Compétences </label>
+                                    <div class="form-group">
+                                        <h:form>
+                                            <ul class="search-ul-list">
+                                                <li>
+                                                    <h:form>
+                                                        <input type="checkbox" class="search-checkbox"/>Java - Niv. 100
+                                                    </h:form>
+                                                </li>
+                                                <li>
+                                                    <h:form>
+                                                        <input type="checkbox" class="search-checkbox"/>C++ - Niv. 80
+                                                    </h:form>
+                                                </li>
+                                                <li>
+                                                    <h:form>
+                                                        <input type="checkbox" class="search-checkbox"/>Corba - Niv. 85
+                                                    </h:form>
+                                                </li>
+                                            </ul>
+                                        </h:form>
+                                    </div>
+
+                                    <!-- Select of new skills, using a SkillConverter -->
+                                    <div class="form-group">
+                                        <h:selectOneMenu class="form-control" converter="#{skillConverter}"
+                                                         p:style="height: 36px;">
+                                            <f:selectItems value="#{searchBean.skillList}" var="_skill"
+                                                           itemLabel="#{_skill.name}" itemValue="#{_skill}"/>
+                                        </h:selectOneMenu>
+                                        <input type="text" placeholder="Niveau"/>
+                                        <a class="btn btn-default">+</a>
+                                    </div>
+                                    <!-- End of Select of new skills + button -->
+
+                                </h:form>
+                                <!-- End of Form for skills -->
+
+                            </div>
+                            <!-- End of Advanced Filter -->
+
+
+                            <!-- Search list -->
                             <div class="search-group col-lg-6 col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-8 col-xs-12 ">
                                 <div class="row"></div>
                                 <hr class="dashed"/>
@@ -75,10 +202,41 @@
                                             <h:link class="search-link" outcome="cv.xhtml?id=#{_employee.id}">
                                                 #{_employee.firstName} #{_employee.lastName}
                                             </h:link>
+                                            <h:form style="display:inline;float:right">
+                                                <a data-toggle="collapse"
+                                                   data-target="#employee-0000-add-cvlist">+ Ajouter à </a>
+                                            </h:form>
                                         </div>
                                         <p class="search-group-title">#{_employee.description.professionalTitle}</p>
                                         <p class="search-group-sub-title">#{_employee.description.country.toString()} | #{_employee.description.sector}</p>
                                         <p class="search-group-competence">Meilleur compétence : Java - niveau 100</p>
+
+                                        <!-- List CV -->
+                                        <div id="employee-0000-add-cvlist" class="employee-add-cvlist collapse in">
+                                            <!-- List 1 -->
+                                            <h:form>
+                                                <div class="form-group">
+                                                    <input type="checkbox"/> liste CV1
+                                                </div>
+                                            </h:form>
+                                            <!-- End of List 1 -->
+                                            <!-- List 2 -->
+                                            <h:form>
+                                                <div class="form-group">
+                                                    <input type="checkbox"/> liste CV2
+                                                </div>
+                                            </h:form>
+                                            <!-- End of List 2 -->
+                                            <!-- List 3 -->
+                                            <h:form>
+                                                <div class="form-group">
+                                                    <input type="checkbox"/> liste CV3
+                                                </div>
+                                            </h:form>
+                                            <!-- End of List 3 -->
+                                        </div>
+                                        <!-- End of List CV -->
+
                                         <div class="row"></div>
                                         <hr class="dashed"/>
                                     </div>
