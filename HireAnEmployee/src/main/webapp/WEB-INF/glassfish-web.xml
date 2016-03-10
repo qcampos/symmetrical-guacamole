@@ -5,6 +5,6 @@
     <!-- Web module registered in Glassfish.
     Care ! Distinct between every project -->
     <context-root>/hireanemployee</context-root>
-    <property name="alternatedocroot_1" value="from=/db_images/*
-    dir=/Users/Baxtalou/Documents/Master2/JAVAEE/cv_online/symmetrical-guacamole/HireAnEmployee" />
+    <!--<property name="alternatedocroot_1" value="from=/db_images/*-->
+    <!--dir=/Users/Baxtalou/Documents/Master2/JAVAEE/cv_online/symmetrical-guacamole/HireAnEmployee" />-->
 </glassfish-web-app>
