@@ -90,12 +90,13 @@
                             <div class="col-sm-3" id="advanced-filter">
                                 <!-- Form for place -->
                                 <h:form prependId="false">
-                                    <label class="control-label">Lieu </label>
+                                    <label class="control-label">Lieux </label>
                                     <div class="form-group">
                                         <ul class="search-ul-list">
                                             <c:forEach var="_countrySelectedWrapper"
                                                        items="#{searchBean.countriesSelected}">
-                                                <h:panelGroup layout="bloc" rendered="#{not _countrySelectedWrapper.dead}">
+                                                <h:panelGroup layout="bloc"
+                                                              rendered="#{not _countrySelectedWrapper.dead}">
                                                     <li>
                                                         <h:selectBooleanCheckbox
                                                                 id="country-select-#{_countrySelectedWrapper.get().name()}"
@@ -135,12 +136,10 @@
                                 <h:form>
                                     <label class="control-label">Secteur </label>
                                     <div class="form-group">
-                                        <select class="form-control" style="height: 36px;">
-                                            <option>---</option>
-                                            <option>Informatique</option>
-                                            <option>Game design</option>
-                                            <option>MAO</option>
-                                        </select>
+                                        <h:selectOneMenu value="" styleClass="form-control" p:style="height: 36px;">
+                                            <f:selectItems value="#{searchBean.sectorList}" var="_sector"
+                                                           itemLabel="#{_sector}"/>
+                                        </h:selectOneMenu>
                                     </div>
                                 </h:form>
                                 <div class="row"></div>
@@ -151,38 +150,43 @@
                                 <h:form>
                                     <label class="control-label">Compétences </label>
                                     <div class="form-group">
-                                        <h:form>
-                                            <ul class="search-ul-list">
-                                                <li>
-                                                    <h:form>
-                                                        <input type="checkbox" class="search-checkbox"/>Java - Niv. 100
-                                                    </h:form>
-                                                </li>
-                                                <li>
-                                                    <h:form>
-                                                        <input type="checkbox" class="search-checkbox"/>C++ - Niv. 80
-                                                    </h:form>
-                                                </li>
-                                                <li>
-                                                    <h:form>
-                                                        <input type="checkbox" class="search-checkbox"/>Corba - Niv. 85
-                                                    </h:form>
-                                                </li>
-                                            </ul>
-                                        </h:form>
+                                        <ul class="search-ul-list">
+                                            <c:forEach var="_skillSelectedWrapper"
+                                                       items="#{searchBean.skillSelected}">
+                                                <h:panelGroup layout="bloc"
+                                                              rendered="#{not _skillSelectedWrapper.dead}">
+                                                    <li>
+                                                        <h:selectBooleanCheckbox
+                                                                type="checkbox" value="true" p:checked="checked"
+                                                                class="search-checkbox">
+                                                            <f:ajax event="click"
+                                                                    listener="#{searchBean.removeSkill(_skillSelectedWrapper)}"
+                                                                    render="@form"/>
+                                                        </h:selectBooleanCheckbox>#{_skillSelectedWrapper.get().toString()}
+                                                        #{_skillSelectedWrapper.minLevel eq 0 ? '' :
+                                                                ('- Niv. ').concat(_skillSelectedWrapper.minLevel)}
+                                                    </li>
+                                                </h:panelGroup>
+                                            </c:forEach>
+                                        </ul>
                                     </div>
 
                                     <!-- Select of new skills, using a SkillConverter -->
                                     <div class="form-group">
-                                        <h:selectOneMenu class="form-control" converter="#{skillConverter}"
+                                        <h:selectOneMenu id="select-skill-filter" value="#{searchBean.skillAdded}"
+                                                         styleClass="form-control" converter="#{skillConverter}"
                                                          p:style="height: 36px;">
                                             <f:selectItems value="#{searchBean.skillList}" var="_skill"
-                                                           itemLabel="#{_skill.name}" itemValue="#{_skill}"/>
+                                                           itemLabel="#{_skill}" itemValue="#{_skill.toString()}"/>
                                         </h:selectOneMenu>
-                                        <input type="text" placeholder="Niveau"/>
-                                        <a class="btn btn-default">+</a>
+                                        <h:inputText id="input-skill-level-filter" type="text"
+                                                     value="#{searchBean.skillAddedMinLevel}" p:placeholder="Niveau"/>
+                                        <h:commandButton type="submit" class="btn btn-default" value="+"
+                                                         action="#{searchBean.addSkill}">
+                                            <f:ajax render="@form"
+                                                    execute="select-skill-filter input-skill-level-filter"/>
+                                        </h:commandButton>
                                     </div>
-                                    <!-- End of Select of new skills + button -->
 
                                 </h:form>
                                 <!-- End of Form for skills -->

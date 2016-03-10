@@ -6,13 +6,12 @@ import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.converters.FormControlWrapper;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.navigation.Navigations;
-import fr.upem.hireanemployee.profildata.*;
+import fr.upem.hireanemployee.profildata.Country;
+import fr.upem.hireanemployee.profildata.Skill;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,15 +33,14 @@ public class SearchBean extends Logger {
     private List<Employee> employees;
     private List<Country> countries;
     private List<Skill> skillList;
+    private List<String> sectorList;
     private List<FormControlWrapper<Country>> countriesSelected;
+    private List<SkillFilterBundle> skillSelected;
 
     // Added values to current research.
     private Country countryAdded;
-    private Country countryRemoved;
-
-    public void listener(ValueChangeEvent ajaxBehaviorEvent) {
-        log("listener - " + ajaxBehaviorEvent + " " + ajaxBehaviorEvent.getNewValue());
-    }
+    private Skill skillAdded;
+    private int skillAddedMinLevel;
 
     public String searchActionInit() {
         // Guard needed because of viewParam Bug with ajax in the API 2.2
@@ -62,7 +60,11 @@ public class SearchBean extends Logger {
         // Country selected.
         countriesSelected = new ArrayList<>();
         countryAdded = Country.NONE;
-        dao.getSectorList();
+        // Sectors.
+        sectorList = dao.getSectorList();
+        // Skills selected.
+        skillSelected = new ArrayList<>();
+        skillAdded = null;
         log("init - search result number " + employees.size());
         return Constants.CURRENT_PAGE;
     }
@@ -84,17 +86,80 @@ public class SearchBean extends Logger {
         return Constants.CURRENT_PAGE;
     }
 
+    public String addSkill() {
+        log("addSkill - adding " + skillAdded);
+        // Checking if the bundle already exists. If so, turning it to alive.
+        // Otherwise, adding it to the skills selected.
+        for (SkillFilterBundle bundle : skillSelected) {
+            if (bundle.get().equals(skillAdded)) {
+                bundle.setDead(false);
+                log("addSkill - " + skillAdded + " min level of : " + skillAddedMinLevel + " turned alive.");
+                return Constants.CURRENT_PAGE;
+            }
+        }
+
+        log("addSkill - " + skillAdded + " min level of : " + skillAddedMinLevel + " added.");
+        skillSelected.add(new SkillFilterBundle(new FormControlWrapper<>(skillAdded), skillAddedMinLevel));
+        return Constants.CURRENT_PAGE;
+    }
+
     public String removeCountry(FormControlWrapper<Country> wrapper) {
-        log("removeCountry - removing " + wrapper.get());
-        wrapper.setDead(true);
-        // countriesSelected.lastIndexOf(wrapper);
-        // countriesSelected.remove(wrapper);
+        if (wrapper != null) {
+            log("removeCountry - removing " + wrapper.get());
+            wrapper.setDead(true);
+        }
+        return Constants.CURRENT_PAGE;
+    }
+
+    public String removeSkill(SkillFilterBundle wrapper) {
+        if (wrapper != null) {
+            log("removeCountry - removing " + wrapper.get());
+            wrapper.setDead(true);
+        }
         return Constants.CURRENT_PAGE;
     }
 
     public String performSearch() {
         log("performSearch - click " + search);
         return Navigations.redirect(Constants.SEARCH) + (search == null ? "" : "search=" + search);
+    }
+
+    @SuppressWarnings("unused")
+    public String performAdvancedSearch() {
+        return Constants.CURRENT_PAGE;
+    }
+
+    /**
+     * Class handling a skill and its minimum level for the advanced search filter.
+     */
+    public class SkillFilterBundle {
+        private final FormControlWrapper<Skill> wrapper;
+        private int minLevel;
+
+        public SkillFilterBundle(FormControlWrapper<Skill> wrapper, int minLevel) {
+            this.wrapper = wrapper;
+            this.minLevel = minLevel;
+        }
+
+        public Skill get() {
+            return wrapper.get();
+        }
+
+        public boolean isDead() {
+            return wrapper.isDead();
+        }
+
+        public void setDead(boolean dead) {
+            wrapper.setDead(dead);
+        }
+
+        public int getMinLevel() {
+            return minLevel;
+        }
+
+        public void setMinLevel(int minLevel) {
+            this.minLevel = minLevel;
+        }
     }
 
     public void setSearch(String search) {
@@ -126,15 +191,38 @@ public class SearchBean extends Logger {
     }
 
     public void setCountryAdded(Country countryAdded) {
-        log("setCountryAdded " + countryAdded);
         this.countryAdded = countryAdded;
     }
 
-    public Country getCountryRemoved() {
-        return countryRemoved;
+    public void setSkillList(List<Skill> skillList) {
+        this.skillList = skillList;
     }
 
-    public void setCountryRemoved(Country countryRemoved) {
-        this.countryRemoved = countryRemoved;
+    public List<SkillFilterBundle> getSkillSelected() {
+        return skillSelected;
+    }
+
+    public void setSkillSelected(List<SkillFilterBundle> skillSelected) {
+        this.skillSelected = skillSelected;
+    }
+
+    public Skill getSkillAdded() {
+        return skillAdded;
+    }
+
+    public void setSkillAdded(Skill skillAdded) {
+        this.skillAdded = skillAdded;
+    }
+
+    public String getSkillAddedMinLevel() {
+        return skillAddedMinLevel == 0 ? "" : Integer.toString(skillAddedMinLevel);
+    }
+
+    public void setSkillAddedMinLevel(int skillAddedMinLevel) {
+        this.skillAddedMinLevel = skillAddedMinLevel;
+    }
+
+    public List<String> getSectorList() {
+        return sectorList;
     }
 }
