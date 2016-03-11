@@ -16,14 +16,16 @@ public class EmployeeSkillDAO extends Logger {
     private EntityManager em;
 
     /**
-     * Creates a skill. And persists it.
+     * Creates a skill and persists it.
      *
-     * @return the current list of skills into the database.
+     * @return the created skill.
      */
-    public void createSkill(String name) {
+    public Skill createSkill(String name) {
         Logger.log("Requested creation of skill : " + name, Logger.DATABASE);
-        em.merge(new Skill(name));
+        Skill skill = new Skill(name);
+        em.merge(skill);
         em.flush();
+        return skill;
     }
 
     /**
