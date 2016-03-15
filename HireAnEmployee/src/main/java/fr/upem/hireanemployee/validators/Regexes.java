@@ -50,6 +50,10 @@ public class Regexes {
         return s.matches(NAME);
     }
 
+    public static String getNum() {
+        return NUM;
+    }
+
     public String getDate() {
         return DATE;
     }

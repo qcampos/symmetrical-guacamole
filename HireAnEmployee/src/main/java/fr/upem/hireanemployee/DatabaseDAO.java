@@ -81,6 +81,7 @@ public class DatabaseDAO {
         }
         // Persist the new employee into the database.
         Employee e = new Employee(firstName, lastName, "", Country.NONE, emptySector, email, encrypt(password));
+        Logger.log("signup - description : " + e.getDescription(), Logger.BEAN); // TODO delete debug.
         em.persist(e);
         em.flush();
         return e;
@@ -140,14 +141,28 @@ public class DatabaseDAO {
 
     /**
      * Finds a skill by its name.
+     *
      * @param name has to be the exact skill's name.
      * @return the skill found, null otherwise.
      */
     public Skill getSkillByName(final String name) {
+        // We know for sure that only query inside the module are done on it. (see usage shortcut).
         return em.createQuery("SELECT s FROM Skill s WHERE s.name = :name", Skill.class).setParameter("name", name)
-                .getSingleResult();
+                .getResultList().get(0);
     }
 
+    public SkillAssociation getEmployeeMaxSkill(final Employee employee) {
+        try {
+            Skill skill = em.createQuery("SELECT s FROM Employee e JOIN e.skills es " +
+                    "JOIN es.skill s ORDER BY es.level DESC", Skill.class)
+                    .setMaxResults(1).getSingleResult();
+            return employee.getSkillAssociation(skill);
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @SuppressWarnings("unused")
     public void cleanAll() {
         em.clear();
     }

@@ -34,7 +34,11 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Collection<SkillAssociation> skills;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "EMPLOYEE_RELATION")
     private Collection<Employee> relations;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "EMPLOYEE_SELECTION1")
+    private Collection<Employee> selection1;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Collection<Formation> formations;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -53,6 +57,7 @@ public class Employee {
         relations = new ArrayList<>();
         formations = new ArrayList<>();
         experiences = new ArrayList<>();
+        selection1 = new ArrayList<>();
     }
 
     public Employee(final String firstName, final String lastName, final String professionalTitle, final Country country, final Sector sector, final String email, final String password,
@@ -148,6 +153,25 @@ public class Employee {
         this.experiences = experience;
     }
 
+    public Collection<Employee> getSelection1() {
+        return selection1;
+    }
+
+    public void setSelection1(Collection<Employee> selection1) {
+        this.selection1 = selection1;
+    }
+
+    public void addToSelection1(Employee employee) {
+        if (selection1.contains(employee)) {
+            return;
+        }
+        selection1.add(employee);
+    }
+
+    public void removeSelection1(Employee employee) {
+        selection1.remove(employee);
+    }
+
     public void addSkill(Skill skill) { // TODO auto delete with an interceptor.
         if (hasSkill(skill)) return;
         SkillAssociation association = new SkillAssociation();
@@ -165,14 +189,19 @@ public class Employee {
      * @return true if the current entity has the given skill, false otherwise.
      */
     private boolean hasSkill(Skill skill) {
+        if (getSkillAssociation(skill) != null) return true;
+        return false;
+    }
+
+    public SkillAssociation getSkillAssociation(Skill skill) {
         for (SkillAssociation association : skills) {
             if (association.getSkillId() == skill.getId()) {
                 Logger.log("[BEAN] ERROR skill " + skill.getName() +
                         " already get by employee " + id, Logger.BEAN);
-                return true;
+                return association;
             }
         }
-        return false;
+        return null;
     }
 
     public void addRelation(Employee relation) {
