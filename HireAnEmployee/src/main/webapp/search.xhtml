@@ -215,8 +215,8 @@
                                                 #{_wrapper.employee.firstName} #{_wrapper.employee.lastName}
                                             </h:link>
                                             <h:form style="display:inline;float:right">
-                                                <h:commandLink p:data-toggle="collapse"
-                                                               p:data-target="#employee-#{_wrapper.employee.id}-add-cvlist">+ Ajouter à </h:commandLink>
+                                                <a data-toggle="collapse"
+                                                   data-target="#employee-#{_wrapper.employee.id}-add-cvlist">+ Ajouter à </a>
                                             </h:form>
                                         </div>
                                         <p class="search-group-title">#{_wrapper.employee.description.professionalTitle}</p>
@@ -230,7 +230,7 @@
 
                                         <!-- List CV -->
                                         <div id="employee-#{_wrapper.employee.id}-add-cvlist"
-                                             class="employee-add-cvlist collapse in">
+                                             class="employee-add-cvlist collapse">
                                             <!-- List 1 -->
                                             <h:form>
                                                 <div class="form-group">
