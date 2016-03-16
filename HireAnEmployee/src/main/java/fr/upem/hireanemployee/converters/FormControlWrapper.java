@@ -50,6 +50,11 @@ public class FormControlWrapper<T> extends Logger {
     }
 
     @Override
+    public String toString() {
+        return wrapped.toString();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // Delegating.
         if (!(obj instanceof FormControlWrapper)) {

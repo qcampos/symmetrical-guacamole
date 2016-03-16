@@ -28,6 +28,8 @@ public class InitializationBean extends Logger {
     private EmployeeExperienceDAO exdao;
     @EJB
     private EmployeeSkillDAO sdao;
+    @EJB
+    private EmployeeSelectionDAO esdao;
 
     public InitializationBean() {
 
@@ -45,9 +47,7 @@ public class InitializationBean extends Logger {
         }
         Employee employee1 = dao.connect("nborie@upem.fr", "pony17");
 
-        EmployeeDescription description = employee1.getDescription();
-        edao.updateSector(description, "Combinatorics");
-        edao.updateSector(description, "Logiciels informatiques");
+        EmployeeDescription description;
 
         if (!dao.emailExists("jmangue@u.com")) {
             dao.signup("Jefferson", "Mangue", "jmangue@u.com", "12345");
@@ -55,7 +55,7 @@ public class InitializationBean extends Logger {
         Employee employee = dao.connect("jmangue@u.com", "12345");
 
         description = employee.getDescription();
-
+        log("init - Description : " + description);
         edao.updateCountry(description, Country.FRANCE);
         edao.updateProfessionalTitle(description, "MSc in Management and Business Development");
 
@@ -86,24 +86,8 @@ public class InitializationBean extends Logger {
         // FIXME Begun the 1 and ended the 31 always. (1 Décembre<->29 Février(problem with 31 Fevrier does not exists).
 
         //Adding skills.
-        sdao.createSkill("JAVA");
-        sdao.createSkill("C");
-        sdao.createSkill("C++");
-        sdao.createSkill("CORBA");
-        sdao.createSkill("Gestion de projet");
-        sdao.createSkill("Big Data");
-        sdao.createSkill("Map Reduce");
-        sdao.createSkill("Java Enterprise Edition 7");
-        sdao.createSkill("Spaghetti Code");
-        List<Skill> skills = dao.getSkills();
-
-        // Don't do that anymore because the database is now initialized.
-//        for (Skill s : skills) {
-//            sdao.addSkill(employee, s);
-//        }
 
         log("init - skills : " + employee.getSkills().size());
-        sdao.removeSkill(employee, skills.get(8));
         sdao.increaseSkill(employee, "JAVA", employee1);
         sdao.increaseSkill(employee, "CORBA", employee1);
         sdao.increaseSkill(employee, "C++", employee1);
@@ -112,6 +96,27 @@ public class InitializationBean extends Logger {
         Employee linus = dao.signup("Linus", "Torvald", "jmangue@test.com", "12345");
         sdao.increaseSkill(employee, "Big Data", linus);
         sdao.increaseSkill(employee, "Big Data", employee1);
+
+
+        /* Selections */
+        esdao.addSelection1(employee, employee1);
+        Employee signup = dao.signup("Lisa", "Ok", "a@az.com", "12345");
+        Employee signup1 = dao.signup("Lisa2", "Ok", "a@az2.com", "12345");
+        Employee signup2 = dao.signup("Lisa3", "Ok", "a@az3.com", "12345");
+        Employee signup3 = dao.signup("Lisa4", "Ok", "a@az4.com", "12345");
+        log("init - employee Lisa : " + signup);
+        esdao.addSelection1(employee, signup);
+        esdao.addSelection1(employee, signup1);
+        esdao.addSelection1(employee, signup2);
+        esdao.addSelection1(employee, signup3);
+        esdao.removeSelection1(employee, signup);
+        esdao.removeSelection1(employee, signup1);
+        esdao.removeSelection1(employee, signup2);
+        esdao.removeSelection1(employee, signup3);
+        esdao.removeSelection1(employee, employee1);
+        esdao.removeSelection1(employee, employee1);
+
+
 
         log("init - skills : " + employee.getSkills().size());
         log("init - " + description.getEmployee().getFirstName());

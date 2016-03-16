@@ -7,7 +7,9 @@ import fr.upem.hireanemployee.converters.FormControlWrapper;
 import fr.upem.hireanemployee.navigation.Constants;
 import fr.upem.hireanemployee.navigation.Navigations;
 import fr.upem.hireanemployee.profildata.Country;
+import fr.upem.hireanemployee.profildata.Sector;
 import fr.upem.hireanemployee.profildata.Skill;
+import fr.upem.hireanemployee.profildata.SkillAssociation;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -30,7 +32,7 @@ public class SearchBean extends Logger {
     // Current search.
     private String search;
     private boolean initialized;
-    private List<Employee> employees;
+    private List<EmployeeSearchResult> employees;
     private List<Country> countries;
     private List<Skill> skillList;
     private List<String> sectorList;
@@ -40,7 +42,8 @@ public class SearchBean extends Logger {
     // Added values to current research.
     private Country countryAdded;
     private Skill skillAdded;
-    private int skillAddedMinLevel;
+    private String skillAddedMinLevel;
+    private String sectorAdded;
 
     public String searchActionInit() {
         // Guard needed because of viewParam Bug with ajax in the API 2.2
@@ -50,9 +53,7 @@ public class SearchBean extends Logger {
         initialized = true;
         log("searchActionInit - search " + search);
         // Retrieving the results in the database.
-        // TODO switch on research type.
-        // TODO on null research special message info (no result or take relations).
-        employees = dao.searchEmployeeByName(search);
+        employees = getEmployeesSearchResults();
         // Getting the list of country.
         countries = dao.getCountries();
         // Getting the list of skills.
@@ -65,8 +66,25 @@ public class SearchBean extends Logger {
         // Skills selected.
         skillSelected = new ArrayList<>();
         skillAdded = null;
+        // Setting default sector.
+        sectorAdded = Sector.DEFAULT_NAME;
         log("init - search result number " + employees.size());
         return Constants.CURRENT_PAGE;
+    }
+
+    /**
+     * Creates a wrapper for employees founds in the research, with all their informations
+     * put in cache.
+     *
+     * @return the list created.
+     */
+    private List<EmployeeSearchResult> getEmployeesSearchResults() {
+        List<Employee> employees = dao.searchEmployeeByName(search);
+        List<EmployeeSearchResult> employeesResults = new ArrayList<>();
+        for (Employee e : employees) {
+            employeesResults.add(new EmployeeSearchResult(e));
+        }
+        return employeesResults;
     }
 
     public String addCountry() {
@@ -76,30 +94,51 @@ public class SearchBean extends Logger {
         // Otherwise, adding it to the countries selected if not equals to NONE.
         int index;
         if ((index = countriesSelected.indexOf(wrapper)) != -1) {
-            countriesSelected.get(index).setDead(false);
+            FormControlWrapper<Country> added = countriesSelected.get(index);
+            if (added.isDead()) {
+                added.setDead(false);
+                performAdvancedSearch();
+            }
         } else {
             if (countryAdded != Country.NONE) {
                 log("addCountry - " + countryAdded + " added.");
                 countriesSelected.add(wrapper);
+                performAdvancedSearch();
             }
         }
+        log("addCountry - end");
         return Constants.CURRENT_PAGE;
     }
 
     public String addSkill() {
-        log("addSkill - adding " + skillAdded);
+        log("addSkill - adding " + skillAdded + " " + skillAddedMinLevel);
+        // Retrieving integer value.
+        int minLevelValue;
+        try {
+            minLevelValue = Integer.parseInt(skillAddedMinLevel);
+        } catch (NumberFormatException e) {
+            log("[ERROR] addSkill - " + skillAdded + " min level of : " + skillAddedMinLevel + " not added.");
+            skillAddedMinLevel = null;
+            return Constants.CURRENT_PAGE;
+        }
         // Checking if the bundle already exists. If so, turning it to alive.
         // Otherwise, adding it to the skills selected.
         for (SkillFilterBundle bundle : skillSelected) {
             if (bundle.get().equals(skillAdded)) {
+                // Values already handled.
+                if (!bundle.isDead() && bundle.getMinLevel() == minLevelValue) {
+                    return Constants.CURRENT_PAGE;
+                }
                 bundle.setDead(false);
+                bundle.setMinLevel(minLevelValue);
+                performAdvancedSearch();
                 log("addSkill - " + skillAdded + " min level of : " + skillAddedMinLevel + " turned alive.");
                 return Constants.CURRENT_PAGE;
             }
         }
-
+        skillSelected.add(new SkillFilterBundle(new FormControlWrapper<>(skillAdded), minLevelValue));
+        performAdvancedSearch();
         log("addSkill - " + skillAdded + " min level of : " + skillAddedMinLevel + " added.");
-        skillSelected.add(new SkillFilterBundle(new FormControlWrapper<>(skillAdded), skillAddedMinLevel));
         return Constants.CURRENT_PAGE;
     }
 
@@ -107,6 +146,7 @@ public class SearchBean extends Logger {
         if (wrapper != null) {
             log("removeCountry - removing " + wrapper.get());
             wrapper.setDead(true);
+            performAdvancedSearch();
         }
         return Constants.CURRENT_PAGE;
     }
@@ -115,6 +155,7 @@ public class SearchBean extends Logger {
         if (wrapper != null) {
             log("removeCountry - removing " + wrapper.get());
             wrapper.setDead(true);
+            performAdvancedSearch();
         }
         return Constants.CURRENT_PAGE;
     }
@@ -124,9 +165,21 @@ public class SearchBean extends Logger {
         return Navigations.redirect(Constants.SEARCH) + (search == null ? "" : "search=" + search);
     }
 
-    @SuppressWarnings("unused")
     public String performAdvancedSearch() {
+        log("performAdvancedSearch - " + search + " " + countryAdded + " " + sectorAdded + " " + skillAdded +
+                " listes : Countries : " + countriesSelected + " Sectors : " + sectorAdded + " skills : " + skillSelected);
+        employees = getEmployeesSearchResults();
         return Constants.CURRENT_PAGE;
+    }
+
+    public String getSectorAdded() {
+        return sectorAdded;
+    }
+
+    public void setSectorAdded(String sectorAdded) {
+        log("setSectorAdded - " + sectorAdded);
+        this.sectorAdded = sectorAdded;
+        performAdvancedSearch();
     }
 
     /**
@@ -143,6 +196,11 @@ public class SearchBean extends Logger {
 
         public Skill get() {
             return wrapper.get();
+        }
+
+        @Override
+        public String toString() {
+            return wrapper.get().toString() + " level : " + minLevel;
         }
 
         public boolean isDead() {
@@ -162,6 +220,28 @@ public class SearchBean extends Logger {
         }
     }
 
+    /**
+     * Handles and put in cache an employee's results, all its informations specific to the research.
+     */
+    public class EmployeeSearchResult {
+        private final Employee employee;
+        private final SkillAssociation maxSkill;
+        // TODO add the list of cv contained if the visitor has some.
+
+        public EmployeeSearchResult(Employee employee) {
+            this.employee = employee;
+            maxSkill = dao.getEmployeeMaxSkill(employee);
+        }
+
+        public SkillAssociation getMaxSkill() {
+            return maxSkill;
+        }
+
+        public Employee getEmployee() {
+            return employee;
+        }
+    }
+
     public void setSearch(String search) {
         this.search = search;
     }
@@ -170,7 +250,7 @@ public class SearchBean extends Logger {
         return search;
     }
 
-    public List<Employee> getEmployees() {
+    public List<EmployeeSearchResult> getEmployees() {
         return employees;
     }
 
@@ -215,10 +295,10 @@ public class SearchBean extends Logger {
     }
 
     public String getSkillAddedMinLevel() {
-        return skillAddedMinLevel == 0 ? "" : Integer.toString(skillAddedMinLevel);
+        return skillAddedMinLevel == null ? "" : skillAddedMinLevel;
     }
 
-    public void setSkillAddedMinLevel(int skillAddedMinLevel) {
+    public void setSkillAddedMinLevel(String skillAddedMinLevel) {
         this.skillAddedMinLevel = skillAddedMinLevel;
     }
 

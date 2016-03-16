@@ -252,7 +252,7 @@ body {
     font-weight: 700;
     padding: auto 18px;
     background-color: rgb(74, 74, 74);
-    ;
+;
     color: #ffffff;
     line-height: 14px;
 }
@@ -1152,7 +1152,7 @@ select {
 
 .mycv-form .help-block.with-error {
     font-size: 12px;
-    ;
+;
 }
 
 
@@ -1328,13 +1328,7 @@ select {
 }
 
 .search-group .dashed {
-    width: 110%;
-}
-
-@media (max-width: 767px) {
-    .search-group .dashed {
-        width: 100%;
-    }
+    width: 102%;
 }
 
 #search-panel-hint-step {
@@ -1410,7 +1404,7 @@ input[type="checkbox"].search-checkbox {
 #advanced-filter input[type="text"] {
     display: inline-block;
     width: 60px;
-    padding-bottom: 4px;
+    padding-bottom: 8px;
     height: 36px;
     border-radius: 4px;
 }

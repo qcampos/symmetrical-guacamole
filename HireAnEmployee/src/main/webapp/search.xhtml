@@ -87,7 +87,24 @@
                         <div class="panel-body">
 
                             <!-- Advanced Filter -->
-                            <div class="col-sm-3" id="advanced-filter">
+                            <div class="col-md-4 col-sm-5 col-xs-12" id="advanced-filter">
+
+                                <!-- Form for sector -->
+                                <h:form prependId="false">
+                                    <label class="control-label">Secteur </label>
+                                    <div class="form-group">
+                                        <h:selectOneMenu id="search-country-filter" value="#{searchBean.sectorAdded}"
+                                                         styleClass="form-control" p:style="height: 36px;">
+                                            <f:selectItems value="#{searchBean.sectorList}" var="_sector"
+                                                           itemLabel="#{_sector}"/>
+                                            <f:ajax execute="@form" render="search-list"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </h:form>
+                                <div class="row"></div>
+                                <hr class="dashed"/>
+                                <!-- End of Form for sector -->
+
                                 <!-- Form for place -->
                                 <h:form prependId="false">
                                     <label class="control-label">Lieux </label>
@@ -104,7 +121,7 @@
                                                                 class="search-checkbox">
                                                             <f:ajax event="click"
                                                                     listener="#{searchBean.removeCountry(_countrySelectedWrapper)}"
-                                                                    render="@form"/>
+                                                                    render="@form search-list"/>
                                                         </h:selectBooleanCheckbox>#{_countrySelectedWrapper.get().toString()}
                                                     </li>
                                                 </h:panelGroup>
@@ -122,7 +139,7 @@
                                         </h:selectOneMenu>
                                         <h:commandButton type="submit" class="btn btn-default"
                                                          action="#{searchBean.addCountry}" value="+">
-                                            <f:ajax render="@form" execute="select-country-filter"/>
+                                            <f:ajax render="@form search-list" execute="select-country-filter"/>
                                         </h:commandButton>
                                     </div>
                                     <!-- End of Select for country -->
@@ -131,23 +148,8 @@
                                 <hr class="dashed"/>
                                 <!-- End of Form for place -->
 
-
-                                <!-- Form for sector -->
-                                <h:form>
-                                    <label class="control-label">Secteur </label>
-                                    <div class="form-group">
-                                        <h:selectOneMenu value="" styleClass="form-control" p:style="height: 36px;">
-                                            <f:selectItems value="#{searchBean.sectorList}" var="_sector"
-                                                           itemLabel="#{_sector}"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                </h:form>
-                                <div class="row"></div>
-                                <hr class="dashed"/>
-                                <!-- End of Form for sector -->
-
                                 <!-- Form for skills -->
-                                <h:form>
+                                <h:form p:data-toggle="validator" p:role="form">
                                     <label class="control-label">Compétences </label>
                                     <div class="form-group">
                                         <ul class="search-ul-list">
@@ -161,7 +163,7 @@
                                                                 class="search-checkbox">
                                                             <f:ajax event="click"
                                                                     listener="#{searchBean.removeSkill(_skillSelectedWrapper)}"
-                                                                    render="@form"/>
+                                                                    render="@form search-list"/>
                                                         </h:selectBooleanCheckbox>#{_skillSelectedWrapper.get().toString()}
                                                         #{_skillSelectedWrapper.minLevel eq 0 ? '' :
                                                                 ('- Niv. ').concat(_skillSelectedWrapper.minLevel)}
@@ -173,17 +175,20 @@
 
                                     <!-- Select of new skills, using a SkillConverter -->
                                     <div class="form-group">
+                                        <span class="help-block with-error">Niveau requis.</span>
+                                        <div class="row"></div>
                                         <h:selectOneMenu id="select-skill-filter" value="#{searchBean.skillAdded}"
                                                          styleClass="form-control" converter="#{skillConverter}"
                                                          p:style="height: 36px;">
                                             <f:selectItems value="#{searchBean.skillList}" var="_skill"
                                                            itemLabel="#{_skill}" itemValue="#{_skill.toString()}"/>
                                         </h:selectOneMenu>
-                                        <h:inputText id="input-skill-level-filter" type="text"
+                                        <h:inputText id="input-skill-level-filter" type="text" p:data-minlength="1"
+                                                     p:data-error=" " p:pattern="#{regexes.getNum()}"
                                                      value="#{searchBean.skillAddedMinLevel}" p:placeholder="Niveau"/>
                                         <h:commandButton type="submit" class="btn btn-default" value="+"
                                                          action="#{searchBean.addSkill}">
-                                            <f:ajax render="@form"
+                                            <f:ajax render="@form search-list"
                                                     execute="select-skill-filter input-skill-level-filter"/>
                                         </h:commandButton>
                                     </div>
@@ -196,30 +201,36 @@
 
 
                             <!-- Search list -->
-                            <div class="search-group col-lg-6 col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-8 col-xs-12 ">
+                            <div class="search-group col-lg-8 col-md-8 col-sm-7 col-xs-12" id="search-list">
                                 <div class="row"></div>
                                 <hr class="dashed"/>
 
-                                <c:forEach var="_employee" items="#{searchBean.employees}" varStatus="status">
+                                <c:forEach var="_wrapper" items="#{searchBean.employees}" varStatus="status">
                                     <!-- Search group item -->
                                     <div class="search-group-inner">
                                         <h:graphicImage class="col-xs-3 search-group-img" name="img/no-photo.png"
                                                         alt="photo de profil"/>
                                         <div>
-                                            <h:link class="search-link" outcome="cv.xhtml?id=#{_employee.id}">
-                                                #{_employee.firstName} #{_employee.lastName}
+                                            <h:link class="search-link" outcome="cv.xhtml?id=#{_wrapper.employee.id}">
+                                                #{_wrapper.employee.firstName} #{_wrapper.employee.lastName}
                                             </h:link>
                                             <h:form style="display:inline;float:right">
                                                 <a data-toggle="collapse"
-                                                   data-target="#employee-0000-add-cvlist">+ Ajouter à </a>
+                                                   data-target="#employee-#{_wrapper.employee.id}-add-cvlist">+ Ajouter à </a>
                                             </h:form>
                                         </div>
-                                        <p class="search-group-title">#{_employee.description.professionalTitle}</p>
-                                        <p class="search-group-sub-title">#{_employee.description.country.toString()} | #{_employee.description.sector}</p>
-                                        <p class="search-group-competence">Meilleur compétence : Java - niveau 100</p>
+                                        <p class="search-group-title">#{_wrapper.employee.description.professionalTitle}</p>
+                                        <p class="search-group-sub-title">#{_wrapper.employee.description.country.toString()} | #{_wrapper.employee.description.sector}</p>
+                                        <h:panelGroup rendered="#{_wrapper.maxSkill != null}">
+                                            <p class="search-group-competence">Meilleur compétence : #{_wrapper.maxSkill.skill.name} - niveau #{_wrapper.maxSkill.level}</p>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{_wrapper.maxSkill == null}">
+                                            <p class="search-group-competence">Aucune compétence.</p>
+                                        </h:panelGroup>
 
                                         <!-- List CV -->
-                                        <div id="employee-0000-add-cvlist" class="employee-add-cvlist collapse in">
+                                        <div id="employee-#{_wrapper.employee.id}-add-cvlist"
+                                             class="employee-add-cvlist collapse">
                                             <!-- List 1 -->
                                             <h:form>
                                                 <div class="form-group">
@@ -234,13 +245,6 @@
                                                 </div>
                                             </h:form>
                                             <!-- End of List 2 -->
-                                            <!-- List 3 -->
-                                            <h:form>
-                                                <div class="form-group">
-                                                    <input type="checkbox"/> liste CV3
-                                                </div>
-                                            </h:form>
-                                            <!-- End of List 3 -->
                                         </div>
                                         <!-- End of List CV -->
 
