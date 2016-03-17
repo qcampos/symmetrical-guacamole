@@ -36,11 +36,15 @@ public class ResumeCreator {
      *
      * @throws IOException if the file could not be created.
      */
-    public static String generateCv(Employee e) throws IOException {
+    public static String generateCv(Employee e) throws IOException, InterruptedException {
         String content = generateLatexString(e);
         Path path = Paths.get(e.getId() + ".tex");
         Files.write(path, Arrays.asList(content.split("\n")), Charset.defaultCharset());
-        System.out.println(content);
+
+        Runtime r = Runtime.getRuntime();
+        Process p = r.exec("uname -a");
+        p.waitFor();
+
         return path.toAbsolutePath().toString();
     }
 
@@ -52,20 +56,15 @@ public class ResumeCreator {
         generateUserData(sb, e);
         // Beginning of the document.
         sb.append(BEGIN).append(TITLE);
-
         // Add The formations of the user
         generateUserFormations(sb, e);
-
         // Add experiences
         generateUserExperiences(sb, e);
-
         // Add skills
         generateUserSkills(sb, e);
-
         // End of the document.
         sb.append(END);
-        String s = sb.toString().replace("%", "\\%");
-        return s;
+        return sb.toString().replace("%", "\\%");
     }
 
     private static void generateUserSkills(final StringBuilder sb, final Employee e) {
@@ -85,8 +84,10 @@ public class ResumeCreator {
         }
         sb.append("\\section{Experience}\n");
         for (Experience experience : e.getExperiences()) {
-            String s = String.format("\\cventry{%s--%s}{%s}{%S}{%s}{}{%s}", experience.getStartDate().getYear(), experience.getEndDate().getYear(), experience.getJobName(), experience.getCompanyName(), experience.getCountry(), experience.getJobDescription());
-            sb.append(s).append("\n");
+            if (experience.getVisibility().equals(Visibility.PUBLIC)) {
+                String s = String.format("\\cventry{%s--%s}{%s}{%S}{%s}{}{%s}", experience.getStartDate().getYear(), experience.getEndDate().getYear(), experience.getJobName(), experience.getCompanyName(), experience.getCountry(), experience.getJobDescription());
+                sb.append(s).append("\n");
+            }
         }
     }
 
@@ -96,11 +97,13 @@ public class ResumeCreator {
         }
         sb.append("\\section{Formation}\n");
         for (Formation formation : e.getFormations()) {
-            String s = String.format("\\cventry{%d -- %d}{%s}{%s}{%s}{\\textit{%s}}{%s}",
-                    formation.getStartDate().getYear(), formation.getEndDate().getYear(),
-                    formation.getName(), formation.getSchool().getName(), formation.getSchool().getCountry(),
-                    formation.getLevel(), formation.getDescription());
-            sb.append(s).append("\n");
+            if (formation.getVisibility().equals(Visibility.PUBLIC)) {
+                String s = String.format("\\cventry{%d -- %d}{%s}{%s}{%s}{\\textit{%s}}{%s}",
+                        formation.getStartDate().getYear(), formation.getEndDate().getYear(),
+                        formation.getName(), formation.getSchool().getName(), formation.getSchool().getCountry(),
+                        formation.getLevel(), formation.getDescription());
+                sb.append(s).append("\n");
+            }
         }
     }
 
@@ -114,9 +117,11 @@ public class ResumeCreator {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         Employee e = new Employee("Jean-Yves", "Thibon", "Master of conferences", Country.FRANCE,
+                new Sector("Combinatoire"), "jyt@upem.fr", "pony");
+        Employee e2 = new Employee("Jean-Yves", "Thibon", "Master of conferences", Country.FRANCE,
                 new Sector("Combinatoire"), "jyt@upem.fr", "pony");
 
         e.addExperience(new Experience("NSA", "Chef du service d'investigation", "Un travail super éprouvant",
