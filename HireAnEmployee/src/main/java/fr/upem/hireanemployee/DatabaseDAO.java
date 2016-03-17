@@ -1,11 +1,13 @@
 package fr.upem.hireanemployee;
 
+import fr.upem.hireanemployee.beans.SearchBean;
 import fr.upem.hireanemployee.profildata.*;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static fr.upem.hireanemployee.profildata.Country.*;
 
 /**
  * Created by Quentin on 18/02/2016.
@@ -80,7 +84,7 @@ public class DatabaseDAO {
             return null;
         }
         // Persist the new employee into the database.
-        Employee e = new Employee(firstName, lastName, "", Country.NONE, emptySector, email, encrypt(password));
+        Employee e = new Employee(firstName, lastName, "", NONE, emptySector, email, encrypt(password));
         Logger.log("signup - description : " + e.getDescription(), Logger.BEAN); // TODO delete debug.
         em.persist(e);
         em.flush();
@@ -112,32 +116,9 @@ public class DatabaseDAO {
     }
 
     public List<Employee> searchEmployeeByName(String name) {
-        return em.createQuery("SELECT e FROM Employee e WHERE e.firstName LIKE :name OR e.lastName LIKE :name").setParameter("name", name).getResultList();
+        return em.createQuery("SELECT e FROM Employee e WHERE upper(e.firstName) LIKE upper(:name) OR upper(e.lastName) LIKE upper(:name)")
+                .setParameter("name", "%" + name + "%").getResultList();
     }
-
-    public List<Employee> searchEmployeeBySkill(final String skillname) {
-        List<Employee> employees = em.createQuery("SELECT e FROM Employee e").getResultList();
-        List<Employee> skilledEmployees = new ArrayList<>();
-/* TODO remove comments
-        for (Employee e : employees) {
-            for (Skill s : e.getSkills()) {
-                if (s.getName().contains(skillname)) {
-                    skilledEmployees.add(e);
-                }
-            }
-        }*/
-        return skilledEmployees;
-    }
-
-    public void register(Object o) {
-        try {
-            em.persist(o);
-            em.flush();
-        } catch (Exception e) {
-            throw new IllegalStateException("There was an error while adding an item to the database", e);
-        }
-    }
-
 
     /**
      * Finds a skill by its name.
@@ -160,6 +141,68 @@ public class DatabaseDAO {
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    public List<Employee> advancedSearchedEmployee(String sector, List<Country> countries,
+                                                   List<SearchBean.SkillFilterBundle> skills) {
+        System.out.println("[BEAN] Advanced string countries : " + countries);
+        boolean setCountryParam = false;
+        boolean setSectorParam = false;
+        try {
+            String queryString = "SELECT emp FROM Employee emp JOIN emp.description descr LEFT JOIN emp.skills ES ";
+            // No countries.
+            if (countries.size() == 0) {
+                // The sector.
+                if (!sector.equals(Sector.DEFAULT_NAME)) {
+                    setSectorParam = true;
+                    queryString = queryString + "WHERE (descr.sector.name = :sector) ";
+                }
+            } else {
+                setCountryParam = true;
+                queryString = queryString + "WHERE (descr.country IN :countries) ";
+                // The sector.
+                if (!sector.equals(Sector.DEFAULT_NAME)) {
+                    setSectorParam = true;
+                    queryString = queryString + "AND (descr.sector.name = :sector) ";
+                }
+            }
+            // The final filter.
+            StringBuilder sb = generateSkillConstraint(skills, setCountryParam || setSectorParam);
+            queryString = queryString + sb.toString() + "GROUP BY emp HAVING COUNT(emp) >= " + skills.size();
+            System.out.println("[BEAN] Computed : Advanced string : " + queryString);
+            TypedQuery<Employee> query = em.createQuery(queryString, Employee.class);
+            if (setCountryParam) {
+                query.setParameter("countries", countries);
+            }
+            if (setSectorParam) {
+                query.setParameter("sector", sector);
+            }
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    private StringBuilder generateSkillConstraint(List<SearchBean.SkillFilterBundle> skills, boolean otherSkills) {
+        StringBuilder sb = new StringBuilder();
+
+        if (skills.size() > 0) {
+            if (otherSkills) {
+                sb.append(" AND (");
+            } else {
+                sb.append(" WHERE (");
+            }
+            for (int i = 0; i < skills.size() - 1; i++) {
+                SearchBean.SkillFilterBundle skill = skills.get(i);
+                sb.append("(ES.skillId = " + skill.get().getId() + " AND ES.level >= " + skill.getMinLevel() + ") OR ");
+            }
+            SearchBean.SkillFilterBundle last = skills.get(skills.size() - 1);
+            if (last != null) {
+                sb.append("(ES.skillId = " + last.get().getId() + " AND ES.level >= " + last.getMinLevel() + ")");
+            }
+            sb.append(") ");
+        }
+        return sb;
     }
 
     @SuppressWarnings("unused")
@@ -194,7 +237,7 @@ public class DatabaseDAO {
      * @return a list of all the possible Countries.
      */
     public List<String> getCountryList() {
-        return Arrays.asList(Country.values()).stream().map(new Function<Country, String>() {
+        return Arrays.asList(values()).stream().map(new Function<Country, String>() {
             @Override
             public String apply(final Country country) {
                 return country.toString();
@@ -213,7 +256,7 @@ public class DatabaseDAO {
 
     public List<Country> getCountries() {
         List<Country> countries = new ArrayList<>();
-        for (Country c : Country.values()) {
+        for (Country c : values()) {
             countries.add(c);
         }
         return countries;
