@@ -86,7 +86,7 @@ public class ResumeCreator {
         sb.append("\\section{Experience}\n");
         for (Experience experience : e.getExperiences()) {
             if (experience.getVisibility().equals(Visibility.PUBLIC)) {
-                String s = String.format("\\cventry{%s--%s}{%s}{%S}{%s}{}{%s}", experience.getStartDate().getYear(), experience.getEndDate().getYear(), experience.getJobName(), experience.getCompanyName(), experience.getCountry(), experience.getJobDescription());
+                String s = String.format("\\cventry{%s--%s}{%s}{%S}{%s}{}{%s}", experience.getStartDate().getYear() + 1900, experience.getEndDate().getYear() + 1900, experience.getJobName(), experience.getCompanyName(), experience.getCountry(), experience.getJobDescription());
                 sb.append(s).append("\n");
             }
         }
@@ -100,7 +100,7 @@ public class ResumeCreator {
         for (Formation formation : e.getFormations()) {
             if (formation.getVisibility().equals(Visibility.PUBLIC)) {
                 String s = String.format("\\cventry{%d -- %d}{%s}{%s}{%s}{\\textit{%s}}{%s}",
-                        formation.getStartDate().getYear(), formation.getEndDate().getYear(),
+                        formation.getStartDate().getYear() + 1900, formation.getEndDate().getYear() + 1900,
                         formation.getName(), formation.getSchool().getName(), formation.getSchool().getCountry(),
                         formation.getLevel(), formation.getDescription());
                 sb.append(s).append("\n");
