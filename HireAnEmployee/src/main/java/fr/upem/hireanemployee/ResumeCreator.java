@@ -38,12 +38,12 @@ public class ResumeCreator {
      */
     public static String generateCv(Employee e) throws IOException, InterruptedException {
         String content = generateLatexString(e);
-        Path path = Paths.get(e.getId() + ".tex");
+        Path path = Paths.get("cv" + e.getId() + ".tex");
         Path pdfPath = Paths.get("cv" + e.getId() + ".pdf");
-        Files.write(path, Arrays.asList(content.split("\n")), Charset.defaultCharset());
+        Files.write(path, Arrays.asList(content.split("\n")), Charset.forName("UTF8"));
 
         Runtime r = Runtime.getRuntime();
-        Process p = r.exec(String.format("pandoc %s -o %s", path.toString(), pdfPath.toString()));
+        Process p = r.exec(String.format("pdflatex %s", path.toAbsolutePath().toString()));
         p.waitFor();
 
         return pdfPath.toAbsolutePath().toString();
@@ -65,7 +65,7 @@ public class ResumeCreator {
         generateUserSkills(sb, e);
         // End of the document.
         sb.append(END);
-        return sb.toString().replace("%", "\\%");
+        return sb.toString().replace("%", "\\%").replace("#", "\\#");
     }
 
     private static void generateUserSkills(final StringBuilder sb, final Employee e) {
