@@ -57,6 +57,7 @@ public class InitializationBean extends Logger {
         description = employee.getDescription();
         log("init - Description : " + description);
         edao.updateCountry(description, Country.FRANCE);
+        edao.updateSector(description, "Armée");
         edao.updateProfessionalTitle(description, "MSc in Management and Business Development");
 
         fdao.createFormation("Master’s Degree, Master of Science in Project and Programme Management and Business Development",
@@ -101,6 +102,7 @@ public class InitializationBean extends Logger {
         /* Selections */
         esdao.addSelection1(employee, employee1);
         Employee signup = dao.signup("Lisa", "Ok", "a@az.com", "12345");
+        edao.updateCountry(signup.getDescription(), Country.ALBANIA);
         Employee signup1 = dao.signup("Lisa2", "Ok", "a@az2.com", "12345");
         Employee signup2 = dao.signup("Lisa3", "Ok", "a@az3.com", "12345");
         Employee signup3 = dao.signup("Lisa4", "Ok", "a@az4.com", "12345");

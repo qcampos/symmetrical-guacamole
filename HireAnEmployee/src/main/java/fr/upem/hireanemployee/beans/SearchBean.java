@@ -58,6 +58,8 @@ public class SearchBean extends Logger {
         countries = dao.getCountries();
         // Getting the list of skills.
         skillList = dao.getSkills();
+
+
         // Country selected.
         countriesSelected = new ArrayList<>();
         countryAdded = Country.NONE;
@@ -80,6 +82,10 @@ public class SearchBean extends Logger {
      */
     private List<EmployeeSearchResult> getEmployeesSearchResults() {
         List<Employee> employees = dao.searchEmployeeByName(search);
+        return wrappEmployeeList(employees);
+    }
+
+    private List<EmployeeSearchResult> wrappEmployeeList(List<Employee> employees) {
         List<EmployeeSearchResult> employeesResults = new ArrayList<>();
         for (Employee e : employees) {
             employeesResults.add(new EmployeeSearchResult(e));
@@ -167,8 +173,19 @@ public class SearchBean extends Logger {
 
     public String performAdvancedSearch() {
         log("performAdvancedSearch - " + search + " " + countryAdded + " " + sectorAdded + " " + skillAdded +
-                " listes : Countries : " + countriesSelected + " Sectors : " + sectorAdded + " skills : " + skillSelected);
-        employees = getEmployeesSearchResults();
+                " list : Countries : " + countriesSelected + " Sectors : " + sectorAdded + " skills : " + skillSelected);
+        List<Country> countries = new ArrayList<>();
+        for (FormControlWrapper<Country> c : countriesSelected) {
+            if (c.isDead()) continue;
+            countries.add(c.get());
+        }
+        List<SkillFilterBundle> skills = new ArrayList<>();
+        for (SkillFilterBundle s : skillSelected) {
+            if (s.isDead()) continue;
+            skills.add(s);
+        }
+        employees = wrappEmployeeList(dao.advancedSearchedEmployee(sectorAdded, countries, skills));
+        log("performAdvancedSearch - Employee retrieved : " + employees);
         return Constants.CURRENT_PAGE;
     }
 
