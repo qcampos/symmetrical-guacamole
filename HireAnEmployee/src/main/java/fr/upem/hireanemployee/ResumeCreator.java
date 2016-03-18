@@ -39,13 +39,14 @@ public class ResumeCreator {
     public static String generateCv(Employee e) throws IOException, InterruptedException {
         String content = generateLatexString(e);
         Path path = Paths.get(e.getId() + ".tex");
+        Path pdfPath = Paths.get("cv" + e.getId() + ".pdf");
         Files.write(path, Arrays.asList(content.split("\n")), Charset.defaultCharset());
 
         Runtime r = Runtime.getRuntime();
-        Process p = r.exec("uname -a");
+        Process p = r.exec(String.format("pandoc %s -o %s", path.toString(), pdfPath.toString()));
         p.waitFor();
 
-        return path.toAbsolutePath().toString();
+        return pdfPath.toAbsolutePath().toString();
     }
 
     private static String generateLatexString(final Employee e) {
