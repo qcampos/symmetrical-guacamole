@@ -48,14 +48,26 @@
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
 
+    <!-- Https -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected resource</web-resource-name>
+            <url-pattern>/useHttps</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
     <!-- Cv filter -->
-   <!-- <filter>
-        <filter-name>UrlRewriteFilter</filter-name>
-        <filter-class>fr.upem.hireanemployee.navigation.UrlRewriteFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>UrlRewriteFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
+    <!-- <filter>
+         <filter-name>UrlRewriteFilter</filter-name>
+         <filter-class>fr.upem.hireanemployee.navigation.UrlRewriteFilter</filter-class>
+     </filter>
+     <filter-mapping>
+         <filter-name>UrlRewriteFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+     </filter-mapping>-->
 
 </web-app>

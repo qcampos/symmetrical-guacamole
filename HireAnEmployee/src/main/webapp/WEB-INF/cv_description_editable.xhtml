@@ -59,7 +59,12 @@
 
                         <!-- (Relation button) -->
                         <div class="col-xs-6 row-strip">
-                            <!-- Not in editable mode -->
+                            <h:form prependId="false">
+                                <h:commandLink class="btn btn-default" id="add-relation"
+                                               action="#{cvViewedBean.downloadCV()}">
+                                    <span class="glyphicon glyphicon-download-alt"></span> Téléchargerr le CV
+                                </h:commandLink>
+                            </h:form>
                         </div>
                         <!-- (nb relations) -->
                         <div class="col-xs-offset-4 col-xs-2 row-strip">

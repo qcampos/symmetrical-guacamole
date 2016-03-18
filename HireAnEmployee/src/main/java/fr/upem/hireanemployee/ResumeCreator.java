@@ -160,7 +160,7 @@ public class ResumeCreator {
                                 Country.FRANCE), new Date(1515, 12, 25), new Date(1518, 12, 25), Visibility.PUBLIC)
         );
 
-        generateCv(e);
+        System.out.println(generateCv(e));
     }
 
 

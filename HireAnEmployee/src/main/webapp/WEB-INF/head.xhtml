@@ -1,43 +1,49 @@
 <ui:composition
-		xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-		xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+        xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>HireEmployee - #{title}</title>
-		<!-- Sets initial viewport load and disables zooming  -->
-		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
-		<!-- SmartAddon.com Verification -->
-		<meta name="smartaddon-verification" content="936e8d43184bc47ef34e25e426c508fe"/>
-		<meta name="keywords"
-			  content="Flat UI Design, UI design, UI, user interface, web interface design, user interface design, Flat web design, Bootstrap, Bootflat, Flat UI colors, colors"/>
-		<meta name="description" content="The complete style of the Bootflat Framework."/>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>HireEmployee - #{title}</title>
+        <!-- Sets initial viewport load and disables zooming  -->
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <!-- SmartAddon.com Verification -->
+        <meta name="smartaddon-verification" content="936e8d43184bc47ef34e25e426c508fe"/>
+        <meta name="description" content="Votre Curriculum vitae sous son meilleur jour."/>
 
-		<!-- BootFlat CSS / JS -->
-		<!-- Bootstrap -->
-		<link href="css/bootstrap.min.css" rel="stylesheet"/>
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic"
-			  rel="stylesheet" type="text/css"/>
-		<link rel="stylesheet" href="css/site.min.css"/>
-		<!-- <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/> -->
-		<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-		<!--[if lt IE 9]>
+        <!-- Facebook share status -->
+        <meta property="og:url" content="http://164.132.55.179:8080/hireanemployee/connection.xhtml"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Votre Curriculum vitae sous son meilleur jour."/>
+        <meta property="og:description" content="Partagez votre CV auprès des meilleurs recruteurs du secteur."/>
+        <meta property="og:image"
+              content="http://164.132.55.179:8080/hireanemployee/javax.faces.resource/img/photo1.jpg.xhtml"/>
+
+        <!-- BootFlat CSS / JS -->
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic"
+              rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="css/site.min.css"/>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/> -->
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+        <!--[if lt IE 9]>
           <script src="js/html5shiv.js"></script>
           <script src="js/respond.min.js"></script>
         <![endif]-->
 
-		<!-- necessary to include this way here -->
-		<h:outputScript library="js" name="site.min.js"/>
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<!-- <h:outputScript library="js" name="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/> -->
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<h:outputScript library="js" name="bootstrap.min.js"/>
-		<h:outputScript library="js" name="validator.js"/>
-		<h:outputScript library="js" name="mojarra-bug.js" target="body"></h:outputScript>
+        <!-- necessary to include this way here -->
+        <h:outputScript library="js" name="site.min.js"/>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- <h:outputScript library="js" name="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/> -->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputScript library="js" name="validator.js"/>
+        <h:outputScript library="js" name="mojarra-bug.js" target="body"></h:outputScript>
 
 
-		<!-- Main CSS -->
-		<link rel="stylesheet" href="css/main.css"/>
-		<link rel="stylesheet" href="css/verticals.css"/>
-	</h:head>
+        <!-- Main CSS -->
+        <link rel="stylesheet" href="css/main.css"/>
+        <link rel="stylesheet" href="css/verticals.css"/>
+    </h:head>
 </ui:composition>
