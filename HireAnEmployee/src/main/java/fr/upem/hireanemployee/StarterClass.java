@@ -1,15 +1,11 @@
 package fr.upem.hireanemployee;
 
 
-import fr.upem.hireanemployee.profildata.*;
+import fr.upem.hireanemployee.profildata.EmployeeDescription;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Baxtalou on 10/02/2016.
@@ -55,6 +51,7 @@ public class StarterClass {
 //        bdu.cleanAll();
 //        return "Founded : " + employeeByMail.toString();
 
+
         if (!bdu.emailExists("nborie@upem.fr")) {
             bdu.signup("Nicolas", "Borie", "nborie@upem.fr", "pony17");
         }
@@ -62,6 +59,7 @@ public class StarterClass {
 
         EmployeeDescription description = employee.getDescription();
         edao.updateSector(description, "Combinatorics");
+
 
         if (!bdu.emailExists("jmangue@u.com")) {
             bdu.signup("Jefferson", "Mangue", "jmangue@u.com", "12345");

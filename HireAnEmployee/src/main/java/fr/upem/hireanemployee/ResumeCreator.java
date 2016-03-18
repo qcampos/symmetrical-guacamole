@@ -69,7 +69,7 @@ public class ResumeCreator {
     }
 
     private static void generateUserSkills(final StringBuilder sb, final Employee e) {
-        if (e.getSkills().isEmpty()) {
+        if (e.getSkillsList().isEmpty()) {
             return;
         }
         sb.append("\\section{Skills}\n");
