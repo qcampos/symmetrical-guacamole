@@ -2,6 +2,7 @@ package fr.upem.hireanemployee.beans;
 
 import fr.upem.hireanemployee.DatabaseDAO;
 import fr.upem.hireanemployee.Employee;
+import fr.upem.hireanemployee.EmployeeSelectionDAO;
 import fr.upem.hireanemployee.Logger;
 import fr.upem.hireanemployee.converters.FormControlWrapper;
 import fr.upem.hireanemployee.navigation.Constants;
@@ -13,6 +14,7 @@ import fr.upem.hireanemployee.profildata.SkillAssociation;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,11 @@ public class SearchBean extends Logger {
 
     @EJB
     private DatabaseDAO dao;
+    @EJB
+    private EmployeeSelectionDAO sdao;
+    @ManagedProperty("#{sessionBean}")
+    private SessionBean sessionBean;
+
 
     // Current search.
     private String search;
@@ -45,12 +52,16 @@ public class SearchBean extends Logger {
     private String skillAddedMinLevel;
     private String sectorAdded;
 
+    // Cache Control data.
+    private Employee currentEmployee;
+
     public String searchActionInit() {
         // Guard needed because of viewParam Bug with ajax in the API 2.2
         if (initialized) {
             return Constants.CURRENT_PAGE;
         }
         initialized = true;
+        currentEmployee = sessionBean.isConnected() ? dao.getEmployeeByID(sessionBean.getId()) : null;
         log("searchActionInit - search " + search);
         // Retrieving the results in the database.
         employees = getEmployeesSearchResults();
@@ -175,10 +186,12 @@ public class SearchBean extends Logger {
         log("performAdvancedSearch - " + search + " " + countryAdded + " " + sectorAdded + " " + skillAdded +
                 " list : Countries : " + countriesSelected + " Sectors : " + sectorAdded + " skills : " + skillSelected);
         List<Country> countries = new ArrayList<>();
+        // Countries filters.
         for (FormControlWrapper<Country> c : countriesSelected) {
             if (c.isDead()) continue;
             countries.add(c.get());
         }
+        // Skills filters.
         List<SkillFilterBundle> skills = new ArrayList<>();
         for (SkillFilterBundle s : skillSelected) {
             if (s.isDead()) continue;
@@ -243,11 +256,15 @@ public class SearchBean extends Logger {
     public class EmployeeSearchResult {
         private final Employee employee;
         private final SkillAssociation maxSkill;
-        // TODO add the list of cv contained if the visitor has some.
+        private boolean isSelected;
 
         public EmployeeSearchResult(Employee employee) {
             this.employee = employee;
             maxSkill = dao.getEmployeeMaxSkill(employee);
+            isSelected = false;
+            if (sessionBean.isConnected()) {
+                isSelected = sdao.isSelected(currentEmployee, employee);
+            }
         }
 
         public SkillAssociation getMaxSkill() {
@@ -256,6 +273,24 @@ public class SearchBean extends Logger {
 
         public Employee getEmployee() {
             return employee;
+        }
+
+        public void setSelected(boolean selected) {
+            log("setSelected - called with value : " + selected + " and employee connected : " + sessionBean.isConnected());
+            if (currentEmployee == null) {
+                return;
+            }
+            isSelected = selected;
+            // Updating the state into the database.
+            if (!isSelected) {
+                sdao.removeSelection1(currentEmployee, employee);
+                return;
+            }
+            sdao.addSelection1(currentEmployee, employee);
+        }
+
+        public boolean isSelected() {
+            return isSelected;
         }
     }
 
@@ -321,5 +356,13 @@ public class SearchBean extends Logger {
 
     public List<String> getSectorList() {
         return sectorList;
+    }
+
+    public SessionBean getSessionBean() {
+        return sessionBean;
+    }
+
+    public void setSessionBean(SessionBean sessionBean) {
+        this.sessionBean = sessionBean;
     }
 }

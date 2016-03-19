@@ -1,7 +1,10 @@
 package fr.upem.hireanemployee;
 
+import fr.upem.hireanemployee.profildata.Skill;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.Collection;
 
@@ -44,5 +47,12 @@ public class EmployeeSelectionDAO {
         Collection<Employee> selection1 = merge.getSelection1();
         employee.setSelection1(selection1);
         return selection1;
+    }
+
+    public boolean isSelected(Employee employee, Employee employeeTested) {
+        if (employee == null || employeeTested == null) {
+            return false;
+        }
+        return employee.getSelection1().contains(employeeTested);
     }
 }

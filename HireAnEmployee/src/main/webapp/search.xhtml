@@ -215,14 +215,33 @@
                                             <h:link class="search-link" outcome="cv.xhtml?id=#{_wrapper.employee.id}">
                                                 #{_wrapper.employee.firstName} #{_wrapper.employee.lastName}
                                             </h:link>
-                                            <h:form style="display:inline;float:right">
-                                                <div class="form-group">
-                                                    Sélection 1 <h:selectBooleanCheckbox type="checkbox" value="true"
-                                                                                         p:checked="checked"
-                                                                                         class="search-checkbox">
-                                                </h:selectBooleanCheckbox>
-                                                </div>
-                                            </h:form>
+
+                                            <!-- If connected : showing the selection check box -->
+                                            <c:if test="#{sessionBean.state eq 'CONNECTED'}">
+                                                <h:form style="display:inline;float:right">
+                                                    <div class="form-group">
+                                                        <c:if test="#{_wrapper.selected}">
+                                                            Sélection 1 <h:selectBooleanCheckbox type="checkbox"
+                                                                                                 value="#{_wrapper.selected}"
+                                                                                                 p:checked="checked"
+                                                                                                 class="search-checkbox">
+                                                            <f:ajax event="click"
+                                                                    execute="@this" render="@form search-list"/>
+                                                        </h:selectBooleanCheckbox>
+                                                        </c:if>
+                                                        <c:if test="#{not _wrapper.selected}">
+                                                            Sélection 1 <h:selectBooleanCheckbox type="checkbox"
+                                                                                                 value="#{_wrapper.selected}"
+                                                                                                 class="search-checkbox">
+                                                            <f:ajax event="click"
+                                                                    execute="@this" render="@form search-list"/>
+                                                        </h:selectBooleanCheckbox>
+                                                        </c:if>
+                                                    </div>
+                                                </h:form>
+                                            </c:if>
+                                            <!-- End of the selection check box -->
+
                                         </div>
                                         <p class="search-group-title">#{_wrapper.employee.description.professionalTitle}</p>
                                         <p class="search-group-sub-title">#{_wrapper.employee.description.country.toString()} | #{_wrapper.employee.description.sector}</p>
