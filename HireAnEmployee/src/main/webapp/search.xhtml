@@ -62,7 +62,8 @@
                                 <div class="col-sm-6 col-sx-12">
                                     <span class="number"
                                           style="float:left; font-size:500%;margin-top:-22px;margin-right:4px;">2</span>
-                                    <p>Ajoutez les employés qui vous conviennent à vos <b>listes de curriculum vitae</b>.
+                                    <p>Ajoutez les employés qui vous conviennent à votre
+                                        <b>liste de curriculum vitae</b>.
                                     </p>
                                 </div>
                             </div>
@@ -88,6 +89,37 @@
 
                             <!-- Advanced Filter -->
                             <div class="col-md-4 col-sm-5 col-xs-12" id="advanced-filter">
+
+                                <!-- Form for the selection list filtering -->
+                                <c:if test="#{sessionBean.state eq 'CONNECTED'}">
+                                    <h:form prependId="false">
+                                        <label class="control-label">Mes sélections </label>
+                                        <div class="form-group">
+                                            <c:if test="#{searchBean.filteringEmployeeSelection}">
+                                                <h:selectBooleanCheckbox
+                                                        type="checkbox" value="true" p:checked="checked"
+                                                        class="search-checkbox">
+                                                    <f:ajax event="click"
+                                                            listener="#{searchBean.filterWithSelection(false)}"
+                                                            render="@form search-list"/>
+                                                </h:selectBooleanCheckbox>
+                                            </c:if>
+                                            <c:if test="#{not searchBean.filteringEmployeeSelection}">
+                                                <h:selectBooleanCheckbox
+                                                        type="checkbox" value="false"
+                                                        class="search-checkbox">
+                                                    <f:ajax event="click"
+                                                            listener="#{searchBean.filterWithSelection(true)}"
+                                                            render="@form search-list"/>
+                                                </h:selectBooleanCheckbox>
+                                            </c:if>
+                                            Afficher mes sélections
+                                        </div>
+                                    </h:form>
+                                    <div class="row"></div>
+                                    <hr class="dashed"/>
+                                </c:if>
+                                <!-- End of the selection list filtering -->
 
                                 <!-- Form for sector -->
                                 <h:form prependId="false">
@@ -221,7 +253,7 @@
                                                 <h:form style="display:inline;float:right">
                                                     <div class="form-group">
                                                         <c:if test="#{_wrapper.selected}">
-                                                            Sélection 1 <h:selectBooleanCheckbox type="checkbox"
+                                                            Sélectionner <h:selectBooleanCheckbox type="checkbox"
                                                                                                  value="#{_wrapper.selected}"
                                                                                                  p:checked="checked"
                                                                                                  class="search-checkbox">
@@ -230,11 +262,10 @@
                                                         </h:selectBooleanCheckbox>
                                                         </c:if>
                                                         <c:if test="#{not _wrapper.selected}">
-                                                            Sélection 1 <h:selectBooleanCheckbox type="checkbox"
+                                                            Sélectionner <h:selectBooleanCheckbox type="checkbox"
                                                                                                  value="#{_wrapper.selected}"
                                                                                                  class="search-checkbox">
-                                                            <f:ajax event="click"
-                                                                    execute="@this" render="@form search-list"/>
+                                                            <f:ajax event="click" execute="@this"/> <!-- No re-render -->
                                                         </h:selectBooleanCheckbox>
                                                         </c:if>
                                                     </div>

@@ -10,9 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -144,7 +142,9 @@ public class DatabaseDAO {
     }
 
     public List<Employee> advancedSearchedEmployee(String sector, List<Country> countries,
-                                                   List<SearchBean.SkillFilterBundle> skills) {
+                                                   List<SearchBean.SkillFilterBundle> skills,
+                                                   Employee requester,
+                                                   boolean filteringEmployeeSelection) {
         System.out.println("[BEAN] Advanced string countries : " + countries);
         boolean setCountryParam = false;
         boolean setSectorParam = false;
@@ -169,7 +169,6 @@ public class DatabaseDAO {
             // The final filter.
             StringBuilder sb = generateSkillConstraint(skills, setCountryParam || setSectorParam);
             queryString = queryString + sb.toString() + "GROUP BY emp HAVING COUNT(emp) >= " + skills.size();
-            System.out.println("[BEAN] Computed : Advanced string : " + queryString);
             TypedQuery<Employee> query = em.createQuery(queryString, Employee.class);
             if (setCountryParam) {
                 query.setParameter("countries", countries);
@@ -177,7 +176,18 @@ public class DatabaseDAO {
             if (setSectorParam) {
                 query.setParameter("sector", sector);
             }
-            return query.getResultList();
+            List<Employee> resultList = query.getResultList();
+            if (requester != null && filteringEmployeeSelection) {
+                // Filtering selected employee.
+                Iterator<Employee> it = resultList.iterator();
+                Collection<Employee> selection1 = requester.getSelection1();
+                while (it.hasNext()) {
+                    if (!selection1.contains(it.next())) {
+                        it.remove();
+                    }
+                }
+            }
+            return resultList;
         } catch (NoResultException e) {
             return null;
         }

@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class SearchBean extends Logger {
     // Current search.
     private String search;
     private boolean initialized;
+    private boolean filteringEmployeeSelection;
     private List<EmployeeSearchResult> employees;
     private List<Country> countries;
     private List<Skill> skillList;
@@ -55,6 +57,7 @@ public class SearchBean extends Logger {
     // Cache Control data.
     private Employee currentEmployee;
 
+
     public String searchActionInit() {
         // Guard needed because of viewParam Bug with ajax in the API 2.2
         if (initialized) {
@@ -70,7 +73,8 @@ public class SearchBean extends Logger {
         // Getting the list of skills.
         skillList = dao.getSkills();
 
-
+        // Automatically filtering the employee's initial selection if no search input.
+        filteringEmployeeSelection = (search == null);
         // Country selected.
         countriesSelected = new ArrayList<>();
         countryAdded = Country.NONE;
@@ -197,9 +201,19 @@ public class SearchBean extends Logger {
             if (s.isDead()) continue;
             skills.add(s);
         }
-        employees = wrappEmployeeList(dao.advancedSearchedEmployee(sectorAdded, countries, skills));
+        employees = wrappEmployeeList(dao.advancedSearchedEmployee(sectorAdded, countries,
+                skills, currentEmployee, filteringEmployeeSelection));
         log("performAdvancedSearch - Employee retrieved : " + employees);
         return Constants.CURRENT_PAGE;
+    }
+
+    /**
+     * Sets the filteringEmployeeSelection, and performs an advanced search.
+     */
+    public void filterWithSelection(boolean filteringEmployeeSelection) {
+        log("filterWithSelection - called with : " + filteringEmployeeSelection);
+        this.filteringEmployeeSelection = filteringEmployeeSelection;
+        performAdvancedSearch();
     }
 
     public String getSectorAdded() {
@@ -284,6 +298,7 @@ public class SearchBean extends Logger {
             // Updating the state into the database.
             if (!isSelected) {
                 sdao.removeSelection1(currentEmployee, employee);
+                performAdvancedSearch();
                 return;
             }
             sdao.addSelection1(currentEmployee, employee);
@@ -364,5 +379,13 @@ public class SearchBean extends Logger {
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
+    }
+
+    public boolean isFilteringEmployeeSelection() {
+        return filteringEmployeeSelection;
+    }
+
+    public void setFilteringEmployeeSelection(boolean filteringEmployeeSelection) {
+        this.filteringEmployeeSelection = filteringEmployeeSelection;
     }
 }
