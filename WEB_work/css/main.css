@@ -252,7 +252,7 @@ body {
     font-weight: 700;
     padding: auto 18px;
     background-color: rgb(74, 74, 74);
-;
+    ;
     color: #ffffff;
     line-height: 14px;
 }
@@ -277,13 +277,13 @@ body {
     padding-left: 26px;
 }
 
-@media (min-width: 923px) {
+@media (min-width: 1023px) {
     #navbar-logout .glyphicon {
         display: none;
     }
 }
 
-@media (min-width: 768px) and (max-width: 922px) {
+@media (min-width: 908px) and (max-width: 1022px) {
     .navbar-inverse .navbar-nav > li > a,
     .navbar-inverse .navbar-nav > li > form .input-group {
         padding-right: 13px;
@@ -297,7 +297,7 @@ body {
 
 /* Menu burger */
 
-@media (max-width: 767px) {
+@media (max-width: 907px) {
     .navbar-inverse .navbar-nav > li > a,
     .navbar-inverse .navbar-nav > li > form .input-group {
         padding-right: 13px;
@@ -314,7 +314,17 @@ body {
         background-color: #000000;
     } */
     #navbar-logout #logout-text {
-        /* display: none;*/
+        display: none;
+    }
+    #nabar-logout {
+        margin: 0;
+    }
+}
+
+@media (min-width: 907px) and (max-width: 988px) {
+    .navbar-inverse .navbar-brand {
+        display: none;
+        margin-left: 200px;
     }
 }
 
@@ -1152,7 +1162,7 @@ select {
 
 .mycv-form .help-block.with-error {
     font-size: 12px;
-;
+    ;
 }
 
 

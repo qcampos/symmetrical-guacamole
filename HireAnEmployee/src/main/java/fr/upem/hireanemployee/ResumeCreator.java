@@ -2,7 +2,7 @@ package fr.upem.hireanemployee;
 
 import fr.upem.hireanemployee.profildata.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,9 +31,7 @@ public class ResumeCreator {
      * Generate a LaTeX file corresponding to a CV from the given Employee.
      *
      * @param e the employee to create the CV.
-     *
      * @return the path to the created file.
-     *
      * @throws IOException if the file could not be created.
      */
     public static String generateCv(Employee e) throws IOException, InterruptedException {
@@ -43,8 +41,36 @@ public class ResumeCreator {
         Files.write(path, Arrays.asList(content.split("\n")), Charset.forName("UTF8"));
 
         Runtime r = Runtime.getRuntime();
-        Process p = r.exec(String.format("pdflatex %s", path.toAbsolutePath().toString()));
-        p.waitFor();
+        final Process p = r.exec(String.format("pdflatex %s", path.toAbsolutePath().toString()));
+
+
+        InputStream stderr = p.getErrorStream();
+        InputStreamReader isr = new InputStreamReader(stderr);
+        BufferedReader br = new BufferedReader(isr);
+        String line = null;
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // exhaust input stream
+                BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+                byte[] bytes = new byte[4096];
+                try {
+                    while (in.read(bytes) != -1) {
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }).start();
+
+
+        System.out.println("<ERROR>");
+        while ((line = br.readLine()) != null)
+            System.out.println(line);
+        System.out.println("</ERROR>");
+        int exitVal = p.waitFor();
 
         return pdfPath.toAbsolutePath().toString();
     }

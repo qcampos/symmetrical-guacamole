@@ -7,7 +7,7 @@
 
 <!-- Head cartridge -->
 <ui:include src="WEB-INF/head.xhtml">
-    <ui:param name="title" value="connexion"/>
+    <ui:param name="title" value="#{cvViewedBean.employee.firstName} #{cvViewedBean.employee.lastName}"/>
 </ui:include>
 
 <!-- The view takes id -->
@@ -80,6 +80,23 @@
                     <div class="panel-body">
                         <div class="panel-body" style="height:150px">
                             <hr class="dashed"/>
+                            <div id="fb-root"></div>
+
+                            <!-- Facebook share script -->
+                            <h:outputScript>
+                                (function (d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (d.getElementById(id)) return;
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&amp;version=v2.5";
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));
+                            </h:outputScript>
+                            <div class="fb-share-button"
+                                 data-href="http://164.132.55.179:8080/hireanemployee/cv.xhtml?id=#{cvViewedBean.id}"
+                                 data-layout="link"></div>
+                            <!-- End of Facebook share script -->
 
                             <div style="height:150px"/>
                             <hr class="dashed"/>
