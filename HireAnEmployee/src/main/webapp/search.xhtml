@@ -201,7 +201,8 @@
 
 
                             <!-- Search list -->
-                            <h:panelGroup layout="block" class="search-group col-lg-8 col-md-8 col-sm-7 col-xs-12" id="search-list">
+                            <h:panelGroup layout="block" class="search-group col-lg-8 col-md-8 col-sm-7 col-xs-12"
+                                          id="search-list">
                                 <div class="row"></div>
                                 <hr class="dashed"/>
 
@@ -215,8 +216,12 @@
                                                 #{_wrapper.employee.firstName} #{_wrapper.employee.lastName}
                                             </h:link>
                                             <h:form style="display:inline;float:right">
-                                                <a data-toggle="collapse"
-                                                   data-target="#employee-#{_wrapper.employee.id}-add-cvlist">+ Ajouter à </a>
+                                                <div class="form-group">
+                                                    Sélection 1 <h:selectBooleanCheckbox type="checkbox" value="true"
+                                                                                         p:checked="checked"
+                                                                                         class="search-checkbox">
+                                                </h:selectBooleanCheckbox>
+                                                </div>
                                             </h:form>
                                         </div>
                                         <p class="search-group-title">#{_wrapper.employee.description.professionalTitle}</p>
@@ -227,26 +232,6 @@
                                         <h:panelGroup rendered="#{_wrapper.maxSkill == null}">
                                             <p class="search-group-competence">Aucune compétence.</p>
                                         </h:panelGroup>
-
-                                        <!-- List CV -->
-                                        <div id="employee-#{_wrapper.employee.id}-add-cvlist"
-                                             class="employee-add-cvlist collapse">
-                                            <!-- List 1 -->
-                                            <h:form>
-                                                <div class="form-group">
-                                                    <input type="checkbox"/> liste CV1
-                                                </div>
-                                            </h:form>
-                                            <!-- End of List 1 -->
-                                            <!-- List 2 -->
-                                            <h:form>
-                                                <div class="form-group">
-                                                    <input type="checkbox"/> liste CV2
-                                                </div>
-                                            </h:form>
-                                            <!-- End of List 2 -->
-                                        </div>
-                                        <!-- End of List CV -->
 
                                         <div class="row"></div>
                                         <hr class="dashed"/>
